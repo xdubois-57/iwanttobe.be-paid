@@ -24,36 +24,10 @@ $router->get('/', 'HomeController@index');          // Homepage with QR code gen
 $router->get('/about', 'HomeController@about');     // About page with project information
 $router->get('/gdpr', 'GDPRController@index');     // GDPR/Privacy policy page
 
-/**
- * Language Change Handler
- * 
- * This function handles both GET and POST requests for changing the interface language.
- * It works in two ways:
- * 1. Via GET request: /language/en (for direct links)
- * 2. Via POST request: /language with lang parameter (for form submissions)
- * 
- * @param array $params Contains the language code in 'lang' parameter
- */
-$languageChangeHandler = function($params) {
-    $langController = LanguageController::getInstance();
-    
-    // Get language code from either POST data or URL parameter
-    $lang = $_POST['lang'] ?? ($params['lang'] ?? null);
-    
-    // Attempt to change the language if a valid language code is provided
-    if ($lang && $langController->setLanguage($lang)) {
-        // On success, redirect back to the previous page or home
-        header('Location: ' . ($_SERVER['HTTP_REFERER'] ?? '/'));
-    } else {
-        // On failure (invalid language code), redirect to homepage
-        header('Location: /');
-    }
-    exit;
-};
-
-// Register language routes
-$router->get('/language/{lang}', $languageChangeHandler);  // For direct language links
-$router->post('/language', $languageChangeHandler);        // For form submissions
+// Language routes
+// These routes handle language changes via both GET and POST requests
+$router->post('/language/{lang}', 'LanguageController@change');  // For direct language links
+$router->post('/language', 'LanguageController@change');        // For form submissions
 
 // API routes
 // These routes handle AJAX requests and return JSON responses

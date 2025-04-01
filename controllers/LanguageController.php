@@ -18,6 +18,21 @@ class LanguageController {
         }
         return self::$instance;
     }
+
+    public function change($params) {
+        // Get language code from either POST data or URL parameter
+        $lang = $_POST['lang'] ?? ($params['lang'] ?? null);
+        
+        // Attempt to change the language if a valid language code is provided
+        if ($lang && $this->setLanguage($lang)) {
+            // On success, redirect back to the previous page or home
+            header('Location: ' . ($_SERVER['HTTP_REFERER'] ?? '/'));
+        } else {
+            // On failure (invalid language code), redirect to homepage
+            header('Location: /');
+        }
+        exit;
+    }
     
     private function determineLanguage() {
         // First check session
@@ -68,33 +83,13 @@ class LanguageController {
     public function setLanguage($lang) {
         $config = require __DIR__ . '/../config/languages.php';
         if (!isset($config['available_languages'][$lang])) {
-            throw new Exception('Language not supported');
+            return false;
         }
 
         $_SESSION['lang'] = $lang;
         setcookie('lang', $lang, time() + (86400 * 30), '/'); // 30 days
         $this->currentLang = $lang;
         $this->loadTranslations();
-    }
-
-    public function changeLanguage() {
-        try {
-            if (!isset($_POST['lang'])) {
-                throw new Exception('Language parameter missing');
-            }
-
-            $lang = $_POST['lang'];
-            $this->setLanguage($lang);
-
-            // Return success response
-            header('Content-Type: application/json');
-            echo json_encode(['success' => true, 'language' => $lang]);
-            exit;
-        } catch (Exception $e) {
-            http_response_code(400);
-            header('Content-Type: application/json');
-            echo json_encode(['error' => $e->getMessage()]);
-            exit;
-        }
+        return true;
     }
 }

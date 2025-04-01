@@ -49,8 +49,15 @@ class Router {
             if (strpos($callback, '@') !== false) {
                 // Handle Controller@method format
                 list($controller, $method) = explode('@', $callback);
-                $controller = new $controller();
-                return $controller->$method($params);
+                
+                // Try to get instance using getInstance for singletons
+                if (method_exists($controller, 'getInstance')) {
+                    $instance = $controller::getInstance();
+                } else {
+                    $instance = new $controller();
+                }
+                
+                return $instance->$method($params);
             }
         } elseif (is_callable($callback)) {
             // Handle anonymous functions and other callables

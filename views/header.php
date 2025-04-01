@@ -152,7 +152,7 @@ $lang = LanguageController::getInstance();
             // Create a form and submit it to properly handle the language change
             const form = document.createElement('form');
             form.method = 'POST';
-            form.action = '/language';
+            form.action = '/language/' + lang;
             
             const input = document.createElement('input');
             input.type = 'hidden';

@@ -3,33 +3,15 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-require_once __DIR__ . '/controllers/Router.php';
-require_once __DIR__ . '/controllers/HomeController.php';
-require_once __DIR__ . '/controllers/GDPRController.php';
-require_once __DIR__ . '/controllers/LanguageController.php';
-
 // Start session if not already started
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+// Include router and routes
+require_once __DIR__ . '/controllers/Router.php';
 $router = new Router();
-
-// Home routes
-$router->get('/', 'HomeController@index');
-$router->post('/generate-qr', 'HomeController@generateQR');
-
-// GDPR routes
-$router->get('/gdpr', 'GDPRController@index');
-
-// Language routes
-$router->post('/change-language', function() {
-    $controller = LanguageController::getInstance();
-    return $controller->changeLanguage();
-});
-
-// About route
-$router->get('/about', 'HomeController@about');
+require_once __DIR__ . '/routes.php';
 
 try {
     // Remove query string from URI
