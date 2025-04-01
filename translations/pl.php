@@ -11,14 +11,18 @@ return [
     
     // Form fields
     'beneficiary_name' => 'Nazwa odbiorcy',
-    'beneficiary_iban' => 'IBAN odbiorcy',
+    'beneficiary_iban' => 'IBAN',
     'amount' => 'Kwota',
-    'communication' => 'Komunikacja',
+    'communication' => 'Komunikat',
     'generate_qr' => 'Generuj kod QR',
     'generated_by' => 'Wygenerowane przez QR Transfer',
     'payment_to' => 'Płatność dla %s',
     
     // Support section
-    'support_text' => 'QR Transfer jest bezpłatny. Użyj kodu QR poniżej w swojej aplikacji bankowej, aby nas wesprzeć!',
-    'support_thanks' => 'Dziękujemy za QR Transfer'
+    'support_text' => 'Jeśli podoba Ci się ta aplikacja, możesz wesprzeć jej rozwój:',
+    'support_thanks' => 'Dziękujemy za wsparcie QR Transfer!',
+    'download_qr' => 'Pobierz kod QR',
+    'share_qr' => 'Udostępnij kod QR',
+    'cookie_notice' => 'Ta strona używa niezbędnych plików cookie',
+    'cookie_accept' => 'OK',
 ];

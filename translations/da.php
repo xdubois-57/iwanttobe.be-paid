@@ -11,7 +11,7 @@ return [
     
     // Form fields
     'beneficiary_name' => 'Modtagers navn',
-    'beneficiary_iban' => 'Modtagers IBAN',
+    'beneficiary_iban' => 'IBAN',
     'amount' => 'Beløb',
     'communication' => 'Besked',
     'generate_qr' => 'Generer QR-kode',
@@ -19,6 +19,10 @@ return [
     'payment_to' => 'Betaling til %s',
     
     // Support section
-    'support_text' => 'QR Transfer er gratis. Brug QR-koden nedenfor i din bank-app for at støtte os!',
-    'support_thanks' => 'Tak for QR Transfer'
+    'support_text' => 'Hvis du kan lide denne app, kan du støtte dens udvikling:',
+    'support_thanks' => 'Tak for din støtte til QR Transfer!',
+    'download_qr' => 'Download QR-kode',
+    'share_qr' => 'Del QR-kode',
+    'cookie_notice' => 'Dette site bruger essentielle cookies',
+    'cookie_accept' => 'OK',
 ];

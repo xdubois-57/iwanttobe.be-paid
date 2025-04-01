@@ -11,7 +11,7 @@ return [
     
     // Form fields
     'beneficiary_name' => 'Mottagarens namn',
-    'beneficiary_iban' => 'Mottagarens IBAN',
+    'beneficiary_iban' => 'IBAN',
     'amount' => 'Belopp',
     'communication' => 'Meddelande',
     'generate_qr' => 'Generera QR-kod',
@@ -19,6 +19,10 @@ return [
     'payment_to' => 'Betalning till %s',
     
     // Support section
-    'support_text' => 'QR Transfer är gratis. Använd QR-koden nedan i din bank-app för att stödja oss!',
-    'support_thanks' => 'Tack för QR Transfer'
+    'support_text' => 'Om du gillar denna app kan du stödja dess utveckling:',
+    'support_thanks' => 'Tack för att du stödjer QR Transfer!',
+    'download_qr' => 'Ladda ner QR-kod',
+    'share_qr' => 'Dela QR-kod',
+    'cookie_notice' => 'Denna sida använder nödvändiga cookies',
+    'cookie_accept' => 'OK',
 ];

@@ -11,7 +11,7 @@ return [
     
     // Form fields
     'beneficiary_name' => 'Όνομα δικαιούχου',
-    'beneficiary_iban' => 'IBAN δικαιούχου',
+    'beneficiary_iban' => 'IBAN',
     'amount' => 'Ποσό',
     'communication' => 'Μήνυμα',
     'generate_qr' => 'Δημιουργία κωδικού QR',
@@ -19,6 +19,10 @@ return [
     'payment_to' => 'Πληρωμή προς %s',
     
     // Support section
-    'support_text' => 'Το QR Transfer είναι δωρεάν. Χρησιμοποιήστε τον παρακάτω κωδικό QR στην τραπεζική σας εφαρμογή για να μας υποστηρίξετε!',
-    'support_thanks' => 'Ευχαριστούμε για το QR Transfer'
+    'support_text' => 'Αν σας αρέσει αυτή η εφαρμογή, μπορείτε να υποστηρίξετε την ανάπτυξή της:',
+    'support_thanks' => 'Ευχαριστούμε για την υποστήριξη του QR Transfer!',
+    'download_qr' => 'Λήψη κωδικού QR',
+    'share_qr' => 'Κοινοποίηση κωδικού QR',
+    'cookie_notice' => 'Αυτός ο ιστότοπος χρησιμοποιεί απαραίτητα cookies',
+    'cookie_accept' => 'OK',
 ];

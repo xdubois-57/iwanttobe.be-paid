@@ -11,14 +11,18 @@ return [
     
     // Form fields
     'beneficiary_name' => 'Jméno příjemce',
-    'beneficiary_iban' => 'IBAN příjemce',
+    'beneficiary_iban' => 'IBAN',
     'amount' => 'Částka',
     'communication' => 'Zpráva',
-    'generate_qr' => 'Generovat QR kód',
-    'generated_by' => 'Vygenerováno aplikací QR Transfer',
+    'generate_qr' => 'Vytvořit QR kód',
+    'generated_by' => 'Vytvořeno aplikací QR Transfer',
     'payment_to' => 'Platba pro %s',
     
     // Support section
-    'support_text' => 'QR Transfer je zdarma. Použijte QR kód níže ve své bankovní aplikaci pro podporu!',
-    'support_thanks' => 'Děkujeme za QR Transfer'
+    'support_text' => 'Pokud se vám tato aplikace líbí, můžete podpořit její vývoj:',
+    'support_thanks' => 'Děkujeme za podporu QR Transfer!',
+    'download_qr' => 'Stáhnout QR kód',
+    'share_qr' => 'Sdílet QR kód',
+    'cookie_notice' => 'Tento web používá nezbytné cookies',
+    'cookie_accept' => 'OK',
 ];

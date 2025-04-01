@@ -11,14 +11,18 @@ return [
     
     // Form fields
     'beneficiary_name' => 'Ime primatelja',
-    'beneficiary_iban' => 'IBAN primatelja',
+    'beneficiary_iban' => 'IBAN',
     'amount' => 'Iznos',
     'communication' => 'Poruka',
     'generate_qr' => 'Generiraj QR kod',
-    'generated_by' => 'Generirano pomoću QR Transfer',
+    'generated_by' => 'Generirao',
     'payment_to' => 'Plaćanje za %s',
     
     // Support section
-    'support_text' => 'QR Transfer je besplatan. Koristite QR kod ispod u svojoj bankovnoj aplikaciji da nas podržite!',
-    'support_thanks' => 'Hvala na korištenju QR Transfer'
+    'support_text' => 'Ako vam se sviđa ova aplikacija, možete podržati njezin razvoj:',
+    'support_thanks' => 'Hvala što podržavate QR Transfer!',
+    'download_qr' => 'Preuzmi QR kod',
+    'share_qr' => 'Podijeli QR kod',
+    'cookie_notice' => 'Ova stranica koristi nužne kolačiće',
+    'cookie_accept' => 'OK',
 ];

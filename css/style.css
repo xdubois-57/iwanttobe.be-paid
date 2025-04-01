@@ -74,8 +74,73 @@ body {
 #support-qr img, #user-qr img {
     max-width: 300px;
     height: auto;
-    margin: 0 auto;
+    margin: 0 auto 1rem;
     display: block;
+}
+
+/* Cookie banner */
+.cookie-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--primary);
+    color: var(--primary-inverse);
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    padding: 0.75rem;
+    font-size: 0.9rem;
+}
+
+.cookie-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: nowrap;
+}
+
+.cookie-content p {
+    margin: 0;
+    padding: 0;
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.cookie-content button {
+    padding: 0.25rem 1rem;
+    margin: 0;
+    white-space: nowrap;
+    background: var(--primary-inverse);
+    color: var(--primary);
+    border: none;
+    font-size: 0.9rem;
+    min-width: auto;
+}
+
+@media (max-width: 768px) {
+    .cookie-banner {
+        padding: 0.5rem;
+    }
+
+    .cookie-content {
+        gap: 0.5rem;
+    }
+
+    .cookie-content button {
+        padding: 0.25rem 0.75rem;
+    }
+}
+
+/* Hide share button if Web Share API is not supported */
+@media not all and (any-hover: hover) {
+    [data-share]:not(.share-supported) {
+        display: none;
+    }
 }
 
 /* Responsive adjustments */
@@ -87,5 +152,10 @@ body {
     
     #support-qr img, #user-qr img {
         max-width: 250px;
+    }
+
+    .cookie-content {
+        flex-direction: column;
+        text-align: center;
     }
 }

@@ -11,11 +11,16 @@ return [
     
     // Form fields
     'beneficiary_name' => 'Kedvezményezett neve',
-    'beneficiary_iban' => 'Kedvezményezett IBAN száma',
+    'beneficiary_iban' => 'IBAN',
     'amount' => 'Összeg',
     'communication' => 'Közlemény',
     'generate_qr' => 'QR-kód generálása',
-    'generated_by' => 'Készítette: QR Transfer',
-    'support_text' => 'A QR Transfer ingyenes. Használja az alábbi QR-kódot a banki alkalmazásában a támogatásunkhoz!',
-    'support_thanks' => 'Köszönjük a QR Transfert'
+    'generated_by' => 'Készítette',
+    'payment_to' => 'Fizetés %s részére',
+    'support_text' => 'Ha tetszik ez az alkalmazás, támogathatja a fejlesztését:',
+    'support_thanks' => 'Köszönjük, hogy támogatja a QR Transfer-t!',
+    'download_qr' => 'QR-kód letöltése',
+    'share_qr' => 'QR-kód megosztása',
+    'cookie_notice' => 'Ez az oldal alapvető sütiket használ',
+    'cookie_accept' => 'OK',
 ];

@@ -11,14 +11,18 @@ return [
     
     // Form fields
     'beneficiary_name' => 'Saajan nimi',
-    'beneficiary_iban' => 'Saajan IBAN',
+    'beneficiary_iban' => 'IBAN',
     'amount' => 'Summa',
     'communication' => 'Viesti',
     'generate_qr' => 'Luo QR-koodi',
-    'generated_by' => 'QR Transferin luoma',
-    'payment_to' => 'Maksu vastaanottajalle %s',
+    'generated_by' => 'Luonut QR Transfer',
+    'payment_to' => 'Maksu %s',
     
     // Support section
-    'support_text' => 'QR Transfer on ilmainen. Käytä alla olevaa QR-koodia pankkisovelluksessasi tukeaksesi meitä!',
-    'support_thanks' => 'Kiitos QR Transferista'
+    'support_text' => 'Jos pidät tästä sovelluksesta, voit tukea sen kehitystä:',
+    'support_thanks' => 'Kiitos QR Transferin tukemisesta!',
+    'download_qr' => 'Lataa QR-koodi',
+    'share_qr' => 'Jaa QR-koodi',
+    'cookie_notice' => 'Tämä sivusto käyttää välttämättömiä evästeitä',
+    'cookie_accept' => 'OK',
 ];
