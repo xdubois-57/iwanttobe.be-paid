@@ -15,5 +15,10 @@ return [
     'amount' => 'Summa',
     'communication' => 'Sõnum',
     'generate_qr' => 'Loo QR-kood',
-    'generated_by' => 'Loodud QR Transfer poolt'
+    'generated_by' => 'Loodud QR Transferi poolt',
+    'payment_to' => 'Makse saajale %s',
+    
+    // Support section
+    'support_text' => 'QR Transfer on tasuta. Kasutage allpool olevat QR-koodi oma pangaäpis, et meid toetada!',
+    'support_thanks' => 'Täname QR Transferi kasutamise eest'
 ];

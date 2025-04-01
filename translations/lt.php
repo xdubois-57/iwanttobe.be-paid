@@ -15,5 +15,10 @@ return [
     'amount' => 'Suma',
     'communication' => 'Žinutė',
     'generate_qr' => 'Generuoti QR kodą',
-    'generated_by' => 'Sugeneravo QR Transfer'
+    'generated_by' => 'Sugeneravo QR Transfer',
+    'payment_to' => 'Mokėjimas %s',
+    
+    // Support section
+    'support_text' => 'QR Transfer yra nemokamas. Naudokite žemiau esantį QR kodą savo banko programėlėje, kad mus paremtumėte!',
+    'support_thanks' => 'Ačiū už QR Transfer'
 ];

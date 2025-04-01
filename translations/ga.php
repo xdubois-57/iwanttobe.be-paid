@@ -15,5 +15,10 @@ return [
     'amount' => 'Méid',
     'communication' => 'Teachtaireacht',
     'generate_qr' => 'Cruthaigh cód QR',
-    'generated_by' => 'Cruthaithe ag QR Transfer'
+    'generated_by' => 'Cruthaithe ag QR Transfer',
+    'payment_to' => 'Íocaíocht chuig %s',
+    
+    // Support section
+    'support_text' => 'Tá QR Transfer saor in aisce. Úsáid an cód QR thíos i d\'aip baincéireachta chun tacú linn!',
+    'support_thanks' => 'Go raibh maith agat as QR Transfer'
 ];

@@ -15,5 +15,10 @@ return [
     'amount' => 'Summa',
     'communication' => 'Ziņojums',
     'generate_qr' => 'Ģenerēt QR kodu',
-    'generated_by' => 'Ģenerēts ar QR Transfer'
+    'generated_by' => 'Ģenerējis QR Transfer',
+    'payment_to' => 'Maksājums %s',
+    
+    // Support section
+    'support_text' => 'QR Transfer ir bezmaksas. Izmantojiet zemāk esošo QR kodu savā bankas lietotnē, lai mūs atbalstītu!',
+    'support_thanks' => 'Paldies par QR Transfer'
 ];

@@ -15,7 +15,10 @@ return [
     'amount' => 'Iznos',
     'communication' => 'Poruka',
     'generate_qr' => 'Generiraj QR kod',
-    'generated_by' => 'Generirano od QR Transfer',
-    'support_text' => 'QR Transfer je besplatan. Koristite donji QR kod u svojoj bankovnoj aplikaciji da nas podržite!',
-    'support_thanks' => 'Hvala na podršku'
+    'generated_by' => 'Generirano pomoću QR Transfer',
+    'payment_to' => 'Plaćanje za %s',
+    
+    // Support section
+    'support_text' => 'QR Transfer je besplatan. Koristite QR kod ispod u svojoj bankovnoj aplikaciji da nas podržite!',
+    'support_thanks' => 'Hvala na korištenju QR Transfer'
 ];
