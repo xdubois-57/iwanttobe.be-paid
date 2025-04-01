@@ -16,6 +16,9 @@ return [
     'communication' => 'Mededeling',
     'generate_qr' => 'QR-code genereren',
     'generated_by' => 'Gegenereerd door QR Transfer',
-    'support_text' => 'QR Transfer is gratis. Gebruik de onderstaande QR-code in uw bankapp om ons te steunen!',
+    'payment_to' => 'Betaling aan %s',
+    
+    // Support section
+    'support_text' => 'QR Transfer is gratis. Gebruik de onderstaande QR-code in uw bank-app om ons te steunen!',
     'support_thanks' => 'Bedankt voor QR Transfer'
 ];

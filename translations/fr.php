@@ -14,9 +14,11 @@ return [
     'beneficiary_iban' => 'IBAN du bénéficiaire',
     'amount' => 'Montant',
     'communication' => 'Communication',
-    'generate_qr' => 'Générer le QR code',
+    'generate_qr' => 'Générer le QR Code',
     'generated_by' => 'Généré par QR Transfer',
+    'payment_to' => 'Paiement à %s',
+    
+    // Support section
     'support_text' => 'QR Transfer est gratuit. Utilisez le QR code ci-dessous dans votre application bancaire pour nous soutenir !',
     'support_thanks' => 'Merci pour QR Transfer'
-    // Add more translations as needed
 ];

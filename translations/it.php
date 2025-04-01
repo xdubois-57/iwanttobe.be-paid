@@ -6,7 +6,7 @@ return [
     'menu_gdpr' => 'GDPR',
     'language' => 'Lingua',
     'welcome_message' => 'Benvenuto su QR Transfer',
-    'about_title' => 'Chi siamo - QR Transfer',
+    'about_title' => 'Chi siamo',
     'gdpr_title' => 'Informativa sulla privacy',
     
     // Form fields
@@ -16,6 +16,9 @@ return [
     'communication' => 'Comunicazione',
     'generate_qr' => 'Genera codice QR',
     'generated_by' => 'Generato da QR Transfer',
+    'payment_to' => 'Pagamento a %s',
+    
+    // Support section
     'support_text' => 'QR Transfer è gratuito. Usa il codice QR qui sotto nella tua app bancaria per supportarci!',
     'support_thanks' => 'Grazie per QR Transfer'
 ];
