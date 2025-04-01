@@ -14,5 +14,6 @@ return [
     'beneficiary_iban' => 'Saņēmēja IBAN',
     'amount' => 'Summa',
     'communication' => 'Ziņojums',
-    'generate_qr' => 'Ģenerēt QR kodu'
+    'generate_qr' => 'Ģenerēt QR kodu',
+    'generated_by' => 'Ģenerēts ar QR Transfer'
 ];

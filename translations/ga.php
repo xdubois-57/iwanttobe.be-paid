@@ -14,5 +14,6 @@ return [
     'beneficiary_iban' => 'IBAN an tairbhí',
     'amount' => 'Méid',
     'communication' => 'Teachtaireacht',
-    'generate_qr' => 'Cruthaigh cód QR'
+    'generate_qr' => 'Cruthaigh cód QR',
+    'generated_by' => 'Cruthaithe ag QR Transfer'
 ];

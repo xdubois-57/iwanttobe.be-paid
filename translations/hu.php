@@ -14,5 +14,8 @@ return [
     'beneficiary_iban' => 'Kedvezményezett IBAN száma',
     'amount' => 'Összeg',
     'communication' => 'Közlemény',
-    'generate_qr' => 'QR-kód generálása'
+    'generate_qr' => 'QR-kód generálása',
+    'generated_by' => 'Készítette: QR Transfer',
+    'support_text' => 'A QR Transfer ingyenes. Használja az alábbi QR-kódot a banki alkalmazásában a támogatásunkhoz!',
+    'support_thanks' => 'Köszönjük a QR Transfert'
 ];

@@ -14,5 +14,6 @@ return [
     'beneficiary_iban' => 'IBAN príjemcu',
     'amount' => 'Suma',
     'communication' => 'Správa',
-    'generate_qr' => 'Vytvoriť QR kód'
+    'generate_qr' => 'Vytvoriť QR kód',
+    'generated_by' => 'Vytvorené pomocou QR Transfer'
 ];

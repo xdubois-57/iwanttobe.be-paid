@@ -32,9 +32,10 @@ require_once __DIR__ . '/header.php';
                         <input type="number" 
                                id="amount" 
                                name="amount" 
-                               placeholder="<?php echo $lang->translate('amount'); ?>"
                                step="0.01" 
                                min="0.01" 
+                               max="999999999.99"
+                               placeholder="<?php echo $lang->translate('amount'); ?>"
                                required>
                         <span class="validation-indicator"></span>
                     </div>
@@ -43,24 +44,42 @@ require_once __DIR__ . '/header.php';
                         <input type="text" 
                                id="communication" 
                                name="communication" 
-                               placeholder="<?php echo $lang->translate('communication'); ?>"
-                               maxlength="100">
+                               placeholder="<?php echo $lang->translate('communication'); ?>">
                         <span class="validation-indicator"></span>
                     </div>
 
-                    <button type="submit" class="primary"><?php echo $lang->translate('generate_qr'); ?></button>
+                    <button type="submit"><?php echo $lang->translate('generate_qr'); ?></button>
                 </form>
             </article>
         </div>
 
         <!-- Right column with QR code -->
         <div>
-            <article class="qr-container">
-                <div id="qr-placeholder">
-                    <img src="https://thumb.ac-illust.com/7b/7b60a6661240685f492f5e8cce934f27_w.jpeg" 
-                         alt="QR Code Transfer Illustration">
+            <!-- QR code display area -->
+            <article class="qr-display">
+                <!-- Default support QR -->
+                <div id="support-qr">
+                    <p><?php echo $lang->translate('support_text'); ?></p>
+                    <?php
+                    require_once __DIR__ . '/../controllers/HomeController.php';
+                    $controller = new HomeController();
+                    
+                    // Support QR code data
+                    $name = 'QR Transfer';
+                    $iban = 'BE42377116042854';
+                    $bic = $controller->lookupBIC($iban) ?: '';
+                    $amount = 5;
+                    $communication = $lang->translate('support_thanks');
+                    
+                    // Generate EPC QR code
+                    $epcData = $controller->generateEPCData($name, $iban, $bic, $amount, $communication);
+                    $supportQrImage = $controller->generateQRCode($epcData);
+                    ?>
+                    <img src="<?php echo $supportQrImage; ?>" alt="Support QR Transfer" class="support-qr">
                 </div>
-                <div id="qr-code" style="display: none;">
+
+                <!-- User generated QR -->
+                <div id="user-qr" style="display: none;">
                     <img id="qr-image" src="" alt="Generated QR Code">
                 </div>
             </article>
@@ -123,6 +142,16 @@ require_once __DIR__ . '/header.php';
     .validation-indicator.invalid {
         display: block;
         background-color: var(--form-invalid-color, #e74c3c);
+    }
+
+    .qr-caption {
+        margin-top: 1rem;
+        color: var(--muted-color);
+        font-size: 0.9em;
+    }
+
+    .text-center {
+        text-align: center;
     }
 
     @media (max-width: 768px) {

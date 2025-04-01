@@ -14,5 +14,6 @@ return [
     'beneficiary_iban' => 'IBAN prejemnika',
     'amount' => 'Znesek',
     'communication' => 'Sporočilo',
-    'generate_qr' => 'Ustvari QR kodo'
+    'generate_qr' => 'Ustvari QR kodo',
+    'generated_by' => 'Ustvarjeno s QR Transfer'
 ];

@@ -10,9 +10,12 @@ return [
     'gdpr_title' => 'Datenschutzerklärung',
     // Add more translations as needed
     // Form fields
-    'beneficiary_name' => 'Name des Empfängers',
-    'beneficiary_iban' => 'IBAN des Empfängers',
+    'beneficiary_name' => 'Name des Begünstigten',
+    'beneficiary_iban' => 'IBAN des Begünstigten',
     'amount' => 'Betrag',
     'communication' => 'Mitteilung',
-    'generate_qr' => 'QR-Code generieren'
+    'generate_qr' => 'QR-Code generieren',
+    'generated_by' => 'Erstellt von QR Transfer',
+    'support_text' => 'QR Transfer ist kostenlos. Verwenden Sie den QR-Code unten in Ihrer Banking-App, um uns zu unterstützen!',
+    'support_thanks' => 'Danke für QR Transfer'
 ];

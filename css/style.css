@@ -1,0 +1,91 @@
+/* General styles */
+body {
+    font-family: system-ui, -apple-system, "Segoe UI", "Roboto", "Ubuntu", "Cantarell", "Noto Sans", sans-serif;
+}
+
+/* Grid styles */
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: start;
+}
+
+/* Form styles */
+.form-container {
+    padding: 1rem;
+    background-color: #fff;
+    border-radius: 8px;
+}
+
+.input-container {
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+.validation-indicator {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: none;
+}
+
+.validation-indicator.valid {
+    display: block;
+    background-color: #2ecc71;
+}
+
+.validation-indicator.invalid {
+    display: block;
+    background-color: #e74c3c;
+}
+
+/* QR code styles */
+.qr-display {
+    text-align: center;
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100%;
+}
+
+.qr-display p {
+    margin-bottom: 1rem;
+    color: #2c3e50;
+    max-width: 80%;
+}
+
+#support-qr, #user-qr {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+#support-qr img, #user-qr img {
+    max-width: 300px;
+    height: auto;
+    margin: 0 auto;
+    display: block;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    #support-qr img, #user-qr img {
+        max-width: 250px;
+    }
+}

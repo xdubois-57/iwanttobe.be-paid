@@ -14,5 +14,8 @@ return [
     'beneficiary_iban' => 'IBAN příjemce',
     'amount' => 'Částka',
     'communication' => 'Zpráva',
-    'generate_qr' => 'Vytvořit QR kód'
+    'generate_qr' => 'Vytvořit QR kód',
+    'generated_by' => 'Vytvořeno pomocí QR Transfer',
+    'support_text' => 'QR Transfer je zdarma. Použijte QR kód níže ve své bankovní aplikaci pro podporu!',
+    'support_thanks' => 'Děkujeme za podporu QR Transfer'
 ];

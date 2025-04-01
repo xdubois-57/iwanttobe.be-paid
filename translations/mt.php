@@ -2,7 +2,7 @@
 return [
     'app_name' => 'QR Transfer',
     'menu_home' => 'Dar',
-    'menu_about' => 'Dwarna',
+    'menu_about' => 'Dwar',
     'menu_gdpr' => 'GDPR',
     'language' => 'Lingwa',
     'welcome_message' => 'Merħba fil-QR Transfer',
@@ -13,6 +13,7 @@ return [
     'beneficiary_name' => 'Isem tal-benefiċjarju',
     'beneficiary_iban' => 'IBAN tal-benefiċjarju',
     'amount' => 'Ammont',
-    'communication' => 'Komunikazzjoni',
-    'generate_qr' => 'Iġġenera kodiċi QR'
+    'communication' => 'Messaġġ',
+    'generate_qr' => 'Iġġenera kodiċi QR',
+    'generated_by' => 'Iġġenerat minn QR Transfer'
 ];

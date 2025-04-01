@@ -13,6 +13,9 @@ return [
     'beneficiary_name' => 'Ime primatelja',
     'beneficiary_iban' => 'IBAN primatelja',
     'amount' => 'Iznos',
-    'communication' => 'Komunikacija',
-    'generate_qr' => 'Generiraj QR kod'
+    'communication' => 'Poruka',
+    'generate_qr' => 'Generiraj QR kod',
+    'generated_by' => 'Generirano od QR Transfer',
+    'support_text' => 'QR Transfer je besplatan. Koristite donji QR kod u svojoj bankovnoj aplikaciji da nas podržite!',
+    'support_thanks' => 'Hvala na podršku'
 ];

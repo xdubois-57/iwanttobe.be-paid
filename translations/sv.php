@@ -14,5 +14,7 @@ return [
     'beneficiary_iban' => 'Mottagarens IBAN',
     'amount' => 'Belopp',
     'communication' => 'Meddelande',
-    'generate_qr' => 'Skapa QR-kod'
+    'generate_qr' => 'Skapa QR-kod',
+    'support_text' => 'QR Transfer är gratis. Använd QR-koden nedan i din bankapp för att stödja oss!',
+    'support_thanks' => 'Tack för QR Transfer'
 ];

@@ -1,31 +1,14 @@
 document.addEventListener('DOMContentLoaded', function() {
     const STORAGE_KEY = 'qrtransfer_form_data';
     const form = document.querySelector('#transfer-form');
+    const submitButton = form.querySelector('button[type="submit"]');
+    const submitButtonOriginalText = submitButton.textContent;
     const inputs = {
         beneficiary_name: document.getElementById('beneficiary_name'),
         beneficiary_iban: document.getElementById('beneficiary_iban'),
         amount: document.getElementById('amount'),
         communication: document.getElementById('communication')
     };
-
-    // Load saved values from local storage
-    try {
-        const savedData = localStorage.getItem(STORAGE_KEY);
-        if (savedData) {
-            const formData = JSON.parse(savedData);
-            for (let inputId in inputs) {
-                if (formData[inputId]) {
-                    inputs[inputId].value = formData[inputId];
-                }
-            }
-            // Validate all fields after loading
-            for (let inputId in inputs) {
-                validateField(inputId, inputs[inputId].value);
-            }
-        }
-    } catch (e) {
-        console.error('Error loading saved form data:', e);
-    }
 
     // Add validation indicators if they don't exist
     for (let inputId in inputs) {
@@ -83,34 +66,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Real-time validation and storage
-    for (let inputId in inputs) {
-        const input = inputs[inputId];
-        
-        // Only prevent invalid characters in amount field
-        if (inputId === 'amount') {
-            input.addEventListener('keypress', function(e) {
-                if (!/[\d.]/.test(e.key) || 
-                    (e.key === '.' && this.value.includes('.'))) {
-                    e.preventDefault();
-                }
-            });
-        }
-
-        input.addEventListener('input', function() {
-            validateField(inputId, input.value);
-            saveFormData(); // Save on every change
-        });
-
-        input.addEventListener('change', function() {
-            validateField(inputId, input.value);
-            saveFormData(); // Save on every change
-        });
-
-        // Initial validation
-        validateField(inputId, input.value);
-    }
-
     function validateField(fieldId, value) {
         const input = inputs[fieldId];
         const isValid = rules[fieldId](value);
@@ -128,6 +83,22 @@ document.addEventListener('DOMContentLoaded', function() {
                 input.setCustomValidity('Invalid format');
             }
         }
+    }
+
+    // Load saved values from local storage
+    try {
+        const savedData = localStorage.getItem(STORAGE_KEY);
+        if (savedData) {
+            const formData = JSON.parse(savedData);
+            for (let inputId in inputs) {
+                if (formData[inputId]) {
+                    inputs[inputId].value = formData[inputId];
+                    validateField(inputId, inputs[inputId].value);
+                }
+            }
+        }
+    } catch (e) {
+        console.error('Error loading saved form data:', e);
     }
 
     // Format IBAN as user types
@@ -160,73 +131,46 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        // Prepare form data
-        const formData = {
-            beneficiary_name: inputs.beneficiary_name.value.trim(),
-            beneficiary_iban: inputs.beneficiary_iban.value.replace(/\s/g, ''),
-            amount: parseFloat(inputs.amount.value),
-            communication: inputs.communication.value.trim()
-        };
+        // Show loading state
+        submitButton.disabled = true;
+        submitButton.textContent = 'Generating...';
 
         try {
-            // Show loading state
-            const submitButton = form.querySelector('button[type="submit"]');
-            const originalText = submitButton.getAttribute('data-original-text') || submitButton.textContent;
-            submitButton.setAttribute('data-original-text', originalText); // Store original text
-            submitButton.disabled = true;
-            submitButton.textContent = 'Generating...';
-
-            // Make AJAX call
+            // Prepare form data
+            const formData = new FormData(form);
+            
+            // Send request
             const response = await fetch('/generate-qr', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData)
+                body: formData
             });
 
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
             const result = await response.json();
-            if (result.error) {
-                console.error('Server Error:', result.details);
-                alert('Error: ' + result.message);
-                submitButton.disabled = false;
-                submitButton.textContent = originalText;
-                return;
-            }
-
-            // Update QR code display
-            document.getElementById('qr-placeholder').style.display = 'none';
-            const qrCode = document.getElementById('qr-code');
-            qrCode.style.display = 'block';
-            const qrImage = document.getElementById('qr-image');
             
-            // Set the base64 image data
-            qrImage.src = result.qr_url;
-            qrImage.onerror = function() {
-                console.error('Failed to load QR code');
-                alert('Failed to load QR code. Please try again.');
-                document.getElementById('qr-placeholder').style.display = 'block';
-                qrCode.style.display = 'none';
-            };
-
-            // Log debug info
-            if (result.debug) {
-                console.log('Debug Info:', result.debug);
+            if (!result.success) {
+                throw new Error(result.error || 'Failed to generate QR code');
             }
 
-            // Don't clear form data from local storage on success anymore
-            // localStorage.removeItem(STORAGE_KEY);
-
-            // Reset button state with original text
-            submitButton.disabled = false;
-            submitButton.textContent = originalText;
+            // Hide support QR and show user QR
+            document.getElementById('support-qr').style.display = 'none';
+            document.getElementById('user-qr').style.display = 'block';
+            document.getElementById('qr-image').src = result.image;
 
         } catch (error) {
             console.error('Error:', error);
-            alert('Failed to generate QR code. Please try again.');
-            // Reset button state with original text
+            alert('Error: ' + (error.message || 'Failed to generate QR code. Please try again.'));
+            
+            // Show support QR and hide user QR on error
+            document.getElementById('support-qr').style.display = 'block';
+            document.getElementById('user-qr').style.display = 'none';
+        } finally {
+            // Restore button state
             submitButton.disabled = false;
-            submitButton.textContent = originalText;
+            submitButton.textContent = submitButtonOriginalText;
         }
     });
 });

@@ -15,6 +15,56 @@ class HomeController {
         require_once __DIR__ . '/../views/about.php';
     }
 
+    public function generateQR() {
+        try {
+            // Get POST data
+            $name = $_POST['beneficiary_name'] ?? '';
+            $iban = $_POST['beneficiary_iban'] ?? '';
+            $amount = $_POST['amount'] ?? '';
+            $communication = $_POST['communication'] ?? '';
+
+            // Validate inputs
+            if (empty($name) || empty($iban) || empty($amount)) {
+                throw new Exception('Missing required fields');
+            }
+
+            // Clean and validate IBAN
+            $iban = strtoupper(str_replace(' ', '', $iban));
+            if (!preg_match('/^[A-Z]{2}[0-9]{2}[A-Z0-9]{1,30}$/', $iban)) {
+                throw new Exception('Invalid IBAN format');
+            }
+
+            // Validate amount
+            $amount = floatval($amount);
+            if ($amount <= 0 || $amount > 999999999.99) {
+                throw new Exception('Invalid amount');
+            }
+
+            // Get BIC code
+            $bic = $this->lookupBIC($iban);
+
+            // Generate EPC QR code data
+            $epcData = $this->generateEPCData($name, $iban, $bic, $amount, $communication);
+
+            // Generate QR code with caption
+            $qrImage = $this->generateQRCode($epcData);
+
+            // Return success response
+            header('Content-Type: application/json');
+            echo json_encode([
+                'success' => true,
+                'image' => $qrImage
+            ]);
+
+        } catch (Exception $e) {
+            header('Content-Type: application/json');
+            echo json_encode([
+                'success' => false,
+                'error' => $e->getMessage()
+            ]);
+        }
+    }
+
     private function lookupBIC($iban) {
         $url = 'https://openiban.com/validate/' . urlencode($iban) . '?getBIC=true&validateBankCode=true';
         
@@ -29,32 +79,15 @@ class HomeController {
         $response = @file_get_contents($url, false, $context);
         
         if ($response === false) {
-            $error = error_get_last();
-            throw new Exception('Failed to connect to BIC lookup service: ' . ($error['message'] ?? 'Unknown error'));
-        }
-
-        // Check for HTTP errors
-        if (isset($http_response_header[0])) {
-            $status_line = $http_response_header[0];
-            if (strpos($status_line, '200') === false) {
-                throw new Exception('BIC lookup service error: ' . $status_line);
-            }
+            return ''; // Return empty string if BIC lookup fails
         }
 
         $data = json_decode($response, true);
-        if (!$data) {
-            throw new Exception('Invalid JSON response from BIC lookup: ' . substr($response, 0, 100));
+        if (!$data || isset($data['valid']) && $data['valid'] === false) {
+            return ''; // Return empty string if validation fails
         }
 
-        if (isset($data['valid']) && $data['valid'] === false) {
-            throw new Exception('Invalid IBAN: ' . ($data['messages'][0] ?? 'No specific error message'));
-        }
-
-        if (!isset($data['bankData']['bic'])) {
-            throw new Exception('No BIC found in response. Full response: ' . json_encode($data));
-        }
-
-        return $data['bankData']['bic'];
+        return $data['bankData']['bic'] ?? ''; // Return BIC or empty string if not found
     }
 
     private function generateEPCData($name, $iban, $bic, $amount, $communication = '') {
@@ -84,6 +117,9 @@ class HomeController {
     }
 
     private function generateQRCode($text) {
+        require_once __DIR__ . '/../controllers/LanguageController.php';
+        $lang = LanguageController::getInstance();
+
         // Generate QR code using qrserver.com API
         $params = [
             'data' => $text,
@@ -106,101 +142,75 @@ class HomeController {
             ]
         ]);
 
-        $imageData = @file_get_contents($url, false, $context);
-        
-        if ($imageData === false) {
+        $qrImage = @file_get_contents($url, false, $context);
+        if ($qrImage === false) {
             throw new Exception('Failed to generate QR code');
         }
 
-        // Check if we got an image
-        if (!isset($http_response_header[0]) || strpos($http_response_header[0], '200') === false) {
-            throw new Exception('QR code service error');
+        // Create image from QR code
+        $im = @imagecreatefromstring($qrImage);
+        if ($im === false) {
+            throw new Exception('Failed to process QR code image');
         }
 
-        // Convert to base64
+        // Create a larger canvas to accommodate the text
+        $width = imagesx($im);
+        $height = imagesy($im) + 40; // Add space for text
+        $newIm = imagecreatetruecolor($width, $height);
+        if ($newIm === false) {
+            imagedestroy($im);
+            throw new Exception('Failed to create image canvas');
+        }
+
+        // Fill background with white
+        $white = imagecolorallocate($newIm, 255, 255, 255);
+        imagefill($newIm, 0, 0, $white);
+
+        // Copy QR code to new image
+        imagecopy($newIm, $im, 0, 0, 0, 0, imagesx($im), imagesy($im));
+
+        // Add text
+        $black = imagecolorallocate($newIm, 0, 0, 0);
+        $text = $lang->translate('generated_by');
+        
+        // Use Arial font for proper UTF-8 support
+        $fontSize = 12;
+        $fontPath = '/Library/Fonts/Arial Unicode.ttf';
+        
+        // If Arial Unicode is not available, try other system fonts
+        if (!file_exists($fontPath)) {
+            $fontPath = '/System/Library/Fonts/Supplemental/Arial.ttf';
+        }
+        if (!file_exists($fontPath)) {
+            $fontPath = '/System/Library/Fonts/Helvetica.ttc';
+        }
+        
+        // Calculate text position
+        $bbox = imagettfbbox($fontSize, 0, $fontPath, $text);
+        if ($bbox === false) {
+            throw new Exception('Failed to calculate text dimensions');
+        }
+        
+        $textWidth = abs($bbox[4] - $bbox[0]);
+        $x = ($width - $textWidth) / 2;
+        $y = $height - 15;
+
+        // Add text to image with UTF-8 support
+        $result = imagettftext($newIm, $fontSize, 0, $x, $y, $black, $fontPath, $text);
+        if ($result === false) {
+            throw new Exception('Failed to add text to image');
+        }
+
+        // Capture the image data
+        ob_start();
+        imagepng($newIm);
+        $imageData = ob_get_clean();
+
+        // Clean up
+        imagedestroy($im);
+        imagedestroy($newIm);
+
+        // Return base64 encoded image
         return 'data:image/png;base64,' . base64_encode($imageData);
-    }
-
-    public function generateQR() {
-        try {
-            // Enable error reporting for this request
-            ini_set('display_errors', 1);
-            error_reporting(E_ALL);
-
-            // Validate input
-            $input = file_get_contents('php://input');
-            if ($input === false) {
-                throw new Exception('Failed to read request data');
-            }
-
-            $data = json_decode($input, true);
-            if (!$data) {
-                throw new Exception('Invalid JSON data received. Raw input: ' . substr($input, 0, 100));
-            }
-            
-            if (!isset($data['beneficiary_name']) || 
-                !isset($data['beneficiary_iban']) || 
-                !isset($data['amount'])) {
-                throw new Exception('Missing required fields. Received fields: ' . implode(', ', array_keys($data)));
-            }
-
-            // Validate IBAN format
-            $iban = str_replace(' ', '', strtoupper($data['beneficiary_iban']));
-            if (!preg_match('/^[A-Z]{2}[0-9]{2}[A-Z0-9]{1,30}$/', $iban)) {
-                throw new Exception('Invalid IBAN format: ' . $iban);
-            }
-
-            // Validate amount
-            $amount = floatval($data['amount']);
-            if ($amount <= 0 || $amount > 999999999.99) {
-                throw new Exception('Invalid amount: ' . $amount);
-            }
-
-            // Get BIC from IBAN
-            $bic = $this->lookupBIC($iban);
-
-            // Generate EPC QR code data
-            $epcData = $this->generateEPCData(
-                $data['beneficiary_name'],
-                $iban,
-                $bic,
-                $amount,
-                isset($data['communication']) ? trim($data['communication']) : ''
-            );
-
-            // Generate QR code as base64 image
-            $qrImage = $this->generateQRCode($epcData);
-
-            $response = [
-                'success' => true,
-                'qr_url' => $qrImage,
-                'debug' => [
-                    'epc_data' => $epcData,
-                    'bic' => $bic
-                ]
-            ];
-
-            header('Content-Type: application/json');
-            echo json_encode($response);
-
-        } catch (Exception $e) {
-            $errorDetails = [
-                'message' => $e->getMessage(),
-                'file' => $e->getFile(),
-                'line' => $e->getLine(),
-                'trace' => $e->getTraceAsString(),
-                'request_data' => $data ?? null,
-                'php_version' => PHP_VERSION,
-                'date' => date('Y-m-d H:i:s')
-            ];
-            
-            http_response_code(500);
-            header('Content-Type: application/json');
-            echo json_encode([
-                'error' => true,
-                'message' => $e->getMessage(),
-                'details' => $errorDetails
-            ]);
-        }
     }
 }

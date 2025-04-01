@@ -10,9 +10,12 @@ return [
     'gdpr_title' => 'Polityka prywatności',
     
     // Form fields
-    'beneficiary_name' => 'Nazwa odbiorcy',
-    'beneficiary_iban' => 'IBAN odbiorcy',
+    'beneficiary_name' => 'Nazwa beneficjenta',
+    'beneficiary_iban' => 'IBAN beneficjenta',
     'amount' => 'Kwota',
-    'communication' => 'Komunikat',
-    'generate_qr' => 'Wygeneruj kod QR'
+    'communication' => 'Komunikacja',
+    'generate_qr' => 'Wygeneruj kod QR',
+    'generated_by' => 'Wygenerowane przez QR Transfer',
+    'support_text' => 'QR Transfer jest darmowy. Użyj poniższego kodu QR w swojej aplikacji bankowej, aby nas wesprzeć!',
+    'support_thanks' => 'Dziękujemy za QR Transfer'
 ];

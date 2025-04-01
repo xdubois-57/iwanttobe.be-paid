@@ -13,6 +13,7 @@ return [
     'beneficiary_name' => 'Numele beneficiarului',
     'beneficiary_iban' => 'IBAN-ul beneficiarului',
     'amount' => 'Sumă',
-    'communication' => 'Comunicare',
-    'generate_qr' => 'Generează cod QR'
+    'communication' => 'Mesaj',
+    'generate_qr' => 'Generează cod QR',
+    'generated_by' => 'Generat de QR Transfer'
 ];

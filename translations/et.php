@@ -14,5 +14,6 @@ return [
     'beneficiary_iban' => 'Saaja IBAN',
     'amount' => 'Summa',
     'communication' => 'Sõnum',
-    'generate_qr' => 'Loo QR-kood'
+    'generate_qr' => 'Loo QR-kood',
+    'generated_by' => 'Loodud QR Transfer poolt'
 ];

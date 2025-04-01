@@ -13,6 +13,7 @@ return [
     'beneficiary_name' => 'Gavėjo vardas',
     'beneficiary_iban' => 'Gavėjo IBAN',
     'amount' => 'Suma',
-    'communication' => 'Pranešimas',
-    'generate_qr' => 'Generuoti QR kodą'
+    'communication' => 'Žinutė',
+    'generate_qr' => 'Generuoti QR kodą',
+    'generated_by' => 'Sugeneravo QR Transfer'
 ];
