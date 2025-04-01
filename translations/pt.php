@@ -16,6 +16,9 @@ return [
     'communication' => 'Comunicação',
     'generate_qr' => 'Gerar código QR',
     'generated_by' => 'Gerado por QR Transfer',
-    'support_text' => 'QR Transfer é gratuito. Use o código QR abaixo no seu aplicativo bancário para nos apoiar!',
+    'payment_to' => 'Pagamento para %s',
+    
+    // Support section
+    'support_text' => 'O QR Transfer é gratuito. Use o código QR abaixo na sua aplicação bancária para nos apoiar!',
     'support_thanks' => 'Obrigado pelo QR Transfer'
 ];

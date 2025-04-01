@@ -2,7 +2,7 @@
 return [
     'app_name' => 'QR Transfer',
     'menu_home' => 'Hjem',
-    'menu_about' => 'Om os',
+    'menu_about' => 'Om',
     'menu_gdpr' => 'GDPR',
     'language' => 'Sprog',
     'welcome_message' => 'Velkommen til QR Transfer',
@@ -16,6 +16,9 @@ return [
     'communication' => 'Besked',
     'generate_qr' => 'Generer QR-kode',
     'generated_by' => 'Genereret af QR Transfer',
+    'payment_to' => 'Betaling til %s',
+    
+    // Support section
     'support_text' => 'QR Transfer er gratis. Brug QR-koden nedenfor i din bank-app for at støtte os!',
     'support_thanks' => 'Tak for QR Transfer'
 ];
