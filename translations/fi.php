@@ -15,7 +15,10 @@ return [
     'amount' => 'Summa',
     'communication' => 'Viesti',
     'generate_qr' => 'Luo QR-koodi',
-    'generated_by' => 'Luotu QR Transferillä',
+    'generated_by' => 'QR Transferin luoma',
+    'payment_to' => 'Maksu vastaanottajalle %s',
+    
+    // Support section
     'support_text' => 'QR Transfer on ilmainen. Käytä alla olevaa QR-koodia pankkisovelluksessasi tukeaksesi meitä!',
-    'support_thanks' => 'Kiitos QR Transferistä'
+    'support_thanks' => 'Kiitos QR Transferista'
 ];

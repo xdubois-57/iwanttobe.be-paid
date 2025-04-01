@@ -2,7 +2,7 @@
 return [
     'app_name' => 'QR Transfer',
     'menu_home' => 'Hem',
-    'menu_about' => 'Om oss',
+    'menu_about' => 'Om',
     'menu_gdpr' => 'GDPR',
     'language' => 'Språk',
     'welcome_message' => 'Välkommen till QR Transfer',
@@ -14,7 +14,11 @@ return [
     'beneficiary_iban' => 'Mottagarens IBAN',
     'amount' => 'Belopp',
     'communication' => 'Meddelande',
-    'generate_qr' => 'Skapa QR-kod',
-    'support_text' => 'QR Transfer är gratis. Använd QR-koden nedan i din bankapp för att stödja oss!',
+    'generate_qr' => 'Generera QR-kod',
+    'generated_by' => 'Genererad av QR Transfer',
+    'payment_to' => 'Betalning till %s',
+    
+    // Support section
+    'support_text' => 'QR Transfer är gratis. Använd QR-koden nedan i din bank-app för att stödja oss!',
     'support_thanks' => 'Tack för QR Transfer'
 ];
