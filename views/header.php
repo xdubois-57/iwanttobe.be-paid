@@ -129,7 +129,9 @@ $lang = LanguageController::getInstance();
                             <select onchange="changeLanguage(this.value)" aria-label="<?php echo $lang->translate('language'); ?>">
                                 <?php
                                 $config = require __DIR__ . '/../config/languages.php';
-                                foreach ($config['available_languages'] as $code => $name) {
+                                $languages = $config['available_languages'];
+                                asort($languages); // Sort languages by name
+                                foreach ($languages as $code => $name) {
                                     $selected = $lang->getCurrentLanguage() === $code ? 'selected' : '';
                                     echo "<option value=\"$code\" $selected>$name</option>";
                                 }
