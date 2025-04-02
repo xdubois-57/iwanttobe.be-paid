@@ -64,9 +64,10 @@ $lang = LanguageController::getInstance();
 
         .nav-header {
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-start;
             align-items: center;
             width: 100%;
+            gap: 1rem;
         }
 
         .nav-links {
@@ -98,13 +99,8 @@ $lang = LanguageController::getInstance();
 
         /* Mobile styles */
         @media (max-width: 768px) {
-            .nav-header {
-                flex-direction: row-reverse; /* App name goes to right */
-            }
-
             .hamburger {
                 display: block;
-                order: -1; /* Hamburger goes to left */
             }
 
             .nav-links {
