@@ -17,6 +17,7 @@ return [
     'generate_qr' => 'Generera QR-kod',
     'generated_by' => 'Genererad av QR Transfer',
     'payment_to' => 'Betalning till %s',
+    'clear_form' => 'Rensa formulär',
     
     // Support section
     'support_text' => 'Om du gillar denna app kan du stödja dess utveckling:',
@@ -26,6 +27,12 @@ return [
     'cookie_notice' => 'Denna sida använder nödvändiga cookies',
     'cookie_accept' => 'OK',
 
+    // Favorites management
+    'select_favorite' => 'Ny favorit',
+    'save_favorite' => 'Spara som favorit',
+    'update_favorite' => 'Uppdatera favorit',
+    'delete_favorite' => 'Ta bort favorit',
+    
     // GDPR Page
     'gdpr_last_updated' => 'Senast uppdaterad: %s',
     'gdpr_intro' => 'Denna integritetspolicy beskriver hur QR Transfer ("vi", "vår") samlar in, använder och skyddar din personliga information när du använder vår QR-kodgenereringstjänst.',
