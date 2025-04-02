@@ -1,14 +1,32 @@
 document.addEventListener('DOMContentLoaded', function() {
+    const FAVORITES_KEY = 'qrtransfer_favorites';
     const STORAGE_KEY = 'qrtransfer_form_data';
     const form = document.querySelector('#transfer-form');
     const submitButton = form.querySelector('button[type="submit"]');
     const submitButtonOriginalText = submitButton.textContent;
+    const favoritesSelect = document.getElementById('favorites');
+    const saveButton = document.getElementById('save-favorite');
+    const deleteButton = document.getElementById('delete-favorite');
+    const saveButtonOriginalText = saveButton.textContent;
+    const updateButtonText = saveButton.getAttribute('data-update-text');
     const inputs = {
         beneficiary_name: document.getElementById('beneficiary_name'),
         beneficiary_iban: document.getElementById('beneficiary_iban'),
         amount: document.getElementById('amount'),
         communication: document.getElementById('communication')
     };
+
+    // Clear any stored form data
+    sessionStorage.clear();
+    localStorage.removeItem(STORAGE_KEY);
+    
+    // Reset all form fields
+    form.reset();
+    
+    // Clear any browser-stored values
+    for (let inputId in inputs) {
+        inputs[inputId].value = '';
+    }
 
     // Add validation indicators if they don't exist
     for (let inputId in inputs) {
@@ -56,18 +74,155 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
 
-    // Save form data to local storage
-    function saveFormData() {
+    // Load favorites from local storage
+    function loadFavorites() {
         try {
+            const favorites = JSON.parse(localStorage.getItem(FAVORITES_KEY) || '[]');
+            // Clear existing options except the first one (placeholder)
+            while (favoritesSelect.options.length > 1) {
+                favoritesSelect.remove(1);
+            }
+            // Add favorites to select
+            favorites.forEach((favorite, index) => {
+                const option = document.createElement('option');
+                option.value = index;
+                option.textContent = favorite.beneficiary_name + ' - ' + favorite.beneficiary_iban;
+                favoritesSelect.appendChild(option);
+            });
+        } catch (e) {
+            console.error('Error loading favorites:', e);
+        }
+    }
+
+    // Load a favorite into the form
+    window.loadFavorite = function() {
+        const selectedIndex = favoritesSelect.value;
+        if (!selectedIndex) {
+            saveButton.textContent = saveButtonOriginalText;
+            deleteButton.disabled = true;
+            return;
+        }
+
+        try {
+            const favorites = JSON.parse(localStorage.getItem(FAVORITES_KEY) || '[]');
+            const favorite = favorites[selectedIndex];
+            if (favorite) {
+                let allValid = true;
+                for (let inputId in inputs) {
+                    const value = favorite[inputId] || '';
+                    inputs[inputId].value = value;
+                    // Validate each field
+                    if (!validateField(inputId, value)) {
+                        allValid = false;
+                    }
+                }
+                if (allValid) {
+                    saveButton.textContent = updateButtonText;
+                }
+                deleteButton.disabled = false;
+            }
+        } catch (e) {
+            console.error('Error loading favorite:', e);
+        }
+    };
+
+    // Delete the selected favorite
+    window.deleteFavorite = function() {
+        const selectedIndex = favoritesSelect.value;
+        if (!selectedIndex) return;
+
+        try {
+            const favorites = JSON.parse(localStorage.getItem(FAVORITES_KEY) || '[]');
+            const favorite = favorites[selectedIndex];
+            
+            if (confirm('Are you sure you want to delete this favorite?')) {
+                favorites.splice(selectedIndex, 1);
+                localStorage.setItem(FAVORITES_KEY, JSON.stringify(favorites));
+                loadFavorites();
+                clearForm();
+            }
+        } catch (e) {
+            console.error('Error deleting favorite:', e);
+            alert('Error deleting favorite');
+        }
+    };
+
+    // Save or update favorite
+    window.saveFavorite = function() {
+        // Validate all required fields
+        let isValid = true;
+        for (let inputId in inputs) {
+            const value = inputs[inputId].value;
+            if (!validateField(inputId, value)) {
+                if (inputId !== 'communication') { // Don't fail validation for optional field
+                    isValid = false;
+                    break;
+                }
+            }
+        }
+
+        if (!isValid) {
+            alert('Please fill all required fields correctly before saving');
+            return;
+        }
+
+        try {
+            const favorites = JSON.parse(localStorage.getItem(FAVORITES_KEY) || '[]');
             const formData = {};
             for (let inputId in inputs) {
                 formData[inputId] = inputs[inputId].value;
             }
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
+
+            const selectedIndex = favoritesSelect.value;
+            if (selectedIndex) {
+                // Update existing favorite
+                favorites[selectedIndex] = formData;
+                localStorage.setItem(FAVORITES_KEY, JSON.stringify(favorites));
+                loadFavorites();
+                favoritesSelect.value = selectedIndex; // Maintain selection
+                deleteButton.disabled = false;
+                alert('Favorite updated');
+            } else {
+                // Check for duplicates when adding new favorite
+                const isDuplicate = favorites.some(fav => 
+                    fav.beneficiary_iban === formData.beneficiary_iban && 
+                    fav.beneficiary_name === formData.beneficiary_name
+                );
+
+                if (isDuplicate) {
+                    alert('This beneficiary is already saved in your favorites');
+                    return;
+                }
+
+                favorites.push(formData);
+                localStorage.setItem(FAVORITES_KEY, JSON.stringify(favorites));
+                loadFavorites();
+                favoritesSelect.value = favorites.length - 1; // Select the new favorite
+                saveButton.textContent = updateButtonText;
+                deleteButton.disabled = false;
+                alert('Saved to favorites');
+            }
         } catch (e) {
-            console.error('Error saving form data:', e);
+            console.error('Error saving favorite:', e);
+            alert('Error saving to favorites');
         }
-    }
+    };
+
+    // Clear form fields
+    window.clearForm = function() {
+        // Reset favorites dropdown
+        favoritesSelect.value = '';
+        saveButton.textContent = saveButtonOriginalText;
+        deleteButton.disabled = true;
+        
+        // Clear all input fields
+        for (let inputId in inputs) {
+            inputs[inputId].value = '';
+            // Hide validation indicators
+            const indicator = inputs[inputId].parentNode.querySelector('.validation-indicator');
+            indicator.style.display = 'none';
+        }
+    };
 
     function validateField(fieldId, value) {
         const input = inputs[fieldId];
@@ -91,28 +246,11 @@ document.addEventListener('DOMContentLoaded', function() {
         return isValid;
     }
 
-    // Load saved values from local storage
-    try {
-        const savedData = localStorage.getItem(STORAGE_KEY);
-        if (savedData) {
-            const formData = JSON.parse(savedData);
-            for (let inputId in inputs) {
-                if (formData[inputId]) {
-                    inputs[inputId].value = formData[inputId];
-                    validateField(inputId, inputs[inputId].value);
-                }
-            }
-        }
-    } catch (e) {
-        console.error('Error loading saved form data:', e);
-    }
-
     // Add input event listeners for real-time validation
     for (let inputId in inputs) {
         const input = inputs[inputId];
         input.addEventListener('input', function(e) {
             validateField(inputId, e.target.value);
-            saveFormData();
         });
 
         // Initial validation state
@@ -134,6 +272,25 @@ document.addEventListener('DOMContentLoaded', function() {
         e.target.value = formatted;
     });
 
+    // Load favorites on page load
+    loadFavorites();
+
+    // Load saved values from local storage
+    try {
+        const savedData = localStorage.getItem(STORAGE_KEY);
+        if (savedData) {
+            const formData = JSON.parse(savedData);
+            for (let inputId in inputs) {
+                if (formData[inputId]) {
+                    inputs[inputId].value = formData[inputId];
+                    validateField(inputId, inputs[inputId].value);
+                }
+            }
+        }
+    } catch (e) {
+        console.error('Error loading saved form data:', e);
+    }
+
     // Handle form submission
     form.addEventListener('submit', async function(event) {
         event.preventDefault();
@@ -142,8 +299,8 @@ document.addEventListener('DOMContentLoaded', function() {
         let isValid = true;
         for (let inputId in inputs) {
             if (!validateField(inputId, inputs[inputId].value)) {
-                isValid = false;
                 if (inputId !== 'communication') { // Don't break for optional field
+                    isValid = false;
                     break;
                 }
             }
