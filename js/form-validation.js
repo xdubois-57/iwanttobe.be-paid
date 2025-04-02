@@ -23,6 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Validation rules
     const rules = {
         beneficiary_name: (value) => {
+            if (!value.trim()) return false;
             // Allow letters, spaces, hyphens, apostrophes, and accented characters
             const validNameRegex = /^[a-zA-ZÀ-ÿ\s\-']+$/;
             return value.trim().length >= 1 && 
@@ -30,6 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
                    validNameRegex.test(value.trim());
         },
         beneficiary_iban: (value) => {
+            if (!value.trim()) return false;
             // Remove spaces and convert to uppercase
             value = value.replace(/\s/g, '').toUpperCase();
             
@@ -37,6 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return /^[A-Z]{2}[0-9]{2}[A-Z0-9]{1,30}$/.test(value);
         },
         amount: (value) => {
+            if (!value) return false;
             // Only allow numbers and one decimal point
             const validAmountRegex = /^\d+(\.\d{0,2})?$/;
             const amount = parseFloat(value);
@@ -71,7 +74,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const isValid = rules[fieldId](value);
         const indicator = input.parentNode.querySelector('.validation-indicator');
         
-        if (value.trim() === '') {
+        // Always show indicator except for empty optional fields
+        if (fieldId === 'communication' && value.trim() === '') {
             indicator.style.display = 'none';
         } else {
             indicator.style.display = 'block';
@@ -83,6 +87,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 input.setCustomValidity('Invalid format');
             }
         }
+
+        return isValid;
     }
 
     // Load saved values from local storage
@@ -99,6 +105,20 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     } catch (e) {
         console.error('Error loading saved form data:', e);
+    }
+
+    // Add input event listeners for real-time validation
+    for (let inputId in inputs) {
+        const input = inputs[inputId];
+        input.addEventListener('input', function(e) {
+            validateField(inputId, e.target.value);
+            saveFormData();
+        });
+
+        // Initial validation state
+        if (inputId !== 'communication') {
+            validateField(inputId, input.value);
+        }
     }
 
     // Format IBAN as user types
@@ -121,9 +141,11 @@ document.addEventListener('DOMContentLoaded', function() {
         // Validate all fields
         let isValid = true;
         for (let inputId in inputs) {
-            if (!rules[inputId](inputs[inputId].value)) {
+            if (!validateField(inputId, inputs[inputId].value)) {
                 isValid = false;
-                break;
+                if (inputId !== 'communication') { // Don't break for optional field
+                    break;
+                }
             }
         }
 

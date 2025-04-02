@@ -62,11 +62,19 @@ $lang = LanguageController::getInstance();
             max-width: 1200px;
         }
 
+        .nav-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
         /* Hamburger menu styles */
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
                 width: 100%;
+                margin-top: 1rem;
                 padding-top: 1rem;
                 border-top: 1px solid var(--secondary-border);
             }
@@ -83,12 +91,25 @@ $lang = LanguageController::getInstance();
             nav ul {
                 flex-direction: column;
                 gap: 0.5rem !important;
+                padding: 0;
+            }
+
+            nav ul li {
+                width: 100%;
+            }
+
+            nav ul li select {
+                width: 100%;
             }
         }
 
         @media (min-width: 769px) {
             .nav-links {
                 display: flex !important;
+                align-items: center;
+                justify-content: flex-end;
+                flex: 1;
+                margin-left: 2rem;
             }
             
             .hamburger {
@@ -101,17 +122,18 @@ $lang = LanguageController::getInstance();
             border: none;
             cursor: pointer;
             padding: 0.5rem;
+            margin: 0;
         }
 
-        .hamburger svg {
-            fill: currentColor;
+        .hamburger:hover {
+            opacity: 0.8;
         }
     </style>
 </head>
 <body>
     <nav>
         <div class="container-fluid">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div class="nav-header">
                 <strong><?php echo $lang->translate('app_name'); ?></strong>
                 
                 <button class="hamburger" onclick="toggleMenu()">
@@ -119,27 +141,27 @@ $lang = LanguageController::getInstance();
                         <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
                     </svg>
                 </button>
+            </div>
 
-                <div class="nav-links">
-                    <ul style="display: flex; gap: 1rem; list-style: none; margin: 0;">
-                        <li><a href="/"><?php echo $lang->translate('menu_home'); ?></a></li>
-                        <li><a href="/about"><?php echo $lang->translate('menu_about'); ?></a></li>
-                        <li><a href="/gdpr"><?php echo $lang->translate('menu_gdpr'); ?></a></li>
-                        <li>
-                            <select onchange="changeLanguage(this.value)" aria-label="<?php echo $lang->translate('language'); ?>">
-                                <?php
-                                $config = require __DIR__ . '/../config/languages.php';
-                                $languages = $config['available_languages'];
-                                asort($languages); // Sort languages by name
-                                foreach ($languages as $code => $name) {
-                                    $selected = $lang->getCurrentLanguage() === $code ? 'selected' : '';
-                                    echo "<option value=\"$code\" $selected>$name</option>";
-                                }
-                                ?>
-                            </select>
-                        </li>
-                    </ul>
-                </div>
+            <div class="nav-links">
+                <ul style="display: flex; gap: 1rem; list-style: none; margin: 0;">
+                    <li><a href="/"><?php echo $lang->translate('menu_home'); ?></a></li>
+                    <li><a href="/about"><?php echo $lang->translate('menu_about'); ?></a></li>
+                    <li><a href="/gdpr"><?php echo $lang->translate('menu_gdpr'); ?></a></li>
+                    <li>
+                        <select onchange="changeLanguage(this.value)" aria-label="<?php echo $lang->translate('language'); ?>">
+                            <?php
+                            $config = require __DIR__ . '/../config/languages.php';
+                            $languages = $config['available_languages'];
+                            asort($languages); // Sort languages by name
+                            foreach ($languages as $code => $name) {
+                                $selected = $lang->getCurrentLanguage() === $code ? 'selected' : '';
+                                echo "<option value=\"$code\" $selected>$name</option>";
+                            }
+                            ?>
+                        </select>
+                    </li>
+                </ul>
             </div>
         </div>
     </nav>
