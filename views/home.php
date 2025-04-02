@@ -112,6 +112,7 @@ require_once __DIR__ . '/header.php';
 
                 <!-- User generated QR -->
                 <div id="user-qr" class="text-center" style="display: none;">
+                    <p class="support-message clickable" onclick="resetRightPanel()"><?php echo $lang->translate('support_text_alt'); ?></p>
                     <div class="qr-wrapper">
                         <img id="qr-image" src="" alt="Generated QR Code">
                     </div>
@@ -217,6 +218,16 @@ require_once __DIR__ . '/header.php';
         line-height: 1.4;
     }
 
+    .support-message.clickable {
+        cursor: pointer;
+        color: var(--primary);
+        text-decoration: underline;
+    }
+
+    .support-message.clickable:hover {
+        opacity: 0.8;
+    }
+
     .qr-wrapper {
         width: 100%;
         max-width: 300px;
@@ -279,6 +290,13 @@ require_once __DIR__ . '/header.php';
 </style>
 
 <script src="js/form-validation.js"></script>
+
+<script>
+function resetRightPanel() {
+    document.getElementById('user-qr').style.display = 'none';
+    document.getElementById('support-qr').style.display = 'block';
+}
+</script>
 
 <?php 
 require_once __DIR__ . '/footer.php';

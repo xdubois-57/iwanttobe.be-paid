@@ -21,6 +21,7 @@ return [
     
     // Support section
     'support_text' => 'This app is free. If you like it, buy me a coffee by scanning the QR code below with your banking app!',
+    'support_text_alt' => 'This app is free. If you like it, buy me a coffee by clicking here!',
     'support_thanks' => 'Thank you for supporting QR Transfer!',
     'download_qr' => 'Download QR Code',
     'share_qr' => 'Share QR Code',
