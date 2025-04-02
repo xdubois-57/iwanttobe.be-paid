@@ -17,6 +17,7 @@ return [
     'generate_qr' => 'Générer le QR code',
     'generated_by' => 'Généré par QR Transfer',
     'payment_to' => 'Paiement à %s',
+    'clear_form' => 'Effacer le formulaire',
     
     // Support section
     'support_text' => 'Si vous aimez cette application, vous pouvez soutenir son développement :',

@@ -17,6 +17,7 @@ return [
     'generate_qr' => 'QR-code genereren',
     'generated_by' => 'Gegenereerd door QR Transfer',
     'payment_to' => 'Betaling aan %s',
+    'clear_form' => 'Formulier wissen',
     
     // Support section
     'support_text' => 'Als je deze app waardeert, kun je de ontwikkeling ervan steunen:',
