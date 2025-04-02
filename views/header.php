@@ -69,52 +69,18 @@ $lang = LanguageController::getInstance();
             width: 100%;
         }
 
-        /* Hamburger menu styles */
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-                width: 100%;
-                margin-top: 1rem;
-                padding-top: 1rem;
-                border-top: 1px solid var(--secondary-border);
-            }
-            
-            .nav-links.active {
-                display: block;
-            }
-            
-            .hamburger {
-                display: block;
-                color: var(--primary);
-            }
-
-            nav ul {
-                flex-direction: column;
-                gap: 0.5rem !important;
-                padding: 0;
-            }
-
-            nav ul li {
-                width: 100%;
-            }
-
-            nav ul li select {
-                width: 100%;
-            }
+        .nav-links {
+            display: flex;
+            align-items: center;
         }
 
-        @media (min-width: 769px) {
-            .nav-links {
-                display: flex !important;
-                align-items: center;
-                justify-content: flex-end;
-                flex: 1;
-                margin-left: 2rem;
-            }
-            
-            .hamburger {
-                display: none;
-            }
+        .nav-links ul {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            list-style: none;
+            margin: 0;
+            padding: 0;
         }
 
         .hamburger {
@@ -123,10 +89,81 @@ $lang = LanguageController::getInstance();
             cursor: pointer;
             padding: 0.5rem;
             margin: 0;
+            display: none;
         }
 
         .hamburger:hover {
             opacity: 0.8;
+        }
+
+        /* Mobile styles */
+        @media (max-width: 768px) {
+            .nav-header {
+                flex-direction: row-reverse; /* App name goes to right */
+            }
+
+            .hamburger {
+                display: block;
+                order: -1; /* Hamburger goes to left */
+            }
+
+            .nav-links {
+                display: none;
+                width: 100%;
+                margin-top: 1rem;
+                padding-top: 1rem;
+                border-top: 1px solid var(--secondary-border);
+            }
+
+            .nav-links.active {
+                display: block;
+            }
+
+            .nav-links ul {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0.5rem;
+            }
+
+            .nav-links li {
+                width: 100%;
+            }
+
+            .nav-links a {
+                display: block;
+                padding: 0.5rem 0;
+            }
+
+            .nav-links select {
+                width: 100%;
+            }
+
+            .container-fluid {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+
+        /* Desktop styles */
+        @media (min-width: 769px) {
+            .container-fluid {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .nav-header {
+                width: auto;
+            }
+
+            .nav-links {
+                display: flex !important;
+                margin-left: auto;
+            }
+
+            .hamburger {
+                display: none;
+            }
         }
     </style>
 </head>
@@ -134,13 +171,12 @@ $lang = LanguageController::getInstance();
     <nav>
         <div class="container-fluid">
             <div class="nav-header">
-                <strong><?php echo $lang->translate('app_name'); ?></strong>
-                
                 <button class="hamburger" onclick="toggleMenu()">
                     <svg width="24" height="24" viewBox="0 0 24 24">
                         <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
                     </svg>
                 </button>
+                <strong><?php echo $lang->translate('app_name'); ?></strong>
             </div>
 
             <div class="nav-links">
