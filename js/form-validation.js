@@ -222,6 +222,10 @@ document.addEventListener('DOMContentLoaded', function() {
             const indicator = inputs[inputId].parentNode.querySelector('.validation-indicator');
             indicator.style.display = 'none';
         }
+
+        // Reset right panel to default state
+        document.getElementById('user-qr').style.display = 'none';
+        document.getElementById('support-qr').style.display = 'block';
     };
 
     function validateField(fieldId, value) {
