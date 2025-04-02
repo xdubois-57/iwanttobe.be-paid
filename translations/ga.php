@@ -10,21 +10,28 @@ return [
     'gdpr_title' => 'Polasaí Príobháideachta & GDPR',
 
     // Form fields
-    'beneficiary_name' => 'Ainm an Tairbhí',
+    'beneficiary_name' => 'Ainm an tairbhí',
     'beneficiary_iban' => 'IBAN',
     'amount' => 'Méid',
     'communication' => 'Teachtaireacht',
-    'generate_qr' => 'Cruthaigh Cód QR',
-    'generated_by' => 'Cruthaithe ag QR Transfer',
+    'generate_qr' => 'Gin cód QR',
+    'generated_by' => 'Ginte ag QR Transfer',
     'payment_to' => 'Íocaíocht chuig %s',
+    'clear_form' => 'Glan an fhoirm',
     
     // Support section
     'support_text' => 'Má thaitníonn an aip seo leat, is féidir leat tacú lena forbairt:',
     'support_thanks' => 'Go raibh maith agat as tacú le QR Transfer!',
-    'download_qr' => 'Íoslódáil Cód QR',
-    'share_qr' => 'Roinn Cód QR',
+    'download_qr' => 'Íoslódáil cód QR',
+    'share_qr' => 'Roinn cód QR',
     'cookie_notice' => 'Úsáideann an suíomh seo fianáin riachtanacha',
     'cookie_accept' => 'OK',
+
+    // Favorites management
+    'select_favorite' => 'Ceanán nua',
+    'save_favorite' => 'Sábháil mar cheanán',
+    'update_favorite' => 'Nuashonraigh ceanán',
+    'delete_favorite' => 'Scrios ceanán',
 
     // GDPR Page
     'gdpr_last_updated' => 'Nuashonraithe go deireanach: %s',

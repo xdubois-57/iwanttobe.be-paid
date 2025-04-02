@@ -20,7 +20,7 @@ return [
     'clear_form' => 'Clear form',
     
     // Support section
-    'support_text' => 'If you like this app, you can support its development:',
+    'support_text' => 'This app is free. If you like it, buy me a coffee by scanning the QR code below with your banking app!',
     'support_thanks' => 'Thank you for supporting QR Transfer!',
     'download_qr' => 'Download QR Code',
     'share_qr' => 'Share QR Code',

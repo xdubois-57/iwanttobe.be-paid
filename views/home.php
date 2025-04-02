@@ -82,9 +82,9 @@ require_once __DIR__ . '/header.php';
         <div>
             <!-- QR code display area -->
             <article class="qr-display">
-                <!-- Default support QR -->
-                <div id="support-qr">
-                    <p><?php echo $lang->translate('support_text'); ?></p>
+                <!-- Support QR code -->
+                <div id="support-qr" class="text-center">
+                    <p class="support-message"><?php echo $lang->translate('support_text'); ?></p>
                     <?php
                     require_once __DIR__ . '/../controllers/HomeController.php';
                     $controller = new HomeController();
@@ -100,19 +100,23 @@ require_once __DIR__ . '/header.php';
                     $epcData = $controller->generateEPCData($name, $iban, $bic, $amount, $communication);
                     $supportQrImage = $controller->generateQRCode($epcData);
                     ?>
-                    <img src="<?php echo $supportQrImage; ?>" alt="Support QR Transfer" class="support-qr">
-                    <div>
-                        <button type="button" data-share data-image="<?php echo $supportQrImage; ?>" data-title="QR Transfer Support" class="outline">
+                    <div class="qr-wrapper">
+                        <img src="<?php echo $supportQrImage; ?>" alt="Support QR Transfer" class="support-qr">
+                    </div>
+                    <div class="button-wrapper">
+                        <button type="submit" data-share data-image="<?php echo $supportQrImage; ?>" data-title="QR Transfer Support">
                             <?php echo $lang->translate('share_qr'); ?>
                         </button>
                     </div>
                 </div>
 
                 <!-- User generated QR -->
-                <div id="user-qr" style="display: none;">
-                    <img id="qr-image" src="" alt="Generated QR Code">
-                    <div>
-                        <button type="button" data-share data-title="QR Transfer Payment" id="share-qr" class="outline">
+                <div id="user-qr" class="text-center" style="display: none;">
+                    <div class="qr-wrapper">
+                        <img id="qr-image" src="" alt="Generated QR Code">
+                    </div>
+                    <div class="button-wrapper">
+                        <button type="submit" data-share data-title="QR Transfer Payment" id="share-qr">
                             <?php echo $lang->translate('share_qr'); ?>
                         </button>
                     </div>
@@ -123,7 +127,7 @@ require_once __DIR__ . '/header.php';
 </main>
 
 <style>
-    .form-container, .qr-container {
+    .form-container {
         height: 100%;
         display: flex;
         flex-direction: column;
@@ -187,18 +191,54 @@ require_once __DIR__ . '/header.php';
         margin: 0;
     }
 
-    .qr-container {
+    .qr-display {
         display: flex;
+        flex-direction: column;
         align-items: center;
         justify-content: center;
+        padding: 2rem;
+        height: 100%;
     }
 
-    #qr-placeholder img, #qr-code img {
+    #support-qr, #user-qr {
+        width: 100%;
+        max-width: 400px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+    }
+
+    .support-message {
+        font-size: 1.1em;
+        margin-bottom: 1rem;
+        max-width: 400px;
+        line-height: 1.4;
+    }
+
+    .qr-wrapper {
+        width: 100%;
+        max-width: 300px;
+        margin: 0 auto;
+    }
+
+    .support-qr, #qr-image {
         width: 100%;
         height: auto;
-        max-height: 400px;
-        object-fit: contain;
         border-radius: var(--border-radius);
+    }
+
+    .button-wrapper {
+        margin-top: 1rem;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+
+    [data-share] {
+        margin: 0 auto;
     }
 
     /* Validation indicators */
@@ -223,19 +263,6 @@ require_once __DIR__ . '/header.php';
         margin-top: 1rem;
         color: var(--muted-color);
         font-size: 0.9em;
-    }
-
-    .text-center {
-        text-align: center;
-    }
-
-    [data-share] {
-        background-color: var(--button-color);
-        color: var(--button-text-color);
-        border: none;
-        padding: 0.5rem 1rem;
-        border-radius: var(--border-radius);
-        cursor: pointer;
     }
 
     @media (max-width: 768px) {
