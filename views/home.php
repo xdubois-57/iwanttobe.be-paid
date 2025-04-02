@@ -5,9 +5,9 @@ require_once __DIR__ . '/header.php';
 ?>
 
 <main class="container">
-    <div class="grid">
+    <div class="grid panel-container">
         <!-- Left column with form -->
-        <div>
+        <div class="panel">
             <article class="form-container">
                 <form id="transfer-form" autocomplete="off">
                     <div class="favorites-container">
@@ -79,7 +79,7 @@ require_once __DIR__ . '/header.php';
         </div>
 
         <!-- Right column with QR code -->
-        <div>
+        <div class="panel" id="qr-container">
             <!-- QR code display area -->
             <article class="qr-display">
                 <!-- Default support QR -->
@@ -123,6 +123,50 @@ require_once __DIR__ . '/header.php';
 </main>
 
 <style>
+    .panel-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1rem;
+        align-items: stretch;
+    }
+
+    .panel {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        min-height: 500px;
+        padding: 1rem;
+        background: var(--card-background-color);
+        border-radius: var(--border-radius);
+        box-shadow: var(--card-box-shadow);
+    }
+
+    #qr-container {
+        justify-content: center;
+        align-items: center;
+    }
+
+    #transfer-form {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .button-container {
+        margin-top: auto;
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    @media (max-width: 992px) {
+        .panel {
+            min-height: auto;
+        }
+    }
+
     .form-container, .qr-container {
         height: 100%;
         display: flex;
