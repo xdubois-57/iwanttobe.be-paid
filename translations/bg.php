@@ -15,15 +15,22 @@ return [
     'amount' => 'Сума',
     'communication' => 'Съобщение',
     'generate_qr' => 'Генериране на QR код',
-    'generated_by' => 'Генерирано от QR Transfer',
+    'generated_by' => 'Генериран от QR Transfer',
     'payment_to' => 'Плащане към %s',
+    'clear_form' => 'Изчистване на формуляра',
+    
+    // Favorites management
+    'select_favorite' => 'Нов фаворит',
+    'save_favorite' => 'Запазване като фаворит',
+    'update_favorite' => 'Актуализиране на фаворит',
+    'delete_favorite' => 'Изтриване на фаворит',
     
     // Support section
     'support_text' => 'Ако харесвате това приложение, можете да подкрепите развитието му:',
     'support_thanks' => 'Благодарим ви, че подкрепяте QR Transfer!',
     'download_qr' => 'Изтегляне на QR код',
     'share_qr' => 'Споделяне на QR код',
-    'cookie_notice' => 'Този сайт използва необходими бисквитки',
+    'cookie_notice' => 'Този сайт използва основни бисквитки',
     'cookie_accept' => 'OK',
 
     // GDPR Page

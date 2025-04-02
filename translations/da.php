@@ -17,6 +17,13 @@ return [
     'generate_qr' => 'Generer QR-kode',
     'generated_by' => 'Genereret af QR Transfer',
     'payment_to' => 'Betaling til %s',
+    'clear_form' => 'Ryd formular',
+    
+    // Favorites management
+    'select_favorite' => 'Vælg favorit',
+    'save_favorite' => 'Gem som favorit',
+    'update_favorite' => 'Opdater favorit',
+    'delete_favorite' => 'Slet favorit',
     
     // Support section
     'support_text' => 'Hvis du kan lide denne app, kan du støtte dens udvikling:',

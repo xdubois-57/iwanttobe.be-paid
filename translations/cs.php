@@ -17,6 +17,13 @@ return [
     'generate_qr' => 'Generovat QR kód',
     'generated_by' => 'Vygenerováno pomocí QR Transfer',
     'payment_to' => 'Platba pro %s',
+    'clear_form' => 'Vymazat formulář',
+    
+    // Favorites management
+    'select_favorite' => 'Nová oblíbená',
+    'save_favorite' => 'Uložit jako oblíbenou',
+    'update_favorite' => 'Aktualizovat oblíbenou',
+    'delete_favorite' => 'Smazat oblíbenou',
     
     // Support section
     'support_text' => 'Pokud se vám tato aplikace líbí, můžete podpořit její vývoj:',
