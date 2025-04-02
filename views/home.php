@@ -102,7 +102,7 @@ require_once __DIR__ . '/header.php';
                     ?>
                     <img src="<?php echo $supportQrImage; ?>" alt="Support QR Transfer" class="support-qr">
                     <div>
-                        <button type="submit" data-share data-image="<?php echo $supportQrImage; ?>" data-title="QR Transfer Support">
+                        <button type="submit" data-share data-image="<?php echo $supportQrImage; ?>" data-title="QR Transfer Support" class="outline">
                             <?php echo $lang->translate('share_qr'); ?>
                         </button>
                     </div>
@@ -112,7 +112,7 @@ require_once __DIR__ . '/header.php';
                 <div id="user-qr" style="display: none;">
                     <img id="qr-image" src="" alt="Generated QR Code">
                     <div>
-                        <button type="submit" data-share data-title="QR Transfer Payment" id="share-qr">
+                        <button type="submit" data-share data-title="QR Transfer Payment" id="share-qr" class="outline">
                             <?php echo $lang->translate('share_qr'); ?>
                         </button>
                     </div>
