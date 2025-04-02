@@ -17,6 +17,7 @@ return [
     'generate_qr' => 'Generar código QR',
     'generated_by' => 'Generado por QR Transfer',
     'payment_to' => 'Pago a %s',
+    'clear_form' => 'Limpiar formulario',
     
     // Support section
     'support_text' => 'Si te gusta esta aplicación, puedes apoyar su desarrollo:',
@@ -26,6 +27,12 @@ return [
     'cookie_notice' => 'Este sitio utiliza cookies esenciales',
     'cookie_accept' => 'OK',
 
+    // Favorites management
+    'select_favorite' => 'Nuevo favorito',
+    'save_favorite' => 'Guardar como favorito',
+    'update_favorite' => 'Actualizar favorito',
+    'delete_favorite' => 'Eliminar favorito',
+    
     // GDPR Page
     'gdpr_last_updated' => 'Última actualización: %s',
     'gdpr_intro' => 'Esta Política de Privacidad describe cómo QR Transfer ("nosotros", "nuestro/a") recopila, utiliza y protege su información personal cuando utiliza nuestro servicio de generación de códigos QR.',
