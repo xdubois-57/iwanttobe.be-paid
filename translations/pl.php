@@ -17,6 +17,13 @@ return [
     'generate_qr' => 'Generuj kod QR',
     'generated_by' => 'Wygenerowano przez QR Transfer',
     'payment_to' => 'Płatność dla %s',
+    'clear_form' => 'Wyczyść formularz',
+    
+    // Favorites management
+    'select_favorite' => 'Nowy ulubiony',
+    'save_favorite' => 'Zapisz jako ulubiony',
+    'update_favorite' => 'Zaktualizuj ulubiony',
+    'delete_favorite' => 'Usuń ulubiony',
     
     // Support section
     'support_text' => 'Jeśli podoba Ci się ta aplikacja, możesz wesprzeć jej rozwój:',

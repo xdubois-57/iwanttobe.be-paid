@@ -10,22 +10,29 @@ return [
     'gdpr_title' => 'Politika tal-Privatezza & GDPR',
 
     // Form fields
-    'beneficiary_name' => 'Isem il-Benefiċjarju',
+    'beneficiary_name' => 'Isem tal-benefiċjarju',
     'beneficiary_iban' => 'IBAN',
     'amount' => 'Ammont',
     'communication' => 'Messaġġ',
-    'generate_qr' => 'Iġġenera Kodiċi QR',
+    'generate_qr' => 'Iġġenera kodiċi QR',
     'generated_by' => 'Iġġenerat minn QR Transfer',
     'payment_to' => 'Ħlas lil %s',
+    'clear_form' => 'Naddaf il-formola',
     
     // Support section
-    'support_text' => 'Jekk togħġbok din l-app, tista\' tappoġġja l-iżvilupp tagħha:',
+    'support_text' => 'Jekk tħobb din l-app, tista\' tappoġġja l-iżvilupp tagħha:',
     'support_thanks' => 'Grazzi talli tappoġġja QR Transfer!',
-    'download_qr' => 'Niżżel il-Kodiċi QR',
-    'share_qr' => 'Aqsam il-Kodiċi QR',
+    'download_qr' => 'Niżżel il-kodiċi QR',
+    'share_qr' => 'Aqsam il-kodiċi QR',
     'cookie_notice' => 'Dan is-sit juża cookies essenzjali',
     'cookie_accept' => 'OK',
 
+    // Favorites management
+    'select_favorite' => 'Favorit ġdid',
+    'save_favorite' => 'Żomm bħala favorit',
+    'update_favorite' => 'Aġġorna l-favorit',
+    'delete_favorite' => 'Ħassar il-favorit',
+    
     // GDPR Page
     'gdpr_last_updated' => 'L-aħħar aġġornament: %s',
     'gdpr_intro' => 'Din il-Politika tal-Privatezza tiddeskrivi kif QR Transfer ("aħna", "tagħna") tiġbor, tuża u tipproteġi d-data personali tiegħek meta tuża s-servizz tagħna ta\' ġenerazzjoni ta\' kodiċi QR.',
