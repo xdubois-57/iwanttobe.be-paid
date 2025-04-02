@@ -91,4 +91,10 @@ return [
     'gdpr_contact_title' => 'Contact opnemen',
     'gdpr_contact_intro' => 'Als u vragen heeft over dit privacybeleid of onze praktijken, neem dan contact met ons op:',
     'gdpr_contact_github' => 'Door een issue aan te maken op onze GitHub repository',
+
+    // Favorites management
+    'select_favorite' => 'Nieuwe favoriet',
+    'save_favorite' => 'Opslaan als favoriet',
+    'update_favorite' => 'Favoriet bijwerken',
+    'delete_favorite' => 'Favoriet verwijderen',
 ];

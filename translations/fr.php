@@ -91,4 +91,10 @@ return [
     'gdpr_contact_title' => 'Nous contacter',
     'gdpr_contact_intro' => 'Si vous avez des questions sur cette politique de confidentialité ou nos pratiques, veuillez nous contacter :',
     'gdpr_contact_github' => 'En créant une issue sur notre dépôt GitHub',
+
+    // Favorites management
+    'select_favorite' => 'Nouveau favori',
+    'save_favorite' => 'Enregistrer en favori',
+    'update_favorite' => 'Mettre à jour le favori',
+    'delete_favorite' => 'Supprimer le favori',
 ];
