@@ -17,15 +17,22 @@ return [
     'generate_qr' => 'Generiraj QR kod',
     'generated_by' => 'Generirao QR Transfer',
     'payment_to' => 'Plaćanje za %s',
+    'clear_form' => 'Očisti obrazac',
     
     // Support section
     'support_text' => 'Ako vam se sviđa ova aplikacija, možete podržati njezin razvoj:',
     'support_thanks' => 'Hvala što podržavate QR Transfer!',
     'download_qr' => 'Preuzmi QR kod',
     'share_qr' => 'Podijeli QR kod',
-    'cookie_notice' => 'Ova stranica koristi nužne kolačiće',
+    'cookie_notice' => 'Ova web stranica koristi nužne kolačiće',
     'cookie_accept' => 'OK',
 
+    // Favorites management
+    'select_favorite' => 'Novi favorit',
+    'save_favorite' => 'Spremi kao favorit',
+    'update_favorite' => 'Ažuriraj favorit',
+    'delete_favorite' => 'Izbriši favorit',
+    
     // GDPR Page
     'gdpr_last_updated' => 'Zadnje ažuriranje: %s',
     'gdpr_intro' => 'Ova Politika privatnosti opisuje kako QR Transfer ("mi", "naš") prikuplja, koristi i štiti vaše osobne podatke kada koristite našu uslugu generiranja QR kodova.',
