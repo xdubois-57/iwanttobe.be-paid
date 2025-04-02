@@ -14,17 +14,24 @@ return [
     'beneficiary_iban' => 'IBAN',
     'amount' => 'Summa',
     'communication' => 'Ziņojums',
-    'generate_qr' => 'Izveidot QR kodu',
-    'generated_by' => 'Izveidots ar QR Transfer',
+    'generate_qr' => 'Ģenerēt QR kodu',
+    'generated_by' => 'Ģenerējis QR Transfer',
     'payment_to' => 'Maksājums %s',
+    'clear_form' => 'Notīrīt formu',
     
     // Support section
-    'support_text' => 'Ja jums patīk šī lietotne, jūs varat atbalstīt tās attīstību:',
-    'support_thanks' => 'Paldies, ka atbalstāt QR Transfer!',
+    'support_text' => 'Ja jums patīk šī lietotne, varat atbalstīt tās attīstību:',
+    'support_thanks' => 'Paldies par QR Transfer atbalstīšanu!',
     'download_qr' => 'Lejupielādēt QR kodu',
     'share_qr' => 'Dalīties ar QR kodu',
     'cookie_notice' => 'Šī vietne izmanto nepieciešamās sīkdatnes',
-    'cookie_accept' => 'Labi',
+    'cookie_accept' => 'OK',
+
+    // Favorites management
+    'select_favorite' => 'Jauns favorīts',
+    'save_favorite' => 'Saglabāt kā favorītu',
+    'update_favorite' => 'Atjaunināt favorītu',
+    'delete_favorite' => 'Dzēst favorītu',
 
     // GDPR Page
     'gdpr_last_updated' => 'Pēdējo reizi atjaunināts: %s',

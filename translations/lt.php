@@ -17,6 +17,7 @@ return [
     'generate_qr' => 'Generuoti QR kodą',
     'generated_by' => 'Sugeneravo QR Transfer',
     'payment_to' => 'Mokėjimas %s',
+    'clear_form' => 'Išvalyti formą',
     
     // Support section
     'support_text' => 'Jei jums patinka ši programėlė, galite paremti jos vystymą:',
@@ -25,6 +26,12 @@ return [
     'share_qr' => 'Dalintis QR kodu',
     'cookie_notice' => 'Ši svetainė naudoja būtinus slapukus',
     'cookie_accept' => 'Gerai',
+
+    // Favorites management
+    'select_favorite' => 'Naujas mėgstamas',
+    'save_favorite' => 'Išsaugoti kaip mėgstamą',
+    'update_favorite' => 'Atnaujinti mėgstamą',
+    'delete_favorite' => 'Ištrinti mėgstamą',
 
     // GDPR Page
     'gdpr_last_updated' => 'Paskutinį kartą atnaujinta: %s',

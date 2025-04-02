@@ -15,17 +15,24 @@ return [
     'beneficiary_iban' => 'IBAN',
     'amount' => 'Összeg',
     'communication' => 'Üzenet',
-    'generate_qr' => 'QR kód generálása',
-    'generated_by' => 'QR Transfer által generálva',
+    'generate_qr' => 'QR-kód generálása',
+    'generated_by' => 'Generálta: QR Transfer',
     'payment_to' => 'Fizetés %s részére',
+    'clear_form' => 'Űrlap törlése',
     
     // Support section
-    'support_text' => 'Ha hasznosnak találja az alkalmazást, támogathatja a fejlesztését:',
+    'support_text' => 'Ha tetszik ez az alkalmazás, támogathatja a fejlesztését:',
     'support_thanks' => 'Köszönjük, hogy támogatja a QR Transfert!',
-    'download_qr' => 'QR kód letöltése',
-    'share_qr' => 'QR kód megosztása',
-    'cookie_notice' => 'Ez az oldal szükséges sütiket használ',
+    'download_qr' => 'QR-kód letöltése',
+    'share_qr' => 'QR-kód megosztása',
+    'cookie_notice' => 'Ez a weboldal szükséges sütiket használ',
     'cookie_accept' => 'OK',
+
+    // Favorites management
+    'select_favorite' => 'Új kedvenc',
+    'save_favorite' => 'Mentés kedvencként',
+    'update_favorite' => 'Kedvenc frissítése',
+    'delete_favorite' => 'Kedvenc törlése',
 
     // GDPR Page
     'gdpr_last_updated' => 'Utolsó frissítés: %s',
