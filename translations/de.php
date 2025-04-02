@@ -17,6 +17,7 @@ return [
     'generate_qr' => 'QR-Code generieren',
     'generated_by' => 'Generiert von QR Transfer',
     'payment_to' => 'Zahlung an %s',
+    'clear_form' => 'Formular löschen',
     
     // Support section
     'support_text' => 'Wenn Sie diese App mögen, können Sie ihre Entwicklung unterstützen:',
@@ -26,6 +27,12 @@ return [
     'cookie_notice' => 'Diese Website verwendet essentielle Cookies',
     'cookie_accept' => 'OK',
 
+    // Favorites management
+    'select_favorite' => 'Neuer Favorit',
+    'save_favorite' => 'Als Favorit speichern',
+    'update_favorite' => 'Favorit aktualisieren',
+    'delete_favorite' => 'Favorit löschen',
+    
     // GDPR Page
     'gdpr_last_updated' => 'Zuletzt aktualisiert: %s',
     'gdpr_intro' => 'Diese Datenschutzerklärung beschreibt, wie QR Transfer ("wir", "uns", "unser") Ihre personenbezogenen Daten erfasst, verwendet und schützt, wenn Sie unseren QR-Code-Generierungsdienst nutzen.',
