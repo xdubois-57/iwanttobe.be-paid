@@ -15,8 +15,15 @@ return [
     'amount' => 'Summa',
     'communication' => 'Viesti',
     'generate_qr' => 'Luo QR-koodi',
-    'generated_by' => 'QR Transferin luoma',
+    'generated_by' => 'Luonut QR Transfer',
     'payment_to' => 'Maksu vastaanottajalle %s',
+    'clear_form' => 'Tyhjennä lomake',
+    
+    // Favorites management
+    'select_favorite' => 'Uusi suosikki',
+    'save_favorite' => 'Tallenna suosikiksi',
+    'update_favorite' => 'Päivitä suosikki',
+    'delete_favorite' => 'Poista suosikki',
     
     // Support section
     'support_text' => 'Jos pidät tästä sovelluksesta, voit tukea sen kehitystä:',
@@ -37,7 +44,7 @@ return [
     'gdpr_payment_info_desc' => 'Kun luot QR-koodin, käsittelemme seuraavat tiedot:',
     'gdpr_payment_storage_note' => 'Jos valitset maksutietojen tallentamisen, ne tallennetaan paikallisesti selaimesi muistiin. Nämä tiedot eivät koskaan poistu laitteeltasi eivätkä ole meidän saatavillamme.',
     'gdpr_technical_data' => 'Tekniset tiedot',
-    'gdpr_technical_data_desc' => 'Käytämme välttämättömiä evästeitä ja paikallista tallennustilaa verkkosivustomme asianmukaisen toiminnan varmistamiseksi.',
+    'gdpr_technical_data_desc' => 'Käytämme välttämättömiä evästeitä ja paikallista tallennusta verkkosivustomme asianmukaisen toiminnan varmistamiseksi.',
 
     // Information Usage
     'gdpr_info_use_title' => 'Tietojen käyttö',

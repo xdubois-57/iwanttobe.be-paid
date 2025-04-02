@@ -17,6 +17,13 @@ return [
     'generate_qr' => 'Δημιουργία κωδικού QR',
     'generated_by' => 'Δημιουργήθηκε από το QR Transfer',
     'payment_to' => 'Πληρωμή προς %s',
+    'clear_form' => 'Καθαρισμός φόρμας',
+    
+    // Favorites management
+    'select_favorite' => 'Νέο αγαπημένο',
+    'save_favorite' => 'Αποθήκευση ως αγαπημένο',
+    'update_favorite' => 'Ενημέρωση αγαπημένου',
+    'delete_favorite' => 'Διαγραφή αγαπημένου',
     
     // Support section
     'support_text' => 'Εάν σας αρέσει αυτή η εφαρμογή, μπορείτε να υποστηρίξετε την ανάπτυξή της:',

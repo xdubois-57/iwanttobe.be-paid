@@ -14,18 +14,25 @@ return [
     'beneficiary_iban' => 'IBAN',
     'amount' => 'Summa',
     'communication' => 'Sõnum',
-    'generate_qr' => 'Loo QR-kood',
-    'generated_by' => 'Loodud QR Transferi poolt',
+    'generate_qr' => 'Genereeri QR-kood',
+    'generated_by' => 'Genereeritud QR Transfer poolt',
     'payment_to' => 'Makse %s',
+    'clear_form' => 'Tühjenda vorm',
     
     // Support section
-    'support_text' => 'Kui see rakendus teile meeldib, saate toetada selle arendamist:',
+    'support_text' => 'Kui sulle meeldib see rakendus, saad toetada selle arendamist:',
     'support_thanks' => 'Täname QR Transferi toetamise eest!',
-    'download_qr' => 'Laadi QR-kood alla',
+    'download_qr' => 'Laadi alla QR-kood',
     'share_qr' => 'Jaga QR-koodi',
-    'cookie_notice' => 'See veebileht kasutab vajalikke küpsiseid',
+    'cookie_notice' => 'See sait kasutab vajalikke küpsiseid',
     'cookie_accept' => 'OK',
 
+    // Favorites management
+    'select_favorite' => 'Uus lemmik',
+    'save_favorite' => 'Salvesta lemmikuna',
+    'update_favorite' => 'Uuenda lemmikut',
+    'delete_favorite' => 'Kustuta lemmik',
+    
     // GDPR Page
     'gdpr_last_updated' => 'Viimati uuendatud: %s',
     'gdpr_intro' => 'See privaatsuspoliitika kirjeldab, kuidas QR Transfer ("meie", "meid") kogub, kasutab ja kaitseb teie isikuandmeid meie QR-koodi genereerimise teenuse kasutamisel.',
