@@ -6,7 +6,7 @@ return [
     'why_us_easy_title' => 'Easy to Use',
     'why_us_easy_text' => 'Generate QR codes for payments in seconds. No registration required, no complicated setup.',
     'why_us_free_title' => 'Completely Free',
-    'why_us_free_text' => 'Our service is free to use, with no hidden costs or premium features.',
+    'why_us_free_text' => 'Our service is free to use, with no hidden costs or premium features. If you find it useful, please consider supporting our development!',
     'why_us_features_title' => 'Key Features',
     'why_us_feature_1' => 'Instant QR code generation for SEPA payments',
     'why_us_feature_2' => 'Support for all European banks',
