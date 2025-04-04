@@ -2,6 +2,18 @@ import validation from './validation.js';
 import translations from './translations.js';
 
 /**
+ * Resets the right panel to show support QR
+ */
+function resetRightPanel() {
+    const supportQr = document.getElementById('support-qr');
+    const userQr = document.getElementById('user-qr');
+    if (supportQr && userQr) {
+        userQr.style.display = 'none';
+        supportQr.style.display = 'block';
+    }
+}
+
+/**
  * Generates a QR code based on form data
  * @param {HTMLFormElement} form - The form element
  * @param {HTMLButtonElement} submitButton - The submit button
@@ -47,20 +59,32 @@ async function generateQRCode(form, submitButton, submitButtonOriginalText) {
         console.log('QR code response:', data);
         
         if (data.success) {
-            const qrContainer = document.getElementById('qr-code-container');
-            if (!qrContainer) {
-                console.error('QR code container not found');
+            const supportQr = document.getElementById('support-qr');
+            const userQr = document.getElementById('user-qr');
+            const qrImage = document.getElementById('qr-image');
+            const shareQr = document.getElementById('share-qr');
+
+            if (!qrImage || !userQr || !supportQr || !shareQr) {
+                console.error('Missing QR code elements:', {
+                    userQr: !!userQr,
+                    qrImage: !!qrImage,
+                    supportQr: !!supportQr,
+                    shareQr: !!shareQr
+                });
                 throw new Error(translations.translate('qr_generation_failed'));
             }
 
-            // Check if we have QR code data in the response
-            if (!data.qr_code) {
-                console.error('No QR code in response:', data);
+            // Check if we have image data in the response
+            const imageUrl = data.qr_code;
+            if (!imageUrl) {
+                console.error('No image URL in response:', data);
                 throw new Error(translations.translate('qr_generation_failed'));
             }
 
-            qrContainer.innerHTML = data.qr_code;
-            qrContainer.style.display = 'block';
+            qrImage.src = imageUrl;
+            shareQr.dataset.image = imageUrl;
+            userQr.style.display = 'block';
+            supportQr.style.display = 'none';
         } else {
             throw new Error(data.message || translations.translate('qr_generation_failed'));
         }
@@ -75,7 +99,11 @@ async function generateQRCode(form, submitButton, submitButtonOriginalText) {
 }
 
 const qrGenerator = {
-    generateQRCode
+    generateQRCode,
+    resetRightPanel
 };
+
+// Make resetRightPanel globally available
+window.resetRightPanel = resetRightPanel;
 
 export default qrGenerator;
