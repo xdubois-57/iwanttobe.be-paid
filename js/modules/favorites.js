@@ -56,7 +56,7 @@ function loadFavorite() {
         nameInput.disabled = false;
         ibanInput.disabled = false;
         deleteButton.disabled = true;
-        saveButton.textContent = translations.translate('save_favorite');
+        saveButton.textContent = translations.default.translate('save_favorite');
         
         // Trigger validation on enabled fields
         nameInput.dispatchEvent(new Event('input', { bubbles: true }));
@@ -79,11 +79,13 @@ function loadFavorite() {
     nameInput.disabled = true;
     ibanInput.disabled = true;
     deleteButton.disabled = false;
-    saveButton.textContent = translations.translate('update_favorite');
+    saveButton.textContent = translations.default.translate('update_favorite');
 
-    // Trigger validation on disabled fields
+    // Trigger validation and change events on fields
     nameInput.dispatchEvent(new Event('input', { bubbles: true }));
     ibanInput.dispatchEvent(new Event('input', { bubbles: true }));
+    nameInput.dispatchEvent(new Event('change', { bubbles: true }));
+    ibanInput.dispatchEvent(new Event('change', { bubbles: true }));
 }
 
 /**
@@ -113,19 +115,21 @@ function deleteFavorite() {
     localStorage.setItem(FAVORITES_KEY, JSON.stringify(favorites));
 
     // Clear form and enable inputs
-    formOperations.clearForm(form);
+    formOperations.default.clearForm(form);
     nameInput.disabled = false;
     ibanInput.disabled = false;
     deleteButton.disabled = true;
-    saveButton.textContent = translations.translate('save_favorite');
+    saveButton.textContent = translations.default.translate('save_favorite');
 
     // Reload favorites list
     loadFavorites(favoritesSelect);
     favoritesSelect.value = '';
 
-    // Trigger validation on enabled fields
+    // Trigger validation and change events on fields
     nameInput.dispatchEvent(new Event('input', { bubbles: true }));
     ibanInput.dispatchEvent(new Event('input', { bubbles: true }));
+    nameInput.dispatchEvent(new Event('change', { bubbles: true }));
+    ibanInput.dispatchEvent(new Event('change', { bubbles: true }));
 }
 
 /**

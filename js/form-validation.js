@@ -59,6 +59,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Save form data when modified
         form.addEventListener('change', () => {
+            console.log('Form change event triggered');
             formStorage.default.saveFormData(form);
             qrGenerator.default.updateButtonState(inputs, submitButton);
         });
@@ -66,6 +67,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Listen for favorites changes
         favoritesSelect.addEventListener('change', () => {
             console.log('Favorite selection changed');
+            favorites.default.loadFavorite();
             // Small delay to ensure inputs are updated
             setTimeout(() => {
                 qrGenerator.default.updateButtonState(inputs, submitButton);
@@ -80,6 +82,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 formOperations.default.clearForm(form);
                 inputs.beneficiary_name.disabled = false;
                 inputs.beneficiary_iban.disabled = false;
+                favoritesSelect.value = '';
+                deleteButton.disabled = true;
+                saveButton.textContent = translations.default.translate('save_favorite');
             });
         }
 
@@ -125,6 +130,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Select the saved favorite
             const newIndex = selectedIndex !== '' ? selectedIndex : (favorites.length - 1).toString();
             favoritesSelect.value = newIndex;
+            favorites.default.loadFavorite();
 
             // Update UI state
             inputs.beneficiary_name.disabled = true;
