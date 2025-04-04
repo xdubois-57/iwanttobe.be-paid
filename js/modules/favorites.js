@@ -1,6 +1,7 @@
 import formOperations from './form-operations.js';
 import translations from './translations.js';
 import constants from './constants.js';
+import validation from './validation.js'; // Import validation module
 
 const FAVORITES_KEY = constants.FAVORITES_KEY;
 const SELECTED_FAVORITE_KEY = constants.SELECTED_FAVORITE_KEY;
@@ -183,11 +184,9 @@ function loadFavorite() {
 
     // Trigger validation once after all fields are set
     setTimeout(() => {
-        const generateButton = document.getElementById('generate-qr-button');
-        if (generateButton && !generateButton.disabled) {
-            generateButton.click();
-        }
-    }, 100);
+        validation.validateField('beneficiary_name', nameInput.value);
+        validation.validateField('beneficiary_iban', ibanInput.value);
+    }, 0);
 }
 
 /**
