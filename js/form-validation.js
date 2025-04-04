@@ -154,16 +154,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const deleteButton = document.getElementById('delete-favorite');
     const saveButtonOriginalText = saveButton.textContent;
     const updateButtonText = saveButton.getAttribute('data-update-text');
-
-    // Debug amount field properties
     const amountField = document.getElementById('amount');
-    console.log('Amount field properties:', {
-        type: amountField.type,
-        readOnly: amountField.readOnly,
-        disabled: amountField.disabled,
-        value: amountField.value,
-        defaultValue: amountField.defaultValue
-    });
 
     const inputs = {
         beneficiary_name: document.getElementById('beneficiary_name'),
@@ -268,47 +259,25 @@ document.addEventListener('DOMContentLoaded', function() {
             const favorites = JSON.parse(localStorage.getItem(FAVORITES_KEY) || '[]');
             const favorite = favorites[selectedIndex];
             if (favorite) {
-                // Log the loaded favorite data
-                console.log('Loading favorite:', favorite);
-
                 // Set text fields
                 inputs.beneficiary_name.value = favorite.beneficiary_name || '';
                 inputs.beneficiary_iban.value = favorite.beneficiary_iban || '';
                 inputs.communication.value = favorite.communication || '';
 
                 // Handle amount field specially (convert to number)
-                const amountField = document.getElementById('amount');
-                console.log('Amount field element:', amountField);
-                
                 const amount = parseFloat(favorite.amount);
-                console.log('Parsed amount:', amount);
-                
                 if (!isNaN(amount)) {
                     const formattedAmount = amount.toFixed(2);
-                    console.log('Setting amount field value to:', formattedAmount);
-                    
-                    // Try multiple ways to set the value
                     amountField.value = formattedAmount;
-                    console.log('Amount field value after direct set:', amountField.value);
                     
-                    // Force a DOM update
+                    // Force a DOM update and trigger events
                     setTimeout(() => {
                         amountField.value = formattedAmount;
-                        console.log('Amount field value after timeout:', amountField.value);
-                        
-                        // Trigger input event
-                        const event = new Event('input', { bubbles: true });
-                        amountField.dispatchEvent(event);
-                        console.log('Input event dispatched');
-                        
-                        // Trigger change event
-                        const changeEvent = new Event('change', { bubbles: true });
-                        amountField.dispatchEvent(changeEvent);
-                        console.log('Change event dispatched');
+                        amountField.dispatchEvent(new Event('input', { bubbles: true }));
+                        amountField.dispatchEvent(new Event('change', { bubbles: true }));
                     }, 0);
                 } else {
                     amountField.value = '';
-                    console.log('Cleared amount field');
                 }
 
                 // Validate all fields
@@ -394,9 +363,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 communication: communication
             };
 
-            // Log the data being saved
-            console.log('Saving favorite:', formData);
-
             const selectedIndex = favoritesSelect.value;
             if (selectedIndex) {
                 // Update existing favorite
@@ -477,10 +443,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add input event listeners for real-time validation
     for (let inputId in inputs) {
         const input = inputs[inputId];
-        console.log(`Adding input listener for ${inputId}:`, input);
-        
         input.addEventListener('input', function(e) {
-            console.log(`Input event on ${inputId}:`, e.target.value);
             validateField(inputId, e.target.value);
         });
 
