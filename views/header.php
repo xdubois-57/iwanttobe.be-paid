@@ -4,22 +4,6 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 require_once __DIR__ . '/../controllers/LanguageController.php';
 $lang = LanguageController::getInstance();
-
-// Prepare translations for JavaScript
-$jsTranslations = [
-    'error_required_fields' => $lang->translate('error_required_fields'),
-    'error_saving_favorite' => $lang->translate('error_saving_favorite'),
-    'favorite_updated' => $lang->translate('favorite_updated'),
-    'favorite_duplicate' => $lang->translate('favorite_duplicate'),
-    'favorite_saved' => $lang->translate('favorite_saved'),
-    'share_text' => $lang->translate('share_text'),
-    'generating' => $lang->translate('generating'),
-    'failed_to_generate_qr' => $lang->translate('failed_to_generate_qr'),
-    'invalid_format' => $lang->translate('invalid_format'),
-    'confirm_delete_favorite' => $lang->translate('confirm_delete_favorite'),
-    'error_deleting_favorite' => $lang->translate('error_deleting_favorite'),
-    'error' => $lang->translate('error')
-];
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo $lang->getCurrentLanguage(); ?>">
@@ -28,23 +12,21 @@ $jsTranslations = [
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $lang->translate('app_name'); ?></title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
-    <script>
-        // Make translations available to JavaScript
-        window.translations = <?php echo json_encode($jsTranslations); ?>;
-    </script>
     <style>
         /* Custom styles */
         nav {
             background: var(--secondary-background);
             border-bottom: 1px solid var(--secondary-border);
-            padding: 1rem;
-            margin-bottom: 2rem;
+            padding: 0.25rem 0.4rem;
+            margin-bottom: 0.75rem;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            position: relative;
         }
         
         nav a {
             color: var(--primary);
             text-decoration: none;
+            font-size: 0.9rem;
         }
 
         nav a:hover {
@@ -52,11 +34,11 @@ $jsTranslations = [
         }
 
         .language-switcher {
-            margin-left: 1rem;
+            margin-left: 0.5rem;
         }
 
         .language-switcher .lang-link {
-            padding: 0.2rem 0.4rem;
+            padding: 0.2rem 0.3rem;
             border-radius: 3px;
         }
 
@@ -74,20 +56,29 @@ $jsTranslations = [
             background-color: var(--secondary-background);
             border: 1px solid var(--secondary-border);
             margin-bottom: 0;
+            font-size: 0.8rem;
+            padding: 0.15rem;
+            height: auto;
+            min-height: unset;
         }
         
         .container-fluid {
             margin: 0 auto;
-            padding: 0 1rem;
+            padding: 0 0.5rem;
             max-width: 1200px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .nav-header {
             display: flex;
-            justify-content: flex-start;
             align-items: center;
-            width: 100%;
-            gap: 1rem;
+            gap: 0.5rem;
+        }
+        
+        .nav-header strong {
+            font-size: 0.9rem;
         }
 
         .nav-links {
@@ -98,7 +89,7 @@ $jsTranslations = [
         .nav-links ul {
             display: flex;
             align-items: center;
-            gap: 1.5rem;
+            gap: 0.75rem;
             list-style: none;
             margin: 0;
             padding: 0;
@@ -108,9 +99,17 @@ $jsTranslations = [
             background: none;
             border: none;
             cursor: pointer;
-            padding: 0.5rem;
+            padding: 0.25rem;
             margin: 0;
             display: none;
+            line-height: 1;
+        }
+
+        .hamburger svg {
+            width: 20px;
+            height: 20px;
+            display: block;
+            fill: var(--primary);
         }
 
         .hamburger:hover {
@@ -119,16 +118,29 @@ $jsTranslations = [
 
         /* Mobile styles */
         @media (max-width: 768px) {
+            .nav-header {
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+            }
+            
             .hamburger {
                 display: block;
+                order: -1;
             }
 
             .nav-links {
                 display: none;
                 width: 100%;
-                margin-top: 1rem;
-                padding-top: 1rem;
-                border-top: 1px solid var(--secondary-border);
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background-color: var(--card-background-color, #ffffff);
+                padding: 0.3rem 0.5rem;
+                border-bottom: 1px solid var(--secondary-border);
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                z-index: 100;
             }
 
             .nav-links.active {
@@ -138,36 +150,29 @@ $jsTranslations = [
             .nav-links ul {
                 flex-direction: column;
                 align-items: stretch;
-                gap: 0.5rem;
+                gap: 0;
             }
 
             .nav-links li {
                 width: 100%;
+                margin: 0;
+                padding: 0;
             }
 
             .nav-links a {
                 display: block;
-                padding: 0.5rem 0;
+                padding: 0.2rem 0;
+                margin: 0;
             }
 
             .nav-links select {
                 width: 100%;
-            }
-
-            .container-fluid {
-                flex-direction: column;
-                align-items: stretch;
+                margin: 0.2rem 0;
             }
         }
 
         /* Desktop styles */
         @media (min-width: 769px) {
-            .container-fluid {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-            }
-
             .nav-header {
                 width: auto;
             }
@@ -175,6 +180,12 @@ $jsTranslations = [
             .nav-links {
                 display: flex !important;
                 margin-left: auto;
+            }
+            
+            .nav-links li {
+                margin: 0;
+                padding: 0;
+                line-height: 1;
             }
 
             .hamburger {
@@ -188,15 +199,15 @@ $jsTranslations = [
         <div class="container-fluid">
             <div class="nav-header">
                 <button class="hamburger" onclick="toggleMenu()">
-                    <svg width="24" height="24" viewBox="0 0 24 24">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
                         <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
                     </svg>
                 </button>
-                <strong><?php echo $lang->translate('app_name'); ?></strong>
+                <a href="/" style="text-decoration: none; color: inherit;"><strong><?php echo $lang->translate('app_name'); ?></strong></a>
             </div>
 
             <div class="nav-links">
-                <ul style="display: flex; gap: 1rem; list-style: none; margin: 0;">
+                <ul>
                     <li><a href="/"><?php echo $lang->translate('menu_home'); ?></a></li>
                     <li><a href="/why-us"><?php echo $lang->translate('menu_why_us'); ?></a></li>
                     <li><a href="/about"><?php echo $lang->translate('menu_about'); ?></a></li>
