@@ -12,9 +12,12 @@ const FAVORITES_KEY = 'qr_transfer_favorites';
 function findFavoriteIndex(name, iban) {
     if (!name || !iban) return -1;
     const favorites = JSON.parse(localStorage.getItem(FAVORITES_KEY) || '[]');
-    return favorites.findIndex(f => 
+    console.log('Finding favorite:', { name, iban, favorites });
+    const index = favorites.findIndex(f => 
         f.beneficiary_name === name && f.beneficiary_iban === iban
     );
+    console.log('Found at index:', index);
+    return index;
 }
 
 /**
@@ -24,8 +27,11 @@ function findFavoriteIndex(name, iban) {
  * @param {string} iban - Beneficiary IBAN
  */
 function updateSaveButtonText(saveButton, name, iban) {
+    console.log('updateSaveButtonText called with:', { name, iban });
     const existingIndex = findFavoriteIndex(name, iban);
-    saveButton.textContent = existingIndex !== -1 ? translations.translate('update_favorite') : translations.translate('save_favorite');
+    const newText = existingIndex !== -1 ? translations.translate('update_favorite') : translations.translate('save_favorite');
+    console.log('Setting button text to:', newText);
+    saveButton.textContent = newText;
 }
 
 /**
@@ -260,6 +266,8 @@ function initializeFavorites() {
             // Enable inputs when no favorite is selected
             nameInput.disabled = false;
             ibanInput.disabled = false;
+            // Update button text for current values
+            updateSaveButtonText(saveButton, nameInput.value.trim(), ibanInput.value.trim());
         }
         loadFavorite();
     });
@@ -269,6 +277,7 @@ function initializeFavorites() {
         const name = nameInput.value.trim();
         const iban = ibanInput.value.trim();
         const selectedIndex = favoritesSelect.value;
+        console.log('updateButtonText called:', { name, iban, selectedIndex });
 
         // If a favorite is selected, always show "update"
         if (selectedIndex !== '') {
@@ -277,15 +286,21 @@ function initializeFavorites() {
         }
 
         // Otherwise, check if this name+IBAN combination exists
-        console.log('Updating button text for:', { name, iban });
         updateSaveButtonText(saveButton, name, iban);
     };
 
     // Listen for both input and change events to catch all value changes
-    nameInput.addEventListener('input', updateButtonText);
-    nameInput.addEventListener('change', updateButtonText);
-    ibanInput.addEventListener('input', updateButtonText);
-    ibanInput.addEventListener('change', updateButtonText);
+    const events = ['input', 'change', 'keyup'];
+    events.forEach(eventType => {
+        nameInput.addEventListener(eventType, () => {
+            console.log(`${eventType} event on nameInput`);
+            updateButtonText();
+        });
+        ibanInput.addEventListener(eventType, () => {
+            console.log(`${eventType} event on ibanInput`);
+            updateButtonText();
+        });
+    });
 
     // Set initial button text
     updateButtonText();
