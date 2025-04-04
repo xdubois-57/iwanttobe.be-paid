@@ -12,6 +12,7 @@
 require_once 'controllers/HomeController.php';
 require_once 'controllers/AboutController.php';
 require_once 'controllers/GDPRController.php';
+require_once 'controllers/WhyUsController.php';
 require_once 'controllers/Router.php';
 require_once 'controllers/LanguageController.php';
 
@@ -23,6 +24,7 @@ $router = new Router();
 $router->get('/', 'HomeController@index');          // Homepage with QR code generation form
 $router->get('/about', 'HomeController@about');     // About page with project information
 $router->get('/gdpr', 'GDPRController@index');     // GDPR/Privacy policy page
+$router->get('/why-us', 'WhyUsController@index');     // Why Us page
 
 // Language routes
 // These routes handle language changes via both GET and POST requests

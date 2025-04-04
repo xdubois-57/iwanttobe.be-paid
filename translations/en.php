@@ -4,10 +4,12 @@ return [
     'menu_home' => 'Home',
     'menu_about' => 'About',
     'menu_gdpr' => 'GDPR',
+    'menu_why_us' => 'Why Us?',
     'language' => 'Language',
     'welcome_message' => 'Welcome to QR Transfer',
     'about_title' => 'About QR Transfer',
     'gdpr_title' => 'Privacy Policy & GDPR',
+    'why_us_title' => 'Why Choose QR Transfer?',
 
     // Form fields
     'beneficiary_name' => 'Beneficiary Name',
@@ -27,6 +29,19 @@ return [
     'share_qr' => 'Share QR Code',
     'cookie_notice' => 'This site uses essential cookies',
     'cookie_accept' => 'OK',
+
+    // Why Us page
+    'why_us_secure_title' => 'Secure & Private',
+    'why_us_secure_text' => 'Your data is processed locally in your browser. We never store sensitive payment information on our servers.',
+    'why_us_easy_title' => 'Easy to Use',
+    'why_us_easy_text' => 'Generate QR codes for payments in seconds. No registration required, no complicated setup.',
+    'why_us_free_title' => 'Completely Free',
+    'why_us_free_text' => 'Our service is free to use, with no hidden costs or premium features.',
+    'why_us_features_title' => 'Key Features',
+    'why_us_feature_1' => 'Instant QR code generation for SEPA payments',
+    'why_us_feature_2' => 'Support for all European banks',
+    'why_us_feature_3' => 'Available in multiple languages',
+    'why_us_feature_4' => 'Works on all devices - desktop, tablet, and mobile',
 
     // GDPR Page
     'gdpr_last_updated' => 'Last updated: %s',

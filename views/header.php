@@ -178,6 +178,7 @@ $lang = LanguageController::getInstance();
             <div class="nav-links">
                 <ul style="display: flex; gap: 1rem; list-style: none; margin: 0;">
                     <li><a href="/"><?php echo $lang->translate('menu_home'); ?></a></li>
+                    <li><a href="/why-us"><?php echo $lang->translate('menu_why_us'); ?></a></li>
                     <li><a href="/about"><?php echo $lang->translate('menu_about'); ?></a></li>
                     <li><a href="/gdpr"><?php echo $lang->translate('menu_gdpr'); ?></a></li>
                     <li>
