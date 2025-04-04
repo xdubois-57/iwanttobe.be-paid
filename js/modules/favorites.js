@@ -196,33 +196,29 @@ function loadFavorite() {
 function deleteFavorite(formOperations) {
     return function() {
         const favoritesSelect = document.getElementById('favorites');
-        if (!favoritesSelect) {
-            console.error('Favorites select element not found');
-            return;
-        }
+        if (!favoritesSelect) return;
         
-        const selectedIndex = favoritesSelect.selectedIndex - 1; // Account for default option
-        
-        if (selectedIndex < 0) {
-            console.error('Please select a favorite to delete');
-            return;
-        }
+        const selectedIndex = favoritesSelect.selectedIndex - 1;
+        if (selectedIndex < 0) return;
         
         const favorites = JSON.parse(localStorage.getItem(constants.FAVORITES_KEY) || '[]');
+        if (selectedIndex >= favorites.length) return;
         
-        if (selectedIndex >= 0 && selectedIndex < favorites.length) {
-            favorites.splice(selectedIndex, 1);
-            localStorage.setItem(constants.FAVORITES_KEY, JSON.stringify(favorites));
-            
-            // Clear form
+        // Delete the favorite
+        favorites.splice(selectedIndex, 1);
+        localStorage.setItem(constants.FAVORITES_KEY, JSON.stringify(favorites));
+        
+        // Explicitly call clear form function
+        const clearFormBtn = document.getElementById('clear-form');
+        if (clearFormBtn) {
+            clearFormBtn.click();
+        } else if (formOperations?.default?.clearForm) {
             const form = document.getElementById('transfer-form');
-            if (formOperations?.default?.clearForm && form) {
-                formOperations.default.clearForm(form);
-            }
-            
-            // Reset UI
-            loadFavorites(favoritesSelect);
+            if (form) formOperations.default.clearForm(form);
         }
+        
+        // Reset favorites list
+        loadFavorites(favoritesSelect);
     };
 }
 
