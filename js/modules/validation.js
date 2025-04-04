@@ -1,7 +1,8 @@
 import constants from './constants.js';
+import translations from './translations.js';
 
 /**
- * Validates a form field based on its ID and value
+ * Validates a single field
  * @param {string} fieldId - The ID of the field to validate
  * @param {string} value - The value to validate
  * @returns {boolean} - Whether the field is valid
@@ -12,52 +13,94 @@ function validateField(fieldId, value) {
 
     // Skip validation for disabled fields (they are considered valid)
     if (field.disabled) {
+        const validationIndicator = field.nextElementSibling;
+        if (validationIndicator && validationIndicator.classList.contains('validation-indicator')) {
+            validationIndicator.textContent = '✓';
+            field.classList.add('is-valid');
+            field.classList.remove('is-invalid');
+        }
         return true;
     }
 
-    const pattern = constants.VALIDATION_PATTERNS[fieldId];
-    if (!pattern) return true; // No pattern means no validation required
-
-    const isValid = pattern.test(value);
-    field.classList.toggle('is-invalid', !isValid);
-    
-    // Special handling for amount field
-    if (fieldId === 'amount' && isValid) {
-        const numValue = parseFloat(value);
-        if (isNaN(numValue) || numValue <= 0) {
-            field.classList.add('is-invalid');
-            return false;
-        }
+    const validationIndicator = field.nextElementSibling;
+    if (!validationIndicator || !validationIndicator.classList.contains('validation-indicator')) {
+        console.error('No validation indicator found for field:', fieldId);
+        return false;
     }
+
+    let isValid = false;
+
+    switch (fieldId) {
+        case 'beneficiary_name':
+            isValid = value && value.trim().length >= 2;
+            validationIndicator.textContent = isValid ? '✓' : translations.translate('invalid_name');
+            break;
+
+        case 'beneficiary_iban':
+            isValid = value && /^[A-Z]{2}[0-9]{2}[A-Z0-9]{4}[0-9]{7}([A-Z0-9]?){0,16}$/.test(value.replace(/\s/g, ''));
+            validationIndicator.textContent = isValid ? '✓' : translations.translate('invalid_iban');
+            break;
+
+        case 'amount':
+            isValid = value && /^\d+(\.\d{0,2})?$/.test(value) && parseFloat(value) > 0;
+            validationIndicator.textContent = isValid ? '✓' : translations.translate('invalid_amount');
+            break;
+
+        case 'communication':
+            // Communication is optional, so empty is valid
+            isValid = !value || /^[A-Za-z0-9\s\-_.,]+$/.test(value);
+            validationIndicator.textContent = isValid ? (value ? '✓' : '') : translations.translate('invalid_communication');
+            break;
+
+        default:
+            console.error('Unknown field ID:', fieldId);
+            return false;
+    }
+
+    field.classList.toggle('is-valid', isValid);
+    field.classList.toggle('is-invalid', !isValid);
 
     return isValid;
 }
 
 /**
- * Validates all form fields
- * @param {Object} inputs - Object containing input elements
+ * Validates all required fields in the form
+ * @param {Object} inputs - Object containing form input elements
  * @returns {boolean} - Whether all required fields are valid
  */
 function validateAllFields(inputs) {
+    const requiredFields = ['beneficiary_name', 'beneficiary_iban', 'amount'];
     let allValid = true;
-    for (let inputId in inputs) {
-        const field = inputs[inputId];
-        if (field.disabled) {
-            continue;
+
+    for (let fieldId of requiredFields) {
+        const field = inputs[fieldId];
+        if (!field) {
+            console.error('Required field not found:', fieldId);
+            return false;
         }
 
-        const value = field.value;
-        if (!validateField(inputId, value)) {
-            if (inputId !== 'communication') { // Don't fail validation for optional field
-                allValid = false;
-                break;
-            }
+        // For disabled fields, we consider them valid but still need their values
+        const isValid = field.disabled || validateField(fieldId, field.value);
+        if (!isValid) {
+            console.log(`Field ${fieldId} is invalid with value:`, field.value);
+            allValid = false;
         }
     }
+
+    // Communication is optional, but if present, must be valid
+    if (inputs.communication && inputs.communication.value) {
+        const isValid = validateField('communication', inputs.communication.value);
+        if (!isValid) {
+            allValid = false;
+        }
+    }
+
     return allValid;
 }
 
-export default {
+const validationModule = {
     validateField,
     validateAllFields
 };
+
+export default validationModule;

@@ -23,7 +23,6 @@ async function generateQRCode(form, submitButton, submitButtonOriginalText) {
     }
 
     // Update button state
-    const originalText = submitButton.textContent;
     submitButton.textContent = translations.translate('generating');
     submitButton.disabled = true;
 
@@ -45,16 +44,23 @@ async function generateQRCode(form, submitButton, submitButtonOriginalText) {
         }
 
         const data = await response.json();
+        console.log('QR code response:', data);
         
         if (data.success) {
-            // Update QR code container
             const qrContainer = document.getElementById('qr-code-container');
-            if (qrContainer) {
-                qrContainer.innerHTML = data.qr_code;
-                qrContainer.style.display = 'block';
-            } else {
+            if (!qrContainer) {
                 console.error('QR code container not found');
+                throw new Error(translations.translate('qr_generation_failed'));
             }
+
+            // Check if we have QR code data in the response
+            if (!data.qr_code) {
+                console.error('No QR code in response:', data);
+                throw new Error(translations.translate('qr_generation_failed'));
+            }
+
+            qrContainer.innerHTML = data.qr_code;
+            qrContainer.style.display = 'block';
         } else {
             throw new Error(data.message || translations.translate('qr_generation_failed'));
         }
