@@ -32,12 +32,14 @@ function validateField(fieldId, value) {
 
     switch (fieldId) {
         case 'beneficiary_name':
-            isValid = value && value.trim().length >= 2;
+            // Consider disabled fields valid
+            isValid = field.disabled || (value && value.trim().length >= 2);
             validationIndicator.textContent = isValid ? '✓' : translations.translate('invalid_name');
             break;
 
         case 'beneficiary_iban':
-            isValid = value && /^[A-Z]{2}[0-9]{2}[A-Z0-9]{4}[0-9]{7}([A-Z0-9]?){0,16}$/.test(value.replace(/\s/g, ''));
+            // Consider disabled fields valid
+            isValid = field.disabled || (value && /^[A-Z]{2}[0-9]{2}[A-Z0-9]{4}[0-9]{7}([A-Z0-9]?){0,16}$/.test(value.replace(/\s/g, '')));
             validationIndicator.textContent = isValid ? '✓' : translations.translate('invalid_iban');
             break;
 

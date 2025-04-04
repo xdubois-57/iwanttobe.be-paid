@@ -50,11 +50,16 @@ function loadFavorite() {
     const favorites = JSON.parse(localStorage.getItem(FAVORITES_KEY) || '[]');
 
     if (selectedIndex === '') {
-        // No favorite selected, enable inputs
+        // No favorite selected, enable inputs and reset buttons
+        console.log('No favorite selected, enabling inputs');
         nameInput.disabled = false;
         ibanInput.disabled = false;
         deleteButton.disabled = true;
         saveButton.textContent = translations.translate('save_favorite');
+        
+        // Trigger validation on enabled fields
+        nameInput.dispatchEvent(new Event('input', { bubbles: true }));
+        ibanInput.dispatchEvent(new Event('input', { bubbles: true }));
         return;
     }
 
@@ -65,6 +70,7 @@ function loadFavorite() {
     }
 
     // Load favorite data
+    console.log('Loading favorite:', favorite);
     nameInput.value = favorite.beneficiary_name;
     ibanInput.value = favorite.beneficiary_iban;
 
@@ -74,9 +80,9 @@ function loadFavorite() {
     deleteButton.disabled = false;
     saveButton.textContent = translations.translate('update_favorite');
 
-    // Trigger change events on the inputs
-    nameInput.dispatchEvent(new Event('change', { bubbles: true }));
-    ibanInput.dispatchEvent(new Event('change', { bubbles: true }));
+    // Trigger validation on disabled fields
+    nameInput.dispatchEvent(new Event('input', { bubbles: true }));
+    ibanInput.dispatchEvent(new Event('input', { bubbles: true }));
 }
 
 /**
@@ -157,26 +163,29 @@ function deleteFavorite() {
     }
 
     const selectedIndex = favoritesSelect.value;
-    if (selectedIndex === '') return;
+    if (selectedIndex === '') {
+        console.error('No favorite selected for deletion');
+        return;
+    }
 
     const favorites = JSON.parse(localStorage.getItem(FAVORITES_KEY) || '[]');
     favorites.splice(selectedIndex, 1);
     localStorage.setItem(FAVORITES_KEY, JSON.stringify(favorites));
 
     // Clear form and enable inputs
-    nameInput.value = '';
-    ibanInput.value = '';
+    formOperations.clearForm();
     nameInput.disabled = false;
     ibanInput.disabled = false;
-
-    // Trigger change events
-    nameInput.dispatchEvent(new Event('change', { bubbles: true }));
-    ibanInput.dispatchEvent(new Event('change', { bubbles: true }));
-
-    // Update UI
-    loadFavorites();
     deleteButton.disabled = true;
     saveButton.textContent = translations.translate('save_favorite');
+
+    // Reload favorites list
+    loadFavorites(favoritesSelect);
+    favoritesSelect.value = '';
+
+    // Trigger validation on enabled fields
+    nameInput.dispatchEvent(new Event('input', { bubbles: true }));
+    ibanInput.dispatchEvent(new Event('input', { bubbles: true }));
 }
 
 /**
