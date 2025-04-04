@@ -255,16 +255,19 @@ function initializeFavorites() {
     // Add event listeners
     favoritesSelect.addEventListener('change', loadFavorite);
 
-    // Listen for input changes to update save button text
-    nameInput.addEventListener('input', () => {
+    // Function to update button text
+    const updateButtonText = () => {
         updateSaveButtonText(saveButton, nameInput.value.trim(), ibanInput.value.trim());
-    });
-    ibanInput.addEventListener('input', () => {
-        updateSaveButtonText(saveButton, nameInput.value.trim(), ibanInput.value.trim());
-    });
+    };
+
+    // Listen for both input and change events to catch all value changes
+    nameInput.addEventListener('input', updateButtonText);
+    nameInput.addEventListener('change', updateButtonText);
+    ibanInput.addEventListener('input', updateButtonText);
+    ibanInput.addEventListener('change', updateButtonText);
 
     // Set initial button text
-    updateSaveButtonText(saveButton, nameInput.value.trim(), ibanInput.value.trim());
+    updateButtonText();
 }
 
 // Initialize when DOM is ready
