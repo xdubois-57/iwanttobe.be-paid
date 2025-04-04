@@ -250,27 +250,15 @@ function initializeFavorites() {
     const saveButton = document.getElementById('save-favorite');
     const nameInput = document.getElementById('beneficiary_name');
     const ibanInput = document.getElementById('beneficiary_iban');
+    const form = document.getElementById('transfer-form');
 
-    if (!favoritesSelect || !saveButton || !nameInput || !ibanInput) {
+    if (!favoritesSelect || !saveButton || !nameInput || !ibanInput || !form) {
         console.error('Missing required elements for initializing favorites');
         return;
     }
 
     // Load initial favorites
     loadFavorites(favoritesSelect);
-
-    // Add event listeners
-    favoritesSelect.addEventListener('change', () => {
-        const selectedIndex = favoritesSelect.value;
-        if (selectedIndex === '') {
-            // Enable inputs when no favorite is selected
-            nameInput.disabled = false;
-            ibanInput.disabled = false;
-            // Update button text for current values
-            updateSaveButtonText(saveButton, nameInput.value.trim(), ibanInput.value.trim());
-        }
-        loadFavorite();
-    });
 
     // Function to update button text based on current state
     const updateButtonText = () => {
@@ -289,17 +277,32 @@ function initializeFavorites() {
         updateSaveButtonText(saveButton, name, iban);
     };
 
-    // Listen for both input and change events to catch all value changes
-    const events = ['input', 'change', 'keyup'];
-    events.forEach(eventType => {
-        nameInput.addEventListener(eventType, () => {
-            console.log(`${eventType} event on nameInput`);
+    // Add event listeners
+    favoritesSelect.addEventListener('change', () => {
+        const selectedIndex = favoritesSelect.value;
+        if (selectedIndex === '') {
+            // Enable inputs when no favorite is selected
+            nameInput.disabled = false;
+            ibanInput.disabled = false;
+        }
+        loadFavorite();
+        // Update button text after loading favorite
+        updateButtonText();
+    });
+
+    // Listen for form changes
+    form.addEventListener('input', (event) => {
+        if (event.target === nameInput || event.target === ibanInput) {
+            console.log('Form input event:', event.target.id);
             updateButtonText();
-        });
-        ibanInput.addEventListener(eventType, () => {
-            console.log(`${eventType} event on ibanInput`);
+        }
+    });
+
+    form.addEventListener('change', (event) => {
+        if (event.target === nameInput || event.target === ibanInput) {
+            console.log('Form change event:', event.target.id);
             updateButtonText();
-        });
+        }
     });
 
     // Set initial button text
