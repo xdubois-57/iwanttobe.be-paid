@@ -461,6 +461,26 @@ document.addEventListener('DOMContentLoaded', function() {
         console.error('Error loading saved form data:', e);
     }
 
+    // Load favorite and generate QR code on page load
+    const selectedFavorite = localStorage.getItem('selectedFavorite');
+    if (selectedFavorite) {
+        try {
+            const favorite = JSON.parse(localStorage.getItem('favorite_' + selectedFavorite));
+            if (favorite) {
+                // Fill the form with favorite data
+                document.getElementById('beneficiary_name').value = favorite.name || '';
+                document.getElementById('beneficiary_iban').value = favorite.iban || '';
+                document.getElementById('amount').value = favorite.amount || '';
+                document.getElementById('communication').value = favorite.communication || '';
+
+                // Automatically generate QR code
+                generateQRCode();
+            }
+        } catch (e) {
+            console.error('Error loading favorite:', e);
+        }
+    }
+
     // Watch amount field changes to auto-generate QR code when favorite is selected
     inputs.amount.addEventListener('change', function() {
         if (favoritesSelect.value !== '') {
