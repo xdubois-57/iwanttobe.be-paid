@@ -47,8 +47,6 @@ document.addEventListener('DOMContentLoaded', function() {
             input.addEventListener('input', function(e) {
                 console.log(`Input event on ${inputId}:`, e.target.value);
                 validation.default.validateField(inputId, e.target.value);
-                // Enable button on any input change
-                submitButton.disabled = false;
             });
 
             // Initial validation state
@@ -77,13 +75,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 formOperations.default.clearForm(form);
                 inputs.beneficiary_name.disabled = false;
                 inputs.beneficiary_iban.disabled = false;
-                submitButton.disabled = false;
-                console.log('Enabled generate button after form clear');
             });
         }
-
-        // Initial button state
-        console.log('Initializing button state');
-        submitButton.disabled = false;
     });
 });

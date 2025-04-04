@@ -5,6 +5,52 @@ import translations from './translations.js';
 let lastGeneratedValues = null;
 
 /**
+ * Gets normalized form values as a string for comparison
+ * @param {Object} inputs - Object containing form input elements
+ * @returns {string} - Normalized string representation of form values
+ */
+function getFormValuesString(inputs) {
+    return Object.entries(inputs)
+        .map(([key, input]) => {
+            // Normalize the value: trim and remove extra spaces
+            const value = input.value.trim().replace(/\s+/g, '');
+            return `${key}:${value}`;
+        })
+        .join('|');
+}
+
+/**
+ * Checks if current form values match the last generated values
+ * @param {Object} inputs - Object containing form input elements
+ * @returns {boolean} - True if values match, false otherwise
+ */
+function formValuesMatchLastGenerated(inputs) {
+    if (!lastGeneratedValues) return false;
+    const currentValues = getFormValuesString(inputs);
+    console.log('Comparing form values:', {
+        current: currentValues,
+        last: lastGeneratedValues,
+        match: currentValues === lastGeneratedValues
+    });
+    return currentValues === lastGeneratedValues;
+}
+
+/**
+ * Updates button state based on form values
+ * @param {Object} inputs - Object containing form input elements
+ * @param {HTMLButtonElement} button - The generate button
+ */
+function updateButtonState(inputs, button) {
+    const shouldDisable = formValuesMatchLastGenerated(inputs);
+    button.disabled = shouldDisable;
+    console.log('Button state updated:', {
+        shouldDisable,
+        isDisabled: button.disabled,
+        buttonText: button.textContent
+    });
+}
+
+/**
  * Resets the right panel to show support QR
  */
 function resetRightPanel() {
@@ -31,21 +77,6 @@ function createFormData(form, inputs) {
     }
     
     return formData;
-}
-
-/**
- * Gets current form values as a string for comparison
- * @param {Object} inputs - Object containing form input elements
- * @returns {string} - String representation of form values
- */
-function getFormValuesString(inputs) {
-    return Object.entries(inputs)
-        .map(([key, input]) => {
-            // Normalize the value: trim and remove extra spaces
-            const value = input.value.trim().replace(/\s+/g, '');
-            return `${key}:${value}`;
-        })
-        .join('|');
 }
 
 /**
@@ -165,8 +196,7 @@ function initializeFormListeners() {
     // Function to handle any input change
     const handleChange = (event) => {
         console.log('Form value changed:', event.target.id, event.target.value);
-        generateButton.disabled = false;
-        console.log('Enabled generate button');
+        updateButtonState(inputs, generateButton);
     };
 
     // Add input event listeners to all form fields
@@ -185,7 +215,7 @@ function initializeFormListeners() {
 
     // Initial button state
     console.log('Initializing button state');
-    generateButton.disabled = false;
+    updateButtonState(inputs, generateButton);
 }
 
 const qrGenerator = {
