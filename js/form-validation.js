@@ -257,33 +257,31 @@ document.addEventListener('DOMContentLoaded', function() {
             const favorites = JSON.parse(localStorage.getItem(FAVORITES_KEY) || '[]');
             const favorite = favorites[selectedIndex];
             if (favorite) {
-                let allValid = true;
-                for (let inputId in inputs) {
-                    const value = favorite[inputId] || '';
-                    inputs[inputId].value = value;
-                    // Validate each field
-                    if (!validateField(inputId, value)) {
-                        allValid = false;
-                    }
-                }
-                if (allValid) {
-                    saveButton.textContent = updateButtonText;
-                }
-                deleteButton.disabled = false;
+                // Log the loaded favorite data
+                console.log('Loading favorite:', favorite);
 
-                // Automatically generate QR code when a favorite is selected
-                let isValid = true;
+                // Explicitly set each field
+                inputs.beneficiary_name.value = favorite.beneficiary_name || '';
+                inputs.beneficiary_iban.value = favorite.beneficiary_iban || '';
+                inputs.amount.value = favorite.amount || '';
+                inputs.communication.value = favorite.communication || '';
+
+                // Validate all fields
+                let allValid = true;
                 for (let inputId in inputs) {
                     const value = inputs[inputId].value;
                     if (!validateField(inputId, value)) {
-                        if (inputId !== 'communication') { // Don't break for optional field
-                            isValid = false;
+                        if (inputId !== 'communication') { // Don't fail validation for optional field
+                            allValid = false;
                             break;
                         }
                     }
                 }
 
-                if (isValid) {
+                if (allValid) {
+                    saveButton.textContent = updateButtonText;
+                    deleteButton.disabled = false;
+                    // Automatically generate QR code
                     generateQRCode();
                 }
             }
@@ -334,12 +332,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
         try {
             const favorites = JSON.parse(localStorage.getItem(FAVORITES_KEY) || '[]');
+            
+            // Get current form values
+            const name = inputs.beneficiary_name.value.trim();
+            const iban = inputs.beneficiary_iban.value.trim();
+            const amount = inputs.amount.value.trim();
+            const communication = inputs.communication.value.trim();
+
+            // Create favorite object
             const formData = {
-                beneficiary_name: inputs.beneficiary_name.value.trim(),
-                beneficiary_iban: inputs.beneficiary_iban.value.trim(),
-                amount: inputs.amount.value.trim(),
-                communication: inputs.communication.value.trim()
+                beneficiary_name: name,
+                beneficiary_iban: iban,
+                amount: amount,
+                communication: communication
             };
+
+            // Log the data being saved
+            console.log('Saving favorite:', formData);
 
             const selectedIndex = favoritesSelect.value;
             if (selectedIndex) {
