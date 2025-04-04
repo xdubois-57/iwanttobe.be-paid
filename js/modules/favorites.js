@@ -4,6 +4,32 @@ import formOperations from './form-operations.js';
 const FAVORITES_KEY = 'qr_transfer_favorites';
 
 /**
+ * Check if a favorite exists with given name and IBAN
+ * @param {string} name - Beneficiary name
+ * @param {string} iban - Beneficiary IBAN
+ * @returns {number} Index of the favorite if found, -1 otherwise
+ */
+function findFavoriteIndex(name, iban) {
+    const favorites = JSON.parse(localStorage.getItem(FAVORITES_KEY) || '[]');
+    return favorites.findIndex(f => 
+        f.beneficiary_name === name && f.beneficiary_iban === iban
+    );
+}
+
+/**
+ * Update the save button text based on whether a favorite exists
+ * @param {HTMLButtonElement} saveButton - The save button element
+ * @param {string} name - Beneficiary name
+ * @param {string} iban - Beneficiary IBAN
+ * @param {string} currentIndex - Current selected favorite index
+ */
+function updateSaveButtonText(saveButton, name, iban, currentIndex) {
+    const existingIndex = findFavoriteIndex(name, iban);
+    const isUpdate = existingIndex !== -1 && existingIndex !== parseInt(currentIndex);
+    saveButton.textContent = isUpdate ? window.t('update') : window.t('save');
+}
+
+/**
  * Save current form data as a favorite
  * @param {Object} inputs - Form input elements
  * @param {HTMLSelectElement} favoritesSelect - Favorites select element
@@ -25,13 +51,15 @@ function saveFavorite(inputs, favoritesSelect, saveButton, deleteButton) {
     const selectedIndex = favoritesSelect.value;
 
     // Check for duplicates
-    const existingIndex = favorites.findIndex(f => 
-        f.beneficiary_name === name && f.beneficiary_iban === iban
-    );
+    const existingIndex = findFavoriteIndex(name, iban);
 
     if (existingIndex !== -1 && existingIndex !== parseInt(selectedIndex)) {
-        alert(window.t('favorite_exists'));
-        return;
+        const shouldUpdate = confirm(window.t('favorite_exists_update'));
+        if (!shouldUpdate) {
+            return;
+        }
+        // Remove the existing favorite if we're going to update it
+        favorites.splice(existingIndex, 1);
     }
 
     const favorite = {
@@ -60,7 +88,7 @@ function saveFavorite(inputs, favoritesSelect, saveButton, deleteButton) {
     inputs.beneficiary_name.disabled = true;
     inputs.beneficiary_iban.disabled = true;
     deleteButton.disabled = false;
-    saveButton.textContent = window.t('update_favorite');
+    saveButton.textContent = window.t('update');
 }
 
 /**
@@ -118,7 +146,7 @@ function loadFavorite() {
         nameInput.disabled = false;
         ibanInput.disabled = false;
         deleteButton.disabled = true;
-        saveButton.textContent = window.t('save_favorite');
+        saveButton.textContent = window.t('save');
         
         // Trigger validation on enabled fields
         nameInput.dispatchEvent(new Event('input', { bubbles: true }));
@@ -143,7 +171,7 @@ function loadFavorite() {
     nameInput.disabled = true;
     ibanInput.disabled = true;
     deleteButton.disabled = false;
-    saveButton.textContent = window.t('update_favorite');
+    saveButton.textContent = window.t('update');
 
     // Trigger validation and change events on fields
     nameInput.dispatchEvent(new Event('input', { bubbles: true }));
@@ -191,7 +219,7 @@ function deleteFavorite() {
     amountInput.disabled = false;
     communicationInput.disabled = false;
     deleteButton.disabled = true;
-    saveButton.textContent = window.t('save_favorite');
+    saveButton.textContent = window.t('save');
 
     // Reload favorites list
     loadFavorites(favoritesSelect);
@@ -213,16 +241,28 @@ function deleteFavorite() {
  */
 function initializeFavorites() {
     const favoritesSelect = document.getElementById('favorites');
-    if (!favoritesSelect) {
-        console.error('Favorites select not found');
+    const saveButton = document.getElementById('save-favorite');
+    const nameInput = document.getElementById('beneficiary_name');
+    const ibanInput = document.getElementById('beneficiary_iban');
+
+    if (!favoritesSelect || !saveButton || !nameInput || !ibanInput) {
+        console.error('Missing required elements for initializing favorites');
         return;
     }
 
     // Load initial favorites
     loadFavorites(favoritesSelect);
 
-    // Add event listener for favorites selection
+    // Add event listeners
     favoritesSelect.addEventListener('change', loadFavorite);
+
+    // Listen for input changes to update save button text
+    nameInput.addEventListener('input', () => {
+        updateSaveButtonText(saveButton, nameInput.value.trim(), ibanInput.value.trim(), favoritesSelect.value);
+    });
+    ibanInput.addEventListener('input', () => {
+        updateSaveButtonText(saveButton, nameInput.value.trim(), ibanInput.value.trim(), favoritesSelect.value);
+    });
 }
 
 // Initialize when DOM is ready
@@ -233,7 +273,8 @@ const favorites = {
     loadFavorite,
     saveFavorite,
     deleteFavorite,
-    initializeFavorites
+    initializeFavorites,
+    updateSaveButtonText
 };
 
 export default favorites;
