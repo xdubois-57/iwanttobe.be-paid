@@ -72,7 +72,14 @@ function saveFavorite(inputs, favoritesSelect, saveButton, deleteButton) {
     }
     
     localStorage.setItem(constants.FAVORITES_KEY, JSON.stringify(favorites));
+    
+    // Reload and select the new favorite
     loadFavorites(favoritesSelect);
+    const newIndex = findFavoriteIndex(name, iban);
+    if (newIndex !== -1) {
+        favoritesSelect.value = newIndex;
+        loadFavorite();
+    }
 }
 
 /**
