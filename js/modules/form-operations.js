@@ -5,6 +5,9 @@ import validation from './validation.js';
  * @param {HTMLFormElement} form - The form to clear
  */
 function clearForm(form) {
+    // Clear selected favorite
+    localStorage.removeItem(constants.SELECTED_FAVORITE_KEY);
+
     // Reset form fields
     form.reset();
 

@@ -1,7 +1,9 @@
 import formOperations from './form-operations.js';
 import translations from './translations.js';
+import constants from './constants.js';
 
-const FAVORITES_KEY = 'qr_transfer_favorites';
+const FAVORITES_KEY = constants.FAVORITES_KEY;
+const SELECTED_FAVORITE_KEY = constants.SELECTED_FAVORITE_KEY;
 
 /**
  * Check if a favorite exists with given name and IBAN
@@ -108,19 +110,30 @@ function loadFavorites(favoritesSelect) {
     }
 
     const favorites = JSON.parse(localStorage.getItem(FAVORITES_KEY) || '[]');
-
-    // Clear existing options except the first one (placeholder)
-    while (favoritesSelect.options.length > 1) {
-        favoritesSelect.remove(1);
-    }
-
-    // Add favorites to select
+    
+    // Clear existing options
+    favoritesSelect.innerHTML = '';
+    
+    // Add default option
+    const defaultOption = document.createElement('option');
+    defaultOption.value = '';
+    defaultOption.textContent = translations.translate('select_favorite');
+    favoritesSelect.appendChild(defaultOption);
+    
+    // Add favorites
     favorites.forEach((favorite, index) => {
         const option = document.createElement('option');
         option.value = index;
-        option.textContent = favorite.beneficiary_name + ' - ' + favorite.beneficiary_iban;
+        option.textContent = `${favorite.beneficiary_name} (${favorite.beneficiary_iban})`;
         favoritesSelect.appendChild(option);
     });
+    
+    // Restore selected favorite if any
+    const selectedIndex = localStorage.getItem(SELECTED_FAVORITE_KEY);
+    if (selectedIndex !== null && favoritesSelect.options[selectedIndex]) {
+        favoritesSelect.value = selectedIndex;
+        loadFavorite();
+    }
 }
 
 /**
@@ -143,7 +156,13 @@ function loadFavorite() {
     }
 
     const selectedIndex = favoritesSelect.value;
-    const favorites = JSON.parse(localStorage.getItem(FAVORITES_KEY) || '[]');
+    
+    // Save selected favorite
+    if (selectedIndex) {
+        localStorage.setItem(SELECTED_FAVORITE_KEY, selectedIndex);
+    } else {
+        localStorage.removeItem(SELECTED_FAVORITE_KEY);
+    }
 
     if (selectedIndex === '') {
         // No favorite selected
@@ -152,6 +171,8 @@ function loadFavorite() {
         deleteButton.disabled = true;
         return;
     }
+
+    const favorites = JSON.parse(localStorage.getItem(FAVORITES_KEY) || '[]');
 
     const favorite = favorites[selectedIndex];
     if (!favorite) {
