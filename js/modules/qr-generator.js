@@ -40,7 +40,7 @@ function createFormData(form, inputs) {
  */
 function getFormValuesString(inputs) {
     return Object.entries(inputs)
-        .map(([key, input]) => `${key}:${input.value}`)
+        .map(([key, input]) => `${key}:${input.value.trim()}`)
         .join('|');
 }
 
@@ -52,15 +52,22 @@ function getFormValuesString(inputs) {
 function updateGenerateButtonState(inputs, generateButton) {
     if (!generateButton) return;
 
-    // If there are no last generated values, enable the button
+    // Always enable if no last values
     if (!lastGeneratedValues) {
         generateButton.disabled = false;
         return;
     }
 
     const currentValues = getFormValuesString(inputs);
-    // Enable button if current values are different from last generated values
-    generateButton.disabled = currentValues === lastGeneratedValues;
+    const shouldEnable = currentValues !== lastGeneratedValues;
+    
+    console.log('Button state update:', {
+        currentValues,
+        lastGeneratedValues,
+        shouldEnable
+    });
+
+    generateButton.disabled = !shouldEnable;
 }
 
 /**
@@ -138,8 +145,6 @@ async function generateQRCode(form, submitButton, submitButtonOriginalText) {
 
             // Store the current values as last generated
             lastGeneratedValues = getFormValuesString(inputs);
-            // Update button state after successful generation
-            updateGenerateButtonState(inputs, submitButton);
         } else {
             throw new Error(data.message || data.error || translations.translate('qr_generation_failed'));
         }
@@ -151,7 +156,7 @@ async function generateQRCode(form, submitButton, submitButtonOriginalText) {
         // Reset last generated values on error
         lastGeneratedValues = null;
     } finally {
-        // Reset button state
+        // Reset button text
         submitButton.textContent = submitButtonOriginalText;
         // Update button state
         updateGenerateButtonState(inputs, submitButton);
@@ -173,22 +178,38 @@ function initializeFormListeners() {
         communication: document.getElementById('communication')
     };
 
+    // Function to handle any input change
+    const handleChange = () => {
+        console.log('Form values changed');
+        updateGenerateButtonState(inputs, generateButton);
+    };
+
     // Add input event listeners to all form fields
     Object.values(inputs).forEach(input => {
         if (input) {
-            ['input', 'change'].forEach(eventType => {
-                input.addEventListener(eventType, () => {
-                    updateGenerateButtonState(inputs, generateButton);
-                });
-            });
+            input.addEventListener('input', handleChange);
+            input.addEventListener('change', handleChange);
         }
     });
 
+    // Listen for favorites changes
+    const favoritesSelect = document.getElementById('favorites');
+    if (favoritesSelect) {
+        favoritesSelect.addEventListener('change', handleChange);
+    }
+
     // Reset last generated values when form is cleared
-    document.getElementById('clear-form')?.addEventListener('click', () => {
-        lastGeneratedValues = null;
-        updateGenerateButtonState(inputs, generateButton);
-    });
+    const clearButton = document.getElementById('clear-form');
+    if (clearButton) {
+        clearButton.addEventListener('click', () => {
+            console.log('Form cleared');
+            lastGeneratedValues = null;
+            updateGenerateButtonState(inputs, generateButton);
+        });
+    }
+
+    // Initial button state
+    updateGenerateButtonState(inputs, generateButton);
 }
 
 const qrGenerator = {
