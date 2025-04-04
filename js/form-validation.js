@@ -45,6 +45,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.log(`Input event on ${inputId}:`, e.target.value);
                 validation.default.validateField(inputId, e.target.value);
                 qrGenerator.default.updateButtonState(inputs, submitButton);
+                
+                // Update save button text when name or IBAN changes
+                if (inputId === 'beneficiary_name' || inputId === 'beneficiary_iban') {
+                    favorites.default.updateSaveButtonText(saveButton, inputs.beneficiary_name.value.trim(), inputs.beneficiary_iban.value.trim());
+                }
             });
 
             // Initial validation state
@@ -58,6 +63,9 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('Form change event triggered');
             formStorage.default.saveFormData(form);
             qrGenerator.default.updateButtonState(inputs, submitButton);
+            
+            // Update save button text on change events too
+            favorites.default.updateSaveButtonText(saveButton, inputs.beneficiary_name.value.trim(), inputs.beneficiary_iban.value.trim());
         });
 
         // Listen for favorites changes

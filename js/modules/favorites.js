@@ -260,23 +260,6 @@ function initializeFavorites() {
     // Load initial favorites
     loadFavorites(favoritesSelect);
 
-    // Function to update button text based on current state
-    const updateButtonText = () => {
-        const name = nameInput.value.trim();
-        const iban = ibanInput.value.trim();
-        const selectedIndex = favoritesSelect.value;
-        console.log('updateButtonText called:', { name, iban, selectedIndex });
-
-        // If a favorite is selected, always show "update"
-        if (selectedIndex !== '') {
-            saveButton.textContent = translations.translate('update_favorite');
-            return;
-        }
-
-        // Otherwise, check if this name+IBAN combination exists
-        updateSaveButtonText(saveButton, name, iban);
-    };
-
     // Add event listeners
     favoritesSelect.addEventListener('change', () => {
         const selectedIndex = favoritesSelect.value;
@@ -284,35 +267,21 @@ function initializeFavorites() {
             // Enable inputs when no favorite is selected
             nameInput.disabled = false;
             ibanInput.disabled = false;
+            // Update button text for current values
+            updateSaveButtonText(saveButton, nameInput.value.trim(), ibanInput.value.trim());
         }
         loadFavorite();
-        // Update button text after loading favorite
-        updateButtonText();
-    });
-
-    // Listen for form changes
-    form.addEventListener('input', (event) => {
-        if (event.target === nameInput || event.target === ibanInput) {
-            console.log('Form input event:', event.target.id);
-            updateButtonText();
-        }
-    });
-
-    form.addEventListener('change', (event) => {
-        if (event.target === nameInput || event.target === ibanInput) {
-            console.log('Form change event:', event.target.id);
-            updateButtonText();
-        }
     });
 
     // Set initial button text
-    updateButtonText();
+    updateSaveButtonText(saveButton, nameInput.value.trim(), ibanInput.value.trim());
 }
 
 // Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', initializeFavorites);
 
-const favorites = {
+// Export functions
+export default {
     loadFavorites,
     loadFavorite,
     saveFavorite,
@@ -320,5 +289,3 @@ const favorites = {
     initializeFavorites,
     updateSaveButtonText
 };
-
-export default favorites;
