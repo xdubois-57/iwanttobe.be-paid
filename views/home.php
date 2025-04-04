@@ -68,13 +68,13 @@ require_once __DIR__ . '/header.php';
                             <button type="submit" id="generate-qr-button"><?php echo $lang->translate('generate_qr'); ?></button>
                         </div>
                         <div class="secondary-button-row">
-                            <button type="button" onclick="clearForm()" class="secondary outline" id="clear-form">
+                            <button type="button" class="secondary outline" id="clear-form">
                                 <?php echo $lang->translate('clear_form'); ?>
                             </button>
-                            <button type="button" onclick="saveFavorite()" class="secondary outline" id="save-favorite" data-update-text="<?php echo $lang->translate('update_favorite'); ?>">
+                            <button type="button" class="secondary outline" id="save-favorite" data-update-text="<?php echo $lang->translate('update_favorite'); ?>">
                                 <?php echo $lang->translate('save_favorite'); ?>
                             </button>
-                            <button type="button" onclick="deleteFavorite()" class="secondary outline" id="delete-favorite" disabled>
+                            <button type="button" class="secondary outline" id="delete-favorite" disabled>
                                 <?php echo $lang->translate('delete_favorite'); ?>
                             </button>
                         </div>
@@ -131,168 +131,6 @@ require_once __DIR__ . '/header.php';
         </div>
     </div>
 </main>
-
-<style>
-    .form-container {
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .form-container form {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-        height: 100%;
-    }
-
-    .favorites-container {
-        margin-bottom: 1rem;
-    }
-
-    .favorites-container select {
-        width: 100%;
-        margin: 0;
-    }
-
-    .button-container {
-        display: flex;
-        flex-direction: column;
-        gap: 0.1rem;
-        margin-top: 1rem;
-    }
-
-    .primary-button-row {
-        display: flex;
-        justify-content: center;
-        margin-bottom: -0.2rem;
-    }
-
-    .primary-button-row button {
-        width: 100%;
-        max-width: 600px;
-    }
-
-    .secondary-button-row {
-        display: flex;
-        justify-content: center;
-        gap: 0.5rem;
-        width: 100%;
-        max-width: 600px;
-        margin: 0 auto;
-    }
-
-    .secondary-button-row button {
-        flex: 1;
-    }
-
-    .input-container {
-        display: grid;
-        grid-template-columns: 1fr 24px;
-        gap: 0.5rem;
-        align-items: center;
-    }
-
-    .input-container input {
-        margin: 0;
-    }
-
-    .qr-display {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: 2rem;
-        height: 100%;
-    }
-
-    #support-qr, #user-qr {
-        width: 100%;
-        max-width: 400px;
-        margin: 0 auto;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 1.5rem;
-    }
-
-    .support-message {
-        font-size: 1.1em;
-        margin-bottom: 1rem;
-        max-width: 400px;
-        line-height: 1.4;
-    }
-
-    .support-message.clickable {
-        cursor: pointer;
-        color: var(--primary);
-        text-decoration: underline;
-    }
-
-    .support-message.clickable:hover {
-        opacity: 0.8;
-    }
-
-    .qr-wrapper {
-        width: 100%;
-        max-width: 300px;
-        margin: 0 auto;
-    }
-
-    .support-qr, #qr-image {
-        width: 100%;
-        height: auto;
-        border-radius: var(--border-radius);
-    }
-
-    .button-wrapper {
-        margin-top: 1rem;
-    }
-
-    .text-center {
-        text-align: center;
-    }
-
-    [data-share] {
-        margin: 0 auto;
-    }
-
-    /* Validation indicators */
-    .validation-indicator {
-        width: 16px;
-        height: 16px;
-        border-radius: 50%;
-        display: none;
-    }
-
-    .validation-indicator.valid {
-        display: block;
-        background-color: var(--form-valid-color, #2ecc71);
-    }
-
-    .validation-indicator.invalid {
-        display: block;
-        background-color: var(--form-invalid-color, #e74c3c);
-    }
-
-    .qr-caption {
-        margin-top: 1rem;
-        color: var(--muted-color);
-        font-size: 0.9em;
-    }
-
-    @media (max-width: 768px) {
-        #qr-placeholder img, #qr-code img {
-            max-height: 300px;
-        }
-        .secondary-button-row {
-            flex-direction: column;
-        }
-        .secondary-button-row button {
-            width: 100%;
-        }
-    }
-</style>
 
 <script src="js/form-validation.js"></script>
 

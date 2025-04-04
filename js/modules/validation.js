@@ -9,22 +9,8 @@ import translations from './translations.js';
  */
 function validateField(fieldId, value) {
     const field = document.getElementById(fieldId);
-    if (!field) return false;
-
-    // Skip validation for disabled fields (they are considered valid)
-    if (field.disabled) {
-        const validationIndicator = field.nextElementSibling;
-        if (validationIndicator && validationIndicator.classList.contains('validation-indicator')) {
-            validationIndicator.textContent = '✓';
-            field.classList.add('is-valid');
-            field.classList.remove('is-invalid');
-        }
-        return true;
-    }
-
-    const validationIndicator = field.nextElementSibling;
-    if (!validationIndicator || !validationIndicator.classList.contains('validation-indicator')) {
-        console.error('No validation indicator found for field:', fieldId);
+    if (!field) {
+        console.error('Field not found:', fieldId);
         return false;
     }
 
@@ -34,24 +20,20 @@ function validateField(fieldId, value) {
         case 'beneficiary_name':
             // Consider disabled fields valid
             isValid = field.disabled || (value && value.trim().length >= 2);
-            validationIndicator.textContent = isValid ? '✓' : translations.translate('invalid_name');
             break;
 
         case 'beneficiary_iban':
             // Consider disabled fields valid
             isValid = field.disabled || (value && /^[A-Z]{2}[0-9]{2}[A-Z0-9]{4}[0-9]{7}([A-Z0-9]?){0,16}$/.test(value.replace(/\s/g, '')));
-            validationIndicator.textContent = isValid ? '✓' : translations.translate('invalid_iban');
             break;
 
         case 'amount':
             isValid = value && /^\d+(\.\d{0,2})?$/.test(value) && parseFloat(value) > 0;
-            validationIndicator.textContent = isValid ? '✓' : translations.translate('invalid_amount');
             break;
 
         case 'communication':
             // Communication is optional, so empty is valid
             isValid = !value || /^[A-Za-z0-9\s\-_.,]+$/.test(value);
-            validationIndicator.textContent = isValid ? (value ? '✓' : '') : translations.translate('invalid_communication');
             break;
 
         default:
@@ -59,8 +41,16 @@ function validateField(fieldId, value) {
             return false;
     }
 
-    field.classList.toggle('is-valid', isValid);
-    field.classList.toggle('is-invalid', !isValid);
+    field.setAttribute('aria-invalid', !isValid);
+    
+    // Remove any custom classes
+    field.classList.remove('is-valid', 'is-invalid');
+
+    // Also toggle on the parent container for better CSS targeting
+    if (field.parentNode.classList.contains('input-container')) {
+        field.parentNode.classList.toggle('has-valid', isValid);
+        field.parentNode.classList.toggle('has-invalid', !isValid);
+    }
 
     return isValid;
 }

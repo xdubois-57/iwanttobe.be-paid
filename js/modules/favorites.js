@@ -31,7 +31,8 @@ function findFavoriteIndex(name, iban) {
 function updateSaveButtonText(saveButton, name, iban) {
     console.log('updateSaveButtonText called with:', { name, iban });
     const existingIndex = findFavoriteIndex(name, iban);
-    const newText = existingIndex !== -1 ? translations.translate('update_favorite') : translations.translate('save_favorite');
+    const exists = existingIndex !== -1;
+    const newText = exists ? translations.translate('update_favorite') : translations.translate('save_favorite');
     console.log('Setting button text to:', newText);
     saveButton.textContent = newText;
 }
@@ -44,58 +45,33 @@ function updateSaveButtonText(saveButton, name, iban) {
  * @param {HTMLButtonElement} deleteButton - Delete button element
  */
 function saveFavorite(inputs, favoritesSelect, saveButton, deleteButton) {
-    const name = inputs.beneficiary_name.value.trim();
-    const iban = inputs.beneficiary_iban.value.trim();
-    const amount = inputs.amount.value.trim();
-    const communication = inputs.communication.value.trim();
-
+    const name = inputs.beneficiary_name?.value?.trim();
+    const iban = inputs.beneficiary_iban?.value?.trim();
+    
     if (!name || !iban) {
-        alert(translations.translate('fill_required_fields'));
+        console.error('Missing required fields');
         return;
     }
-
-    let favorites = JSON.parse(localStorage.getItem(FAVORITES_KEY) || '[]');
-    const selectedIndex = favoritesSelect.value;
-
-    // Check for duplicates
-    const existingIndex = findFavoriteIndex(name, iban);
-
-    if (existingIndex !== -1 && existingIndex !== parseInt(selectedIndex)) {
-        const shouldUpdate = confirm(translations.translate('favorite_exists_update'));
-        if (!shouldUpdate) {
-            return;
-        }
-        // Remove the existing favorite if we're going to update it
-        favorites.splice(existingIndex, 1);
-    }
-
+    
     const favorite = {
         beneficiary_name: name,
         beneficiary_iban: iban,
-        amount: amount,
-        communication: communication
+        amount: inputs.amount?.value?.trim() || '',
+        communication: inputs.communication?.value?.trim() || ''
     };
-
-    if (selectedIndex !== '') {
-        // Update existing favorite
-        favorites[selectedIndex] = favorite;
+    
+    let favorites = JSON.parse(localStorage.getItem(constants.FAVORITES_KEY) || '[]');
+    const existingIndex = findFavoriteIndex(name, iban);
+    
+    if (existingIndex >= 0) {
+        if (!confirm(translations.translate('favorite_exists_update'))) return;
+        favorites[existingIndex] = favorite;
     } else {
-        // Add new favorite
         favorites.push(favorite);
     }
-
-    localStorage.setItem(FAVORITES_KEY, JSON.stringify(favorites));
+    
+    localStorage.setItem(constants.FAVORITES_KEY, JSON.stringify(favorites));
     loadFavorites(favoritesSelect);
-
-    // Select the saved favorite
-    const newIndex = selectedIndex !== '' ? selectedIndex : (favorites.length - 1).toString();
-    favoritesSelect.value = newIndex;
-
-    // Update UI state
-    inputs.beneficiary_name.disabled = true;
-    inputs.beneficiary_iban.disabled = true;
-    deleteButton.disabled = false;
-    saveButton.textContent = translations.translate('update_favorite_button_text');
 }
 
 /**
@@ -109,7 +85,9 @@ function loadFavorites(favoritesSelect) {
         return;
     }
 
-    const favorites = JSON.parse(localStorage.getItem(FAVORITES_KEY) || '[]');
+    const favorites = JSON.parse(localStorage.getItem(FAVORITES_KEY) || '[]').filter(f => 
+        f?.beneficiary_name && f?.beneficiary_iban
+    );
     
     // Clear existing options
     favoritesSelect.innerHTML = '';
@@ -120,13 +98,18 @@ function loadFavorites(favoritesSelect) {
     defaultOption.textContent = translations.translate('select_favorite');
     favoritesSelect.appendChild(defaultOption);
     
-    // Add favorites
+    // Add validated favorites
     favorites.forEach((favorite, index) => {
         const option = document.createElement('option');
         option.value = index;
         option.textContent = `${favorite.beneficiary_name} (${favorite.beneficiary_iban})`;
         favoritesSelect.appendChild(option);
     });
+    
+    // Update storage with cleaned favorites if any were removed
+    if (favorites.length !== JSON.parse(localStorage.getItem(constants.FAVORITES_KEY) || '[]').length) {
+        localStorage.setItem(constants.FAVORITES_KEY, JSON.stringify(favorites));
+    }
     
     // Restore selected favorite if any
     const selectedIndex = localStorage.getItem(SELECTED_FAVORITE_KEY);
@@ -142,42 +125,48 @@ function loadFavorites(favoritesSelect) {
 function loadFavorite() {
     console.log('loadFavorite called');
     const favoritesSelect = document.getElementById('favorites');
-    const deleteButton = document.getElementById('delete-favorite');
-    const saveButton = document.getElementById('save-favorite');
+    const selectedIndex = favoritesSelect?.value;
+    
+    if (!favoritesSelect) return;
+    
     const nameInput = document.getElementById('beneficiary_name');
     const ibanInput = document.getElementById('beneficiary_iban');
+    const saveButton = document.getElementById('save-favorite');
+    
+    if (selectedIndex === '') {
+        // No favorite selected - enable fields
+        nameInput.disabled = false;
+        ibanInput.disabled = false;
+        saveButton.disabled = !(nameInput.value && ibanInput.value);
+        return;
+    }
+    
+    const favorites = JSON.parse(localStorage.getItem(constants.FAVORITES_KEY) || '[]');
+    const favorite = favorites[selectedIndex];
+    
+    if (!favorite?.beneficiary_name || !favorite?.beneficiary_iban) {
+        console.error('Invalid favorite at index', selectedIndex);
+        favorites.splice(selectedIndex, 1);
+        localStorage.setItem(constants.FAVORITES_KEY, JSON.stringify(favorites));
+        loadFavorites(favoritesSelect);
+        return;
+    }
+    
+    const deleteButton = document.getElementById('delete-favorite');
     const amountInput = document.getElementById('amount');
     const communicationInput = document.getElementById('communication');
     const form = document.getElementById('transfer-form');
 
-    if (!favoritesSelect || !deleteButton || !saveButton || !nameInput || !ibanInput || !form) {
+    if (!deleteButton || !saveButton || !nameInput || !ibanInput || !form) {
         console.error('Missing required elements for loading favorite');
         return;
     }
 
-    const selectedIndex = favoritesSelect.value;
-    
     // Save selected favorite
     if (selectedIndex) {
         localStorage.setItem(SELECTED_FAVORITE_KEY, selectedIndex);
     } else {
         localStorage.removeItem(SELECTED_FAVORITE_KEY);
-    }
-
-    if (selectedIndex === '') {
-        // No favorite selected
-        nameInput.disabled = false;
-        ibanInput.disabled = false;
-        deleteButton.disabled = true;
-        return;
-    }
-
-    const favorites = JSON.parse(localStorage.getItem(FAVORITES_KEY) || '[]');
-
-    const favorite = favorites[selectedIndex];
-    if (!favorite) {
-        console.error('Selected favorite not found:', selectedIndex);
-        return;
     }
 
     // Load all favorite data first
@@ -190,7 +179,7 @@ function loadFavorite() {
     nameInput.disabled = true;
     ibanInput.disabled = true;
     deleteButton.disabled = false;
-    saveButton.textContent = translations.translate('update_favorite_button_text');
+    saveButton.textContent = translations.translate('update_favorite');
 
     // Trigger validation once after all fields are set
     setTimeout(() => {
@@ -204,53 +193,37 @@ function loadFavorite() {
 /**
  * Deletes the currently selected favorite
  */
-function deleteFavorite() {
-    const favoritesSelect = document.getElementById('favorites');
-    const deleteButton = document.getElementById('delete-favorite');
-    const saveButton = document.getElementById('save-favorite');
-    const nameInput = document.getElementById('beneficiary_name');
-    const ibanInput = document.getElementById('beneficiary_iban');
-    const amountInput = document.getElementById('amount');
-    const communicationInput = document.getElementById('communication');
-    const form = document.getElementById('transfer-form');
-
-    if (!favoritesSelect || !deleteButton || !saveButton || !nameInput || !ibanInput || !form) {
-        console.error('Missing required elements for deleting favorite');
-        return;
-    }
-
-    const selectedIndex = favoritesSelect.value;
-    if (selectedIndex === '') {
-        console.error('No favorite selected for deletion');
-        return;
-    }
-
-    const favorites = JSON.parse(localStorage.getItem(FAVORITES_KEY) || '[]');
-    favorites.splice(selectedIndex, 1);
-    localStorage.setItem(FAVORITES_KEY, JSON.stringify(favorites));
-
-    // Clear form and enable inputs
-    formOperations.default.clearForm(form);
-    nameInput.disabled = false;
-    ibanInput.disabled = false;
-    amountInput.disabled = false;
-    communicationInput.disabled = false;
-    deleteButton.disabled = true;
-    updateSaveButtonText(saveButton, '', '');
-
-    // Reload favorites list
-    loadFavorites(favoritesSelect);
-    favoritesSelect.value = '';
-
-    // Trigger validation and change events on fields
-    nameInput.dispatchEvent(new Event('input', { bubbles: true }));
-    ibanInput.dispatchEvent(new Event('input', { bubbles: true }));
-    amountInput.dispatchEvent(new Event('input', { bubbles: true }));
-    communicationInput.dispatchEvent(new Event('input', { bubbles: true }));
-    nameInput.dispatchEvent(new Event('change', { bubbles: true }));
-    ibanInput.dispatchEvent(new Event('change', { bubbles: true }));
-    amountInput.dispatchEvent(new Event('change', { bubbles: true }));
-    communicationInput.dispatchEvent(new Event('change', { bubbles: true }));
+function deleteFavorite(formOperations) {
+    return function() {
+        const favoritesSelect = document.getElementById('favorites');
+        if (!favoritesSelect) {
+            console.error('Favorites select element not found');
+            return;
+        }
+        
+        const selectedIndex = favoritesSelect.selectedIndex - 1; // Account for default option
+        
+        if (selectedIndex < 0) {
+            console.error('Please select a favorite to delete');
+            return;
+        }
+        
+        const favorites = JSON.parse(localStorage.getItem(constants.FAVORITES_KEY) || '[]');
+        
+        if (selectedIndex >= 0 && selectedIndex < favorites.length) {
+            favorites.splice(selectedIndex, 1);
+            localStorage.setItem(constants.FAVORITES_KEY, JSON.stringify(favorites));
+            
+            // Clear form
+            const form = document.getElementById('transfer-form');
+            if (formOperations?.default?.clearForm && form) {
+                formOperations.default.clearForm(form);
+            }
+            
+            // Reset UI
+            loadFavorites(favoritesSelect);
+        }
+    };
 }
 
 /**
@@ -315,10 +288,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Export functions
 export default {
+    findFavoriteIndex,
+    updateSaveButtonText,
+    saveFavorite,
     loadFavorites,
     loadFavorite,
-    saveFavorite,
-    deleteFavorite,
-    initializeFavorites,
-    updateSaveButtonText
+    deleteFavorite: (formOperations) => deleteFavorite(formOperations),
+    initializeFavorites
 };

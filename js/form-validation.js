@@ -39,6 +39,17 @@ document.addEventListener('DOMContentLoaded', function() {
         // Initialize favorites
         favorites.default.loadFavorites(favoritesSelect);
 
+        // Initialize validation indicators
+        ['beneficiary_name', 'beneficiary_iban', 'amount', 'communication'].forEach(fieldId => {
+            const field = document.getElementById(fieldId);
+            if (field) {
+                const indicator = document.createElement('span');
+                indicator.className = 'validation-indicator';
+                field.insertAdjacentElement('afterend', indicator);
+                validation.default.validateField(fieldId, field.value);
+            }
+        });
+
         // Set up event handlers
         form.addEventListener('submit', function(e) {
             e.preventDefault();
@@ -90,6 +101,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 favoritesSelect.value = '';
                 deleteButton.disabled = true;
                 saveButton.textContent = window.t('save_favorite');
+                
+                // Reset validation states
+                validation.default.validateField('beneficiary_name', '');
+                validation.default.validateField('beneficiary_iban', '');
+                validation.default.validateField('amount', '');
+                validation.default.validateField('communication', '');
             });
         }
 
@@ -100,7 +117,25 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Delete favorite handler
         deleteButton.addEventListener('click', () => {
-            favorites.default.deleteFavorite();
+            if (favoritesSelect.selectedIndex > 0) {
+                favorites.default.deleteFavorite()(formOperations);
+            }
         });
+
+        function validateForm() {
+            const nameValid = validation.default.validateField('beneficiary_name', inputs.beneficiary_name.value);
+            const ibanValid = validation.default.validateField('beneficiary_iban', inputs.beneficiary_iban.value);
+            const saveButton = document.getElementById('save-favorite');
+            
+            if (saveButton) {
+                saveButton.disabled = !(nameValid && ibanValid);
+            }
+        }
+
+        // Add input event listeners for save button validation
+        for (let inputId in inputs) {
+            const input = inputs[inputId];
+            input.addEventListener('input', validateForm);
+        }
     });
 });
