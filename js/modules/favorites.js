@@ -10,6 +10,7 @@ const FAVORITES_KEY = 'qr_transfer_favorites';
  * @returns {number} Index of the favorite if found, -1 otherwise
  */
 function findFavoriteIndex(name, iban) {
+    if (!name || !iban) return -1;
     const favorites = JSON.parse(localStorage.getItem(FAVORITES_KEY) || '[]');
     return favorites.findIndex(f => 
         f.beneficiary_name === name && f.beneficiary_iban === iban
@@ -21,12 +22,10 @@ function findFavoriteIndex(name, iban) {
  * @param {HTMLButtonElement} saveButton - The save button element
  * @param {string} name - Beneficiary name
  * @param {string} iban - Beneficiary IBAN
- * @param {string} currentIndex - Current selected favorite index
  */
-function updateSaveButtonText(saveButton, name, iban, currentIndex) {
+function updateSaveButtonText(saveButton, name, iban) {
     const existingIndex = findFavoriteIndex(name, iban);
-    const isUpdate = existingIndex !== -1 && existingIndex !== parseInt(currentIndex);
-    saveButton.textContent = isUpdate ? translations.translate('update_favorite') : translations.translate('save_favorite');
+    saveButton.textContent = existingIndex !== -1 ? translations.translate('update_favorite') : translations.translate('save_favorite');
 }
 
 /**
@@ -146,7 +145,7 @@ function loadFavorite() {
         nameInput.disabled = false;
         ibanInput.disabled = false;
         deleteButton.disabled = true;
-        saveButton.textContent = translations.translate('save_favorite');
+        updateSaveButtonText(saveButton, nameInput.value.trim(), ibanInput.value.trim());
         
         // Trigger validation on enabled fields
         nameInput.dispatchEvent(new Event('input', { bubbles: true }));
@@ -171,7 +170,7 @@ function loadFavorite() {
     nameInput.disabled = true;
     ibanInput.disabled = true;
     deleteButton.disabled = false;
-    saveButton.textContent = translations.translate('update_favorite');
+    updateSaveButtonText(saveButton, nameInput.value.trim(), ibanInput.value.trim());
 
     // Trigger validation and change events on fields
     nameInput.dispatchEvent(new Event('input', { bubbles: true }));
@@ -219,7 +218,7 @@ function deleteFavorite() {
     amountInput.disabled = false;
     communicationInput.disabled = false;
     deleteButton.disabled = true;
-    saveButton.textContent = translations.translate('save_favorite');
+    updateSaveButtonText(saveButton, '', '');
 
     // Reload favorites list
     loadFavorites(favoritesSelect);
@@ -258,11 +257,14 @@ function initializeFavorites() {
 
     // Listen for input changes to update save button text
     nameInput.addEventListener('input', () => {
-        updateSaveButtonText(saveButton, nameInput.value.trim(), ibanInput.value.trim(), favoritesSelect.value);
+        updateSaveButtonText(saveButton, nameInput.value.trim(), ibanInput.value.trim());
     });
     ibanInput.addEventListener('input', () => {
-        updateSaveButtonText(saveButton, nameInput.value.trim(), ibanInput.value.trim(), favoritesSelect.value);
+        updateSaveButtonText(saveButton, nameInput.value.trim(), ibanInput.value.trim());
     });
+
+    // Set initial button text
+    updateSaveButtonText(saveButton, nameInput.value.trim(), ibanInput.value.trim());
 }
 
 // Initialize when DOM is ready
