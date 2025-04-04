@@ -260,11 +260,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Log the loaded favorite data
                 console.log('Loading favorite:', favorite);
 
-                // Explicitly set each field
+                // Set text fields
                 inputs.beneficiary_name.value = favorite.beneficiary_name || '';
                 inputs.beneficiary_iban.value = favorite.beneficiary_iban || '';
-                inputs.amount.value = favorite.amount || '';
                 inputs.communication.value = favorite.communication || '';
+
+                // Handle amount field specially (convert to number)
+                const amount = parseFloat(favorite.amount);
+                inputs.amount.value = isNaN(amount) ? '' : amount.toFixed(2);
 
                 // Validate all fields
                 let allValid = true;
@@ -336,7 +339,8 @@ document.addEventListener('DOMContentLoaded', function() {
             // Get current form values
             const name = inputs.beneficiary_name.value.trim();
             const iban = inputs.beneficiary_iban.value.trim();
-            const amount = inputs.amount.value.trim();
+            const amountValue = parseFloat(inputs.amount.value.trim());
+            const amount = isNaN(amountValue) ? '' : amountValue.toFixed(2);
             const communication = inputs.communication.value.trim();
 
             // Create favorite object
