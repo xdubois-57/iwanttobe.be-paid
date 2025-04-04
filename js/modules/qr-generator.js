@@ -24,19 +24,17 @@ function generateQRCode(form, submitButton, submitButtonOriginalText) {
     .then(data => {
         console.log('QR code response:', data);
         if (data.success) {
-            const qrDisplay = document.getElementById('qr-display');
-            const qrImage = document.getElementById('qr-image');
-            const qrDownload = document.getElementById('qr-download');
-            const qrShare = document.getElementById('qr-share');
             const supportQr = document.getElementById('support-qr');
+            const userQr = document.getElementById('user-qr');
+            const qrImage = document.getElementById('qr-image');
+            const shareQr = document.getElementById('share-qr');
 
-            if (!qrImage || !qrDownload || !qrDisplay || !qrShare || !supportQr) {
+            if (!qrImage || !userQr || !supportQr || !shareQr) {
                 console.error('Missing QR code elements:', {
-                    qrDisplay: !!qrDisplay,
+                    userQr: !!userQr,
                     qrImage: !!qrImage,
-                    qrDownload: !!qrDownload,
-                    qrShare: !!qrShare,
-                    supportQr: !!supportQr
+                    supportQr: !!supportQr,
+                    shareQr: !!shareQr
                 });
                 throw new Error(translations.translate('error_generating_qr'));
             }
@@ -49,9 +47,8 @@ function generateQRCode(form, submitButton, submitButtonOriginalText) {
             }
 
             qrImage.src = imageUrl;
-            qrDownload.href = imageUrl;
-            qrShare.style.display = 'block';
-            qrDisplay.style.display = 'block';
+            shareQr.dataset.image = imageUrl;
+            userQr.style.display = 'block';
             supportQr.style.display = 'none';
             return true;
         } else {
