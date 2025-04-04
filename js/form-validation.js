@@ -154,10 +154,21 @@ document.addEventListener('DOMContentLoaded', function() {
     const deleteButton = document.getElementById('delete-favorite');
     const saveButtonOriginalText = saveButton.textContent;
     const updateButtonText = saveButton.getAttribute('data-update-text');
+
+    // Debug amount field properties
+    const amountField = document.getElementById('amount');
+    console.log('Amount field properties:', {
+        type: amountField.type,
+        readOnly: amountField.readOnly,
+        disabled: amountField.disabled,
+        value: amountField.value,
+        defaultValue: amountField.defaultValue
+    });
+
     const inputs = {
         beneficiary_name: document.getElementById('beneficiary_name'),
         beneficiary_iban: document.getElementById('beneficiary_iban'),
-        amount: document.getElementById('amount'),
+        amount: amountField,
         communication: document.getElementById('communication')
     };
 
@@ -267,14 +278,37 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 // Handle amount field specially (convert to number)
                 const amountField = document.getElementById('amount');
+                console.log('Amount field element:', amountField);
+                
                 const amount = parseFloat(favorite.amount);
+                console.log('Parsed amount:', amount);
+                
                 if (!isNaN(amount)) {
-                    amountField.value = amount.toFixed(2);
-                    // Trigger input event to ensure validation runs
-                    amountField.dispatchEvent(new Event('input', { bubbles: true }));
-                    console.log('Setting amount field to:', amount.toFixed(2));
+                    const formattedAmount = amount.toFixed(2);
+                    console.log('Setting amount field value to:', formattedAmount);
+                    
+                    // Try multiple ways to set the value
+                    amountField.value = formattedAmount;
+                    console.log('Amount field value after direct set:', amountField.value);
+                    
+                    // Force a DOM update
+                    setTimeout(() => {
+                        amountField.value = formattedAmount;
+                        console.log('Amount field value after timeout:', amountField.value);
+                        
+                        // Trigger input event
+                        const event = new Event('input', { bubbles: true });
+                        amountField.dispatchEvent(event);
+                        console.log('Input event dispatched');
+                        
+                        // Trigger change event
+                        const changeEvent = new Event('change', { bubbles: true });
+                        amountField.dispatchEvent(changeEvent);
+                        console.log('Change event dispatched');
+                    }, 0);
                 } else {
                     amountField.value = '';
+                    console.log('Cleared amount field');
                 }
 
                 // Validate all fields
@@ -443,7 +477,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add input event listeners for real-time validation
     for (let inputId in inputs) {
         const input = inputs[inputId];
+        console.log(`Adding input listener for ${inputId}:`, input);
+        
         input.addEventListener('input', function(e) {
+            console.log(`Input event on ${inputId}:`, e.target.value);
             validateField(inputId, e.target.value);
         });
 
