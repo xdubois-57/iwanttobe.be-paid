@@ -22,7 +22,7 @@ function generateQRCode(form, submitButton, submitButtonOriginalText) {
     })
     .then(response => response.json())
     .then(data => {
-        console.log('QR code generated successfully');
+        console.log('QR code response:', data);
         if (data.success) {
             const qrDisplay = document.getElementById('qr-display');
             const qrImage = document.getElementById('qr-image');
@@ -30,8 +30,26 @@ function generateQRCode(form, submitButton, submitButtonOriginalText) {
             const qrShare = document.getElementById('qr-share');
             const supportQr = document.getElementById('support-qr');
 
-            qrImage.src = data.qr_code;
-            qrDownload.href = data.qr_code;
+            if (!qrImage || !qrDownload || !qrDisplay || !qrShare || !supportQr) {
+                console.error('Missing QR code elements:', {
+                    qrDisplay: !!qrDisplay,
+                    qrImage: !!qrImage,
+                    qrDownload: !!qrDownload,
+                    qrShare: !!qrShare,
+                    supportQr: !!supportQr
+                });
+                throw new Error(translations.translate('error_generating_qr'));
+            }
+
+            // Check if we have image data in the response
+            const imageUrl = data.qr_code || data.image;
+            if (!imageUrl) {
+                console.error('No image URL in response:', data);
+                throw new Error(translations.translate('error_generating_qr'));
+            }
+
+            qrImage.src = imageUrl;
+            qrDownload.href = imageUrl;
             qrShare.style.display = 'block';
             qrDisplay.style.display = 'block';
             supportQr.style.display = 'none';
