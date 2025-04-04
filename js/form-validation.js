@@ -5,8 +5,9 @@ document.addEventListener('DOMContentLoaded', function() {
         import('./modules/qr-generator.js'),
         import('./modules/favorites.js'),
         import('./modules/form-storage.js'),
-        import('./modules/form-operations.js')
-    ]).then(([validation, qrGenerator, favorites, formStorage, formOperations]) => {
+        import('./modules/form-operations.js'),
+        import('./modules/translations.js')
+    ]).then(([validation, qrGenerator, favorites, formStorage, formOperations, translations]) => {
         // Get form elements
         const form = document.querySelector('#transfer-form');
         const submitButton = document.getElementById('generate-qr-button');
@@ -15,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const saveButton = document.getElementById('save-favorite');
         const deleteButton = document.getElementById('delete-favorite');
         const saveButtonOriginalText = saveButton.textContent;
-        const updateButtonText = translations.translate('update_favorite');
+        const updateButtonText = translations.default.translate('update_favorite');
         
         // Store original save text for later use
         saveButton.dataset.saveText = saveButtonOriginalText;
@@ -88,7 +89,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const iban = inputs.beneficiary_iban.value.trim();
 
             if (!name || !iban) {
-                alert(translations.translate('fill_required_fields'));
+                alert(translations.default.translate('fill_required_fields'));
                 return;
             }
 
@@ -101,7 +102,7 @@ document.addEventListener('DOMContentLoaded', function() {
             );
 
             if (existingIndex !== -1 && existingIndex !== parseInt(selectedIndex)) {
-                alert(translations.translate('favorite_exists'));
+                alert(translations.default.translate('favorite_exists'));
                 return;
             }
 
@@ -129,7 +130,7 @@ document.addEventListener('DOMContentLoaded', function() {
             inputs.beneficiary_name.disabled = true;
             inputs.beneficiary_iban.disabled = true;
             deleteButton.disabled = false;
-            saveButton.textContent = translations.translate('update_favorite');
+            saveButton.textContent = translations.default.translate('update_favorite');
         });
 
         // Delete favorite handler
