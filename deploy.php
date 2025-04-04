@@ -43,7 +43,7 @@ ftp_pasv($conn, true);
 /**
  * Recursively upload directory
  */
-function uploadDirectory($conn, $localPath, $remotePath, $excludePatterns) {
+function uploadDirectory($conn, $localPath, $remotePath, $excludePatterns, $ftp) {
     if (!is_dir($localPath)) {
         return;
     }
@@ -69,13 +69,38 @@ function uploadDirectory($conn, $localPath, $remotePath, $excludePatterns) {
         $remoteFile = $remotePath . '/' . $file;
 
         if (is_dir($localFile)) {
-            uploadDirectory($conn, $localFile, $remoteFile, $excludePatterns);
+            uploadDirectory($conn, $localFile, $remoteFile, $excludePatterns, $ftp);
         } else {
             echo "Uploading {$localFile}... ";
-            if (ftp_put($conn, $remoteFile, $localFile, FTP_BINARY)) {
-                echo "OK\n";
+            
+            // Special handling for font files
+            if (pathinfo($localFile, PATHINFO_EXTENSION) === 'ttf') {
+                // Use cURL for font files
+                $ch = curl_init();
+                curl_setopt($ch, CURLOPT_URL, "ftp://{$ftp['host']}{$remoteFile}");
+                curl_setopt($ch, CURLOPT_UPLOAD, 1);
+                curl_setopt($ch, CURLOPT_USERPWD, "{$ftp['username']}:{$ftp['password']}");
+                curl_setopt($ch, CURLOPT_INFILE, fopen($localFile, 'rb'));
+                curl_setopt($ch, CURLOPT_INFILESIZE, filesize($localFile));
+                curl_setopt($ch, CURLOPT_FTP_CREATE_MISSING_DIRS, true);
+                curl_setopt($ch, CURLOPT_FTPSSLAUTH, CURLFTPAUTH_TLS);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+                
+                $result = curl_exec($ch);
+                curl_close($ch);
+                
+                if ($result) {
+                    echo "OK (via cURL)\n";
+                } else {
+                    echo "Failed (via cURL)\n";
+                }
             } else {
-                echo "Failed\n";
+                // Use regular FTP for other files
+                if (ftp_put($conn, $remoteFile, $localFile, FTP_ASCII)) {
+                    echo "OK\n";
+                } else {
+                    echo "Failed\n";
+                }
             }
         }
     }
@@ -84,7 +109,7 @@ function uploadDirectory($conn, $localPath, $remotePath, $excludePatterns) {
 
 // Start deployment
 echo "Starting deployment...\n";
-uploadDirectory($conn, __DIR__, '/', $excludePatterns);
+uploadDirectory($conn, __DIR__, '/', $excludePatterns, $ftp);
 
 // Close connection
 ftp_close($conn);

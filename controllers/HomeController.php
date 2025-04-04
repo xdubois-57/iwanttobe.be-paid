@@ -6,6 +6,7 @@ class HomeController {
     private const ENCODING = '1';
     private const IDENTIFICATION = 'SCT';
     private const QR_API_URL = 'https://api.qrserver.com/v1/create-qr-code/';
+    private const FONT_PATH = __DIR__ . '/../fonts/OpenSans-Regular.ttf';
 
     public function index() {
         require_once __DIR__ . '/../views/home.php';
@@ -173,18 +174,10 @@ class HomeController {
         $black = imagecolorallocate($newIm, 0, 0, 0);
         $gray = imagecolorallocate($newIm, 100, 100, 100);
         
-        // Use Arial font for proper UTF-8 support
+        // Use OpenSans font
         $fontSize = 12;
-        $fontPath = '/Library/Fonts/Arial Unicode.ttf';
+        $fontPath = self::FONT_PATH;
         
-        // If Arial Unicode is not available, try other system fonts
-        if (!file_exists($fontPath)) {
-            $fontPath = '/System/Library/Fonts/Supplemental/Arial.ttf';
-        }
-        if (!file_exists($fontPath)) {
-            $fontPath = '/System/Library/Fonts/Helvetica.ttc';
-        }
-
         // Get payment details from EPC data
         $epcLines = explode("\n", $text);
         $name = rtrim($epcLines[5]); // Remove all trailing whitespace and newlines

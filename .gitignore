@@ -1,0 +1,35 @@
+# IDE and Editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Configuration files with sensitive data
+credentials.php
+.env
+
+# Dependency directories
+/vendor/
+/node_modules/
+
+# Log files
+*.log
+/logs/
+
+# Cache files
+/cache/
+
+# Temporary files
+*.tmp
+*.temp
+
+# Build artifacts
+/dist/
+/build/
+
+# Local development files
+deploy.php
+phpinfo.php
+font-check.php
+font-test.php
