@@ -36,16 +36,10 @@ document.addEventListener('DOMContentLoaded', function() {
         // Set up event handlers
         form.addEventListener('submit', function(e) {
             e.preventDefault();
-            window.generateQRCode();
+            if (validation.default.validateAllFields(inputs)) {
+                qrGenerator.default.generateQRCode(form, submitButton, submitButtonOriginalText);
+            }
         });
-
-        // Make functions globally available
-        window.generateQRCode = () => qrGenerator.default.generateQRCode(form, submitButton, submitButtonOriginalText);
-        window.clearForm = () => {
-            formOperations.default.clearForm(form);
-            inputs.beneficiary_name.disabled = false;
-            inputs.beneficiary_iban.disabled = false;
-        };
 
         // Add input event listeners for real-time validation
         for (let inputId in inputs) {
@@ -53,6 +47,8 @@ document.addEventListener('DOMContentLoaded', function() {
             input.addEventListener('input', function(e) {
                 console.log(`Input event on ${inputId}:`, e.target.value);
                 validation.default.validateField(inputId, e.target.value);
+                // Enable button on any input change
+                submitButton.disabled = false;
             });
 
             // Initial validation state
@@ -64,35 +60,30 @@ document.addEventListener('DOMContentLoaded', function() {
         // Save form data when modified
         form.addEventListener('change', () => formStorage.default.saveFormData(form));
 
-        // Set up favorites handlers
-        window.loadFavorite = () => favorites.default.loadFavorite({
-            favoritesSelect,
-            inputs,
-            amountField,
-            form,
-            submitButton,
-            submitButtonOriginalText,
-            saveButton,
-            updateButtonText,
-            deleteButton
+        // Listen for favorites changes
+        favoritesSelect.addEventListener('change', () => {
+            console.log('Favorite selection changed');
+            // Small delay to ensure inputs are updated
+            setTimeout(() => {
+                submitButton.disabled = false;
+                console.log('Enabled generate button after favorite change');
+            }, 0);
         });
 
-        window.saveFavorite = () => favorites.default.saveFavorite({
-            form,
-            favoritesSelect,
-            inputs,
-            saveButton,
-            saveButtonOriginalText,
-            deleteButton
-        });
+        // Reset when form is cleared
+        const clearButton = document.getElementById('clear-form');
+        if (clearButton) {
+            clearButton.addEventListener('click', () => {
+                formOperations.default.clearForm(form);
+                inputs.beneficiary_name.disabled = false;
+                inputs.beneficiary_iban.disabled = false;
+                submitButton.disabled = false;
+                console.log('Enabled generate button after form clear');
+            });
+        }
 
-        window.deleteFavorite = () => favorites.default.deleteFavorite({
-            favoritesSelect,
-            saveButton,
-            saveButtonOriginalText,
-            deleteButton,
-            form,
-            inputs
-        });
+        // Initial button state
+        console.log('Initializing button state');
+        submitButton.disabled = false;
     });
 });

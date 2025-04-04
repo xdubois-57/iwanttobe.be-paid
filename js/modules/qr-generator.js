@@ -183,29 +183,6 @@ function initializeFormListeners() {
         await generateQRCode(form, generateButton, generateButton.textContent);
     });
 
-    // Listen for favorites changes
-    const favoritesSelect = document.getElementById('favorites');
-    if (favoritesSelect) {
-        favoritesSelect.addEventListener('change', () => {
-            console.log('Favorite selection changed');
-            // Small delay to ensure inputs are updated
-            setTimeout(() => {
-                generateButton.disabled = false;
-                console.log('Enabled generate button after favorite change');
-            }, 0);
-        });
-    }
-
-    // Reset when form is cleared
-    const clearButton = document.getElementById('clear-form');
-    if (clearButton) {
-        clearButton.addEventListener('click', () => {
-            console.log('Form cleared');
-            generateButton.disabled = false;
-            console.log('Enabled generate button after form clear');
-        });
-    }
-
     // Initial button state
     console.log('Initializing button state');
     generateButton.disabled = false;
