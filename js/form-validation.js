@@ -334,10 +334,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
         try {
             const favorites = JSON.parse(localStorage.getItem(FAVORITES_KEY) || '[]');
-            const formData = {};
-            for (let inputId in inputs) {
-                formData[inputId] = inputs[inputId].value;
-            }
+            const formData = {
+                beneficiary_name: inputs.beneficiary_name.value.trim(),
+                beneficiary_iban: inputs.beneficiary_iban.value.trim(),
+                amount: inputs.amount.value.trim(),
+                communication: inputs.communication.value.trim()
+            };
 
             const selectedIndex = favoritesSelect.value;
             if (selectedIndex) {
