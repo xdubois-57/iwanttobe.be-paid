@@ -170,6 +170,9 @@ function loadFavorite() {
     ibanInput.disabled = true;
     deleteButton.disabled = false;
 
+    // Set button text to update since we're editing an existing favorite
+    saveButton.textContent = translations.translate('update_favorite');
+
     // Trigger validation and change events on fields
     nameInput.dispatchEvent(new Event('input', { bubbles: true }));
     ibanInput.dispatchEvent(new Event('input', { bubbles: true }));
@@ -261,10 +264,19 @@ function initializeFavorites() {
         loadFavorite();
     });
 
-    // Function to update button text
+    // Function to update button text based on current state
     const updateButtonText = () => {
         const name = nameInput.value.trim();
         const iban = ibanInput.value.trim();
+        const selectedIndex = favoritesSelect.value;
+
+        // If a favorite is selected, always show "update"
+        if (selectedIndex !== '') {
+            saveButton.textContent = translations.translate('update_favorite');
+            return;
+        }
+
+        // Otherwise, check if this name+IBAN combination exists
         console.log('Updating button text for:', { name, iban });
         updateSaveButtonText(saveButton, name, iban);
     };
