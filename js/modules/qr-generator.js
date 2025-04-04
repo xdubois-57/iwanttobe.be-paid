@@ -14,6 +14,23 @@ function resetRightPanel() {
 }
 
 /**
+ * Creates FormData including disabled fields
+ * @param {HTMLFormElement} form - The form element
+ * @param {Object} inputs - Object containing form input elements
+ * @returns {FormData} - FormData with all field values
+ */
+function createFormData(form, inputs) {
+    const formData = new FormData();
+    
+    // Add all input values, including disabled fields
+    for (const [key, input] of Object.entries(inputs)) {
+        formData.append(key, input.value);
+    }
+    
+    return formData;
+}
+
+/**
  * Generates a QR code based on form data
  * @param {HTMLFormElement} form - The form element
  * @param {HTMLButtonElement} submitButton - The submit button
@@ -39,8 +56,8 @@ async function generateQRCode(form, submitButton, submitButtonOriginalText) {
     submitButton.disabled = true;
 
     try {
-        // Get form data
-        const formData = new FormData(form);
+        // Get form data including disabled fields
+        const formData = createFormData(form, inputs);
 
         // Make the AJAX request
         const response = await fetch('/generate-qr', {
@@ -86,7 +103,7 @@ async function generateQRCode(form, submitButton, submitButtonOriginalText) {
             userQr.style.display = 'block';
             supportQr.style.display = 'none';
         } else {
-            throw new Error(data.message || translations.translate('qr_generation_failed'));
+            throw new Error(data.message || data.error || translations.translate('qr_generation_failed'));
         }
     } catch (error) {
         console.error('Error generating QR code:', error);
