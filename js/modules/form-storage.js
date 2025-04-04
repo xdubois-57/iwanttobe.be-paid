@@ -5,13 +5,12 @@ import constants from './constants.js';
  * @param {HTMLFormElement} form - The form to save
  */
 function saveFormData(form) {
-    const formData = {};
-    for (let input of form.elements) {
-        if (input.name) {
-            formData[input.name] = input.value;
-        }
+    const formData = new FormData(form);
+    const data = {};
+    for (let [key, value] of formData.entries()) {
+        data[key] = value;
     }
-    sessionStorage.setItem(constants.STORAGE_KEY, JSON.stringify(formData));
+    sessionStorage.setItem(constants.FORM_DATA_KEY, JSON.stringify(data));
 }
 
 /**
@@ -19,18 +18,24 @@ function saveFormData(form) {
  * @param {HTMLFormElement} form - The form to load data into
  */
 function loadFormData(form) {
-    const savedData = sessionStorage.getItem(constants.STORAGE_KEY);
-    if (savedData) {
-        const formData = JSON.parse(savedData);
-        for (let input of form.elements) {
-            if (input.name && formData[input.name]) {
-                input.value = formData[input.name];
-            }
+    const data = JSON.parse(sessionStorage.getItem(constants.FORM_DATA_KEY) || '{}');
+    for (let key in data) {
+        const input = form.elements[key];
+        if (input) {
+            input.value = data[key];
         }
     }
 }
 
+/**
+ * Clear form data from session storage
+ */
+function clearFormData() {
+    sessionStorage.removeItem(constants.FORM_DATA_KEY);
+}
+
 export default {
     saveFormData,
-    loadFormData
+    loadFormData,
+    clearFormData
 };
