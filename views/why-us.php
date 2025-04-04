@@ -27,15 +27,17 @@ $lang = LanguageController::getInstance();
         </article>
     </div>
 
-    <section>
-        <h2><?php echo $lang->translate('why_us_features_title'); ?></h2>
+    <article>
+        <header>
+            <h2><?php echo $lang->translate('why_us_features_title'); ?></h2>
+        </header>
         <ul>
             <li><?php echo $lang->translate('why_us_feature_1'); ?></li>
             <li><?php echo $lang->translate('why_us_feature_2'); ?></li>
             <li><?php echo $lang->translate('why_us_feature_3'); ?></li>
             <li><?php echo $lang->translate('why_us_feature_4'); ?></li>
         </ul>
-    </section>
+    </article>
 
     <section>
         <h2><?php echo $lang->translate('why_us_use_cases_title'); ?></h2>
