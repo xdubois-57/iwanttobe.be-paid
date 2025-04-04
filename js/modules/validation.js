@@ -1,4 +1,4 @@
-import { VALIDATION_PATTERNS } from './constants.js';
+import constants from './constants.js';
 
 /**
  * Validates a form field based on its ID and value
@@ -6,11 +6,11 @@ import { VALIDATION_PATTERNS } from './constants.js';
  * @param {string} value - The value to validate
  * @returns {boolean} - Whether the field is valid
  */
-export function validateField(fieldId, value) {
+function validateField(fieldId, value) {
     const field = document.getElementById(fieldId);
     if (!field) return false;
 
-    const pattern = VALIDATION_PATTERNS[fieldId];
+    const pattern = constants.VALIDATION_PATTERNS[fieldId];
     if (!pattern) return true; // No pattern means no validation required
 
     const isValid = pattern.test(value);
@@ -33,7 +33,7 @@ export function validateField(fieldId, value) {
  * @param {Object} inputs - Object containing input elements
  * @returns {boolean} - Whether all required fields are valid
  */
-export function validateAllFields(inputs) {
+function validateAllFields(inputs) {
     let allValid = true;
     for (let inputId in inputs) {
         const value = inputs[inputId].value;
@@ -46,3 +46,8 @@ export function validateAllFields(inputs) {
     }
     return allValid;
 }
+
+export default {
+    validateField,
+    validateAllFields
+};

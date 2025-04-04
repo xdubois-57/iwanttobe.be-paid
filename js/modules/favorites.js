@@ -1,13 +1,13 @@
-import { FAVORITES_KEY } from './constants.js';
-import { validateAllFields } from './validation.js';
-import { generateQRCode } from './qr-generator.js';
+import constants from './constants.js';
+import validation from './validation.js';
+import qrGenerator from './qr-generator.js';
 
 /**
  * Loads favorites into the select dropdown
  * @param {HTMLSelectElement} favoritesSelect - The favorites select element
  */
-export function loadFavorites(favoritesSelect) {
-    const favorites = JSON.parse(localStorage.getItem(FAVORITES_KEY) || '[]');
+function loadFavorites(favoritesSelect) {
+    const favorites = JSON.parse(localStorage.getItem(constants.FAVORITES_KEY) || '[]');
     // Clear existing options except the first one (placeholder)
     while (favoritesSelect.options.length > 1) {
         favoritesSelect.remove(1);
@@ -26,17 +26,19 @@ export function loadFavorites(favoritesSelect) {
  * Loads a favorite into the form
  * @param {Object} params - Parameters for loading a favorite
  */
-export function loadFavorite({
-    favoritesSelect,
-    inputs,
-    amountField,
-    form,
-    submitButton,
-    submitButtonOriginalText,
-    saveButton,
-    updateButtonText,
-    deleteButton
-}) {
+function loadFavorite(params) {
+    const {
+        favoritesSelect,
+        inputs,
+        amountField,
+        form,
+        submitButton,
+        submitButtonOriginalText,
+        saveButton,
+        updateButtonText,
+        deleteButton
+    } = params;
+
     console.log('loadFavorite called');
     const selectedIndex = favoritesSelect.value;
     if (!selectedIndex) {
@@ -46,7 +48,7 @@ export function loadFavorite({
     }
 
     try {
-        const favorites = JSON.parse(localStorage.getItem(FAVORITES_KEY) || '[]');
+        const favorites = JSON.parse(localStorage.getItem(constants.FAVORITES_KEY) || '[]');
         const favorite = favorites[selectedIndex];
         if (favorite) {
             console.log('Loading favorite:', favorite);
@@ -68,9 +70,9 @@ export function loadFavorite({
             deleteButton.disabled = false;
 
             // Validate fields and generate QR code
-            if (validateAllFields(inputs)) {
+            if (validation.validateAllFields(inputs)) {
                 console.log('All fields valid, generating QR code');
-                generateQRCode(form, submitButton, submitButtonOriginalText).catch(() => {
+                qrGenerator.generateQRCode(form, submitButton, submitButtonOriginalText).catch(() => {
                     console.log('QR generation failed in loadFavorite');
                 });
             }
@@ -94,15 +96,17 @@ export function loadFavorite({
  * Saves the current form data as a favorite
  * @param {Object} params - Parameters for saving a favorite
  */
-export function saveFavorite({
-    form,
-    favoritesSelect,
-    inputs,
-    saveButton,
-    saveButtonOriginalText,
-    deleteButton
-}) {
-    const favorites = JSON.parse(localStorage.getItem(FAVORITES_KEY) || '[]');
+function saveFavorite(params) {
+    const {
+        form,
+        favoritesSelect,
+        inputs,
+        saveButton,
+        saveButtonOriginalText,
+        deleteButton
+    } = params;
+
+    const favorites = JSON.parse(localStorage.getItem(constants.FAVORITES_KEY) || '[]');
     const selectedIndex = favoritesSelect.value;
     
     const favorite = {
@@ -120,7 +124,7 @@ export function saveFavorite({
         favorites.push(favorite);
     }
 
-    localStorage.setItem(FAVORITES_KEY, JSON.stringify(favorites));
+    localStorage.setItem(constants.FAVORITES_KEY, JSON.stringify(favorites));
     loadFavorites(favoritesSelect);
     
     // Select the newly added/updated favorite
@@ -135,18 +139,20 @@ export function saveFavorite({
  * Deletes the currently selected favorite
  * @param {Object} params - Parameters for deleting a favorite
  */
-export function deleteFavorite({
-    favoritesSelect,
-    saveButton,
-    saveButtonOriginalText,
-    deleteButton
-}) {
+function deleteFavorite(params) {
+    const {
+        favoritesSelect,
+        saveButton,
+        saveButtonOriginalText,
+        deleteButton
+    } = params;
+
     const selectedIndex = favoritesSelect.value;
     if (!selectedIndex || selectedIndex === '0') return;
 
-    const favorites = JSON.parse(localStorage.getItem(FAVORITES_KEY) || '[]');
+    const favorites = JSON.parse(localStorage.getItem(constants.FAVORITES_KEY) || '[]');
     favorites.splice(selectedIndex, 1);
-    localStorage.setItem(FAVORITES_KEY, JSON.stringify(favorites));
+    localStorage.setItem(constants.FAVORITES_KEY, JSON.stringify(favorites));
     
     loadFavorites(favoritesSelect);
     favoritesSelect.value = '0';
@@ -155,3 +161,10 @@ export function deleteFavorite({
     saveButton.textContent = saveButtonOriginalText;
     deleteButton.disabled = true;
 }
+
+export default {
+    loadFavorites,
+    loadFavorite,
+    saveFavorite,
+    deleteFavorite
+};

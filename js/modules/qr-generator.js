@@ -5,7 +5,7 @@
  * @param {string} submitButtonOriginalText - The original text of the submit button
  * @returns {Promise} - Resolves when QR code is generated
  */
-export function generateQRCode(form, submitButton, submitButtonOriginalText) {
+function generateQRCode(form, submitButton, submitButtonOriginalText) {
     console.log('generateQRCode called');
     const formData = new FormData(form);
     submitButton.textContent = t('generating');
@@ -49,3 +49,5 @@ export function generateQRCode(form, submitButton, submitButtonOriginalText) {
         submitButton.disabled = false;
     });
 }
+
+export default { generateQRCode };

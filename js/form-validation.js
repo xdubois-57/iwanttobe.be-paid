@@ -1,7 +1,7 @@
-import { validateField } from './modules/validation.js';
-import { generateQRCode } from './modules/qr-generator.js';
-import { loadFavorites, loadFavorite, saveFavorite, deleteFavorite } from './modules/favorites.js';
-import { saveFormData, loadFormData } from './modules/form-storage.js';
+import validation from './modules/validation.js';
+import qrGenerator from './modules/qr-generator.js';
+import favorites from './modules/favorites.js';
+import formStorage from './modules/form-storage.js';
 
 document.addEventListener('DOMContentLoaded', function() {
     // Get form elements
@@ -23,8 +23,8 @@ document.addEventListener('DOMContentLoaded', function() {
     };
 
     // Initialize form
-    loadFormData(form);
-    loadFavorites(favoritesSelect);
+    formStorage.loadFormData(form);
+    favorites.loadFavorites(favoritesSelect);
 
     // Set up event handlers
     form.addEventListener('submit', function(e) {
@@ -33,27 +33,27 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Make generateQRCode globally available
-    window.generateQRCode = () => generateQRCode(form, submitButton, submitButtonOriginalText);
+    window.generateQRCode = () => qrGenerator.generateQRCode(form, submitButton, submitButtonOriginalText);
 
     // Add input event listeners for real-time validation
     for (let inputId in inputs) {
         const input = inputs[inputId];
         input.addEventListener('input', function(e) {
             console.log(`Input event on ${inputId}:`, e.target.value);
-            validateField(inputId, e.target.value);
+            validation.validateField(inputId, e.target.value);
         });
 
         // Initial validation state
         if (inputId !== 'communication') {
-            validateField(inputId, input.value);
+            validation.validateField(inputId, input.value);
         }
     }
 
     // Save form data when modified
-    form.addEventListener('change', () => saveFormData(form));
+    form.addEventListener('change', () => formStorage.saveFormData(form));
 
     // Set up favorites handlers
-    window.loadFavorite = () => loadFavorite({
+    window.loadFavorite = () => favorites.loadFavorite({
         favoritesSelect,
         inputs,
         amountField,
@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function() {
         deleteButton
     });
 
-    window.saveFavorite = () => saveFavorite({
+    window.saveFavorite = () => favorites.saveFavorite({
         form,
         favoritesSelect,
         inputs,
@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function() {
         deleteButton
     });
 
-    window.deleteFavorite = () => deleteFavorite({
+    window.deleteFavorite = () => favorites.deleteFavorite({
         favoritesSelect,
         saveButton,
         saveButtonOriginalText,
