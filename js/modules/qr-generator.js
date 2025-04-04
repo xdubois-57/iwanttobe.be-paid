@@ -50,9 +50,17 @@ function getFormValuesString(inputs) {
  * @param {HTMLButtonElement} generateButton - The generate button element
  */
 function updateGenerateButtonState(inputs, generateButton) {
+    if (!generateButton) return;
+
+    // If there are no last generated values, enable the button
+    if (!lastGeneratedValues) {
+        generateButton.disabled = false;
+        return;
+    }
+
     const currentValues = getFormValuesString(inputs);
-    const isDisabled = currentValues === lastGeneratedValues;
-    generateButton.disabled = isDisabled;
+    // Enable button if current values are different from last generated values
+    generateButton.disabled = currentValues === lastGeneratedValues;
 }
 
 /**
@@ -140,12 +148,13 @@ async function generateQRCode(form, submitButton, submitButtonOriginalText) {
         alert(translations.translate('qr_generation_failed'));
         // Show support QR on error
         resetRightPanel();
+        // Reset last generated values on error
+        lastGeneratedValues = null;
     } finally {
         // Reset button state
         submitButton.textContent = submitButtonOriginalText;
-        if (!lastGeneratedValues || getFormValuesString(inputs) !== lastGeneratedValues) {
-            submitButton.disabled = false;
-        }
+        // Update button state
+        updateGenerateButtonState(inputs, submitButton);
     }
 }
 
@@ -167,8 +176,10 @@ function initializeFormListeners() {
     // Add input event listeners to all form fields
     Object.values(inputs).forEach(input => {
         if (input) {
-            input.addEventListener('input', () => {
-                updateGenerateButtonState(inputs, generateButton);
+            ['input', 'change'].forEach(eventType => {
+                input.addEventListener(eventType, () => {
+                    updateGenerateButtonState(inputs, generateButton);
+                });
             });
         }
     });
