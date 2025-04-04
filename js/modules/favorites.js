@@ -145,7 +145,6 @@ function loadFavorite() {
         nameInput.disabled = false;
         ibanInput.disabled = false;
         deleteButton.disabled = true;
-        updateSaveButtonText(saveButton, nameInput.value.trim(), ibanInput.value.trim());
         
         // Trigger validation on enabled fields
         nameInput.dispatchEvent(new Event('input', { bubbles: true }));
@@ -170,7 +169,6 @@ function loadFavorite() {
     nameInput.disabled = true;
     ibanInput.disabled = true;
     deleteButton.disabled = false;
-    updateSaveButtonText(saveButton, nameInput.value.trim(), ibanInput.value.trim());
 
     // Trigger validation and change events on fields
     nameInput.dispatchEvent(new Event('input', { bubbles: true }));
@@ -253,11 +251,22 @@ function initializeFavorites() {
     loadFavorites(favoritesSelect);
 
     // Add event listeners
-    favoritesSelect.addEventListener('change', loadFavorite);
+    favoritesSelect.addEventListener('change', () => {
+        const selectedIndex = favoritesSelect.value;
+        if (selectedIndex === '') {
+            // Enable inputs when no favorite is selected
+            nameInput.disabled = false;
+            ibanInput.disabled = false;
+        }
+        loadFavorite();
+    });
 
     // Function to update button text
     const updateButtonText = () => {
-        updateSaveButtonText(saveButton, nameInput.value.trim(), ibanInput.value.trim());
+        const name = nameInput.value.trim();
+        const iban = ibanInput.value.trim();
+        console.log('Updating button text for:', { name, iban });
+        updateSaveButtonText(saveButton, name, iban);
     };
 
     // Listen for both input and change events to catch all value changes
