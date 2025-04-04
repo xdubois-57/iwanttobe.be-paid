@@ -56,6 +56,15 @@ return [
     'why_us_feature_2' => 'Support for all European banks',
     'why_us_feature_3' => 'Available in multiple languages',
     'why_us_feature_4' => 'Works on all devices - desktop, tablet, and mobile',
+    'why_us_use_cases_title' => 'Perfect For',
+    'why_us_use_case_1_title' => 'Personal Use',
+    'why_us_use_case_1_text' => 'Request reimbursements from friends for shared expenses like dinners, trips, or gifts.',
+    'why_us_use_case_2_title' => 'Small Businesses',
+    'why_us_use_case_2_text' => 'Add QR codes to your invoices to make payments easier and reduce the need for payment reminders.',
+    'why_us_use_case_3_title' => 'Organizations',
+    'why_us_use_case_3_text' => 'Perfect for scout units, sports clubs, and associations to collect membership fees, event payments, or donations.',
+    'why_us_use_case_4_title' => 'Event Planning',
+    'why_us_use_case_4_text' => 'Simplify group payments for events, team activities, or shared purchases.',
 
     // GDPR Page
     'gdpr_last_updated' => 'Last updated: %s',
