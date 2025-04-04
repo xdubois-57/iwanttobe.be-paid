@@ -4,7 +4,15 @@ $lang = LanguageController::getInstance();
 require_once __DIR__ . '/header.php';
 ?>
 
+<!-- Cookie banner -->
+<?php require_once(__DIR__ . '/cookie-banner.php'); ?>
+
 <main class="container">
+    <article>
+        <h2><?php echo $lang->translate('home_intro_title'); ?></h2>
+        <p><?php echo $lang->translate('home_intro_text'); ?></p>
+    </article>
+
     <div class="grid">
         <!-- Left column with form -->
         <div>

@@ -135,4 +135,6 @@ return [
     'save_favorite' => 'Save as favorite',
     'update_favorite' => 'Update favorite',
     'delete_favorite' => 'Delete favorite',
+    'home_intro_title' => 'Get paid easily',
+    'home_intro_text' => 'Generate a QR code that your friends can scan with their banking app to transfer money to you. Just fill in your details below and share the QR code.',
 ];
