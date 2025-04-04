@@ -10,6 +10,11 @@ function validateField(fieldId, value) {
     const field = document.getElementById(fieldId);
     if (!field) return false;
 
+    // Skip validation for disabled fields (they are considered valid)
+    if (field.disabled) {
+        return true;
+    }
+
     const pattern = constants.VALIDATION_PATTERNS[fieldId];
     if (!pattern) return true; // No pattern means no validation required
 
@@ -36,7 +41,12 @@ function validateField(fieldId, value) {
 function validateAllFields(inputs) {
     let allValid = true;
     for (let inputId in inputs) {
-        const value = inputs[inputId].value;
+        const field = inputs[inputId];
+        if (field.disabled) {
+            continue;
+        }
+
+        const value = field.value;
         if (!validateField(inputId, value)) {
             if (inputId !== 'communication') { // Don't fail validation for optional field
                 allValid = false;
