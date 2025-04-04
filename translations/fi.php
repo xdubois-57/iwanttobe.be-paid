@@ -27,6 +27,7 @@ return [
     
     // Support section
     'support_text' => 'Jos pidät tästä sovelluksesta, voit tukea sen kehitystä:',
+    'support_text_alt' => 'Tämä sovellus on ilmainen. Jos pidät siitä, osta minulle kahvi klikkaamalla tästä!',
     'support_thanks' => 'Kiitos QR Transferin tukemisesta!',
     'download_qr' => 'Lataa QR-koodi',
     'share_qr' => 'Jaa QR-koodi',

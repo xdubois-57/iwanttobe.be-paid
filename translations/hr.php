@@ -21,6 +21,7 @@ return [
     
     // Support section
     'support_text' => 'Ako vam se sviđa ova aplikacija, možete podržati njezin razvoj:',
+    'support_text_alt' => 'Ova aplikacija je besplatna. Ako vam se sviđa, častite me kavom klikom ovdje!',
     'support_thanks' => 'Hvala što podržavate QR Transfer!',
     'download_qr' => 'Preuzmi QR kod',
     'share_qr' => 'Podijeli QR kod',

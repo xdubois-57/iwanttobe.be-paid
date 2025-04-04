@@ -21,6 +21,7 @@ return [
     
     // Support section
     'support_text' => 'Jekk tħobb din l-app, tista\' tappoġġja l-iżvilupp tagħha:',
+    'support_text_alt' => 'Din l-app hija b\'xejn. Jekk togħġbok, ixtri kafè lili billi tikklikkja hawn!',
     'support_thanks' => 'Grazzi talli tappoġġja QR Transfer!',
     'download_qr' => 'Niżżel il-kodiċi QR',
     'share_qr' => 'Aqsam il-kodiċi QR',

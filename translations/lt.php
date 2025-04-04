@@ -21,6 +21,7 @@ return [
     
     // Support section
     'support_text' => 'Jei jums patinka ši programėlė, galite paremti jos vystymą:',
+    'support_text_alt' => 'Jei jums patinka ši programėlė, galite paremti jos vystymą paspausdami čia!',
     'support_thanks' => 'Ačiū, kad remiate QR Transfer!',
     'download_qr' => 'Atsisiųsti QR kodą',
     'share_qr' => 'Dalintis QR kodu',

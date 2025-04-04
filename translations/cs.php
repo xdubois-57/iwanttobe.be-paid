@@ -27,6 +27,7 @@ return [
     
     // Support section
     'support_text' => 'Pokud se vám tato aplikace líbí, můžete podpořit její vývoj:',
+    'support_text_alt' => 'Tato aplikace je zdarma. Pokud se vám líbí, kupte mi kávu kliknutím zde!',
     'support_thanks' => 'Děkujeme za podporu QR Transfer!',
     'download_qr' => 'Stáhnout QR kód',
     'share_qr' => 'Sdílet QR kód',
@@ -77,7 +78,7 @@ return [
 
     // User Rights
     'gdpr_rights_title' => 'Vaše práva',
-    'gdpr_rights_intro' => 'Podle GDPR máte následující práva:',
+    'gdpr_rights_intro' => 'Podle GDPR máte následujících práva:',
     'gdpr_right_access' => 'Právo na přístup k vašim údajům',
     'gdpr_right_rectification' => 'Právo na opravu',
     'gdpr_right_erasure' => 'Právo na výmaz',

@@ -22,6 +22,7 @@ return [
     
     // Support section
     'support_text' => 'Ha tetszik ez az alkalmazás, támogathatja a fejlesztését:',
+    'support_text_alt' => 'Ha tetszik ez az alkalmazás, támogathatja a fejlesztését, kattints ide!',
     'support_thanks' => 'Köszönjük, hogy támogatja a QR Transfert!',
     'download_qr' => 'QR-kód letöltése',
     'share_qr' => 'QR-kód megosztása',

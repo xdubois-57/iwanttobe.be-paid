@@ -27,6 +27,7 @@ return [
     
     // Support section
     'support_text' => 'Hvis du kan lide denne app, kan du støtte dens udvikling:',
+    'support_text_alt' => 'Denne app er gratis. Hvis du kan lide den, så køb mig en kop kaffe ved at klikke her!',
     'support_thanks' => 'Tak for din støtte til QR Transfer!',
     'download_qr' => 'Download QR-kode',
     'share_qr' => 'Del QR-kode',

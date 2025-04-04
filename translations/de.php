@@ -21,6 +21,7 @@ return [
     
     // Support section
     'support_text' => 'Wenn Sie diese App mögen, können Sie ihre Entwicklung unterstützen:',
+    'support_text_alt' => 'Diese App ist kostenlos. Wenn sie Ihnen gefällt, kaufen Sie mir einen Kaffee, indem Sie hier klicken!',
     'support_thanks' => 'Danke, dass Sie QR Transfer unterstützen!',
     'download_qr' => 'QR-Code herunterladen',
     'share_qr' => 'QR-Code teilen',

@@ -21,6 +21,7 @@ return [
     
     // Support section
     'support_text' => 'Má thaitníonn an aip seo leat, is féidir leat tacú lena forbairt:',
+    'support_text_alt' => 'Tá an aip seo saor in aisce. Má thaitníonn sé leat, ceannaigh cupán caife dom trí chliceáil anseo!',
     'support_thanks' => 'Go raibh maith agat as tacú le QR Transfer!',
     'download_qr' => 'Íoslódáil cód QR',
     'share_qr' => 'Roinn cód QR',

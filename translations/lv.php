@@ -21,6 +21,7 @@ return [
     
     // Support section
     'support_text' => 'Ja jums patīk šī lietotne, varat atbalstīt tās attīstību:',
+    'support_text_alt' => 'Šī lietotne ir bezmaksas. Ja tā jums patīk, nopērciet man kafiju, noklikšķinot šeit!',
     'support_thanks' => 'Paldies par QR Transfer atbalstīšanu!',
     'download_qr' => 'Lejupielādēt QR kodu',
     'share_qr' => 'Dalīties ar QR kodu',
