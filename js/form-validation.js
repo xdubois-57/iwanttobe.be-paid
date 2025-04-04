@@ -41,7 +41,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Make functions globally available
         window.generateQRCode = () => qrGenerator.default.generateQRCode(form, submitButton, submitButtonOriginalText);
-        window.clearForm = () => formOperations.default.clearForm(form);
+        window.clearForm = () => {
+            formOperations.default.clearForm(form);
+            inputs.beneficiary_name.disabled = false;
+            inputs.beneficiary_iban.disabled = false;
+        };
 
         // Add input event listeners for real-time validation
         for (let inputId in inputs) {
@@ -87,7 +91,8 @@ document.addEventListener('DOMContentLoaded', function() {
             saveButton,
             saveButtonOriginalText,
             deleteButton,
-            form
+            form,
+            inputs
         });
     });
 });

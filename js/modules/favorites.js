@@ -20,6 +20,16 @@ function findMatchingFavorite(favorites, newFavorite, excludeIndex = -1) {
 }
 
 /**
+ * Toggle input fields based on favorite selection
+ * @param {Object} inputs - Form input fields
+ * @param {boolean} disabled - Whether to disable the fields
+ */
+function toggleInputFields(inputs, disabled) {
+    inputs.beneficiary_name.disabled = disabled;
+    inputs.beneficiary_iban.disabled = disabled;
+}
+
+/**
  * Loads favorites into the select dropdown
  * @param {HTMLSelectElement} favoritesSelect - The favorites select element
  */
@@ -61,6 +71,7 @@ function loadFavorite(params) {
     if (!selectedIndex) {
         saveButton.textContent = saveButton.dataset.saveText || saveButton.textContent;
         deleteButton.disabled = true;
+        toggleInputFields(inputs, false);
         return;
     }
 
@@ -85,6 +96,7 @@ function loadFavorite(params) {
             // Update UI state
             saveButton.textContent = updateButtonText;
             deleteButton.disabled = false;
+            toggleInputFields(inputs, true);
 
             // Validate fields and generate QR code
             if (validation.validateAllFields(inputs)) {
@@ -167,6 +179,7 @@ function saveFavorite(params) {
     // Update UI state
     saveButton.textContent = saveButton.dataset.saveText || saveButtonOriginalText;
     deleteButton.disabled = false;
+    toggleInputFields(inputs, true);
 }
 
 /**
@@ -179,7 +192,8 @@ function deleteFavorite(params) {
         saveButton,
         saveButtonOriginalText,
         deleteButton,
-        form
+        form,
+        inputs
     } = params;
 
     const selectedIndex = favoritesSelect.value;
@@ -197,6 +211,7 @@ function deleteFavorite(params) {
     // Update UI state
     saveButton.textContent = saveButton.dataset.saveText || saveButtonOriginalText;
     deleteButton.disabled = true;
+    toggleInputFields(inputs, false);
 }
 
 const favoritesModule = {
