@@ -131,7 +131,7 @@ return [
     'gdpr_contact_title' => 'Contact Us',
     'gdpr_contact_intro' => 'If you have any questions about this Privacy Policy or our practices, please contact us:',
     'gdpr_contact_github' => 'By creating an issue on our GitHub repository',
-    'select_favorite' => 'New favorite',
+    'select_favorite' => 'Custom beneficiary',
     'save_favorite' => 'Save as favorite',
     'update_favorite' => 'Update favorite',
     'delete_favorite' => 'Delete favorite',

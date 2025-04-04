@@ -24,7 +24,7 @@ return [
     'share_qr' => 'Partager le code QR',
     'cookie_notice' => 'Ce site utilise des cookies essentiels',
     'cookie_accept' => 'OK',
-    'select_favorite' => 'Nouveau favori',
+    'select_favorite' => 'Bénéficiaire personnalisé',
     'save_favorite' => 'Sauvegarder comme favori',
     'update_favorite' => 'Mettre à jour le favori',
     'delete_favorite' => 'Supprimer le favori',
