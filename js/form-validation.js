@@ -9,6 +9,12 @@ document.addEventListener('DOMContentLoaded', function() {
         // Get form elements
         const form = document.querySelector('#transfer-form');
         const submitButton = document.getElementById('generate-qr-button');
+
+        if (!form || !submitButton) {
+            console.error('Required form elements not found');
+            return;
+        }
+
         const submitButtonOriginalText = submitButton.textContent;
         const favoritesSelect = document.getElementById('favorites');
         const saveButton = document.getElementById('save-favorite');
@@ -25,12 +31,19 @@ document.addEventListener('DOMContentLoaded', function() {
             communication: document.getElementById('communication')
         };
 
+        if (!favoritesSelect || !saveButton || !deleteButton || !inputs.beneficiary_name || !inputs.beneficiary_iban || !inputs.amount || !inputs.communication) {
+            console.error('Required form elements not found');
+            return;
+        }
+
         // Initialize favorites
         favorites.default.loadFavorites(favoritesSelect);
 
         // Set up event handlers
         form.addEventListener('submit', function(e) {
             e.preventDefault();
+            if (!submitButton) return;
+            
             if (validation.default.validateAllFields(inputs)) {
                 qrGenerator.default.generateQRCode(form, submitButton, submitButtonOriginalText);
             }
