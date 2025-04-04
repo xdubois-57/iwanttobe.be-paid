@@ -173,7 +173,8 @@ function deleteFavorite() {
     localStorage.setItem(FAVORITES_KEY, JSON.stringify(favorites));
 
     // Clear form and enable inputs
-    formOperations.clearForm();
+    const form = document.getElementById('transfer-form');
+    formOperations.default.clearForm(form);
     nameInput.disabled = false;
     ibanInput.disabled = false;
     deleteButton.disabled = true;
