@@ -12,7 +12,13 @@ $jsTranslations = [
     'favorite_updated' => $lang->translate('favorite_updated'),
     'favorite_duplicate' => $lang->translate('favorite_duplicate'),
     'favorite_saved' => $lang->translate('favorite_saved'),
-    'share_text' => $lang->translate('share_text')
+    'share_text' => $lang->translate('share_text'),
+    'generating' => $lang->translate('generating'),
+    'failed_to_generate_qr' => $lang->translate('failed_to_generate_qr'),
+    'invalid_format' => $lang->translate('invalid_format'),
+    'confirm_delete_favorite' => $lang->translate('confirm_delete_favorite'),
+    'error_deleting_favorite' => $lang->translate('error_deleting_favorite'),
+    'error' => $lang->translate('error')
 ];
 ?>
 <!DOCTYPE html>

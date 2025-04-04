@@ -50,4 +50,5 @@ return array (
   'invalid_format' => 'Invalid format',
   'confirm_delete_favorite' => 'Are you sure you want to delete this favorite?',
   'error_deleting_favorite' => 'Error deleting favorite',
+  'error' => 'Error',
 );

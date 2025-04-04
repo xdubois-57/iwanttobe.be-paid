@@ -99,4 +99,5 @@ return array (
   'invalid_format' => 'Ongeldig formaat',
   'confirm_delete_favorite' => 'Weet u zeker dat u deze favoriet wilt verwijderen?',
   'error_deleting_favorite' => 'Fout bij het verwijderen van favoriet',
+  'error' => 'Fout',
 );

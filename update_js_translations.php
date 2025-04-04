@@ -12,7 +12,8 @@ $translations = [
         'failed_to_generate_qr' => 'Échec de la génération du code QR. Veuillez réessayer.',
         'invalid_format' => 'Format invalide',
         'confirm_delete_favorite' => 'Êtes-vous sûr de vouloir supprimer ce favori ?',
-        'error_deleting_favorite' => 'Erreur lors de la suppression du favori'
+        'error_deleting_favorite' => 'Erreur lors de la suppression du favori',
+        'error' => 'Erreur'
     ],
     'nl' => [
         'error_required_fields' => 'Vul alle verplichte velden correct in',
@@ -25,7 +26,8 @@ $translations = [
         'failed_to_generate_qr' => 'QR-code genereren mislukt. Probeer het opnieuw.',
         'invalid_format' => 'Ongeldig formaat',
         'confirm_delete_favorite' => 'Weet u zeker dat u deze favoriet wilt verwijderen?',
-        'error_deleting_favorite' => 'Fout bij het verwijderen van favoriet'
+        'error_deleting_favorite' => 'Fout bij het verwijderen van favoriet',
+        'error' => 'Fout'
     ],
     'de' => [
         'error_required_fields' => 'Bitte füllen Sie alle Pflichtfelder korrekt aus',
@@ -38,7 +40,8 @@ $translations = [
         'failed_to_generate_qr' => 'QR-Code konnte nicht generiert werden. Bitte versuchen Sie es erneut.',
         'invalid_format' => 'Ungültiges Format',
         'confirm_delete_favorite' => 'Sind Sie sicher, dass Sie diesen Favoriten löschen möchten?',
-        'error_deleting_favorite' => 'Fehler beim Löschen des Favoriten'
+        'error_deleting_favorite' => 'Fehler beim Löschen des Favoriten',
+        'error' => 'Fehler'
     ]
 ];
 
@@ -54,7 +57,8 @@ $default = [
     'failed_to_generate_qr' => 'Failed to generate QR code. Please try again.',
     'invalid_format' => 'Invalid format',
     'confirm_delete_favorite' => 'Are you sure you want to delete this favorite?',
-    'error_deleting_favorite' => 'Error deleting favorite'
+    'error_deleting_favorite' => 'Error deleting favorite',
+    'error' => 'Error'
 ];
 
 // Update all language files

@@ -99,4 +99,5 @@ return array (
   'invalid_format' => 'Format invalide',
   'confirm_delete_favorite' => 'Êtes-vous sûr de vouloir supprimer ce favori ?',
   'error_deleting_favorite' => 'Erreur lors de la suppression du favori',
+  'error' => 'Erreur',
 );
