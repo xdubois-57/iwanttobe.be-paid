@@ -1,7 +1,5 @@
 // Storage keys
 const FAVORITES_KEY = 'qrtransfer_favorites';
-const STORAGE_KEY = 'qrtransfer_form_data';
-const FORM_DATA_KEY = 'qr_transfer_form_data';
 
 // Field validation patterns
 const VALIDATION_PATTERNS = {
@@ -13,7 +11,5 @@ const VALIDATION_PATTERNS = {
 
 export default {
     FAVORITES_KEY,
-    STORAGE_KEY,
-    FORM_DATA_KEY,
     VALIDATION_PATTERNS
 };

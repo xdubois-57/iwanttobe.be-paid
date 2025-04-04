@@ -4,9 +4,8 @@ document.addEventListener('DOMContentLoaded', function() {
         import('./modules/validation.js'),
         import('./modules/qr-generator.js'),
         import('./modules/favorites.js'),
-        import('./modules/form-storage.js'),
         import('./modules/form-operations.js')
-    ]).then(([validation, qrGenerator, favorites, formStorage, formOperations]) => {
+    ]).then(([validation, qrGenerator, favorites, formOperations]) => {
         // Get form elements
         const form = document.querySelector('#transfer-form');
         const submitButton = document.getElementById('generate-qr-button');
@@ -26,8 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
             communication: document.getElementById('communication')
         };
 
-        // Initialize form
-        formStorage.default.loadFormData(form);
+        // Initialize favorites
         favorites.default.loadFavorites(favoritesSelect);
 
         // Set up event handlers
@@ -57,16 +55,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 validation.default.validateField(inputId, input.value);
             }
         }
-
-        // Save form data when modified
-        form.addEventListener('change', () => {
-            console.log('Form change event triggered');
-            formStorage.default.saveFormData(form);
-            qrGenerator.default.updateButtonState(inputs, submitButton);
-            
-            // Update save button text on change events too
-            favorites.default.updateSaveButtonText(saveButton, inputs.beneficiary_name.value.trim(), inputs.beneficiary_iban.value.trim());
-        });
 
         // Listen for favorites changes
         favoritesSelect.addEventListener('change', () => {
