@@ -27,17 +27,35 @@ $lang = LanguageController::getInstance();
         </article>
     </div>
 
-    <article>
-        <header>
-            <h2><?php echo $lang->translate('why_us_features_title'); ?></h2>
-        </header>
-        <ul>
-            <li><?php echo $lang->translate('why_us_feature_1'); ?></li>
-            <li><?php echo $lang->translate('why_us_feature_2'); ?></li>
-            <li><?php echo $lang->translate('why_us_feature_3'); ?></li>
-            <li><?php echo $lang->translate('why_us_feature_4'); ?></li>
-        </ul>
-    </article>
+    <section>
+        <h2><?php echo $lang->translate('why_us_features_title'); ?></h2>
+        <div class="grid">
+            <article>
+                <header>
+                    <h3>Instant QR Generation</h3>
+                </header>
+                <p><?php echo $lang->translate('why_us_feature_1'); ?></p>
+            </article>
+            <article>
+                <header>
+                    <h3>European Bank Support</h3>
+                </header>
+                <p><?php echo $lang->translate('why_us_feature_2'); ?></p>
+            </article>
+            <article>
+                <header>
+                    <h3>Multilingual</h3>
+                </header>
+                <p><?php echo $lang->translate('why_us_feature_3'); ?></p>
+            </article>
+            <article>
+                <header>
+                    <h3>Cross-Device Compatible</h3>
+                </header>
+                <p><?php echo $lang->translate('why_us_feature_4'); ?></p>
+            </article>
+        </div>
+    </section>
 
     <section>
         <h2><?php echo $lang->translate('why_us_use_cases_title'); ?></h2>
