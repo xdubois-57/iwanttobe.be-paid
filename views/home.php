@@ -16,7 +16,7 @@ require_once __DIR__ . '/header.php';
             <article class="form-container">
                 <form id="transfer-form" autocomplete="off" onsubmit="return false">
                     <div class="favorites-container">
-                        <select id="favorites" onchange="loadFavorite()">
+                        <select id="favorites">
                             <option value=""><?php echo $lang->translate('select_favorite'); ?></option>
                         </select>
                     </div>

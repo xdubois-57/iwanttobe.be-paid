@@ -193,6 +193,8 @@ function initializeFormListeners() {
     // Function to handle any input change
     const handleChange = () => {
         console.log('Form values changed');
+        // Reset last generated values when any input changes
+        lastGeneratedValues = null;
         updateGenerateButtonState(inputs, generateButton);
     };
 
