@@ -188,6 +188,12 @@ function loadFavorite() {
     ibanInput.dispatchEvent(new Event('change', { bubbles: true }));
     amountInput.dispatchEvent(new Event('change', { bubbles: true }));
     communicationInput.dispatchEvent(new Event('change', { bubbles: true }));
+
+    // Automatically generate QR code for the loaded favorite
+    const generateButton = document.getElementById('generate-qr-button');
+    if (generateButton && !generateButton.disabled) {
+        generateButton.click();
+    }
 }
 
 /**
