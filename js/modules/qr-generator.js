@@ -1,6 +1,9 @@
 import validation from './validation.js';
 import translations from './translations.js';
 
+// Store the last generated QR code values
+let lastGeneratedValues = null;
+
 /**
  * Resets the right panel to show support QR
  */
@@ -28,6 +31,28 @@ function createFormData(form, inputs) {
     }
     
     return formData;
+}
+
+/**
+ * Gets current form values as a string for comparison
+ * @param {Object} inputs - Object containing form input elements
+ * @returns {string} - String representation of form values
+ */
+function getFormValuesString(inputs) {
+    return Object.entries(inputs)
+        .map(([key, input]) => `${key}:${input.value}`)
+        .join('|');
+}
+
+/**
+ * Updates the generate button state based on form values
+ * @param {Object} inputs - Object containing form input elements
+ * @param {HTMLButtonElement} generateButton - The generate button element
+ */
+function updateGenerateButtonState(inputs, generateButton) {
+    const currentValues = getFormValuesString(inputs);
+    const isDisabled = currentValues === lastGeneratedValues;
+    generateButton.disabled = isDisabled;
 }
 
 /**
@@ -102,6 +127,11 @@ async function generateQRCode(form, submitButton, submitButtonOriginalText) {
             shareQr.dataset.image = imageUrl;
             userQr.style.display = 'block';
             supportQr.style.display = 'none';
+
+            // Store the current values as last generated
+            lastGeneratedValues = getFormValuesString(inputs);
+            // Update button state after successful generation
+            updateGenerateButtonState(inputs, submitButton);
         } else {
             throw new Error(data.message || data.error || translations.translate('qr_generation_failed'));
         }
@@ -113,16 +143,53 @@ async function generateQRCode(form, submitButton, submitButtonOriginalText) {
     } finally {
         // Reset button state
         submitButton.textContent = submitButtonOriginalText;
-        submitButton.disabled = false;
+        if (!lastGeneratedValues || getFormValuesString(inputs) !== lastGeneratedValues) {
+            submitButton.disabled = false;
+        }
     }
+}
+
+/**
+ * Initializes form input event listeners
+ */
+function initializeFormListeners() {
+    const form = document.getElementById('transfer-form');
+    const generateButton = document.getElementById('generate-qr-button');
+    if (!form || !generateButton) return;
+
+    const inputs = {
+        beneficiary_name: document.getElementById('beneficiary_name'),
+        beneficiary_iban: document.getElementById('beneficiary_iban'),
+        amount: document.getElementById('amount'),
+        communication: document.getElementById('communication')
+    };
+
+    // Add input event listeners to all form fields
+    Object.values(inputs).forEach(input => {
+        if (input) {
+            input.addEventListener('input', () => {
+                updateGenerateButtonState(inputs, generateButton);
+            });
+        }
+    });
+
+    // Reset last generated values when form is cleared
+    document.getElementById('clear-form')?.addEventListener('click', () => {
+        lastGeneratedValues = null;
+        updateGenerateButtonState(inputs, generateButton);
+    });
 }
 
 const qrGenerator = {
     generateQRCode,
-    resetRightPanel
+    resetRightPanel,
+    initializeFormListeners
 };
 
 // Make resetRightPanel globally available
 window.resetRightPanel = resetRightPanel;
+
+// Initialize form listeners when the module is loaded
+document.addEventListener('DOMContentLoaded', initializeFormListeners);
 
 export default qrGenerator;
