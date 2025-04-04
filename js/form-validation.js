@@ -1,8 +1,153 @@
+// Helper function to get translations with fallbacks
+function t(key) {
+    const fallbacks = {
+        'generating': 'Generating...',
+        'failed_to_generate_qr': 'Failed to generate QR code',
+        'error': 'Error',
+        'please_fix_errors': 'Please fix the errors in the form',
+        'confirm_delete_favorite': 'Confirm delete favorite',
+        'error_deleting_favorite': 'Error deleting favorite',
+        'error_required_fields': 'Error: required fields',
+        'favorite_updated': 'Favorite updated',
+        'favorite_saved': 'Favorite saved',
+        'favorite_duplicate': 'Favorite duplicate'
+    };
+    return (window.translations && window.translations[key]) || fallbacks[key] || key;
+}
+
+// QR code generation function
+function generateQRCode() {
+    const form = document.getElementById('transfer-form');
+    const submitButton = document.getElementById('generate-qr-button');
+    const submitButtonOriginalText = submitButton.textContent;
+    const inputs = {
+        beneficiary_name: document.getElementById('beneficiary_name'),
+        beneficiary_iban: document.getElementById('beneficiary_iban'),
+        amount: document.getElementById('amount'),
+        communication: document.getElementById('communication')
+    };
+
+    // Validate all fields
+    let isValid = true;
+    for (let inputId in inputs) {
+        const value = inputs[inputId].value;
+        const validationIndicator = inputs[inputId].parentNode.querySelector('.validation-indicator');
+        
+        // Skip validation for optional communication field if empty
+        if (inputId === 'communication' && !value) {
+            continue;
+        }
+
+        // Basic required field validation
+        if (!value || value.trim() === '') {
+            validationIndicator.style.backgroundColor = '#ff4444';
+            isValid = false;
+            continue;
+        }
+
+        // Field-specific validation
+        switch (inputId) {
+            case 'beneficiary_name':
+                if (!/^[a-zA-ZÀ-ÿ\s\-']+$/.test(value.trim())) {
+                    validationIndicator.style.backgroundColor = '#ff4444';
+                    isValid = false;
+                } else {
+                    validationIndicator.style.backgroundColor = '#44ff44';
+                }
+                break;
+
+            case 'beneficiary_iban':
+                const cleanIban = value.replace(/\s/g, '').toUpperCase();
+                if (!/^[A-Z]{2}[0-9]{2}[A-Z0-9]{1,30}$/.test(cleanIban)) {
+                    validationIndicator.style.backgroundColor = '#ff4444';
+                    isValid = false;
+                } else {
+                    validationIndicator.style.backgroundColor = '#44ff44';
+                }
+                break;
+
+            case 'amount':
+                const amount = parseFloat(value);
+                if (isNaN(amount) || amount <= 0 || amount > 999999999.99) {
+                    validationIndicator.style.backgroundColor = '#ff4444';
+                    isValid = false;
+                } else {
+                    validationIndicator.style.backgroundColor = '#44ff44';
+                }
+                break;
+
+            case 'communication':
+                if (value && !/^[a-zA-Z0-9\s\-'.,]*$/.test(value)) {
+                    validationIndicator.style.backgroundColor = '#ff4444';
+                    isValid = false;
+                } else {
+                    validationIndicator.style.backgroundColor = '#44ff44';
+                }
+                break;
+        }
+    }
+
+    if (!isValid) {
+        alert(t('please_fix_errors'));
+        return;
+    }
+
+    // Show loading state
+    submitButton.disabled = true;
+    submitButton.textContent = t('generating');
+
+    const formData = new FormData(form);
+    fetch('/generate-qr', {
+        method: 'POST',
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        },
+        body: formData
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (!data.success) {
+            throw new Error(data.error || t('failed_to_generate_qr'));
+        }
+
+        // Use the image data directly since it's already a complete data URL
+        const imageUrl = data.image;
+
+        // Hide support QR and show user QR
+        document.getElementById('support-qr').style.display = 'none';
+        document.getElementById('user-qr').style.display = 'block';
+        
+        // Set the image source and ensure it's visible
+        const qrImage = document.getElementById('qr-image');
+        qrImage.src = imageUrl;
+        qrImage.style.display = 'block';
+
+        submitButton.disabled = false;
+        submitButton.textContent = submitButtonOriginalText;
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert(t('error') + ': ' + (error.message || t('failed_to_generate_qr')));
+        
+        // Show support QR and hide user QR on error
+        document.getElementById('support-qr').style.display = 'block';
+        document.getElementById('user-qr').style.display = 'none';
+
+        submitButton.disabled = false;
+        submitButton.textContent = submitButtonOriginalText;
+    });
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     const FAVORITES_KEY = 'qrtransfer_favorites';
     const STORAGE_KEY = 'qrtransfer_form_data';
     const form = document.querySelector('#transfer-form');
-    const submitButton = form.querySelector('button[type="submit"]');
+    const submitButton = document.getElementById('generate-qr-button');
     const submitButtonOriginalText = submitButton.textContent;
     const favoritesSelect = document.getElementById('favorites');
     const saveButton = document.getElementById('save-favorite');
@@ -16,21 +161,21 @@ document.addEventListener('DOMContentLoaded', function() {
         communication: document.getElementById('communication')
     };
 
-    // Helper function to get translations
+    // Helper function to get translations with fallbacks
     function t(key) {
-        return window.translations[key] || key;
-    }
-
-    // Clear any stored form data
-    sessionStorage.clear();
-    localStorage.removeItem(STORAGE_KEY);
-    
-    // Reset all form fields
-    form.reset();
-    
-    // Clear any browser-stored values
-    for (let inputId in inputs) {
-        inputs[inputId].value = '';
+        const fallbacks = {
+            'generating': 'Generating...',
+            'failed_to_generate_qr': 'Failed to generate QR code',
+            'error': 'Error',
+            'please_fix_errors': 'Please fix the errors in the form',
+            'confirm_delete_favorite': 'Confirm delete favorite',
+            'error_deleting_favorite': 'Error deleting favorite',
+            'error_required_fields': 'Error: required fields',
+            'favorite_updated': 'Favorite updated',
+            'favorite_saved': 'Favorite saved',
+            'favorite_duplicate': 'Favorite duplicate'
+        };
+        return (window.translations && window.translations[key]) || fallbacks[key] || key;
     }
 
     // Add validation indicators if they don't exist
@@ -316,66 +461,8 @@ document.addEventListener('DOMContentLoaded', function() {
         console.error('Error loading saved form data:', e);
     }
 
-    function generateQRCode() {
-        // Validate all fields
-        let isValid = true;
-        for (let inputId in inputs) {
-            if (!validateField(inputId, inputs[inputId].value)) {
-                if (inputId !== 'communication') { // Don't break for optional field
-                    isValid = false;
-                    break;
-                }
-            }
-        }
-
-        if (!isValid) {
-            return;
-        }
-
-        // Show loading state
-        submitButton.disabled = true;
-        submitButton.textContent = t('generating');
-
-        const formData = new FormData(form);
-        fetch('/generate-qr', {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (!data.success) {
-                throw new Error(data.error || t('failed_to_generate_qr'));
-            }
-
-            // Hide support QR and show user QR
-            document.getElementById('support-qr').style.display = 'none';
-            document.getElementById('user-qr').style.display = 'block';
-            document.getElementById('qr-image').src = data.image;
-
-            submitButton.disabled = false;
-            submitButton.textContent = submitButtonOriginalText;
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert(t('error') + ': ' + (error.message || t('failed_to_generate_qr')));
-            
-            // Show support QR and hide user QR on error
-            document.getElementById('support-qr').style.display = 'block';
-            document.getElementById('user-qr').style.display = 'none';
-
-            submitButton.disabled = false;
-            submitButton.textContent = submitButtonOriginalText;
-        });
-    }
-
-    // Handle form submission
-    form.addEventListener('submit', function(event) {
-        event.preventDefault();
-        generateQRCode();
-    });
-
     // Watch amount field changes to auto-generate QR code when favorite is selected
-    inputs.amount.addEventListener('input', function() {
+    inputs.amount.addEventListener('change', function() {
         if (favoritesSelect.value !== '') {
             generateQRCode();
         }

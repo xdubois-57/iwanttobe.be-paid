@@ -14,7 +14,7 @@ require_once __DIR__ . '/header.php';
         <!-- Left column with form -->
         <div>
             <article class="form-container">
-                <form id="transfer-form" autocomplete="off">
+                <form id="transfer-form" autocomplete="off" onsubmit="return false">
                     <div class="favorites-container">
                         <select id="favorites" onchange="loadFavorite()">
                             <option value=""><?php echo $lang->translate('select_favorite'); ?></option>
@@ -65,7 +65,7 @@ require_once __DIR__ . '/header.php';
 
                     <div class="button-container">
                         <div class="primary-button-row">
-                            <button type="submit"><?php echo $lang->translate('generate_qr'); ?></button>
+                            <button type="button" id="generate-qr-button" onclick="generateQRCode()"><?php echo $lang->translate('generate_qr'); ?></button>
                         </div>
                         <div class="secondary-button-row">
                             <button type="button" onclick="clearForm()" class="secondary outline" id="clear-form">
