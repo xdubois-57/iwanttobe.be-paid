@@ -288,8 +288,30 @@ function initializeFavorites() {
     updateSaveButtonText(saveButton, nameInput.value.trim(), ibanInput.value.trim());
 }
 
+// Expose saveFavorite immediately
+window.saveFavorite = function() {
+    const inputs = {
+        beneficiary_name: document.getElementById('beneficiary_name'),
+        beneficiary_iban: document.getElementById('beneficiary_iban'),
+        amount: document.getElementById('amount'),
+        communication: document.getElementById('communication')
+    };
+    const favoritesSelect = document.getElementById('favorites');
+    const saveButton = document.getElementById('save-favorite');
+    const deleteButton = document.getElementById('delete-favorite');
+    
+    if (!inputs.beneficiary_name || !inputs.beneficiary_iban) {
+        alert(translations.translate('fill_required_fields'));
+        return;
+    }
+    
+    saveFavorite(inputs, favoritesSelect, saveButton, deleteButton);
+};
+
 // Initialize when DOM is ready
-document.addEventListener('DOMContentLoaded', initializeFavorites);
+document.addEventListener('DOMContentLoaded', function() {
+    initializeFavorites();
+});
 
 // Export functions
 export default {
