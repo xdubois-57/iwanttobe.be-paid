@@ -40,7 +40,11 @@ function createFormData(form, inputs) {
  */
 function getFormValuesString(inputs) {
     return Object.entries(inputs)
-        .map(([key, input]) => `${key}:${input.value.trim()}`)
+        .map(([key, input]) => {
+            // Normalize the value: trim and remove extra spaces
+            const value = input.value.trim().replace(/\s+/g, '');
+            return `${key}:${value}`;
+        })
         .join('|');
 }
 
@@ -63,8 +67,9 @@ function updateGenerateButtonState(inputs, generateButton) {
     
     console.log('Button state update:', {
         currentValues,
-        lastGeneratedValues,
-        shouldEnable
+        lastGenerated: lastGeneratedValues,
+        shouldEnable,
+        buttonDisabled: !shouldEnable
     });
 
     generateButton.disabled = !shouldEnable;
