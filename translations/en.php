@@ -132,9 +132,9 @@ return [
     'gdpr_contact_intro' => 'If you have any questions about this Privacy Policy or our practices, please contact us:',
     'gdpr_contact_github' => 'By creating an issue on our GitHub repository',
     'select_favorite' => 'Custom beneficiary',
-    'save_favorite' => 'Save as favorite',
-    'update_favorite' => 'Update favorite',
-    'delete_favorite' => 'Delete favorite',
+    'save_favorite' => 'Save',
+    'update_favorite' => 'Update',
+    'delete_favorite' => 'Delete',
     'home_intro_title' => 'Be paid, now',
     'home_intro_text' => 'Generate a QR code that your friends can scan with their banking app to transfer money to you. Just fill in your details below and share the QR code.',
 ];

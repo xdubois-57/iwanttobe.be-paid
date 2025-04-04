@@ -93,7 +93,7 @@ function saveFavorite(inputs, favoritesSelect, saveButton, deleteButton) {
     inputs.beneficiary_name.disabled = true;
     inputs.beneficiary_iban.disabled = true;
     deleteButton.disabled = false;
-    saveButton.textContent = translations.translate('update_favorite');
+    saveButton.textContent = translations.translate('update_favorite_button_text');
 }
 
 /**
@@ -169,7 +169,7 @@ function loadFavorite() {
     nameInput.disabled = true;
     ibanInput.disabled = true;
     deleteButton.disabled = false;
-    saveButton.textContent = translations.translate('update_favorite');
+    saveButton.textContent = translations.translate('update_favorite_button_text');
 
     // Trigger validation once after all fields are set
     setTimeout(() => {
