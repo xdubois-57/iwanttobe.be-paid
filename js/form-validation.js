@@ -16,7 +16,7 @@ function t(key) {
 }
 
 // QR code generation function
-function generateQRCode() {
+window.generateQRCode = function() {
     const form = document.getElementById('transfer-form');
     const submitButton = document.getElementById('generate-qr-button');
     const submitButtonOriginalText = submitButton.textContent;
@@ -93,50 +93,39 @@ function generateQRCode() {
     }
 
     // Show loading state
-    submitButton.disabled = true;
     submitButton.textContent = t('generating');
+    submitButton.disabled = true;
 
     const formData = new FormData(form);
-    fetch('/generate-qr', {
+    return fetch('/generate-qr', {
         method: 'POST',
         headers: {
             'X-Requested-With': 'XMLHttpRequest'
         },
         body: formData
     })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.json();
-    })
+    .then(response => response.json())
     .then(data => {
-        if (!data.success) {
+        if (data.success) {
+            const imageUrl = data.image;
+
+            // Hide support QR and show user QR
+            document.getElementById('support-qr').style.display = 'none';
+            document.getElementById('user-qr').style.display = 'block';
+            
+            // Set the image source and ensure it's visible
+            const qrImage = document.getElementById('qr-image');
+            qrImage.src = imageUrl;
+            qrImage.style.display = 'block';
+
+            return true;
+        } else {
             throw new Error(data.error || t('failed_to_generate_qr'));
         }
-
-        // Use the image data directly since it's already a complete data URL
-        const imageUrl = data.image;
-
-        // Hide support QR and show user QR
-        document.getElementById('support-qr').style.display = 'none';
-        document.getElementById('user-qr').style.display = 'block';
-        
-        // Set the image source and ensure it's visible
-        const qrImage = document.getElementById('qr-image');
-        qrImage.src = imageUrl;
-        qrImage.style.display = 'block';
-
-        return Promise.resolve();
     })
     .catch(error => {
         console.error('Error:', error);
-        alert(t('error') + ': ' + (error.message || t('failed_to_generate_qr')));
-        
-        // Show support QR and hide user QR on error
-        document.getElementById('support-qr').style.display = 'block';
-        document.getElementById('user-qr').style.display = 'none';
-
+        alert(error.message || t('failed_to_generate_qr'));
         throw error;
     })
     .finally(() => {
@@ -298,7 +287,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     saveButton.textContent = updateButtonText;
                     deleteButton.disabled = false;
                     // Automatically generate QR code
-                    generateQRCode().catch(() => {
+                    window.generateQRCode().catch(() => {
                         // Error is already handled in generateQRCode
                     });
                 }
