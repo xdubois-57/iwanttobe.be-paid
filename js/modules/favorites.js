@@ -7,10 +7,12 @@ import translations from './translations.js';
  * Find the index of a favorite with matching name and IBAN
  * @param {Array} favorites - List of favorites
  * @param {Object} newFavorite - New favorite to check
+ * @param {number} excludeIndex - Index to exclude from the search (for updates)
  * @returns {number} - Index of matching favorite or -1 if not found
  */
-function findMatchingFavorite(favorites, newFavorite) {
-    return favorites.findIndex(favorite => 
+function findMatchingFavorite(favorites, newFavorite, excludeIndex = -1) {
+    return favorites.findIndex((favorite, index) => 
+        index !== excludeIndex &&
         favorite.beneficiary_name === newFavorite.beneficiary_name && 
         favorite.beneficiary_iban === newFavorite.beneficiary_iban
     );
@@ -121,7 +123,7 @@ function saveFavorite(params) {
     } = params;
 
     const favorites = JSON.parse(localStorage.getItem(constants.FAVORITES_KEY) || '[]');
-    const selectedIndex = favoritesSelect.value;
+    const selectedIndex = parseInt(favoritesSelect.value) || -1;
     
     const newFavorite = {
         beneficiary_name: inputs.beneficiary_name.value,
@@ -131,9 +133,9 @@ function saveFavorite(params) {
     };
 
     // Check for existing favorite with same name and IBAN
-    const existingIndex = findMatchingFavorite(favorites, newFavorite);
+    const existingIndex = findMatchingFavorite(favorites, newFavorite, selectedIndex);
     
-    if (existingIndex !== -1 && (!selectedIndex || parseInt(selectedIndex) !== existingIndex)) {
+    if (existingIndex !== -1) {
         // Found duplicate but not updating the same favorite
         if (!confirm(translations.translate('favorite_exists_confirm_update'))) {
             return;
@@ -141,7 +143,7 @@ function saveFavorite(params) {
         // Update existing favorite
         favorites[existingIndex] = newFavorite;
         favoritesSelect.value = existingIndex;
-    } else if (selectedIndex && selectedIndex !== '0') {
+    } else if (selectedIndex !== -1) {
         // Update selected favorite
         favorites[selectedIndex] = newFavorite;
     } else {
@@ -155,14 +157,14 @@ function saveFavorite(params) {
     // Select the newly added/updated favorite
     if (existingIndex !== -1) {
         favoritesSelect.value = existingIndex;
-    } else if (selectedIndex && selectedIndex !== '0') {
+    } else if (selectedIndex !== -1) {
         favoritesSelect.value = selectedIndex;
     } else {
         favoritesSelect.value = (favorites.length - 1).toString();
     }
     
     // Update UI state
-    saveButton.textContent = saveButtonOriginalText;
+    saveButton.textContent = saveButton.dataset.saveText || saveButtonOriginalText;
     deleteButton.disabled = false;
 }
 
@@ -189,13 +191,15 @@ function deleteFavorite(params) {
     favoritesSelect.value = '0';
     
     // Update UI state
-    saveButton.textContent = saveButtonOriginalText;
+    saveButton.textContent = saveButton.dataset.saveText || saveButtonOriginalText;
     deleteButton.disabled = true;
 }
 
-export default {
+const favoritesModule = {
     loadFavorites,
     loadFavorite,
     saveFavorite,
     deleteFavorite
 };
+
+export default favoritesModule;
