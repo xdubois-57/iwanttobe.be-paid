@@ -166,22 +166,6 @@ div.input-container > span.validation-indicator {
     .secondary-button-row button {
         width: 100%;
     }
-    .nav-links {
-        padding-left: 0;
-        margin-left: 1rem;
-        transform: translateX(-1rem); /* Compensate for any parent padding */
-    }
-
-    .hamburger-menu {
-        padding-left: 1rem;
-        padding-right: 1rem;
-    }
-    
-    .hamburger-menu li {
-        margin-bottom: 1rem;
-        padding: 0.75rem 0;
-        width: 100%;
-    }
 }
 
 /* General styles from style.css */

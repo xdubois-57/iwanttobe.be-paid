@@ -30,12 +30,15 @@ function findFavoriteIndex(name, iban) {
  * @param {string} iban - Beneficiary IBAN
  */
 function updateSaveButtonText(saveButton, name, iban) {
-    console.log('updateSaveButtonText called with:', { name, iban });
     const existingIndex = findFavoriteIndex(name, iban);
-    const exists = existingIndex !== -1;
-    const newText = exists ? translations.translate('update_favorite') : translations.translate('save_favorite');
-    console.log('Setting button text to:', newText);
-    saveButton.textContent = newText;
+    const currentText = saveButton.textContent;
+    
+    // Only update if necessary to prevent flickering
+    if (existingIndex !== -1 && !currentText.includes('Update')) {
+        saveButton.textContent = translations.translate('update_favorite');
+    } else if (existingIndex === -1 && !currentText.includes('Save')) {
+        saveButton.textContent = translations.translate('save_favorite');
+    }
 }
 
 /**
@@ -88,31 +91,35 @@ function saveFavorite(inputs, favoritesSelect, saveButton, deleteButton) {
  */
 function loadFavorites(favoritesSelect) {
     favoritesSelect = favoritesSelect || document.getElementById('favorites');
-    if (!favoritesSelect) {
-        console.error('Favorites select not found');
-        return;
-    }
-
+    if (!favoritesSelect) return;
+    
+    // Store current state before clearing
+    const currentValue = favoritesSelect.value;
+    const defaultText = favoritesSelect.options[0]?.textContent || translations.translate('select_favorite');
+    
     const favorites = JSON.parse(localStorage.getItem(FAVORITES_KEY) || '[]').filter(f => 
         f?.beneficiary_name && f?.beneficiary_iban
     );
     
-    // Clear existing options
+    // Rebuild dropdown while preserving translations
     favoritesSelect.innerHTML = '';
     
-    // Add default option
     const defaultOption = document.createElement('option');
     defaultOption.value = '';
-    defaultOption.textContent = translations.translate('select_favorite');
+    defaultOption.textContent = defaultText;
     favoritesSelect.appendChild(defaultOption);
     
-    // Add validated favorites
     favorites.forEach((favorite, index) => {
         const option = document.createElement('option');
         option.value = index;
         option.textContent = `${favorite.beneficiary_name} (${favorite.beneficiary_iban})`;
         favoritesSelect.appendChild(option);
     });
+    
+    // Restore selection if still valid
+    if (currentValue && favoritesSelect.options[currentValue]) {
+        favoritesSelect.value = currentValue;
+    }
     
     // Update storage with cleaned favorites if any were removed
     if (favorites.length !== JSON.parse(localStorage.getItem(constants.FAVORITES_KEY) || '[]').length) {
@@ -261,6 +268,28 @@ function initializeFavorites() {
 
     // Set initial button text
     updateSaveButtonText(saveButton, nameInput.value.trim(), ibanInput.value.trim());
+
+    const clearButton = document.getElementById('clear-form');
+    if (clearButton) {
+        clearButton.addEventListener('click', () => {
+            formOperations.default.clearForm(form);
+            inputs.beneficiary_name.disabled = false;
+            inputs.beneficiary_iban.disabled = false;
+            favoritesSelect.value = '';
+            deleteButton.disabled = true;
+            
+            // Reset button text to 'Save' translation while preserving existing translation
+            if (!saveButton.textContent.includes('Save')) {
+                saveButton.textContent = translations.translate('save_favorite');
+            }
+            
+            // Reset validation states
+            validation.default.validateField('beneficiary_name', '');
+            validation.default.validateField('beneficiary_iban', '');
+            validation.default.validateField('amount', '');
+            validation.default.validateField('communication', '');
+        });
+    }
 }
 
 // Expose saveFavorite immediately

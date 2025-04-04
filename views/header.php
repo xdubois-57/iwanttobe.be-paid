@@ -12,15 +12,6 @@ $lang = LanguageController::getInstance();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $lang->translate('app_name'); ?></title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
-    <script>
-        // Initialize translations object for JavaScript
-        window.translations = {
-            'generating': '<?php echo $lang->translate('generating'); ?>',
-            'failed_to_generate_qr': '<?php echo $lang->translate('failed_to_generate_qr'); ?>',
-            'error': '<?php echo $lang->translate('error'); ?>',
-            'please_fix_errors': '<?php echo $lang->translate('please_fix_errors'); ?>'
-        };
-    </script>
     <style>
         /* Custom styles */
         nav {
