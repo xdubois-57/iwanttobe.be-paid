@@ -109,5 +109,5 @@ return array (
   'favorite_saved' => 'Išsaugotas mėgstamuose',
   'error_required_fields' => 'Prašome užpildyti visus būtinus laukus',
   'error_saving_favorite' => 'Klaida išsaugant mėgstamą',
-  'home_intro_title' => 'Gaukite mokėjimą, dabar',
+  'home_intro_title' => 'Būkite apmokėti, dabar',
 );

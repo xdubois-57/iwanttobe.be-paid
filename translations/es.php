@@ -109,5 +109,5 @@ return array (
   'confirm_delete_favorite' => '¿Estás seguro de que quieres eliminar este favorito?',
   'error_deleting_favorite' => 'Error al eliminar el favorito',
   'error' => 'Error',
-  'home_intro_title' => 'Recibe pagos, ahora',
+  'home_intro_title' => 'Sé pagado, ahora',
 );

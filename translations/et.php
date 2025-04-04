@@ -109,5 +109,5 @@ return array (
   'confirm_delete_favorite' => 'Kas olete kindel, et soovite selle lemmiku kustutada?',
   'error_deleting_favorite' => 'Viga lemmiku kustutamisel',
   'error' => 'Viga',
-  'home_intro_title' => 'Saa makstud, nüüd',
+  'home_intro_title' => 'Ole tasutud, nüüd',
 );

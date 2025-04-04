@@ -109,4 +109,5 @@ return array (
   'confirm_delete_favorite' => 'Czy na pewno chcesz usunąć ten ulubiony?',
   'error_deleting_favorite' => 'Błąd podczas usuwania ulubionego',
   'error' => 'Błąd',
+  'home_intro_title' => 'Bądź opłacony, teraz',
 );

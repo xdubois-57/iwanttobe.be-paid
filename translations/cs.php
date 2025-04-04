@@ -109,5 +109,5 @@ return array (
   'confirm_delete_favorite' => 'Opravdu chcete smazat tento oblíbený?',
   'error_deleting_favorite' => 'Chyba při mazání oblíbeného',
   'error' => 'Chyba',
-  'home_intro_title' => 'Získejte platbu, teď',
+  'home_intro_title' => 'Buďte zaplaceni, teď',
 );

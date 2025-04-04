@@ -109,5 +109,5 @@ return array (
   'favorite_duplicate' => 'This beneficiary is already saved in your favorites',
   'favorite_saved' => 'Saved to favorites',
   'share_text' => 'Scan with your banking app!',
-  'home_intro_title' => 'Saņemiet maksājumu, tagad',
+  'home_intro_title' => 'Esiet samaksāts, tagad',
 );

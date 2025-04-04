@@ -109,5 +109,5 @@ return array (
   'confirm_delete_favorite' => 'Haluatko varmasti poistaa tämän suosikin?',
   'error_deleting_favorite' => 'Virhe suosikin poistamisessa',
   'error' => 'Virhe',
-  'home_intro_title' => 'Saa maksu, nyt',
+  'home_intro_title' => 'Ole maksettu, nyt',
 );

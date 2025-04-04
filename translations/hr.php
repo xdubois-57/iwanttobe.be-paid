@@ -1,6 +1,6 @@
 <?php
 return array_merge(require(__FILE__), [
-    'home_intro_title' => 'Primite uplatu, sada',
+    'home_intro_title' => 'Budite plaćeni, sada',
     'app_name' => 'QR Transfer',
     'menu_home' => 'Početna',
     'menu_about' => 'O nama',

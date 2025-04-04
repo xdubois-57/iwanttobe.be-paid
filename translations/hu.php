@@ -109,5 +109,5 @@ return array (
   'confirm_delete_favorite' => 'Biztosan törölni szeretnéd ezt a kedvencet?',
   'error_deleting_favorite' => 'Hiba a kedvenc törlésekor',
   'error' => 'Hiba',
-  'home_intro_title' => 'Kapj fizetést, most',
+  'home_intro_title' => 'Légy kifizetve, most',
 );

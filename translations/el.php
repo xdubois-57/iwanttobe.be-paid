@@ -109,5 +109,5 @@ return array (
   'confirm_delete_favorite' => 'Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτό το αγαπημένο;',
   'error_deleting_favorite' => 'Σφάλμα κατά τη διαγραφή του αγαπημένου',
   'error' => 'Σφάλμα',
-  'home_intro_title' => 'Πληρωθείτε, τώρα',
+  'home_intro_title' => 'Να πληρωθείτε, τώρα',
 );

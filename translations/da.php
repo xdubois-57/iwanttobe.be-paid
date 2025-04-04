@@ -109,5 +109,5 @@ return array (
   'confirm_delete_favorite' => 'Er du sikker på, at du vil slette denne favorit?',
   'error_deleting_favorite' => 'Fejl ved sletning af favorit',
   'error' => 'Fejl',
-  'home_intro_title' => 'Få betaling, nu',
+  'home_intro_title' => 'Bliv betalt, nu',
 );

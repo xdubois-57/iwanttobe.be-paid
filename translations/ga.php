@@ -109,5 +109,5 @@ return array (
   'favorite_saved' => 'Saved to favorites',
   'error_required_fields' => 'Please fill all required fields correctly',
   'error_saving_favorite' => 'Error saving to favorites',
-  'home_intro_title' => 'Faigh íocaíocht, anois',
+  'home_intro_title' => 'Bí íoctha, anois',
 );

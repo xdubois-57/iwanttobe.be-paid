@@ -1,6 +1,6 @@
 <?php
 return array_merge(require(__FILE__), [
-    'home_intro_title' => 'Ricevi pagamenti, ora',
+    'home_intro_title' => 'Sii pagato, ora',
     'app_name' => 'QR Transfer',
     'menu_home' => 'Home',
     'menu_about' => 'Chi siamo',
