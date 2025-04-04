@@ -75,7 +75,7 @@ async function generateQRCode(form, submitButton, submitButtonOriginalText) {
             }
 
             // Check if we have image data in the response
-            const imageUrl = data.qr_code;
+            const imageUrl = data.image || data.qr_code;
             if (!imageUrl) {
                 console.error('No image URL in response:', data);
                 throw new Error(translations.translate('qr_generation_failed'));
@@ -91,6 +91,8 @@ async function generateQRCode(form, submitButton, submitButtonOriginalText) {
     } catch (error) {
         console.error('Error generating QR code:', error);
         alert(translations.translate('qr_generation_failed'));
+        // Show support QR on error
+        resetRightPanel();
     } finally {
         // Reset button state
         submitButton.textContent = submitButtonOriginalText;
