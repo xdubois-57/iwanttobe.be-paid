@@ -4,8 +4,9 @@ document.addEventListener('DOMContentLoaded', function() {
         import('./modules/validation.js'),
         import('./modules/qr-generator.js'),
         import('./modules/favorites.js'),
-        import('./modules/form-operations.js')
-    ]).then(([validation, qrGenerator, favorites, formOperations]) => {
+        import('./modules/form-operations.js'),
+        import('./modules/translations.js')
+    ]).then(([validation, qrGenerator, favorites, formOperations, translations]) => {
         // Get form elements
         const form = document.querySelector('#transfer-form');
         const submitButton = document.getElementById('generate-qr-button');
@@ -100,7 +101,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 inputs.beneficiary_iban.disabled = false;
                 favoritesSelect.value = '';
                 deleteButton.disabled = true;
-                saveButton.textContent = window.t('save_favorite');
+                saveButton.textContent = translations.default.translate('save_favorite');
                 
                 // Reset validation states
                 validation.default.validateField('beneficiary_name', '');
