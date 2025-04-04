@@ -40,8 +40,9 @@ function loadFavorite() {
     const saveButton = document.getElementById('save-favorite');
     const nameInput = document.getElementById('beneficiary_name');
     const ibanInput = document.getElementById('beneficiary_iban');
+    const form = document.getElementById('transfer-form');
 
-    if (!favoritesSelect || !deleteButton || !saveButton || !nameInput || !ibanInput) {
+    if (!favoritesSelect || !deleteButton || !saveButton || !nameInput || !ibanInput || !form) {
         console.error('Missing required elements for loading favorite');
         return;
     }
@@ -86,68 +87,6 @@ function loadFavorite() {
 }
 
 /**
- * Saves the current form values as a favorite
- */
-function saveFavorite() {
-    const favoritesSelect = document.getElementById('favorites');
-    const saveButton = document.getElementById('save-favorite');
-    const nameInput = document.getElementById('beneficiary_name');
-    const ibanInput = document.getElementById('beneficiary_iban');
-
-    if (!favoritesSelect || !saveButton || !nameInput || !ibanInput) {
-        console.error('Missing required elements for saving favorite');
-        return;
-    }
-
-    const name = nameInput.value.trim();
-    const iban = ibanInput.value.trim();
-
-    if (!name || !iban) {
-        alert(translations.translate('fill_required_fields'));
-        return;
-    }
-
-    let favorites = JSON.parse(localStorage.getItem(FAVORITES_KEY) || '[]');
-    const selectedIndex = favoritesSelect.value;
-
-    // Check for duplicates
-    const existingIndex = favorites.findIndex(f => 
-        f.beneficiary_name === name && f.beneficiary_iban === iban
-    );
-
-    if (existingIndex !== -1 && existingIndex !== parseInt(selectedIndex)) {
-        alert(translations.translate('favorite_exists'));
-        return;
-    }
-
-    const favorite = {
-        beneficiary_name: name,
-        beneficiary_iban: iban
-    };
-
-    if (selectedIndex !== '') {
-        // Update existing favorite
-        favorites[selectedIndex] = favorite;
-    } else {
-        // Add new favorite
-        favorites.push(favorite);
-    }
-
-    localStorage.setItem(FAVORITES_KEY, JSON.stringify(favorites));
-    loadFavorites(favoritesSelect);
-
-    // Select the saved favorite
-    const newIndex = selectedIndex !== '' ? selectedIndex : (favorites.length - 1).toString();
-    favoritesSelect.value = newIndex;
-
-    // Update UI state
-    nameInput.disabled = true;
-    ibanInput.disabled = true;
-    document.getElementById('delete-favorite').disabled = false;
-    saveButton.textContent = translations.translate('update_favorite');
-}
-
-/**
  * Deletes the currently selected favorite
  */
 function deleteFavorite() {
@@ -156,8 +95,9 @@ function deleteFavorite() {
     const saveButton = document.getElementById('save-favorite');
     const nameInput = document.getElementById('beneficiary_name');
     const ibanInput = document.getElementById('beneficiary_iban');
+    const form = document.getElementById('transfer-form');
 
-    if (!favoritesSelect || !deleteButton || !saveButton || !nameInput || !ibanInput) {
+    if (!favoritesSelect || !deleteButton || !saveButton || !nameInput || !ibanInput || !form) {
         console.error('Missing required elements for deleting favorite');
         return;
     }
@@ -173,8 +113,7 @@ function deleteFavorite() {
     localStorage.setItem(FAVORITES_KEY, JSON.stringify(favorites));
 
     // Clear form and enable inputs
-    const form = document.getElementById('transfer-form');
-    formOperations.default.clearForm(form);
+    formOperations.clearForm(form);
     nameInput.disabled = false;
     ibanInput.disabled = false;
     deleteButton.disabled = true;
@@ -194,26 +133,26 @@ function deleteFavorite() {
  */
 function initializeFavorites() {
     const favoritesSelect = document.getElementById('favorites');
-    if (!favoritesSelect) return;
+    if (!favoritesSelect) {
+        console.error('Favorites select not found');
+        return;
+    }
 
     // Load initial favorites
     loadFavorites(favoritesSelect);
 
-    // Add change listener
+    // Add event listener for favorites selection
     favoritesSelect.addEventListener('change', loadFavorite);
-
-    // Make functions globally available
-    window.saveFavorite = saveFavorite;
-    window.deleteFavorite = deleteFavorite;
 }
 
 // Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', initializeFavorites);
 
-export default {
+const favorites = {
     loadFavorites,
     loadFavorite,
-    saveFavorite,
     deleteFavorite,
     initializeFavorites
 };
+
+export default favorites;

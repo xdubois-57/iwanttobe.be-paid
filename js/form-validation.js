@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const saveButton = document.getElementById('save-favorite');
         const deleteButton = document.getElementById('delete-favorite');
         const saveButtonOriginalText = saveButton.textContent;
-        const updateButtonText = saveButton.getAttribute('data-update-text');
+        const updateButtonText = translations.translate('update_favorite');
         
         // Store original save text for later use
         saveButton.dataset.saveText = saveButtonOriginalText;
@@ -81,5 +81,60 @@ document.addEventListener('DOMContentLoaded', function() {
                 inputs.beneficiary_iban.disabled = false;
             });
         }
+
+        // Save favorite handler
+        saveButton.addEventListener('click', () => {
+            const name = inputs.beneficiary_name.value.trim();
+            const iban = inputs.beneficiary_iban.value.trim();
+
+            if (!name || !iban) {
+                alert(translations.translate('fill_required_fields'));
+                return;
+            }
+
+            let favorites = JSON.parse(localStorage.getItem('qr_transfer_favorites') || '[]');
+            const selectedIndex = favoritesSelect.value;
+
+            // Check for duplicates
+            const existingIndex = favorites.findIndex(f => 
+                f.beneficiary_name === name && f.beneficiary_iban === iban
+            );
+
+            if (existingIndex !== -1 && existingIndex !== parseInt(selectedIndex)) {
+                alert(translations.translate('favorite_exists'));
+                return;
+            }
+
+            const favorite = {
+                beneficiary_name: name,
+                beneficiary_iban: iban
+            };
+
+            if (selectedIndex !== '') {
+                // Update existing favorite
+                favorites[selectedIndex] = favorite;
+            } else {
+                // Add new favorite
+                favorites.push(favorite);
+            }
+
+            localStorage.setItem('qr_transfer_favorites', JSON.stringify(favorites));
+            favorites.default.loadFavorites(favoritesSelect);
+
+            // Select the saved favorite
+            const newIndex = selectedIndex !== '' ? selectedIndex : (favorites.length - 1).toString();
+            favoritesSelect.value = newIndex;
+
+            // Update UI state
+            inputs.beneficiary_name.disabled = true;
+            inputs.beneficiary_iban.disabled = true;
+            deleteButton.disabled = false;
+            saveButton.textContent = translations.translate('update_favorite');
+        });
+
+        // Delete favorite handler
+        deleteButton.addEventListener('click', () => {
+            favorites.default.deleteFavorite();
+        });
     });
 });
