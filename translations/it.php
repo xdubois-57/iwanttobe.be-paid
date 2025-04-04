@@ -1,6 +1,5 @@
 <?php
-return array_merge(require(__FILE__), [
-    'home_intro_title' => 'Sii pagato, ora',
+return [
     'app_name' => 'QR Transfer',
     'menu_home' => 'Home',
     'menu_about' => 'Chi siamo',
@@ -110,4 +109,4 @@ return array_merge(require(__FILE__), [
     'confirm_delete_favorite' => 'Sei sicuro di voler eliminare questo preferito?',
     'error_deleting_favorite' => 'Errore durante l\'eliminazione del preferito',
     'error' => 'Errore',
-]);
+];

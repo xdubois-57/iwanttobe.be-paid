@@ -5,4 +5,11 @@
         <button id="accept-cookies"><?php echo $lang->translate('cookie_accept'); ?></button>
     </div>
 </div>
+
+<script>
+// Ensure the banner is properly positioned at the bottom of the viewport
+document.addEventListener('DOMContentLoaded', function() {
+    // The main functionality is now in cookies.js
+});
+</script>
 <?php endif; ?>
