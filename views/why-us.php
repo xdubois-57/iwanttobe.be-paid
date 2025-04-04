@@ -114,6 +114,15 @@ $lang = LanguageController::getInstance();
         .feature-content p {
             margin: 0;
         }
+        
+        /* Desktop grid layout */
+        @media (min-width: 769px) {
+            .features-container {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 1.5rem;
+            }
+        }
     </style>
 
     <section>
