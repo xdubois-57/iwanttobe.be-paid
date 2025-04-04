@@ -2,6 +2,7 @@ import constants from './constants.js';
 import validation from './validation.js';
 import qrGenerator from './qr-generator.js';
 import translations from './translations.js';
+import formOperations from './form-operations.js';
 
 /**
  * Find the index of a favorite with matching name and IBAN
@@ -177,7 +178,8 @@ function deleteFavorite(params) {
         favoritesSelect,
         saveButton,
         saveButtonOriginalText,
-        deleteButton
+        deleteButton,
+        form
     } = params;
 
     const selectedIndex = favoritesSelect.value;
@@ -187,6 +189,8 @@ function deleteFavorite(params) {
     favorites.splice(selectedIndex, 1);
     localStorage.setItem(constants.FAVORITES_KEY, JSON.stringify(favorites));
     
+    // Clear form and reset UI
+    formOperations.clearForm(form);
     loadFavorites(favoritesSelect);
     favoritesSelect.value = '0';
     

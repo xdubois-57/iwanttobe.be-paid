@@ -86,7 +86,8 @@ document.addEventListener('DOMContentLoaded', function() {
             favoritesSelect,
             saveButton,
             saveButtonOriginalText,
-            deleteButton
+            deleteButton,
+            form
         });
     });
 });
