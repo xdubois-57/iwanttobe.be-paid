@@ -49,36 +49,6 @@ function getFormValuesString(inputs) {
 }
 
 /**
- * Updates the generate button state based on form values
- * @param {Object} inputs - Object containing form input elements
- * @param {HTMLButtonElement} generateButton - The generate button element
- */
-function updateGenerateButtonState(inputs, generateButton) {
-    if (!generateButton) {
-        console.log('No generate button found');
-        return;
-    }
-
-    const currentValues = getFormValuesString(inputs);
-
-    console.log('Checking button state:', {
-        hasLastValues: !!lastGeneratedValues,
-        currentValues,
-        lastGenerated: lastGeneratedValues || 'none'
-    });
-
-    // Always enable if no last values or values are different
-    const shouldEnable = !lastGeneratedValues || currentValues !== lastGeneratedValues;
-    generateButton.disabled = !shouldEnable;
-
-    console.log('Button state updated:', {
-        shouldEnable,
-        isDisabled: generateButton.disabled,
-        buttonText: generateButton.textContent
-    });
-}
-
-/**
  * Generates a QR code based on form data
  * @param {HTMLFormElement} form - The form element
  * @param {HTMLButtonElement} submitButton - The submit button
@@ -154,6 +124,9 @@ async function generateQRCode(form, submitButton, submitButtonOriginalText) {
             // Store the current values as last generated
             lastGeneratedValues = getFormValuesString(inputs);
             console.log('Stored last generated values:', lastGeneratedValues);
+            
+            // Keep button disabled after successful generation
+            submitButton.disabled = true;
         } else {
             throw new Error(data.message || data.error || translations.translate('qr_generation_failed'));
         }
@@ -162,13 +135,12 @@ async function generateQRCode(form, submitButton, submitButtonOriginalText) {
         alert(translations.translate('qr_generation_failed'));
         // Show support QR on error
         resetRightPanel();
-        // Reset last generated values on error
+        // Reset last generated values and enable button on error
         lastGeneratedValues = null;
+        submitButton.disabled = false;
     } finally {
         // Reset button text
         submitButton.textContent = submitButtonOriginalText;
-        // Update button state
-        updateGenerateButtonState(inputs, submitButton);
     }
 }
 
@@ -193,12 +165,8 @@ function initializeFormListeners() {
     // Function to handle any input change
     const handleChange = (event) => {
         console.log('Form value changed:', event.target.id, event.target.value);
-        
-        // Always reset last generated values and enable button on any input change
-        lastGeneratedValues = null;
         generateButton.disabled = false;
-        
-        console.log('Reset last generated values and enabled button');
+        console.log('Enabled generate button');
     };
 
     // Add input event listeners to all form fields
@@ -217,27 +185,24 @@ function initializeFormListeners() {
             console.log('Favorite selection changed');
             // Small delay to ensure inputs are updated
             setTimeout(() => {
-                lastGeneratedValues = null;
                 generateButton.disabled = false;
-                console.log('Reset last generated values after favorite change');
+                console.log('Enabled generate button after favorite change');
             }, 0);
         });
     }
 
-    // Reset last generated values when form is cleared
+    // Reset when form is cleared
     const clearButton = document.getElementById('clear-form');
     if (clearButton) {
         clearButton.addEventListener('click', () => {
             console.log('Form cleared');
-            lastGeneratedValues = null;
             generateButton.disabled = false;
-            console.log('Reset last generated values after form clear');
+            console.log('Enabled generate button after form clear');
         });
     }
 
     // Initial button state
     console.log('Initializing button state');
-    lastGeneratedValues = null;
     generateButton.disabled = false;
 }
 
