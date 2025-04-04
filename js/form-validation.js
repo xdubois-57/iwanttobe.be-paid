@@ -4,8 +4,9 @@ document.addEventListener('DOMContentLoaded', function() {
         import('./modules/validation.js'),
         import('./modules/qr-generator.js'),
         import('./modules/favorites.js'),
-        import('./modules/form-storage.js')
-    ]).then(([validation, qrGenerator, favorites, formStorage]) => {
+        import('./modules/form-storage.js'),
+        import('./modules/form-operations.js')
+    ]).then(([validation, qrGenerator, favorites, formStorage, formOperations]) => {
         // Get form elements
         const form = document.querySelector('#transfer-form');
         const submitButton = document.getElementById('generate-qr-button');
@@ -15,6 +16,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const deleteButton = document.getElementById('delete-favorite');
         const saveButtonOriginalText = saveButton.textContent;
         const updateButtonText = saveButton.getAttribute('data-update-text');
+        
+        // Store original save text for later use
+        saveButton.dataset.saveText = saveButtonOriginalText;
+        
         const amountField = document.getElementById('amount');
 
         const inputs = {
@@ -34,8 +39,9 @@ document.addEventListener('DOMContentLoaded', function() {
             window.generateQRCode();
         });
 
-        // Make generateQRCode globally available
+        // Make functions globally available
         window.generateQRCode = () => qrGenerator.default.generateQRCode(form, submitButton, submitButtonOriginalText);
+        window.clearForm = () => formOperations.default.clearForm(form);
 
         // Add input event listeners for real-time validation
         for (let inputId in inputs) {

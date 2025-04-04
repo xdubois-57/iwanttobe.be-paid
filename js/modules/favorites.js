@@ -1,6 +1,20 @@
 import constants from './constants.js';
 import validation from './validation.js';
 import qrGenerator from './qr-generator.js';
+import translations from './translations.js';
+
+/**
+ * Find the index of a favorite with matching name and IBAN
+ * @param {Array} favorites - List of favorites
+ * @param {Object} newFavorite - New favorite to check
+ * @returns {number} - Index of matching favorite or -1 if not found
+ */
+function findMatchingFavorite(favorites, newFavorite) {
+    return favorites.findIndex(favorite => 
+        favorite.beneficiary_name === newFavorite.beneficiary_name && 
+        favorite.beneficiary_iban === newFavorite.beneficiary_iban
+    );
+}
 
 /**
  * Loads favorites into the select dropdown
@@ -42,7 +56,7 @@ function loadFavorite(params) {
     console.log('loadFavorite called');
     const selectedIndex = favoritesSelect.value;
     if (!selectedIndex) {
-        saveButton.textContent = saveButtonOriginalText;
+        saveButton.textContent = saveButton.dataset.saveText || saveButton.textContent;
         deleteButton.disabled = true;
         return;
     }
@@ -109,26 +123,43 @@ function saveFavorite(params) {
     const favorites = JSON.parse(localStorage.getItem(constants.FAVORITES_KEY) || '[]');
     const selectedIndex = favoritesSelect.value;
     
-    const favorite = {
+    const newFavorite = {
         beneficiary_name: inputs.beneficiary_name.value,
         beneficiary_iban: inputs.beneficiary_iban.value,
         amount: inputs.amount.value,
         communication: inputs.communication.value
     };
 
-    if (selectedIndex && selectedIndex !== '0') {
+    // Check for existing favorite with same name and IBAN
+    const existingIndex = findMatchingFavorite(favorites, newFavorite);
+    
+    if (existingIndex !== -1 && (!selectedIndex || parseInt(selectedIndex) !== existingIndex)) {
+        // Found duplicate but not updating the same favorite
+        if (!confirm(translations.translate('favorite_exists_confirm_update'))) {
+            return;
+        }
         // Update existing favorite
-        favorites[selectedIndex] = favorite;
+        favorites[existingIndex] = newFavorite;
+        favoritesSelect.value = existingIndex;
+    } else if (selectedIndex && selectedIndex !== '0') {
+        // Update selected favorite
+        favorites[selectedIndex] = newFavorite;
     } else {
         // Add new favorite
-        favorites.push(favorite);
+        favorites.push(newFavorite);
     }
 
     localStorage.setItem(constants.FAVORITES_KEY, JSON.stringify(favorites));
     loadFavorites(favoritesSelect);
     
     // Select the newly added/updated favorite
-    favoritesSelect.value = selectedIndex || (favorites.length - 1).toString();
+    if (existingIndex !== -1) {
+        favoritesSelect.value = existingIndex;
+    } else if (selectedIndex && selectedIndex !== '0') {
+        favoritesSelect.value = selectedIndex;
+    } else {
+        favoritesSelect.value = (favorites.length - 1).toString();
+    }
     
     // Update UI state
     saveButton.textContent = saveButtonOriginalText;
