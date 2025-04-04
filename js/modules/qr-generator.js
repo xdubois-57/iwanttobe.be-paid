@@ -221,7 +221,8 @@ function initializeFormListeners() {
 const qrGenerator = {
     generateQRCode,
     resetRightPanel,
-    initializeFormListeners
+    initializeFormListeners,
+    updateButtonState
 };
 
 // Make resetRightPanel globally available

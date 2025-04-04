@@ -47,6 +47,7 @@ document.addEventListener('DOMContentLoaded', function() {
             input.addEventListener('input', function(e) {
                 console.log(`Input event on ${inputId}:`, e.target.value);
                 validation.default.validateField(inputId, e.target.value);
+                qrGenerator.default.updateButtonState(inputs, submitButton);
             });
 
             // Initial validation state
@@ -56,15 +57,18 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         // Save form data when modified
-        form.addEventListener('change', () => formStorage.default.saveFormData(form));
+        form.addEventListener('change', () => {
+            formStorage.default.saveFormData(form);
+            qrGenerator.default.updateButtonState(inputs, submitButton);
+        });
 
         // Listen for favorites changes
         favoritesSelect.addEventListener('change', () => {
             console.log('Favorite selection changed');
             // Small delay to ensure inputs are updated
             setTimeout(() => {
-                submitButton.disabled = false;
-                console.log('Enabled generate button after favorite change');
+                qrGenerator.default.updateButtonState(inputs, submitButton);
+                console.log('Updated button state after favorite change');
             }, 0);
         });
 
