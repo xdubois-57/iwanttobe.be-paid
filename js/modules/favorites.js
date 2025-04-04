@@ -56,7 +56,7 @@ function loadFavorite() {
         nameInput.disabled = false;
         ibanInput.disabled = false;
         deleteButton.disabled = true;
-        saveButton.textContent = translations.default.translate('save_favorite');
+        saveButton.textContent = translations.translate('save_favorite');
         
         // Trigger validation on enabled fields
         nameInput.dispatchEvent(new Event('input', { bubbles: true }));
@@ -79,7 +79,7 @@ function loadFavorite() {
     nameInput.disabled = true;
     ibanInput.disabled = true;
     deleteButton.disabled = false;
-    saveButton.textContent = translations.default.translate('update_favorite');
+    saveButton.textContent = translations.translate('update_favorite');
 
     // Trigger validation and change events on fields
     nameInput.dispatchEvent(new Event('input', { bubbles: true }));
@@ -119,7 +119,7 @@ function deleteFavorite() {
     nameInput.disabled = false;
     ibanInput.disabled = false;
     deleteButton.disabled = true;
-    saveButton.textContent = translations.default.translate('save_favorite');
+    saveButton.textContent = translations.translate('save_favorite');
 
     // Reload favorites list
     loadFavorites(favoritesSelect);

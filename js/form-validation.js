@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const saveButton = document.getElementById('save-favorite');
         const deleteButton = document.getElementById('delete-favorite');
         const saveButtonOriginalText = saveButton.textContent;
-        const updateButtonText = translations.default.translate('update_favorite');
+        const updateButtonText = translations.translate('update_favorite');
         
         // Store original save text for later use
         saveButton.dataset.saveText = saveButtonOriginalText;
@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 inputs.beneficiary_iban.disabled = false;
                 favoritesSelect.value = '';
                 deleteButton.disabled = true;
-                saveButton.textContent = translations.default.translate('save_favorite');
+                saveButton.textContent = translations.translate('save_favorite');
             });
         }
 
@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const iban = inputs.beneficiary_iban.value.trim();
 
             if (!name || !iban) {
-                alert(translations.default.translate('fill_required_fields'));
+                alert(translations.translate('fill_required_fields'));
                 return;
             }
 
@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', function() {
             );
 
             if (existingIndex !== -1 && existingIndex !== parseInt(selectedIndex)) {
-                alert(translations.default.translate('favorite_exists'));
+                alert(translations.translate('favorite_exists'));
                 return;
             }
 
@@ -136,7 +136,7 @@ document.addEventListener('DOMContentLoaded', function() {
             inputs.beneficiary_name.disabled = true;
             inputs.beneficiary_iban.disabled = true;
             deleteButton.disabled = false;
-            saveButton.textContent = translations.default.translate('update_favorite');
+            saveButton.textContent = translations.translate('update_favorite');
         });
 
         // Delete favorite handler
