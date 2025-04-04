@@ -60,4 +60,5 @@ return array (
   'confirm_delete_favorite' => 'Ali ste prepričani, da želite izbrisati ta priljubljeni element?',
   'error_deleting_favorite' => 'Napaka pri brisanju priljubljenega elementa',
   'error' => 'Napaka',
+  'home_intro_title' => 'Prejmite plačilo, zdaj',
 );

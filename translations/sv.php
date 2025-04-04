@@ -108,4 +108,5 @@ return array (
   'confirm_delete_favorite' => 'Är du säker på att du vill ta bort denna favorit?',
   'error_deleting_favorite' => 'Fel vid borttagning av favorit',
   'error' => 'Fel',
+  'home_intro_title' => 'Få betalt, nu',
 );

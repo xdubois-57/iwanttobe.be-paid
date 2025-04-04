@@ -60,4 +60,5 @@ return array (
   'confirm_delete_favorite' => 'Sigur doriți să ștergeți acest favorit?',
   'error_deleting_favorite' => 'Eroare la ștergerea favoritului',
   'error' => 'Eroare',
+  'home_intro_title' => 'Primiți plata, acum',
 );

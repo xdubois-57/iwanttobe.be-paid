@@ -109,4 +109,5 @@ return array (
   'confirm_delete_favorite' => 'Weet u zeker dat u deze favoriet wilt verwijderen?',
   'error_deleting_favorite' => 'Fout bij het verwijderen van favoriet',
   'error' => 'Fout',
+  'home_intro_title' => 'Word betaald, nu',
 );

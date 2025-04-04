@@ -109,4 +109,5 @@ return array (
   'confirm_delete_favorite' => 'Сигурни ли сте, че искате да изтриете този любим?',
   'error_deleting_favorite' => 'Грешка при изтриване на любим',
   'error' => 'Грешка',
+  'home_intro_title' => 'Получете плащане, сега',
 );

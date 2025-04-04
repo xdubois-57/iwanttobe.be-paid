@@ -115,6 +115,35 @@ graph TD
   ];
   ```
 
+**Supported Languages:**
+The application MUST maintain translations for ALL of the following languages:
+1. bg (Bulgarian)
+2. cs (Czech)
+3. da (Danish)
+4. de (German)
+5. el (Greek)
+6. en (English)
+7. es (Spanish)
+8. et (Estonian)
+9. fi (Finnish)
+10. fr (French)
+11. ga (Irish)
+12. hr (Croatian)
+13. hu (Hungarian)
+14. it (Italian)
+15. lt (Lithuanian)
+16. lv (Latvian)
+17. mt (Maltese)
+18. nl (Dutch)
+19. pl (Polish)
+20. pt (Portuguese)
+21. ro (Romanian)
+22. sk (Slovak)
+23. sl (Slovenian)
+24. sv (Swedish)
+
+⚠️ **Critical**: When updating ANY translation, ALL of the above languages MUST be updated to maintain consistency.
+
 ### 2.4 Form Handling
 
 ```mermaid
@@ -172,6 +201,7 @@ graph TD
 5. 🌐 Internationalization
    - Add translations for all text
    - Test RTL languages
+   - Update ALL supported languages when making changes
 
 ## 5. Security Considerations
 
@@ -187,4 +217,4 @@ graph TD
 
 ---
 
-*Last updated: 2025-04-02*
+*Last updated: 2025-04-04*

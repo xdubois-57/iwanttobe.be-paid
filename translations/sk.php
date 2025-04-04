@@ -60,4 +60,5 @@ return array (
   'confirm_delete_favorite' => 'Naozaj chcete vymazať tento obľúbený?',
   'error_deleting_favorite' => 'Chyba pri mazaní obľúbeného',
   'error' => 'Chyba',
+  'home_intro_title' => 'Získajte platbu, teraz',
 );
