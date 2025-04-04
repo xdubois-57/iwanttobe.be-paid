@@ -250,7 +250,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const favorites = JSON.parse(localStorage.getItem(FAVORITES_KEY) || '[]');
             const favorite = favorites[selectedIndex];
             if (favorite) {
-                // Set text fields
+                // Set text fields first
                 inputs.beneficiary_name.value = favorite.beneficiary_name || '';
                 inputs.beneficiary_iban.value = favorite.beneficiary_iban || '';
                 inputs.communication.value = favorite.communication || '';
@@ -260,18 +260,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (!isNaN(amount)) {
                     const formattedAmount = amount.toFixed(2);
                     amountField.value = formattedAmount;
-                    
-                    // Force a DOM update and trigger events
-                    setTimeout(() => {
-                        amountField.value = formattedAmount;
-                        amountField.dispatchEvent(new Event('input', { bubbles: true }));
-                        amountField.dispatchEvent(new Event('change', { bubbles: true }));
-                    }, 0);
-                } else {
-                    amountField.value = '';
                 }
 
-                // Validate all fields
+                // Update UI state
+                saveButton.textContent = updateButtonText;
+                deleteButton.disabled = false;
+
+                // Validate fields and generate QR code
                 let allValid = true;
                 for (let inputId in inputs) {
                     const value = inputs[inputId].value;
@@ -284,13 +279,23 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
 
                 if (allValid) {
-                    saveButton.textContent = updateButtonText;
-                    deleteButton.disabled = false;
-                    // Automatically generate QR code
-                    window.generateQRCode().catch(() => {
-                        // Error is already handled in generateQRCode
-                    });
+                    // Delay QR generation to avoid race condition with validation events
+                    setTimeout(() => {
+                        window.generateQRCode().catch(() => {
+                            // Error is already handled in generateQRCode
+                        });
+                    }, 100);
                 }
+
+                // Force a DOM update and trigger events after setting all values
+                setTimeout(() => {
+                    if (!isNaN(amount)) {
+                        const formattedAmount = amount.toFixed(2);
+                        amountField.value = formattedAmount;
+                        amountField.dispatchEvent(new Event('input', { bubbles: true }));
+                        amountField.dispatchEvent(new Event('change', { bubbles: true }));
+                    }
+                }, 0);
             }
         } catch (e) {
             console.error('Error loading favorite:', e);
@@ -437,6 +442,7 @@ document.addEventListener('DOMContentLoaded', function() {
     for (let inputId in inputs) {
         const input = inputs[inputId];
         input.addEventListener('input', function(e) {
+            // Only validate, don't trigger QR generation on input
             validateField(inputId, e.target.value);
         });
 
