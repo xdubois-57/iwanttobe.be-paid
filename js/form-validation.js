@@ -127,8 +127,7 @@ function generateQRCode() {
         qrImage.src = imageUrl;
         qrImage.style.display = 'block';
 
-        submitButton.disabled = false;
-        submitButton.textContent = submitButtonOriginalText;
+        return Promise.resolve();
     })
     .catch(error => {
         console.error('Error:', error);
@@ -138,6 +137,9 @@ function generateQRCode() {
         document.getElementById('support-qr').style.display = 'block';
         document.getElementById('user-qr').style.display = 'none';
 
+        throw error;
+    })
+    .finally(() => {
         submitButton.disabled = false;
         submitButton.textContent = submitButtonOriginalText;
     });
@@ -296,7 +298,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     saveButton.textContent = updateButtonText;
                     deleteButton.disabled = false;
                     // Automatically generate QR code
-                    generateQRCode();
+                    generateQRCode().catch(() => {
+                        // Error is already handled in generateQRCode
+                    });
                 }
             }
         } catch (e) {
