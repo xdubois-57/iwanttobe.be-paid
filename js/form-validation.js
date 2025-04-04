@@ -16,6 +16,11 @@ document.addEventListener('DOMContentLoaded', function() {
         communication: document.getElementById('communication')
     };
 
+    // Helper function to get translations
+    function t(key) {
+        return window.translations[key] || key;
+    }
+
     // Clear any stored form data
     sessionStorage.clear();
     localStorage.removeItem(STORAGE_KEY);
@@ -135,7 +140,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const favorites = JSON.parse(localStorage.getItem(FAVORITES_KEY) || '[]');
             const favorite = favorites[selectedIndex];
             
-            if (confirm('Are you sure you want to delete this favorite?')) {
+            if (confirm(t('confirm_delete_favorite'))) {
                 favorites.splice(selectedIndex, 1);
                 localStorage.setItem(FAVORITES_KEY, JSON.stringify(favorites));
                 loadFavorites();
@@ -143,7 +148,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         } catch (e) {
             console.error('Error deleting favorite:', e);
-            alert('Error deleting favorite');
+            alert(t('error_deleting_favorite'));
         }
     };
 
@@ -162,7 +167,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         if (!isValid) {
-            alert('Please fill all required fields correctly before saving');
+            alert(t('error_required_fields'));
             return;
         }
 
@@ -181,7 +186,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 loadFavorites();
                 favoritesSelect.value = selectedIndex; // Maintain selection
                 deleteButton.disabled = false;
-                alert('Favorite updated');
+                alert(t('favorite_updated'));
             } else {
                 // Check for duplicates when adding new favorite
                 const isDuplicate = favorites.some(fav => 
@@ -190,7 +195,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 );
 
                 if (isDuplicate) {
-                    alert('This beneficiary is already saved in your favorites');
+                    alert(t('favorite_duplicate'));
                     return;
                 }
 
@@ -200,11 +205,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 favoritesSelect.value = favorites.length - 1; // Select the new favorite
                 saveButton.textContent = updateButtonText;
                 deleteButton.disabled = false;
-                alert('Saved to favorites');
+                alert(t('favorite_saved'));
             }
         } catch (e) {
             console.error('Error saving favorite:', e);
-            alert('Error saving to favorites');
+            alert(t('error_saving_favorite'));
         }
     };
 
@@ -243,7 +248,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 input.setCustomValidity('');
             } else {
                 indicator.className = 'validation-indicator invalid';
-                input.setCustomValidity('Invalid format');
+                input.setCustomValidity(t('invalid_format'));
             }
         }
 
@@ -316,7 +321,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Show loading state
         submitButton.disabled = true;
-        submitButton.textContent = 'Generating...';
+        submitButton.textContent = t('generating');
 
         try {
             // Prepare form data
@@ -335,7 +340,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const result = await response.json();
             
             if (!result.success) {
-                throw new Error(result.error || 'Failed to generate QR code');
+                throw new Error(result.error || t('failed_to_generate_qr'));
             }
 
             // Hide support QR and show user QR
@@ -345,7 +350,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         } catch (error) {
             console.error('Error:', error);
-            alert('Error: ' + (error.message || 'Failed to generate QR code. Please try again.'));
+            alert(t('error') + ': ' + (error.message || t('failed_to_generate_qr')));
             
             // Show support QR and hide user QR on error
             document.getElementById('support-qr').style.display = 'block';

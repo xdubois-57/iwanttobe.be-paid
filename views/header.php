@@ -4,6 +4,16 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 require_once __DIR__ . '/../controllers/LanguageController.php';
 $lang = LanguageController::getInstance();
+
+// Prepare translations for JavaScript
+$jsTranslations = [
+    'error_required_fields' => $lang->translate('error_required_fields'),
+    'error_saving_favorite' => $lang->translate('error_saving_favorite'),
+    'favorite_updated' => $lang->translate('favorite_updated'),
+    'favorite_duplicate' => $lang->translate('favorite_duplicate'),
+    'favorite_saved' => $lang->translate('favorite_saved'),
+    'share_text' => $lang->translate('share_text')
+];
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo $lang->getCurrentLanguage(); ?>">
@@ -12,6 +22,10 @@ $lang = LanguageController::getInstance();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $lang->translate('app_name'); ?></title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+    <script>
+        // Make translations available to JavaScript
+        window.translations = <?php echo json_encode($jsTranslations); ?>;
+    </script>
     <style>
         /* Custom styles */
         nav {

@@ -1,4 +1,9 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // Helper function to get translations
+    function t(key) {
+        return window.translations[key] || key;
+    }
+
     // Check if Web Share API is supported
     if (navigator.share) {
         document.querySelectorAll('[data-share]').forEach(button => {
@@ -15,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                     await navigator.share({
                         title: title,
-                        text: 'Scan with your banking app!',
+                        text: t('share_text'),
                         files: [file]
                     });
                 } catch (error) {
