@@ -239,7 +239,7 @@ $lang = LanguageController::getInstance();
         </div>
     </nav>
 
-    <script src="/js/form-validation.js"></script>
+    <script src="/js/form-validation.js" type="module"></script>
     <script>
         function toggleMenu() {
             document.querySelector('.nav-links').classList.toggle('active');
