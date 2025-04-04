@@ -4,6 +4,66 @@ import formOperations from './form-operations.js';
 const FAVORITES_KEY = 'qr_transfer_favorites';
 
 /**
+ * Save current form data as a favorite
+ * @param {Object} inputs - Form input elements
+ * @param {HTMLSelectElement} favoritesSelect - Favorites select element
+ * @param {HTMLButtonElement} saveButton - Save button element
+ * @param {HTMLButtonElement} deleteButton - Delete button element
+ */
+function saveFavorite(inputs, favoritesSelect, saveButton, deleteButton) {
+    const name = inputs.beneficiary_name.value.trim();
+    const iban = inputs.beneficiary_iban.value.trim();
+    const amount = inputs.amount.value.trim();
+    const communication = inputs.communication.value.trim();
+
+    if (!name || !iban) {
+        alert(window.t('fill_required_fields'));
+        return;
+    }
+
+    let favorites = JSON.parse(localStorage.getItem(FAVORITES_KEY) || '[]');
+    const selectedIndex = favoritesSelect.value;
+
+    // Check for duplicates
+    const existingIndex = favorites.findIndex(f => 
+        f.beneficiary_name === name && f.beneficiary_iban === iban
+    );
+
+    if (existingIndex !== -1 && existingIndex !== parseInt(selectedIndex)) {
+        alert(window.t('favorite_exists'));
+        return;
+    }
+
+    const favorite = {
+        beneficiary_name: name,
+        beneficiary_iban: iban,
+        amount: amount,
+        communication: communication
+    };
+
+    if (selectedIndex !== '') {
+        // Update existing favorite
+        favorites[selectedIndex] = favorite;
+    } else {
+        // Add new favorite
+        favorites.push(favorite);
+    }
+
+    localStorage.setItem(FAVORITES_KEY, JSON.stringify(favorites));
+    loadFavorites(favoritesSelect);
+
+    // Select the saved favorite
+    const newIndex = selectedIndex !== '' ? selectedIndex : (favorites.length - 1).toString();
+    favoritesSelect.value = newIndex;
+
+    // Update UI state
+    inputs.beneficiary_name.disabled = true;
+    inputs.beneficiary_iban.disabled = true;
+    deleteButton.disabled = false;
+    saveButton.textContent = window.t('update_favorite');
+}
+
+/**
  * Loads favorites from storage and populates the select
  * @param {HTMLSelectElement} [favoritesSelect] - Optional select element, will query if not provided
  */
@@ -40,6 +100,8 @@ function loadFavorite() {
     const saveButton = document.getElementById('save-favorite');
     const nameInput = document.getElementById('beneficiary_name');
     const ibanInput = document.getElementById('beneficiary_iban');
+    const amountInput = document.getElementById('amount');
+    const communicationInput = document.getElementById('communication');
     const form = document.getElementById('transfer-form');
 
     if (!favoritesSelect || !deleteButton || !saveButton || !nameInput || !ibanInput || !form) {
@@ -56,7 +118,7 @@ function loadFavorite() {
         nameInput.disabled = false;
         ibanInput.disabled = false;
         deleteButton.disabled = true;
-        saveButton.textContent = translations.translate('save_favorite');
+        saveButton.textContent = window.t('save_favorite');
         
         // Trigger validation on enabled fields
         nameInput.dispatchEvent(new Event('input', { bubbles: true }));
@@ -74,18 +136,24 @@ function loadFavorite() {
     console.log('Loading favorite:', favorite);
     nameInput.value = favorite.beneficiary_name;
     ibanInput.value = favorite.beneficiary_iban;
+    amountInput.value = favorite.amount || '';
+    communicationInput.value = favorite.communication || '';
 
     // Disable inputs when a favorite is selected
     nameInput.disabled = true;
     ibanInput.disabled = true;
     deleteButton.disabled = false;
-    saveButton.textContent = translations.translate('update_favorite');
+    saveButton.textContent = window.t('update_favorite');
 
     // Trigger validation and change events on fields
     nameInput.dispatchEvent(new Event('input', { bubbles: true }));
     ibanInput.dispatchEvent(new Event('input', { bubbles: true }));
+    amountInput.dispatchEvent(new Event('input', { bubbles: true }));
+    communicationInput.dispatchEvent(new Event('input', { bubbles: true }));
     nameInput.dispatchEvent(new Event('change', { bubbles: true }));
     ibanInput.dispatchEvent(new Event('change', { bubbles: true }));
+    amountInput.dispatchEvent(new Event('change', { bubbles: true }));
+    communicationInput.dispatchEvent(new Event('change', { bubbles: true }));
 }
 
 /**
@@ -97,6 +165,8 @@ function deleteFavorite() {
     const saveButton = document.getElementById('save-favorite');
     const nameInput = document.getElementById('beneficiary_name');
     const ibanInput = document.getElementById('beneficiary_iban');
+    const amountInput = document.getElementById('amount');
+    const communicationInput = document.getElementById('communication');
     const form = document.getElementById('transfer-form');
 
     if (!favoritesSelect || !deleteButton || !saveButton || !nameInput || !ibanInput || !form) {
@@ -118,8 +188,10 @@ function deleteFavorite() {
     formOperations.default.clearForm(form);
     nameInput.disabled = false;
     ibanInput.disabled = false;
+    amountInput.disabled = false;
+    communicationInput.disabled = false;
     deleteButton.disabled = true;
-    saveButton.textContent = translations.translate('save_favorite');
+    saveButton.textContent = window.t('save_favorite');
 
     // Reload favorites list
     loadFavorites(favoritesSelect);
@@ -128,8 +200,12 @@ function deleteFavorite() {
     // Trigger validation and change events on fields
     nameInput.dispatchEvent(new Event('input', { bubbles: true }));
     ibanInput.dispatchEvent(new Event('input', { bubbles: true }));
+    amountInput.dispatchEvent(new Event('input', { bubbles: true }));
+    communicationInput.dispatchEvent(new Event('input', { bubbles: true }));
     nameInput.dispatchEvent(new Event('change', { bubbles: true }));
     ibanInput.dispatchEvent(new Event('change', { bubbles: true }));
+    amountInput.dispatchEvent(new Event('change', { bubbles: true }));
+    communicationInput.dispatchEvent(new Event('change', { bubbles: true }));
 }
 
 /**
@@ -155,6 +231,7 @@ document.addEventListener('DOMContentLoaded', initializeFavorites);
 const favorites = {
     loadFavorites,
     loadFavorite,
+    saveFavorite,
     deleteFavorite,
     initializeFavorites
 };
