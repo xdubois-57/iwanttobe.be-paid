@@ -266,8 +266,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 inputs.communication.value = favorite.communication || '';
 
                 // Handle amount field specially (convert to number)
+                const amountField = document.getElementById('amount');
                 const amount = parseFloat(favorite.amount);
-                inputs.amount.value = isNaN(amount) ? '' : amount.toFixed(2);
+                if (!isNaN(amount)) {
+                    amountField.value = amount.toFixed(2);
+                    // Trigger input event to ensure validation runs
+                    amountField.dispatchEvent(new Event('input', { bubbles: true }));
+                    console.log('Setting amount field to:', amount.toFixed(2));
+                } else {
+                    amountField.value = '';
+                }
 
                 // Validate all fields
                 let allValid = true;
@@ -339,7 +347,8 @@ document.addEventListener('DOMContentLoaded', function() {
             // Get current form values
             const name = inputs.beneficiary_name.value.trim();
             const iban = inputs.beneficiary_iban.value.trim();
-            const amountValue = parseFloat(inputs.amount.value.trim());
+            const amountField = document.getElementById('amount');
+            const amountValue = parseFloat(amountField.value.trim());
             const amount = isNaN(amountValue) ? '' : amountValue.toFixed(2);
             const communication = inputs.communication.value.trim();
 
