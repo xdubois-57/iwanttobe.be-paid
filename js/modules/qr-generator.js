@@ -172,10 +172,15 @@ function initializeFormListeners() {
     // Add input event listeners to all form fields
     Object.values(inputs).forEach(input => {
         if (input) {
-            ['input', 'change'].forEach(eventType => {
-                input.addEventListener(eventType, handleChange);
-            });
+            input.addEventListener('input', handleChange);
         }
+    });
+
+    // Handle form submit
+    form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        console.log('Form submitted');
+        await generateQRCode(form, generateButton, generateButton.textContent);
     });
 
     // Listen for favorites changes
