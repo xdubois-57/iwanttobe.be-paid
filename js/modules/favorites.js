@@ -1,5 +1,5 @@
-import translations from './translations.js';
 import formOperations from './form-operations.js';
+import translations from './translations.js';
 
 const FAVORITES_KEY = 'qr_transfer_favorites';
 
@@ -26,7 +26,7 @@ function findFavoriteIndex(name, iban) {
 function updateSaveButtonText(saveButton, name, iban, currentIndex) {
     const existingIndex = findFavoriteIndex(name, iban);
     const isUpdate = existingIndex !== -1 && existingIndex !== parseInt(currentIndex);
-    saveButton.textContent = isUpdate ? window.t('update') : window.t('save');
+    saveButton.textContent = isUpdate ? translations.translate('update') : translations.translate('save');
 }
 
 /**
@@ -43,7 +43,7 @@ function saveFavorite(inputs, favoritesSelect, saveButton, deleteButton) {
     const communication = inputs.communication.value.trim();
 
     if (!name || !iban) {
-        alert(window.t('fill_required_fields'));
+        alert(translations.translate('fill_required_fields'));
         return;
     }
 
@@ -54,7 +54,7 @@ function saveFavorite(inputs, favoritesSelect, saveButton, deleteButton) {
     const existingIndex = findFavoriteIndex(name, iban);
 
     if (existingIndex !== -1 && existingIndex !== parseInt(selectedIndex)) {
-        const shouldUpdate = confirm(window.t('favorite_exists_update'));
+        const shouldUpdate = confirm(translations.translate('favorite_exists_update'));
         if (!shouldUpdate) {
             return;
         }
@@ -88,7 +88,7 @@ function saveFavorite(inputs, favoritesSelect, saveButton, deleteButton) {
     inputs.beneficiary_name.disabled = true;
     inputs.beneficiary_iban.disabled = true;
     deleteButton.disabled = false;
-    saveButton.textContent = window.t('update');
+    saveButton.textContent = translations.translate('update');
 }
 
 /**
@@ -146,7 +146,7 @@ function loadFavorite() {
         nameInput.disabled = false;
         ibanInput.disabled = false;
         deleteButton.disabled = true;
-        saveButton.textContent = window.t('save');
+        saveButton.textContent = translations.translate('save');
         
         // Trigger validation on enabled fields
         nameInput.dispatchEvent(new Event('input', { bubbles: true }));
@@ -171,7 +171,7 @@ function loadFavorite() {
     nameInput.disabled = true;
     ibanInput.disabled = true;
     deleteButton.disabled = false;
-    saveButton.textContent = window.t('update');
+    saveButton.textContent = translations.translate('update');
 
     // Trigger validation and change events on fields
     nameInput.dispatchEvent(new Event('input', { bubbles: true }));
@@ -219,7 +219,7 @@ function deleteFavorite() {
     amountInput.disabled = false;
     communicationInput.disabled = false;
     deleteButton.disabled = true;
-    saveButton.textContent = window.t('save');
+    saveButton.textContent = translations.translate('save');
 
     // Reload favorites list
     loadFavorites(favoritesSelect);
