@@ -54,25 +54,28 @@ function getFormValuesString(inputs) {
  * @param {HTMLButtonElement} generateButton - The generate button element
  */
 function updateGenerateButtonState(inputs, generateButton) {
-    if (!generateButton) return;
-
-    // Always enable if no last values
-    if (!lastGeneratedValues) {
-        generateButton.disabled = false;
+    if (!generateButton) {
+        console.log('No generate button found');
         return;
     }
 
     const currentValues = getFormValuesString(inputs);
-    const shouldEnable = currentValues !== lastGeneratedValues;
-    
-    console.log('Button state update:', {
+
+    console.log('Checking button state:', {
+        hasLastValues: !!lastGeneratedValues,
         currentValues,
-        lastGenerated: lastGeneratedValues,
-        shouldEnable,
-        buttonDisabled: !shouldEnable
+        lastGenerated: lastGeneratedValues || 'none'
     });
 
+    // Always enable if no last values or values are different
+    const shouldEnable = !lastGeneratedValues || currentValues !== lastGeneratedValues;
     generateButton.disabled = !shouldEnable;
+
+    console.log('Button state updated:', {
+        shouldEnable,
+        isDisabled: generateButton.disabled,
+        buttonText: generateButton.textContent
+    });
 }
 
 /**
@@ -150,6 +153,7 @@ async function generateQRCode(form, submitButton, submitButtonOriginalText) {
 
             // Store the current values as last generated
             lastGeneratedValues = getFormValuesString(inputs);
+            console.log('Stored last generated values:', lastGeneratedValues);
         } else {
             throw new Error(data.message || data.error || translations.translate('qr_generation_failed'));
         }
@@ -174,7 +178,10 @@ async function generateQRCode(form, submitButton, submitButtonOriginalText) {
 function initializeFormListeners() {
     const form = document.getElementById('transfer-form');
     const generateButton = document.getElementById('generate-qr-button');
-    if (!form || !generateButton) return;
+    if (!form || !generateButton) {
+        console.error('Missing form or generate button');
+        return;
+    }
 
     const inputs = {
         beneficiary_name: document.getElementById('beneficiary_name'),
@@ -200,7 +207,11 @@ function initializeFormListeners() {
     // Listen for favorites changes
     const favoritesSelect = document.getElementById('favorites');
     if (favoritesSelect) {
-        favoritesSelect.addEventListener('change', handleChange);
+        favoritesSelect.addEventListener('change', () => {
+            console.log('Favorite selection changed');
+            // Small delay to ensure inputs are updated
+            setTimeout(handleChange, 0);
+        });
     }
 
     // Reset last generated values when form is cleared
@@ -214,6 +225,7 @@ function initializeFormListeners() {
     }
 
     // Initial button state
+    console.log('Initializing button state');
     updateGenerateButtonState(inputs, generateButton);
 }
 
