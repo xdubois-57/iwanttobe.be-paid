@@ -26,7 +26,7 @@ function findFavoriteIndex(name, iban) {
 function updateSaveButtonText(saveButton, name, iban, currentIndex) {
     const existingIndex = findFavoriteIndex(name, iban);
     const isUpdate = existingIndex !== -1 && existingIndex !== parseInt(currentIndex);
-    saveButton.textContent = isUpdate ? translations.translate('update') : translations.translate('save');
+    saveButton.textContent = isUpdate ? translations.translate('update_favorite') : translations.translate('save_favorite');
 }
 
 /**
@@ -88,7 +88,7 @@ function saveFavorite(inputs, favoritesSelect, saveButton, deleteButton) {
     inputs.beneficiary_name.disabled = true;
     inputs.beneficiary_iban.disabled = true;
     deleteButton.disabled = false;
-    saveButton.textContent = translations.translate('update');
+    saveButton.textContent = translations.translate('update_favorite');
 }
 
 /**
@@ -146,7 +146,7 @@ function loadFavorite() {
         nameInput.disabled = false;
         ibanInput.disabled = false;
         deleteButton.disabled = true;
-        saveButton.textContent = translations.translate('save');
+        saveButton.textContent = translations.translate('save_favorite');
         
         // Trigger validation on enabled fields
         nameInput.dispatchEvent(new Event('input', { bubbles: true }));
@@ -171,7 +171,7 @@ function loadFavorite() {
     nameInput.disabled = true;
     ibanInput.disabled = true;
     deleteButton.disabled = false;
-    saveButton.textContent = translations.translate('update');
+    saveButton.textContent = translations.translate('update_favorite');
 
     // Trigger validation and change events on fields
     nameInput.dispatchEvent(new Event('input', { bubbles: true }));
@@ -219,7 +219,7 @@ function deleteFavorite() {
     amountInput.disabled = false;
     communicationInput.disabled = false;
     deleteButton.disabled = true;
-    saveButton.textContent = translations.translate('save');
+    saveButton.textContent = translations.translate('save_favorite');
 
     // Reload favorites list
     loadFavorites(favoritesSelect);
