@@ -125,6 +125,22 @@ document.addEventListener('DOMContentLoaded', function() {
                     saveButton.textContent = updateButtonText;
                 }
                 deleteButton.disabled = false;
+
+                // Automatically generate QR code when a favorite is selected
+                let isValid = true;
+                for (let inputId in inputs) {
+                    const value = inputs[inputId].value;
+                    if (!validateField(inputId, value)) {
+                        if (inputId !== 'communication') { // Don't break for optional field
+                            isValid = false;
+                            break;
+                        }
+                    }
+                }
+
+                if (isValid) {
+                    generateQRCode();
+                }
             }
         } catch (e) {
             console.error('Error loading favorite:', e);
@@ -300,10 +316,7 @@ document.addEventListener('DOMContentLoaded', function() {
         console.error('Error loading saved form data:', e);
     }
 
-    // Handle form submission
-    form.addEventListener('submit', async function(event) {
-        event.preventDefault();
-        
+    function generateQRCode() {
         // Validate all fields
         let isValid = true;
         for (let inputId in inputs) {
@@ -323,42 +336,55 @@ document.addEventListener('DOMContentLoaded', function() {
         submitButton.disabled = true;
         submitButton.textContent = t('generating');
 
-        try {
-            // Prepare form data
-            const formData = new FormData(form);
-            
-            // Send request
-            const response = await fetch('/generate-qr', {
-                method: 'POST',
-                body: formData
-            });
-
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-
-            const result = await response.json();
-            
-            if (!result.success) {
-                throw new Error(result.error || t('failed_to_generate_qr'));
+        const formData = new FormData(form);
+        fetch('/generate-qr', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (!data.success) {
+                throw new Error(data.error || t('failed_to_generate_qr'));
             }
 
             // Hide support QR and show user QR
             document.getElementById('support-qr').style.display = 'none';
             document.getElementById('user-qr').style.display = 'block';
-            document.getElementById('qr-image').src = result.image;
+            document.getElementById('qr-image').src = data.image;
 
-        } catch (error) {
+            submitButton.disabled = false;
+            submitButton.textContent = submitButtonOriginalText;
+        })
+        .catch(error => {
             console.error('Error:', error);
             alert(t('error') + ': ' + (error.message || t('failed_to_generate_qr')));
             
             // Show support QR and hide user QR on error
             document.getElementById('support-qr').style.display = 'block';
             document.getElementById('user-qr').style.display = 'none';
-        } finally {
-            // Restore button state
+
             submitButton.disabled = false;
             submitButton.textContent = submitButtonOriginalText;
+        });
+    }
+
+    // Handle form submission
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        generateQRCode();
+    });
+
+    // Watch amount field changes to auto-generate QR code when favorite is selected
+    inputs.amount.addEventListener('input', function() {
+        if (favoritesSelect.value !== '') {
+            generateQRCode();
+        }
+    });
+
+    // Clear amount field when selecting a favorite
+    favoritesSelect.addEventListener('change', function() {
+        if (favoritesSelect.value !== '') {
+            inputs.amount.value = '';
         }
     });
 });
