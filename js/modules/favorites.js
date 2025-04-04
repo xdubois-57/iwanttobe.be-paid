@@ -146,15 +146,10 @@ function loadFavorite() {
     const favorites = JSON.parse(localStorage.getItem(FAVORITES_KEY) || '[]');
 
     if (selectedIndex === '') {
-        // No favorite selected, enable inputs and reset buttons
-        console.log('No favorite selected, enabling inputs');
+        // No favorite selected
         nameInput.disabled = false;
         ibanInput.disabled = false;
         deleteButton.disabled = true;
-        
-        // Trigger validation on enabled fields
-        nameInput.dispatchEvent(new Event('input', { bubbles: true }));
-        ibanInput.dispatchEvent(new Event('input', { bubbles: true }));
         return;
     }
 
@@ -164,36 +159,25 @@ function loadFavorite() {
         return;
     }
 
-    // Load favorite data
-    console.log('Loading favorite:', favorite);
+    // Load all favorite data first
     nameInput.value = favorite.beneficiary_name;
     ibanInput.value = favorite.beneficiary_iban;
     amountInput.value = favorite.amount || '';
     communicationInput.value = favorite.communication || '';
 
-    // Disable inputs when a favorite is selected
+    // Disable inputs
     nameInput.disabled = true;
     ibanInput.disabled = true;
     deleteButton.disabled = false;
-
-    // Set button text to update since we're editing an existing favorite
     saveButton.textContent = translations.translate('update_favorite');
 
-    // Trigger validation and change events on fields
-    nameInput.dispatchEvent(new Event('input', { bubbles: true }));
-    ibanInput.dispatchEvent(new Event('input', { bubbles: true }));
-    amountInput.dispatchEvent(new Event('input', { bubbles: true }));
-    communicationInput.dispatchEvent(new Event('input', { bubbles: true }));
-    nameInput.dispatchEvent(new Event('change', { bubbles: true }));
-    ibanInput.dispatchEvent(new Event('change', { bubbles: true }));
-    amountInput.dispatchEvent(new Event('change', { bubbles: true }));
-    communicationInput.dispatchEvent(new Event('change', { bubbles: true }));
-
-    // Automatically generate QR code for the loaded favorite
-    const generateButton = document.getElementById('generate-qr-button');
-    if (generateButton && !generateButton.disabled) {
-        generateButton.click();
-    }
+    // Trigger validation once after all fields are set
+    setTimeout(() => {
+        const generateButton = document.getElementById('generate-qr-button');
+        if (generateButton && !generateButton.disabled) {
+            generateButton.click();
+        }
+    }, 100);
 }
 
 /**
