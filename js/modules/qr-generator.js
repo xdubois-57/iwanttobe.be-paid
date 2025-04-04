@@ -1,3 +1,5 @@
+import translations from './translations.js';
+
 /**
  * Generates a QR code based on form data
  * @param {HTMLFormElement} form - The form containing the data
@@ -8,7 +10,7 @@
 function generateQRCode(form, submitButton, submitButtonOriginalText) {
     console.log('generateQRCode called');
     const formData = new FormData(form);
-    submitButton.textContent = t('generating');
+    submitButton.textContent = translations.translate('generating');
     submitButton.disabled = true;
 
     return fetch('/generate-qr', {
@@ -35,12 +37,12 @@ function generateQRCode(form, submitButton, submitButtonOriginalText) {
             supportQr.style.display = 'none';
             return true;
         } else {
-            throw new Error(data.error || t('error_generating_qr'));
+            throw new Error(data.error || translations.translate('error_generating_qr'));
         }
     })
     .catch(error => {
         console.error('Error:', error);
-        alert(error.message || t('error_generating_qr'));
+        alert(error.message || translations.translate('error_generating_qr'));
         throw error;
     })
     .finally(() => {
