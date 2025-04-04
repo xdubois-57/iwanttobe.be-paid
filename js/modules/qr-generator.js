@@ -191,18 +191,22 @@ function initializeFormListeners() {
     };
 
     // Function to handle any input change
-    const handleChange = () => {
-        console.log('Form values changed');
-        // Reset last generated values when any input changes
+    const handleChange = (event) => {
+        console.log('Form value changed:', event.target.id, event.target.value);
+        
+        // Always reset last generated values and enable button on any input change
         lastGeneratedValues = null;
-        updateGenerateButtonState(inputs, generateButton);
+        generateButton.disabled = false;
+        
+        console.log('Reset last generated values and enabled button');
     };
 
     // Add input event listeners to all form fields
     Object.values(inputs).forEach(input => {
         if (input) {
-            input.addEventListener('input', handleChange);
-            input.addEventListener('change', handleChange);
+            ['input', 'change'].forEach(eventType => {
+                input.addEventListener(eventType, handleChange);
+            });
         }
     });
 
@@ -212,7 +216,11 @@ function initializeFormListeners() {
         favoritesSelect.addEventListener('change', () => {
             console.log('Favorite selection changed');
             // Small delay to ensure inputs are updated
-            setTimeout(handleChange, 0);
+            setTimeout(() => {
+                lastGeneratedValues = null;
+                generateButton.disabled = false;
+                console.log('Reset last generated values after favorite change');
+            }, 0);
         });
     }
 
@@ -222,13 +230,15 @@ function initializeFormListeners() {
         clearButton.addEventListener('click', () => {
             console.log('Form cleared');
             lastGeneratedValues = null;
-            updateGenerateButtonState(inputs, generateButton);
+            generateButton.disabled = false;
+            console.log('Reset last generated values after form clear');
         });
     }
 
     // Initial button state
     console.log('Initializing button state');
-    updateGenerateButtonState(inputs, generateButton);
+    lastGeneratedValues = null;
+    generateButton.disabled = false;
 }
 
 const qrGenerator = {
