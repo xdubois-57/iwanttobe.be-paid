@@ -377,6 +377,7 @@ nav select {
 
 .primary-button-row {
     display: flex;
+    width: 100%;
     justify-content: center;
     margin-bottom: -0.2rem;
 }
