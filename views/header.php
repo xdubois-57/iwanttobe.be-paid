@@ -13,6 +13,20 @@ $lang = LanguageController::getInstance();
     <title><?php echo $lang->translate('app_name'); ?></title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
     <link rel="stylesheet" href="/css/styles.css">
+    
+    <script>
+    // Expose PHP translations to JavaScript
+    window.t = function(key) {
+        const translations = {
+            'save_favorite': '<?php echo $lang->translate('save_favorite'); ?>',
+            'update_favorite': '<?php echo $lang->translate('update_favorite'); ?>',
+            // Add other frequently used translations
+            'app_name': '<?php echo $lang->translate('app_name'); ?>'
+        };
+        return translations[key] || key;
+    };
+    </script>
+    
     <style>
         /* Custom styles */
         nav {

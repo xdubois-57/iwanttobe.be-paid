@@ -6,6 +6,7 @@
 3. [Page Structure](#3-page-structure)
 4. [Development Guidelines](#4-development-guidelines)
 5. [Security Considerations](#5-security-considerations)
+6. [Translation System](#6-translation-system)
 
 ## 1. Architecture Overview
 
@@ -197,6 +198,47 @@ graph TD
   - Input validation
   - XSS prevention
   - CSRF protection
+
+## 6. Translation System
+
+### PHP Translations
+1. Managed by LanguageController
+2. Stored in `/translations/[lang]/` directories
+3. Accessed via `$lang->translate('key')` in PHP
+
+### JavaScript Access
+1. **Initialization**:
+   - `window.t()` function defined in header.php
+   - Preloads common translations (save_favorite, update_favorite)
+   ```php
+   window.t = function(key) {
+       const translations = {
+           'save_favorite': '<?= $lang->translate('save_favorite') ?>',
+           // ...
+       };
+       return translations[key] || key;
+   };
+   ```
+
+2. **Usage**:
+   - Directly via `window.t('key')`
+   - Through the `translate()` module for better abstraction
+   ```javascript
+   import { translate } from './modules/translations';
+   translate('update_favorite');
+   ```
+
+3. **Data Attributes**:
+   - Some translations passed via HTML data attributes
+   ```php
+   <button data-update-text="<?= $lang->translate('update_favorite')">
+   ```
+
+### Key Locations
+- PHP: `LanguageController.php`, view templates
+- JS: `modules/translations.js`, component files
+
+Last updated: 2025-04-08
 
 ## Removed Components
 - About page (controller, view and route)
