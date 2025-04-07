@@ -1,6 +1,8 @@
 <?php
 require_once __DIR__ . '/../controllers/LanguageController.php';
+require_once __DIR__ . '/../controllers/QRController.php';
 $lang = LanguageController::getInstance();
+$qrController = new QRController();
 require_once __DIR__ . '/header.php';
 ?>
 
@@ -87,19 +89,10 @@ require_once __DIR__ . '/header.php';
                 <div id="support-qr" class="text-center">
                     <p class="support-message"><?php echo $lang->translate('support_text'); ?></p>
                     <?php
-                    require_once __DIR__ . '/../controllers/HomeController.php';
-                    $controller = new HomeController();
-                    
                     // Support QR code data
-                    $name = 'QR Transfer';
-                    $iban = 'BE42377116042854';
-                    $bic = $controller->lookupBIC($iban) ?: '';
-                    $amount = 5;
-                    $communication = $lang->translate('support_thanks');
-                    
-                    // Generate EPC QR code
-                    $epcData = $controller->generateEPCData($name, $iban, $bic, $amount, $communication);
-                    $supportQrImage = $controller->generateQRCode($epcData);
+                    $bic = $qrController->lookupBIC('BE42377116042854');
+                    $epcData = $qrController->generateEPCData('QR Transfer', 'BE42377116042854', $bic, 5, $lang->translate('support_thanks'));
+                    $supportQrImage = $qrController->generateQRCode($epcData);
                     ?>
                     <div class="qr-wrapper">
                         <img src="<?php echo $supportQrImage; ?>" alt="Support QR Transfer" class="support-qr">

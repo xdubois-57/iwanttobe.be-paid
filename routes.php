@@ -14,6 +14,7 @@ require_once 'controllers/GDPRController.php';
 require_once 'controllers/WhyUsController.php';
 require_once 'controllers/Router.php';
 require_once 'controllers/LanguageController.php';
+require_once 'controllers/QRController.php';
 
 // Initialize the router
 $router = new Router();
@@ -31,4 +32,4 @@ $router->post('/language', 'LanguageController@change');        // For form subm
 
 // API routes
 // These routes handle AJAX requests and return JSON responses
-$router->post('/generate-qr', 'HomeController@generateQR');     // Handles QR code generation requests
+$router->post('/generate-qr', 'QRController@generate');     // Handles QR code generation requests
