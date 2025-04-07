@@ -133,7 +133,7 @@ main {
     }
 }
 
-/* Header styles */
+/* Navigation styles (moved from header.php) */
 nav {
     background: var(--secondary-background);
     border-bottom: 1px solid var(--secondary-border);
