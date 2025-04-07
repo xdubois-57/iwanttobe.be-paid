@@ -100,9 +100,6 @@ graph LR
 ```mermaid
 graph TD
     T[Translations] --> EN[English]
-    T --> FR[French]
-    T --> NL[Dutch]
-    T --> O[Other Languages]
 ```
 
 - Location: `/translations` directory
@@ -116,33 +113,7 @@ graph TD
   ```
 
 **Supported Languages:**
-The application MUST maintain translations for ALL of the following languages:
-1. bg (Bulgarian)
-2. cs (Czech)
-3. da (Danish)
-4. de (German)
-5. el (Greek)
-6. en (English)
-7. es (Spanish)
-8. et (Estonian)
-9. fi (Finnish)
-10. fr (French)
-11. ga (Irish)
-12. hr (Croatian)
-13. hu (Hungarian)
-14. it (Italian)
-15. lt (Lithuanian)
-16. lv (Latvian)
-17. mt (Maltese)
-18. nl (Dutch)
-19. pl (Polish)
-20. pt (Portuguese)
-21. ro (Romanian)
-22. sk (Slovak)
-23. sl (Slovenian)
-24. sv (Swedish)
-
-⚠️ **Critical**: When updating ANY translation, ALL of the above languages MUST be updated to maintain consistency.
+1. en (English)
 
 ### 2.4 Form Handling
 
@@ -179,26 +150,39 @@ graph TD
 
 ## 4. Development Guidelines
 
-1. 📱 Responsive Design
+1. **CSS Styling**:
+   - All CSS must be placed in `/css/styles.css`
+   - Avoid inline styles in HTML/PHP files
+   - Use CSS variables for theme colors and spacing
+   - Follow BEM (Block-Element-Modifier) naming convention for complex components
+   - Always prefer PicoCSS components over custom styles when available
+
+2. **PicoCSS Usage**:
+   - Use built-in PicoCSS components (buttons, forms, cards etc.) as the foundation
+   - Only create custom styles when no suitable PicoCSS component exists
+   - When extending PicoCSS, do so through CSS variables where possible
+   - Maintain PicoCSS's design language and spacing system
+
+3. 📱 Responsive Design
    - Test on desktop
    - Test on Android
    - Test on iPhone
 
-2. 🏗️ MVC Pattern
+4. 🏗️ MVC Pattern
    - Follow separation of concerns
    - Keep controllers thin
    - Use models for business logic
 
-3. 🛣️ Routing
+5. 🛣️ Routing
    - Update both routing files
    - Follow existing patterns
 
-4. 🎨 UI Consistency
+6. 🎨 UI Consistency
    - Maintain header across pages
    - Use PicoCSS components
    - Follow responsive patterns
 
-5. 🌐 Internationalization
+7. 🌐 Internationalization
    - Add translations for all text
    - Test RTL languages
    - Update ALL supported languages when making changes
