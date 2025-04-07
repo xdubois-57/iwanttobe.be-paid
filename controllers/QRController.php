@@ -1,4 +1,18 @@
 <?php
+/**
+ * Handles all QR code generation functionality
+ * 
+ * Responsibilities:
+ * - Validating payment details
+ * - Looking up BIC codes
+ * - Generating EPC QR code data
+ * - Creating visual QR codes with payment details
+ * - Error handling for QR generation
+ * 
+ * Usage:
+ * $qrController = new QRController();
+ * $qrImage = $qrController->generate($name, $iban, $amount, $communication);
+ */
 class QRController {
     private const SERVICE_TAG = 'BCD';
     private const VERSION = '002';

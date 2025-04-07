@@ -7,6 +7,7 @@
 4. [Development Guidelines](#4-development-guidelines)
 5. [Security Considerations](#5-security-considerations)
 6. [Translation System](#6-translation-system)
+7. [Architecture Changes](#7-architecture-changes)
 
 ## 1. Architecture Overview
 
@@ -237,6 +238,24 @@ graph TD
 ### Key Locations
 - PHP: `LanguageController.php`, view templates
 - JS: `modules/translations.js`, component files
+
+## 7. Architecture Changes
+
+### QR Generation Service (Added 2025-04-08)
+
+The QR generation functionality has been extracted from HomeController into a dedicated QRController service.
+
+### Key Changes:
+- New QRController handles all QR-related operations
+- HomeController now focuses only on homepage rendering
+- All existing QR generation endpoints maintained
+- Improved separation of concerns
+
+### Methods:
+- `generate()` - Main entry point for QR generation
+- `lookupBIC()` - Gets BIC code for an IBAN
+- `generateEPCData()` - Creates QR code payload
+- `generateQRCode()` - Generates visual QR image
 
 Last updated: 2025-04-08
 
