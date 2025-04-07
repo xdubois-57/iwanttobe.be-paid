@@ -28,7 +28,6 @@ require_once __DIR__ . '/header.php';
                                placeholder="<?php echo $lang->translate('beneficiary_name'); ?>"
                                autocomplete="off"
                                required>
-                        <span class="validation-indicator"></span>
                     </div>
 
                     <div class="input-container">
@@ -38,7 +37,6 @@ require_once __DIR__ . '/header.php';
                                placeholder="<?php echo $lang->translate('beneficiary_iban'); ?>"
                                autocomplete="off"
                                required>
-                        <span class="validation-indicator"></span>
                     </div>
 
                     <div class="input-container">
@@ -51,7 +49,6 @@ require_once __DIR__ . '/header.php';
                                placeholder="<?php echo $lang->translate('amount'); ?>"
                                autocomplete="off"
                                required>
-                        <span class="validation-indicator"></span>
                     </div>
 
                     <div class="input-container">
@@ -60,7 +57,6 @@ require_once __DIR__ . '/header.php';
                                name="communication" 
                                placeholder="<?php echo $lang->translate('communication'); ?>"
                                autocomplete="off">
-                        <span class="validation-indicator"></span>
                     </div>
 
                     <div class="button-container">

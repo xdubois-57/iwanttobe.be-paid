@@ -10,7 +10,6 @@
 
 // Include necessary controller classes
 require_once 'controllers/HomeController.php';
-require_once 'controllers/AboutController.php';
 require_once 'controllers/GDPRController.php';
 require_once 'controllers/WhyUsController.php';
 require_once 'controllers/Router.php';
@@ -22,7 +21,6 @@ $router = new Router();
 // Page routes
 // These routes handle the main navigation of the site
 $router->get('/', 'HomeController@index');          // Homepage with QR code generation form
-$router->get('/about', 'HomeController@about');     // About page with project information
 $router->get('/gdpr', 'GDPRController@index');     // GDPR/Privacy policy page
 $router->get('/why-us', 'WhyUsController@index');     // Why Us page
 

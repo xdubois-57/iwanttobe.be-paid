@@ -230,7 +230,7 @@ nav select {
     height: 20px;
     display: block;
     fill: var(--primary);
-    transition: fill 0.2s ease;
+    transition: fill 0.2s;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -320,34 +320,27 @@ nav select {
     }
 }
 
-/* Styles moved from home.php */
-.form-container {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-}
-
+/* Unified form spacing */
 .form-container form {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    height: 100%;
+    /* All spacing handled by PicoCSS */
 }
 
-.favorites-container {
-    margin-bottom: 1rem;
+.input-container, 
+.button-container {
+    /* Structural styles only */
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: center;
 }
 
 .favorites-container select {
     width: 100%;
-    margin: 0;
 }
 
 .button-container {
     display: flex;
     flex-direction: column;
     gap: 0.1rem;
-    margin-top: 1rem;
 }
 
 .primary-button-row {
@@ -372,17 +365,6 @@ nav select {
 
 .secondary-button-row button {
     flex: 1;
-}
-
-.input-container {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 0.5rem;
-    align-items: center;
-}
-
-.input-container input {
-    margin: 0;
 }
 
 .qr-display {
@@ -459,10 +441,12 @@ nav select {
     }
 }
 
-.is-valid {
-    border-color: #28a745 !important;
-}
-
-.is-invalid {
-    border-color: #dc3545 !important;
+/* Desktop form layout */
+@media (min-width: 769px) {
+    .secondary-button-row {
+        flex-direction: row;
+    }
+    .secondary-button-row button {
+        flex: 1;
+    }
 }

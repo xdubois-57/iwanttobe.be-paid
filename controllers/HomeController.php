@@ -34,7 +34,7 @@ class HomeController {
             if (!preg_match('/^[A-Z]{2}[0-9]{2}[A-Z0-9]{1,30}$/', $iban)) {
                 throw new Exception('Invalid IBAN format');
             }
-
+            
             // Validate amount
             $amount = floatval($amount);
             if ($amount <= 0 || $amount > 999999999.99) {

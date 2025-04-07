@@ -12,6 +12,7 @@ $lang = LanguageController::getInstance();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $lang->translate('app_name'); ?></title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
     <style>
         /* Custom styles */
         nav {
@@ -110,6 +111,13 @@ $lang = LanguageController::getInstance();
             height: 20px;
             display: block;
             fill: var(--primary);
+            transition: fill 0.2s ease;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .hamburger svg {
+                fill: #ffffff;
+            }
         }
 
         .hamburger:hover {
@@ -199,18 +207,19 @@ $lang = LanguageController::getInstance();
         <div class="container-fluid">
             <div class="nav-header">
                 <button class="hamburger" onclick="toggleMenu()">
-                    <svg viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    <svg viewBox="0 0 100 80" width="20" height="20">
+                        <rect width="100" height="10"></rect>
+                        <rect y="30" width="100" height="10"></rect>
+                        <rect y="60" width="100" height="10"></rect>
                     </svg>
                 </button>
-                <a href="/" style="text-decoration: none; color: inherit;"><strong><?php echo $lang->translate('app_name'); ?></strong></a>
+                <strong><?php echo $lang->translate('app_name'); ?></strong>
             </div>
 
             <div class="nav-links">
                 <ul>
                     <li><a href="/"><?php echo $lang->translate('menu_home'); ?></a></li>
                     <li><a href="/why-us"><?php echo $lang->translate('menu_why_us'); ?></a></li>
-                    <li><a href="/about"><?php echo $lang->translate('menu_about'); ?></a></li>
                     <li><a href="/gdpr"><?php echo $lang->translate('menu_gdpr'); ?></a></li>
                     <li>
                         <select onchange="changeLanguage(this.value)" aria-label="<?php echo $lang->translate('language'); ?>">

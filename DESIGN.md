@@ -144,7 +144,6 @@ graph TD
 graph TD
     H[Home] --> QR[QR Generation]
     H --> F[Form Input]
-    A[About] --> I[App Info]
     G[GDPR] --> P[Privacy Policy]
 ```
 
@@ -199,6 +198,10 @@ graph TD
   - XSS prevention
   - CSRF protection
 
+## Removed Components
+- About page (controller, view and route)
+- Related menu item
+
 ---
 
-*Last updated: 2025-04-04*
+*Last updated: 2025-04-07*
