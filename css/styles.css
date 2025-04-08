@@ -268,6 +268,13 @@ nav select {
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    background: var(--nav-bg);
+}
+
+@media (prefers-color-scheme: dark) {
+    .nav-header {
+        background: var(--nav-bg);
+    }
 }
 
 .nav-header strong {
@@ -290,7 +297,7 @@ nav select {
 
 .hamburger {
     display: none;
-    background: var(--nav-bg);
+    background: transparent;
     border: none;
     cursor: pointer;
     padding: 0.5rem;
