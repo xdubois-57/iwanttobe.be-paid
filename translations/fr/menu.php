@@ -15,6 +15,6 @@ return [
     'theme_light' => 'Clair',
     'theme_dark' => 'Sombre',
     'theme_auto' => 'Auto',
-    'meta_description' => 'Générez instantanément des codes QR sécurisés pour les paiements SEPA. Gratuit, privé et facile à utiliser pour les transferts personnels, les entreprises et les organisations.',
-    'meta_keywords' => 'Code QR, paiement SEPA, virement bancaire, QR de paiement, paiement européen, paiement sécurisé, don, soutien, offre-moi un café, générateur de code QR gratuit'
+    'meta_description' => 'Créez des codes QR pour paiements personnels, petites entreprises, associations et organisation d\'événements. Générateur de paiements SEPA gratuit, sécurisé et privé qui fonctionne instantanément sur tous les appareils.',
+    'meta_keywords' => 'paiements personnels, factures petites entreprises, frais d\'association, organisation d\'événements, code QR, paiement SEPA, virement bancaire, QR de paiement, paiement européen, paiement sécurisé, don, soutien, offre-moi un café, générateur de code QR gratuit'
 ];

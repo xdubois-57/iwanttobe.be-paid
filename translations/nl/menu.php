@@ -15,6 +15,6 @@ return [
     'theme_light' => 'Licht',
     'theme_dark' => 'Donker',
     'theme_auto' => 'Automatisch',
-    'meta_description' => 'Genereer direct veilige QR-codes voor SEPA-betalingen. Gratis, privé en gemakkelijk te gebruiken voor persoonlijke overboekingen, bedrijven en organisaties.',
-    'meta_keywords' => 'QR-code, SEPA-betaling, bankoverschrijving, betalings-QR, Europese betaling, veilige betaling, donatie, ondersteuning, trakteer me op een koffie, gratis QR-code generator'
+    'meta_description' => 'Maak QR-codes voor persoonlijke betalingen, kleine bedrijven, organisaties en evenementenplanning. Gratis, veilige en privé SEPA-betalingsgenerator die direct werkt op alle apparaten.',
+    'meta_keywords' => 'persoonlijke betalingen, facturen kleine bedrijven, organisatiekosten, evenementenplanning, QR-code, SEPA-betaling, bankoverschrijving, betalings-QR, Europese betaling, veilige betaling, donatie, ondersteuning, trakteer me op een koffie, gratis QR-code generator'
 ];
