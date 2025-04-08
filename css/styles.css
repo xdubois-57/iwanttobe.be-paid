@@ -481,12 +481,14 @@ nav select {
 
 .support-message.clickable {
     cursor: pointer;
-    color: var(--primary);
+    color: var(--link-color);
     text-decoration: underline;
+    transition: color 0.2s ease-in-out;
 }
 
 .support-message.clickable:hover {
-    opacity: 0.8;
+    color: var(--primary);
+    text-decoration: underline;
 }
 
 .qr-wrapper {

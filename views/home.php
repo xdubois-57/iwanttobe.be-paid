@@ -87,26 +87,12 @@ require_once __DIR__ . '/header.php';
             <article class="qr-display">
                 <!-- Support QR code -->
                 <div id="support-qr" class="text-center">
-                    <p class="support-message"><?php echo $lang->translate('support_text'); ?></p>
-                    <?php
-                    // Support QR code data
-                    $bic = $qrController->lookupBIC('BE42377116042854');
-                    $epcData = $qrController->generateEPCData('QR Transfer', 'BE42377116042854', $bic, 5, $lang->translate('support_thanks'));
-                    $supportQrImage = $qrController->generateQRCode($epcData);
-                    ?>
-                    <div class="qr-wrapper">
-                        <img src="<?php echo $supportQrImage; ?>" alt="Support QR Transfer" class="support-qr">
-                    </div>
-                    <div class="button-wrapper">
-                        <button type="submit" data-share data-image="<?php echo $supportQrImage; ?>" data-title="QR Transfer Support">
-                            <?php echo $lang->translate('share_qr'); ?>
-                        </button>
-                    </div>
+                    
                 </div>
 
                 <!-- User generated QR -->
                 <div id="user-qr" class="text-center" style="display: none;">
-                    <p class="support-message clickable"><?php echo $lang->translate('support_text_alt'); ?></p>
+                    <p class="support-message clickable" onclick="window.location.href='/support'"><?php echo $lang->translate('support_text_alt'); ?></p>
                     <div class="qr-wrapper">
                         <img id="qr-image" src="" alt="Generated QR Code">
                     </div>
