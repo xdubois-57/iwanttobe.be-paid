@@ -156,7 +156,12 @@ async function generateQRCode(form, submitButton, submitButtonOriginalText) {
             lastGeneratedValues = getFormValuesString(inputs);
             console.log('Stored last generated values:', lastGeneratedValues);
             
-            // Keep button disabled after successful generation
+            // For form inputs
+            Object.values(inputs).forEach(input => {
+                input.readOnly = true;
+            });
+
+            // Keep buttons disabled
             submitButton.disabled = true;
         } else {
             throw new Error(data.message || data.error || translations.translate('qr_generation_failed'));

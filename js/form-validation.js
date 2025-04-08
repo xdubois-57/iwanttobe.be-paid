@@ -139,8 +139,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         function validateForm() {
-            const nameValid = validation.default.validateField('beneficiary_name', inputs.beneficiary_name.value);
-            const ibanValid = validation.default.validateField('beneficiary_iban', inputs.beneficiary_iban.value);
+            const nameValid = inputs.beneficiary_name.readOnly || validation.default.validateField('beneficiary_name', inputs.beneficiary_name.value);
+            const ibanValid = inputs.beneficiary_iban.readOnly || validation.default.validateField('beneficiary_iban', inputs.beneficiary_iban.value);
             const saveButton = document.getElementById('save-favorite');
             
             if (saveButton) {

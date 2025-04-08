@@ -150,8 +150,8 @@ function loadFavorite() {
     
     if (selectedIndex === '') {
         // No favorite selected - enable fields
-        nameInput.disabled = false;
-        ibanInput.disabled = false;
+        nameInput.readOnly = false;
+        ibanInput.readOnly = false;
         saveButton.disabled = !(nameInput.value && ibanInput.value);
         return;
     }
@@ -191,8 +191,8 @@ function loadFavorite() {
     communicationInput.value = favorite.communication || '';
 
     // Disable inputs
-    nameInput.disabled = true;
-    ibanInput.disabled = true;
+    nameInput.readOnly = true;
+    ibanInput.readOnly = true;
     deleteButton.disabled = false;
     saveButton.textContent = translations.translate('update_favorite');
 
@@ -258,8 +258,8 @@ function initializeFavorites() {
         const selectedIndex = favoritesSelect.value;
         if (selectedIndex === '') {
             // Enable inputs when no favorite is selected
-            nameInput.disabled = false;
-            ibanInput.disabled = false;
+            nameInput.readOnly = false;
+            ibanInput.readOnly = false;
             // Update button text for current values
             updateSaveButtonText(saveButton, nameInput.value.trim(), ibanInput.value.trim());
         }
@@ -273,8 +273,8 @@ function initializeFavorites() {
     if (clearButton) {
         clearButton.addEventListener('click', () => {
             formOperations.default.clearForm(form);
-            inputs.beneficiary_name.disabled = false;
-            inputs.beneficiary_iban.disabled = false;
+            inputs.beneficiary_name.readOnly = false;
+            inputs.beneficiary_iban.readOnly = false;
             favoritesSelect.value = '';
             deleteButton.disabled = true;
             
