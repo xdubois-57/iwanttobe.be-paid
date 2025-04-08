@@ -10,4 +10,8 @@ return [
     'about_title' => 'Over QR Transfer',
     'gdpr_title' => 'Privacybeleid & AVG',
     'why_us_title' => 'Waarom kiezen voor QR Transfer?',
+    'theme' => 'Thema',
+    'theme_light' => 'Licht',
+    'theme_dark' => 'Donker',
+    'theme_auto' => 'Automatisch',
 ];

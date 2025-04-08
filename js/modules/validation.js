@@ -18,13 +18,13 @@ function validateField(fieldId, value) {
 
     switch (fieldId) {
         case 'beneficiary_name':
-            // Consider readonly fields valid
-            isValid = field.readOnly || (value && value.trim().length >= 2);
+            // Consider disabled fields valid
+            isValid = field.disabled || (value && value.trim().length >= 2);
             break;
 
         case 'beneficiary_iban':
-            // IBAN validation
-            isValid = field.readOnly || (value && /^[A-Z]{2}[0-9]{2}[A-Z0-9]{4}[0-9]{7}([A-Z0-9]?){0,16}$/.test(value.replace(/\s/g, '')));
+            // Consider disabled fields valid
+            isValid = field.disabled || (value && /^[A-Z]{2}[0-9]{2}[A-Z0-9]{4}[0-9]{7}([A-Z0-9]?){0,16}$/.test(value.replace(/\s/g, '')));
             break;
 
         case 'amount':
@@ -71,8 +71,8 @@ function validateAllFields(inputs) {
             return false;
         }
 
-        // For readonly fields, we consider them valid but still need their values
-        const isValid = field.readOnly || validateField(fieldId, field.value);
+        // For disabled fields, we consider them valid but still need their values
+        const isValid = field.disabled || validateField(fieldId, field.value);
         if (!isValid) {
             console.log(`Field ${fieldId} is invalid with value:`, field.value);
             allValid = false;

@@ -16,11 +16,8 @@ function clearForm(form) {
     const ibanInput = form.querySelector('#beneficiary_iban');
     const saveButton = form.querySelector('#save-favorite');
     
-    // Set inputs to readonly
-    if (nameInput) nameInput.readOnly = false;
-    if (ibanInput) ibanInput.readOnly = false;
-
-    // Keep buttons disabled
+    if (nameInput) nameInput.disabled = false;
+    if (ibanInput) ibanInput.disabled = false;
     if (saveButton) saveButton.disabled = true;
 
     // Reset validation indicators

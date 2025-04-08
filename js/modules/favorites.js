@@ -68,7 +68,7 @@ function saveFavorite(inputs, favoritesSelect, saveButton, deleteButton) {
     const existingIndex = findFavoriteIndex(name, iban);
     
     if (existingIndex >= 0) {
-        if (!confirm(translations.translate('favorite_exists_update'))) return;
+        // Just update without confirmation
         favorites[existingIndex] = favorite;
     } else {
         favorites.push(favorite);
@@ -150,8 +150,8 @@ function loadFavorite() {
     
     if (selectedIndex === '') {
         // No favorite selected - enable fields
-        nameInput.readOnly = false;
-        ibanInput.readOnly = false;
+        nameInput.disabled = false;
+        ibanInput.disabled = false;
         saveButton.disabled = !(nameInput.value && ibanInput.value);
         return;
     }
@@ -171,8 +171,10 @@ function loadFavorite() {
     const amountInput = document.getElementById('amount');
     const communicationInput = document.getElementById('communication');
     const form = document.getElementById('transfer-form');
+    const submitButton = document.getElementById('generate-qr-button');
+    const submitButtonOriginalText = submitButton?.textContent || '';
 
-    if (!deleteButton || !saveButton || !nameInput || !ibanInput || !form) {
+    if (!deleteButton || !saveButton || !nameInput || !ibanInput || !form || !submitButton) {
         console.error('Missing required elements for loading favorite');
         return;
     }
@@ -191,16 +193,38 @@ function loadFavorite() {
     communicationInput.value = favorite.communication || '';
 
     // Disable inputs
-    nameInput.readOnly = true;
-    ibanInput.readOnly = true;
+    nameInput.disabled = true;
+    ibanInput.disabled = true;
     deleteButton.disabled = false;
     saveButton.textContent = translations.translate('update_favorite');
 
-    // Trigger validation once after all fields are set
-    setTimeout(() => {
-        validation.validateField('beneficiary_name', nameInput.value);
-        validation.validateField('beneficiary_iban', ibanInput.value);
-    }, 0);
+    // Create inputs object for validation
+    const inputs = {
+        beneficiary_name: nameInput,
+        beneficiary_iban: ibanInput,
+        amount: amountInput,
+        communication: communicationInput
+    };
+
+    // Validate all fields
+    const isValid = validation.validateAllFields(inputs);
+    
+    // Reset aria-invalid attributes based on validation results
+    for (const [fieldId, input] of Object.entries(inputs)) {
+        const isFieldValid = validation.validateField(fieldId, input.value);
+        input.setAttribute('aria-invalid', !isFieldValid);
+    }
+    
+    // If all fields are valid, automatically generate QR code
+    if (isValid) {
+        // Import QR generator module dynamically
+        import('./qr-generator.js').then(qrGenerator => {
+            // Generate QR code
+            qrGenerator.default.generateQRCode(form, submitButton, submitButtonOriginalText);
+        }).catch(error => {
+            console.error('Error importing QR generator module:', error);
+        });
+    }
 }
 
 /**
@@ -258,8 +282,8 @@ function initializeFavorites() {
         const selectedIndex = favoritesSelect.value;
         if (selectedIndex === '') {
             // Enable inputs when no favorite is selected
-            nameInput.readOnly = false;
-            ibanInput.readOnly = false;
+            nameInput.disabled = false;
+            ibanInput.disabled = false;
             // Update button text for current values
             updateSaveButtonText(saveButton, nameInput.value.trim(), ibanInput.value.trim());
         }
@@ -273,8 +297,8 @@ function initializeFavorites() {
     if (clearButton) {
         clearButton.addEventListener('click', () => {
             formOperations.default.clearForm(form);
-            inputs.beneficiary_name.readOnly = false;
-            inputs.beneficiary_iban.readOnly = false;
+            inputs.beneficiary_name.disabled = false;
+            inputs.beneficiary_iban.disabled = false;
             favoritesSelect.value = '';
             deleteButton.disabled = true;
             
@@ -284,10 +308,10 @@ function initializeFavorites() {
             }
             
             // Reset validation states
-            validation.default.validateField('beneficiary_name', '');
-            validation.default.validateField('beneficiary_iban', '');
-            validation.default.validateField('amount', '');
-            validation.default.validateField('communication', '');
+            validation.validateField('beneficiary_name', '');
+            validation.validateField('beneficiary_iban', '');
+            validation.validateField('amount', '');
+            validation.validateField('communication', '');
         });
     }
 }
@@ -305,7 +329,7 @@ window.saveFavorite = function() {
     const deleteButton = document.getElementById('delete-favorite');
     
     if (!inputs.beneficiary_name || !inputs.beneficiary_iban) {
-        alert(translations.translate('fill_required_fields'));
+        console.warn(translations.translate('fill_required_fields'));
         return;
     }
     

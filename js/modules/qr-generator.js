@@ -96,7 +96,7 @@ async function generateQRCode(form, submitButton, submitButtonOriginalText) {
 
     // Validate all fields
     if (!validation.validateAllFields(inputs)) {
-        alert(translations.translate('missing_required_fields'));
+        console.warn(translations.translate('missing_required_fields'));
         return;
     }
 
@@ -156,19 +156,14 @@ async function generateQRCode(form, submitButton, submitButtonOriginalText) {
             lastGeneratedValues = getFormValuesString(inputs);
             console.log('Stored last generated values:', lastGeneratedValues);
             
-            // For form inputs
-            Object.values(inputs).forEach(input => {
-                input.readOnly = true;
-            });
-
-            // Keep buttons disabled
+            // Keep button disabled after successful generation
             submitButton.disabled = true;
         } else {
             throw new Error(data.message || data.error || translations.translate('qr_generation_failed'));
         }
     } catch (error) {
         console.error('Error generating QR code:', error);
-        alert(translations.translate('qr_generation_failed'));
+        console.error(translations.translate('qr_generation_failed'));
         // Show support QR on error
         resetRightPanel();
         // Reset last generated values and enable button on error

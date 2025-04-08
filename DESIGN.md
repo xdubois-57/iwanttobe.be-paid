@@ -262,6 +262,29 @@ The QR generation functionality has been extracted from HomeController into a de
 - `generateEPCData()` - Creates QR code payload
 - `generateQRCode()` - Generates visual QR image
 
+### UI and UX Improvements (Added 2025-04-08)
+
+Several enhancements have been made to improve the user interface and experience:
+
+#### Menu and Navigation:
+- Consistent text color for menu items
+- Black hamburger menu icon for better visibility
+- Improved dropdown sizing with dynamic width adaptation
+- Enhanced language and theme selectors with consistent styling
+- Added hover and focus states for better accessibility
+
+#### Form Interactions:
+- IBAN auto-formatting with spaces on blur
+- Removed JavaScript alerts in favor of console logging
+- Enhanced favorites management with automatic validation
+- Automatic QR code generation when loading favorites
+- Improved form validation feedback
+
+#### Visual Consistency:
+- Standardized dropdown styling across the application
+- Consistent interactive states for form elements
+- Improved mobile responsiveness
+
 Last updated: 2025-04-08
 
 ## Removed Components

@@ -46,7 +46,7 @@ $lang = LanguageController::getInstance();
                     <li><a href="/"><?php echo $lang->translate('menu_home'); ?></a></li>
                     <li><a href="/why-us"><?php echo $lang->translate('menu_why_us'); ?></a></li>
                     <li><a href="/gdpr"><?php echo $lang->translate('menu_gdpr'); ?></a></li>
-                    <li>
+                    <li class="language-selector">
                         <select onchange="changeLanguage(this.value)" aria-label="<?php echo $lang->translate('language'); ?>">
                             <?php
                             $config = require __DIR__ . '/../config/languages.php';
@@ -57,6 +57,13 @@ $lang = LanguageController::getInstance();
                                 echo "<option value=\"$code\" $selected>$name</option>";
                             }
                             ?>
+                        </select>
+                    </li>
+                    <li class="theme-selector">
+                        <select id="theme-selector" aria-label="<?php echo $lang->translate('theme'); ?>">
+                            <option value="light"><?php echo $lang->translate('theme_light'); ?></option>
+                            <option value="dark"><?php echo $lang->translate('theme_dark'); ?></option>
+                            <option value="auto"><?php echo $lang->translate('theme_auto'); ?></option>
                         </select>
                     </li>
                 </ul>

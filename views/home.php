@@ -29,7 +29,6 @@ require_once __DIR__ . '/header.php';
                                name="beneficiary_name" 
                                placeholder="<?php echo $lang->translate('beneficiary_name'); ?>"
                                autocomplete="off"
-                               readonly
                                required>
                     </div>
 
@@ -39,7 +38,6 @@ require_once __DIR__ . '/header.php';
                                name="beneficiary_iban" 
                                placeholder="<?php echo $lang->translate('beneficiary_iban'); ?>"
                                autocomplete="off"
-                               readonly
                                required>
                     </div>
 

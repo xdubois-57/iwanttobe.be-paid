@@ -10,4 +10,8 @@ return [
     'about_title' => 'À propos de QR Transfer',
     'gdpr_title' => 'Politique de Confidentialité & RGPD',
     'why_us_title' => 'Pourquoi choisir QR Transfer?',
+    'theme' => 'Thème',
+    'theme_light' => 'Clair',
+    'theme_dark' => 'Sombre',
+    'theme_auto' => 'Auto',
 ];

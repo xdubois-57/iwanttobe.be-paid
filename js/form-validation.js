@@ -40,6 +40,24 @@ document.addEventListener('DOMContentLoaded', function() {
         // Initialize favorites
         favorites.default.loadFavorites(favoritesSelect);
 
+        // Function to format IBAN with spaces
+        function formatIBAN(iban) {
+            // Remove existing spaces
+            iban = iban.replace(/\s/g, '').toUpperCase();
+            // Add a space every 4 characters
+            return iban.replace(/(.{4})/g, '$1 ').trim();
+        }
+        
+        // Add blur event listener to IBAN field for auto-formatting
+        inputs.beneficiary_iban.addEventListener('blur', function() {
+            if (this.value) {
+                const formattedIBAN = formatIBAN(this.value);
+                this.value = formattedIBAN;
+                // Validate after formatting
+                validation.default.validateField('beneficiary_iban', this.value);
+            }
+        });
+
         // Initialize validation indicators
         ['beneficiary_name', 'beneficiary_iban', 'amount', 'communication'].forEach(fieldId => {
             const field = document.getElementById(fieldId);
@@ -139,8 +157,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         function validateForm() {
-            const nameValid = inputs.beneficiary_name.readOnly || validation.default.validateField('beneficiary_name', inputs.beneficiary_name.value);
-            const ibanValid = inputs.beneficiary_iban.readOnly || validation.default.validateField('beneficiary_iban', inputs.beneficiary_iban.value);
+            const nameValid = validation.default.validateField('beneficiary_name', inputs.beneficiary_name.value);
+            const ibanValid = validation.default.validateField('beneficiary_iban', inputs.beneficiary_iban.value);
             const saveButton = document.getElementById('save-favorite');
             
             if (saveButton) {
