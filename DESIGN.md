@@ -102,6 +102,8 @@ graph LR
 ```mermaid
 graph TD
     T[Translations] --> EN[English]
+    T --> FR[French]
+    T --> NL[Dutch]
 ```
 
 - Location: `/translations` directory
@@ -113,9 +115,12 @@ graph TD
       // ...
   ];
   ```
+- Tone: Use informal tone in all languages where such distinction exists (e.g., "tu" instead of "vous" in French, "je/jij" instead of "u" in Dutch)
 
 **Supported Languages:**
 1. en (English)
+2. fr (French)
+3. nl (Dutch)
 
 ### 2.4 Form Handling
 
@@ -265,4 +270,4 @@ Last updated: 2025-04-08
 
 ---
 
-*Last updated: 2025-04-07*
+*Last updated: 2025-04-08*
