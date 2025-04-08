@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Helper function to get translations
     function t(key) {
-        return window.translations[key] || key;
+        return window.t(key) || key;
     }
 
     // Check if Web Share API is supported
