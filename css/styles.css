@@ -290,7 +290,7 @@ nav select {
 
 .hamburger {
     display: none;
-    background: transparent;
+    background: var(--nav-bg);
     border: none;
     cursor: pointer;
     padding: 0.5rem;
@@ -311,7 +311,7 @@ nav select {
 
 @media (prefers-color-scheme: dark) {
     .hamburger {
-        background: transparent;
+        background: var(--nav-bg);
     }
 }
 
