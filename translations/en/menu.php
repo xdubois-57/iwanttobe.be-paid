@@ -15,6 +15,6 @@ return [
     'theme_light' => 'Light',
     'theme_dark' => 'Dark',
     'theme_auto' => 'Auto',
-    'meta_description' => 'Create QR codes for personal payments, small businesses, organizations, and event planning. Free, secure, and private SEPA payment generator that works instantly on all devices.',
-    'meta_keywords' => 'personal payments, small business invoices, organization fees, event planning, QR code, SEPA payment, bank transfer, payment QR, European payment, secure payment, donation, support, buy me a coffee, free QR code generator'
+    'meta_description' => 'Create QR codes for scout events, school parent associations, football clubs, and small businesses. Free, secure, and private SEPA payment generator that works instantly on all devices.',
+    'meta_keywords' => 'scout events, school parent association, football club, charity fundraising, community events, QR code, SEPA payment, bank transfer, payment QR, European payment, secure payment, donation, support, buy me a coffee, free QR code generator'
 ];
