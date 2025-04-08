@@ -88,6 +88,7 @@ function createFormData(form, inputs) {
  * @returns {Promise<void>} - A promise that resolves when the QR code is generated
  */
 async function generateQRCode(form, submitButton, submitButtonOriginalText, trustedEvent = false) {
+    console.log('Generating QR code', { trustedEvent });
     const inputs = {
         beneficiary_name: document.getElementById('beneficiary_name'),
         beneficiary_iban: document.getElementById('beneficiary_iban'),
@@ -221,7 +222,7 @@ function initializeFormListeners() {
     // Handle form submit
     form.addEventListener('submit', async (event) => {
         event.preventDefault();
-        console.log('Form submitted');
+        console.log('Form submitted', { isTrusted: event.isTrusted });
         await generateQRCode(form, generateButton, generateButton.textContent, event.isTrusted);
     });
 
