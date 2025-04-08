@@ -290,7 +290,7 @@ nav select {
 
 .hamburger {
     display: none;
-    background: none;
+    background: transparent;
     border: none;
     cursor: pointer;
     padding: 0.5rem;
@@ -307,6 +307,12 @@ nav select {
 
 .hamburger:hover {
     opacity: 0.8;
+}
+
+@media (prefers-color-scheme: dark) {
+    .hamburger {
+        background: transparent;
+    }
 }
 
 /* Desktop navigation styles */
