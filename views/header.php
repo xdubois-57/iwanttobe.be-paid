@@ -87,6 +87,20 @@ $lang = LanguageController::getInstance();
             document.querySelector('.nav-links').classList.toggle('active');
         }
 
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const navLinks = document.querySelector('.nav-links');
+            const hamburger = document.querySelector('.hamburger');
+            
+            // Only process if we're on mobile (menu toggle is visible) and the menu is open
+            if (window.getComputedStyle(hamburger).display !== 'none' && navLinks.classList.contains('active')) {
+                // Check if the click was outside the menu and not on the hamburger button
+                if (!navLinks.contains(event.target) && !hamburger.contains(event.target)) {
+                    navLinks.classList.remove('active');
+                }
+            }
+        });
+
         async function changeLanguage(lang) {
             // Create a form and submit it to properly handle the language change
             const form = document.createElement('form');
