@@ -84,9 +84,10 @@ function createFormData(form, inputs) {
  * @param {HTMLFormElement} form - The form element
  * @param {HTMLButtonElement} submitButton - The submit button
  * @param {string} submitButtonOriginalText - The original text of the submit button
+ * @param {boolean} [trustedEvent] - Whether the event triggering this generation is trusted
  * @returns {Promise<void>} - A promise that resolves when the QR code is generated
  */
-async function generateQRCode(form, submitButton, submitButtonOriginalText) {
+async function generateQRCode(form, submitButton, submitButtonOriginalText, trustedEvent = false) {
     const inputs = {
         beneficiary_name: document.getElementById('beneficiary_name'),
         beneficiary_iban: document.getElementById('beneficiary_iban'),
@@ -159,12 +160,14 @@ async function generateQRCode(form, submitButton, submitButtonOriginalText) {
             // Keep button disabled after successful generation
             submitButton.disabled = true;
 
-            // Scroll to QR code on mobile mode
-            const qrContainer = document.getElementById('user-qr');
-            if (qrContainer) {
-                const isMobile = window.innerWidth < 768; // Using 768px as the breakpoint for mobile
-                if (isMobile) {
-                    qrContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            // Scroll to QR code on mobile mode only if the event is trusted
+            if (trustedEvent) {
+                const qrContainer = document.getElementById('user-qr');
+                if (qrContainer) {
+                    const isMobile = window.innerWidth < 768; // Using 768px as the breakpoint for mobile
+                    if (isMobile) {
+                        qrContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
                 }
             }
         } else {
@@ -219,7 +222,7 @@ function initializeFormListeners() {
     form.addEventListener('submit', async (event) => {
         event.preventDefault();
         console.log('Form submitted');
-        await generateQRCode(form, generateButton, generateButton.textContent);
+        await generateQRCode(form, generateButton, generateButton.textContent, event.isTrusted);
     });
 
     // Initial button state
