@@ -24,7 +24,9 @@ function validateField(fieldId, value) {
 
         case 'beneficiary_iban':
             // Consider disabled fields valid
-            isValid = field.disabled || (value && /^[A-Z]{2}[0-9]{2}[A-Z0-9]{4}[0-9]{7}([A-Z0-9]?){0,16}$/.test(value.replace(/\s/g, '')));
+            // Always remove spaces for validation regardless of where it's called from
+            const cleanIban = value ? value.replace(/\s/g, '').toUpperCase() : '';
+            isValid = field.disabled || (cleanIban && /^[A-Z]{2}[0-9]{2}[A-Z0-9]{4}[0-9]{7}([A-Z0-9]?){0,16}$/.test(cleanIban));
             break;
 
         case 'amount':

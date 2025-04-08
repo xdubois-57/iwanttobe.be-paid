@@ -90,7 +90,16 @@ document.addEventListener('DOMContentLoaded', function() {
             const input = inputs[inputId];
             input.addEventListener('input', function(e) {
                 console.log(`Input event on ${inputId}:`, e.target.value);
-                validation.default.validateField(inputId, e.target.value);
+                
+                // For IBAN, validate without formatting while typing
+                if (inputId === 'beneficiary_iban') {
+                    // Remove spaces for validation but don't update the field value
+                    const rawValue = e.target.value;
+                    validation.default.validateField(inputId, rawValue);
+                } else {
+                    validation.default.validateField(inputId, e.target.value);
+                }
+                
                 qrGenerator.default.updateButtonState(inputs, submitButton);
                 
                 // Update save button text when name or IBAN changes
