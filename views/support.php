@@ -43,10 +43,10 @@ $qrController = new QRController();
 document.addEventListener('DOMContentLoaded', function() {
     // Create form data for QR code generation
     const formData = new FormData();
-    formData.append('beneficiary_name', 'QR Transfer Team');
-    formData.append('beneficiary_iban', 'BE42377116042854');
+    formData.append('beneficiary_name', 'QR Transfer');
+    formData.append('beneficiary_iban', 'LT103250087680814808');
     formData.append('amount', '5.00');
-    formData.append('communication', '<?php echo $lang->translate('support_coffee_message'); ?>');
+    formData.append('communication', 'Get a coffee');
 
     // Make AJAX request to generate QR code
     fetch('/generate-qr', {
