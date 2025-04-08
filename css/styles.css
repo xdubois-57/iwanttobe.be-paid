@@ -364,7 +364,7 @@ nav select {
         top: 100%;
         left: 0;
         right: 0;
-        background: #ffffff;
+        background: var(--nav-bg);
         padding: 1rem;
         margin: 0.5rem;
         border-radius: 0.5rem;
@@ -374,8 +374,8 @@ nav select {
 
     @media (prefers-color-scheme: dark) {
         .nav-links {
-            background: #1e1e1e;
-            border: 1px solid #2e2e2e;
+            background: var(--nav-bg);
+            border: 1px solid var(--secondary-border);
         }
     }
 
