@@ -45,6 +45,7 @@ $lang = LanguageController::getInstance();
                 <ul>
                     <li><a href="/"><?php echo $lang->translate('menu_home'); ?></a></li>
                     <li><a href="/why-us"><?php echo $lang->translate('menu_why_us'); ?></a></li>
+                    <li><a href="/support"><?php echo $lang->translate('menu_support'); ?></a></li>
                     <li><a href="/gdpr"><?php echo $lang->translate('menu_gdpr'); ?></a></li>
                     <li class="language-selector">
                         <select onchange="changeLanguage(this.value)" aria-label="<?php echo $lang->translate('language'); ?>">

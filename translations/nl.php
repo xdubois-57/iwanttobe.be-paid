@@ -6,5 +6,6 @@ return array_merge(
     require __DIR__.'/nl/home.php',
     require __DIR__.'/nl/about.php',
     require __DIR__.'/nl/gdpr.php',
-    require __DIR__.'/en/why_us.php'
+    require __DIR__.'/nl/why_us.php',
+    require __DIR__.'/nl/support.php'
 );

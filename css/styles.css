@@ -594,3 +594,51 @@ nav select {
     box-shadow: 0 0 0 2px rgba(var(--primary-rgb), 0.25);
     outline: none;
 }
+
+/* Support page styles */
+.coffee-qr {
+    margin: 2rem 0;
+    text-align: center;
+    padding: 1.5rem;
+    background-color: var(--secondary-background);
+    border-radius: var(--border-radius);
+    border: 1px solid var(--secondary-border);
+}
+
+.qr-container {
+    display: flex;
+    justify-content: center;
+    margin: 1.5rem 0;
+}
+
+.support-qr-image {
+    max-width: 250px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.support-message {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+    color: var(--text-color);
+}
+
+.thank-you-message {
+    font-size: 0.9rem;
+    margin-top: 1rem;
+    font-style: italic;
+    color: var(--muted-color);
+}
+
+.content-box {
+    background-color: var(--secondary-background);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid var(--secondary-border);
+    transition: transform 0.2s ease-in-out;
+}
+
+.content-box:hover {
+    transform: translateY(-5px);
+}
