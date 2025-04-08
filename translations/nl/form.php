@@ -5,6 +5,7 @@ return [
     'amount' => 'Bedrag',
     'communication' => 'Mededeling',
     'generate_qr' => 'QR-code genereren',
+    'generating' => 'Genereren...',
     'generated_by' => 'Gegenereerd door QR Transfer',
     'payment_to' => 'Betaling aan %s',
     'clear_form' => 'Formulier wissen',
