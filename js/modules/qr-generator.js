@@ -158,6 +158,15 @@ async function generateQRCode(form, submitButton, submitButtonOriginalText) {
             
             // Keep button disabled after successful generation
             submitButton.disabled = true;
+
+            // Scroll to QR code on mobile mode
+            const qrContainer = document.getElementById('user-qr');
+            if (qrContainer) {
+                const isMobile = window.innerWidth < 768; // Using 768px as the breakpoint for mobile
+                if (isMobile) {
+                    qrContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }
         } else {
             throw new Error(data.message || data.error || translations.translate('qr_generation_failed'));
         }
