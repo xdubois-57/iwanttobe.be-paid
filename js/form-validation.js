@@ -1,4 +1,11 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // Check if we're on a page that has the transfer form
+    const form = document.querySelector('#transfer-form');
+    if (!form) {
+        // Not on a page with the transfer form, exit early
+        return;
+    }
+
     // Initialize modules
     Promise.all([
         import('./modules/validation.js'),
@@ -8,10 +15,9 @@ document.addEventListener('DOMContentLoaded', function() {
         import('./modules/translations.js')
     ]).then(([validation, qrGenerator, favorites, formOperations, translations]) => {
         // Get form elements
-        const form = document.querySelector('#transfer-form');
         const submitButton = document.getElementById('generate-qr-button');
 
-        if (!form || !submitButton) {
+        if (!submitButton) {
             console.error('Required form elements not found');
             return;
         }
