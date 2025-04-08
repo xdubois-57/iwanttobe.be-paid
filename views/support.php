@@ -39,6 +39,33 @@ $qrController = new QRController();
     </section>
 </main>
 
+<!-- Structured data for search engines -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "DonateAction",
+  "name": "<?php echo $lang->translate('support_coffee_title'); ?>",
+  "description": "<?php echo $lang->translate('support_text'); ?>",
+  "agent": {
+    "@type": "Organization",
+    "name": "QR Transfer",
+    "url": "https://qrtransfer.eu"
+  },
+  "potentialAction": {
+    "@type": "PayAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "https://qrtransfer.eu/support"
+    },
+    "instrument": {
+      "@type": "MonetaryAmount",
+      "currency": "EUR",
+      "value": "5.00"
+    }
+  }
+}
+</script>
+
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // Create form data for QR code generation

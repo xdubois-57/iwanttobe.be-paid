@@ -11,6 +11,14 @@ $lang = LanguageController::getInstance();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $lang->translate('app_name'); ?></title>
+    <meta name="description" content="<?php echo $lang->translate('meta_description'); ?>">
+    <meta name="keywords" content="<?php echo $lang->translate('meta_keywords'); ?>">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="<?php echo $lang->translate('app_name'); ?>">
+    <meta property="og:description" content="<?php echo $lang->translate('meta_description'); ?>">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://qrtransfer.eu">
+    <link rel="canonical" href="https://qrtransfer.eu<?php echo $_SERVER['REQUEST_URI']; ?>">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
     <link rel="stylesheet" href="/css/styles.css">
     

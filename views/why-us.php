@@ -152,4 +152,38 @@ $lang = LanguageController::getInstance();
     </section>
 </main>
 
+<!-- Structured data for search engines -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "<?php echo $lang->translate('why_us_secure_title'); ?>",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "<?php echo $lang->translate('why_us_secure_text'); ?>"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "<?php echo $lang->translate('why_us_easy_title'); ?>",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "<?php echo $lang->translate('why_us_easy_text'); ?>"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "<?php echo $lang->translate('why_us_free_title'); ?>",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "<?php echo $lang->translate('why_us_free_text'); ?>"
+      }
+    }
+  ]
+}
+</script>
+
 <?php require_once __DIR__ . '/footer.php'; ?>

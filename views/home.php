@@ -108,6 +108,31 @@ require_once __DIR__ . '/header.php';
     </div>
 </main>
 
+<!-- Structured data for search engines -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "QR Transfer",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Web",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "EUR"
+  },
+  "description": "<?php echo $lang->translate('meta_description'); ?>",
+  "keywords": "<?php echo $lang->translate('meta_keywords'); ?>",
+  "potentialAction": {
+    "@type": "UseAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "https://qrtransfer.eu"
+    }
+  }
+}
+</script>
+
 <script src="js/form-validation.js"></script>
 
 <script>
