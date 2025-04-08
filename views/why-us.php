@@ -121,6 +121,36 @@ $lang = LanguageController::getInstance();
         }
     </style>
 
+    <section>
+        <h2><?php echo $lang->translate('why_us_use_cases_title'); ?></h2>
+        <div class="grid">
+            <article>
+                <header>
+                    <h3><?php echo $lang->translate('why_us_use_case_1_title'); ?></h3>
+                </header>
+                <p><?php echo $lang->translate('why_us_use_case_1_text'); ?></p>
+            </article>
+            <article>
+                <header>
+                    <h3><?php echo $lang->translate('why_us_use_case_2_title'); ?></h3>
+                </header>
+                <p><?php echo $lang->translate('why_us_use_case_2_text'); ?></p>
+            </article>
+            <article>
+                <header>
+                    <h3><?php echo $lang->translate('why_us_use_case_3_title'); ?></h3>
+                </header>
+                <p><?php echo $lang->translate('why_us_use_case_3_text'); ?></p>
+            </article>
+            <article>
+                <header>
+                    <h3><?php echo $lang->translate('why_us_use_case_4_title'); ?></h3>
+                </header>
+                <p><?php echo $lang->translate('why_us_use_case_4_text'); ?></p>
+            </article>
+        </div>
+    </section>
+
     <section class="comparison-section">
         <h2><?php echo $lang->translate('why_us_comparison_title'); ?></h2>
         
@@ -204,10 +234,6 @@ $lang = LanguageController::getInstance();
             font-weight: 500;
         }
         
-        .comparison-table tr:nth-child(even) {
-            background-color: var(--table-alt-bg);
-        }
-        
         @media (prefers-color-scheme: dark) {
             .comparison-table th {
                 background-color: var(--secondary-bg-dark);
@@ -215,10 +241,6 @@ $lang = LanguageController::getInstance();
             
             .comparison-table .highlight {
                 background-color: rgba(var(--primary-rgb), 0.15);
-            }
-            
-            .comparison-table tr:nth-child(even) {
-                background-color: var(--table-alt-bg-dark);
             }
         }
         
@@ -233,36 +255,6 @@ $lang = LanguageController::getInstance();
             }
         }
     </style>
-
-    <section>
-        <h2><?php echo $lang->translate('why_us_use_cases_title'); ?></h2>
-        <div class="grid">
-            <article>
-                <header>
-                    <h3><?php echo $lang->translate('why_us_use_case_1_title'); ?></h3>
-                </header>
-                <p><?php echo $lang->translate('why_us_use_case_1_text'); ?></p>
-            </article>
-            <article>
-                <header>
-                    <h3><?php echo $lang->translate('why_us_use_case_2_title'); ?></h3>
-                </header>
-                <p><?php echo $lang->translate('why_us_use_case_2_text'); ?></p>
-            </article>
-            <article>
-                <header>
-                    <h3><?php echo $lang->translate('why_us_use_case_3_title'); ?></h3>
-                </header>
-                <p><?php echo $lang->translate('why_us_use_case_3_text'); ?></p>
-            </article>
-            <article>
-                <header>
-                    <h3><?php echo $lang->translate('why_us_use_case_4_title'); ?></h3>
-                </header>
-                <p><?php echo $lang->translate('why_us_use_case_4_text'); ?></p>
-            </article>
-        </div>
-    </section>
 </main>
 
 <!-- Structured data for search engines -->
