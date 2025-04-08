@@ -30,7 +30,8 @@ $lang = LanguageController::getInstance();
             'save_favorite': '<?php echo $lang->translate('save_favorite'); ?>',
             'update_favorite': '<?php echo $lang->translate('update_favorite'); ?>',
             // Add other frequently used translations
-            'app_name': '<?php echo $lang->translate('app_name'); ?>'
+            'app_name': '<?php echo $lang->translate('app_name'); ?>',
+            'generating': '<?php echo $lang->translate('generating'); ?>'
         };
         return translations[key] || key;
     };
