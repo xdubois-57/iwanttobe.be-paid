@@ -16,5 +16,6 @@ return [
     'theme_dark' => 'Donker',
     'theme_auto' => 'Automatisch',
     'meta_description' => 'Maak QR-codes voor scoutingevenementen, ouderverenigingen van scholen, voetbalclubs en kleine bedrijven. Gratis, veilige en privé SEPA-betalingsgenerator die direct werkt op alle apparaten.',
-    'meta_keywords' => 'scoutingevenementen, oudervereniging van scholen, voetbalclub, liefdadigheidsfondsenwerving, gemeenschapsevenementen, QR-code, SEPA-betaling, bankoverschrijving, betalings-QR, Europese betaling, veilige betaling, donatie, ondersteuning, trakteer me op een koffie, gratis QR-code generator'
+    'meta_keywords' => 'scoutingevenementen, oudervereniging van scholen, voetbalclub, liefdadigheidsfondsenwerving, gemeenschapsevenementen, QR-code, SEPA-betaling, bankoverschrijving, betalings-QR, Europese betaling, veilige betaling, donatie, ondersteuning, trakteer me op een koffie, gratis QR-code generator',
+    'disclaimer_text' => 'QR Transfer is niet aansprakelijk voor problemen of financiële verliezen die verband houden met het gebruik van deze dienst. Gebruik van deze tool is op eigen risico. Alle betalingen worden verwerkt door de respectievelijke banken, en QR Transfer verwerkt geen geldtransacties.'
 ];

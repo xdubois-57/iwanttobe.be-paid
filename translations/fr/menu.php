@@ -16,5 +16,6 @@ return [
     'theme_dark' => 'Sombre',
     'theme_auto' => 'Auto',
     'meta_description' => 'Créez des codes QR pour événements scouts, associations de parents d\'élèves, clubs de football et petites entreprises. Générateur de paiements SEPA gratuit, sécurisé et privé qui fonctionne instantanément sur tous les appareils.',
-    'meta_keywords' => 'événements scouts, association de parents d\'élèves, club de football, collecte de fonds caritatifs, événements communautaires, code QR, paiement SEPA, virement bancaire, QR de paiement, paiement européen, paiement sécurisé, don, soutien, offre-moi un café, générateur de code QR gratuit'
+    'meta_keywords' => 'événements scouts, association de parents d\'élèves, club de football, collecte de fonds caritatifs, événements communautaires, code QR, paiement SEPA, virement bancaire, QR de paiement, paiement européen, paiement sécurisé, don, soutien, offre-moi un café, générateur de code QR gratuit',
+    'disclaimer_text' => 'QR Transfer n\'est pas responsable des problèmes ou pertes financières liés à l\'utilisation de ce service. L\'utilisation de cet outil est à vos propres risques. Tous les paiements sont traités par les banques respectives, et QR Transfer ne gère aucune transaction monétaire.'
 ];
