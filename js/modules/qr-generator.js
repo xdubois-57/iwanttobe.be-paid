@@ -104,6 +104,18 @@ async function generateQRCode(form, submitButton, submitButtonOriginalText) {
     submitButton.textContent = translations.translate('generating');
     submitButton.disabled = true;
 
+    // Show loading indicator in the QR code area
+    const qrContainer = document.getElementById('qr-container');
+    if (qrContainer) {
+        qrContainer.innerHTML = `
+            <div class="flex flex-col items-center justify-center p-4">
+                <span aria-busy="true" class="inline-block">
+                    ${translations.translate('generating_full')}
+                </span>
+            </div>
+        `;
+    }
+
     try {
         // Get form data including disabled fields
         const formData = createFormData(form, inputs);
@@ -170,8 +182,11 @@ async function generateQRCode(form, submitButton, submitButtonOriginalText) {
         lastGeneratedValues = null;
         submitButton.disabled = false;
     } finally {
-        // Reset button text
-        submitButton.textContent = submitButtonOriginalText;
+        // Reset button text to "Generate QR Code"
+        submitButton.textContent = translations.translate('generate_qr');
+        
+        // Reset the QR container to show the support QR
+        resetRightPanel();
     }
 }
 

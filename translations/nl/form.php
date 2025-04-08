@@ -6,6 +6,7 @@ return [
     'communication' => 'Mededeling',
     'generate_qr' => 'QR-code genereren',
     'generating' => 'Genereren...',
+    'generating_full' => 'Uw link wordt gegenereerd...',
     'generated_by' => 'Gegenereerd door QR Transfer',
     'payment_to' => 'Betaling aan %s',
     'clear_form' => 'Formulier wissen',
