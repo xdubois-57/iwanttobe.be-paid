@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    if (banner && acceptButton) {
+    if (acceptButton) {
         // Style the button
         Object.assign(acceptButton.style, {
             whiteSpace: 'nowrap',
@@ -62,10 +62,29 @@ document.addEventListener('DOMContentLoaded', function() {
             flexShrink: '0'
         });
         
-        acceptButton.addEventListener('click', function() {
+        // Add click event listener
+        acceptButton.addEventListener('click', function(e) {
+            e.preventDefault(); // Prevent any default action
+            
             // Set cookie for 1 year
             document.cookie = 'cookie_consent=1; max-age=31536000; path=/; SameSite=Strict';
-            banner.style.display = 'none';
+            
+            // Hide the banner
+            if (banner) {
+                banner.style.display = 'none';
+                
+                // If hiding doesn't work, try removing from DOM
+                setTimeout(function() {
+                    if (banner.parentNode) {
+                        banner.parentNode.removeChild(banner);
+                    }
+                }, 100);
+            }
+            
+            // Reload the page if needed to reflect the cookie change
+            // window.location.reload();
+            
+            return false; // Prevent event bubbling
         });
     }
 });
