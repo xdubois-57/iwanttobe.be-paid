@@ -121,6 +121,119 @@ $lang = LanguageController::getInstance();
         }
     </style>
 
+    <section class="comparison-section">
+        <h2><?php echo $lang->translate('why_us_comparison_title'); ?></h2>
+        
+        <div class="comparison-table-container">
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th><?php echo $lang->translate('why_us_comparison_feature'); ?></th>
+                        <th class="highlight"><?php echo $lang->translate('why_us_comparison_qr_transfer'); ?></th>
+                        <th><?php echo $lang->translate('why_us_comparison_banking_apps'); ?></th>
+                        <th><?php echo $lang->translate('why_us_comparison_payment_apps'); ?></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><?php echo $lang->translate('why_us_comparison_price'); ?></td>
+                        <td class="highlight"><?php echo $lang->translate('why_us_comparison_price_qr'); ?></td>
+                        <td><?php echo $lang->translate('why_us_comparison_price_banking'); ?></td>
+                        <td><?php echo $lang->translate('why_us_comparison_price_payment'); ?></td>
+                    </tr>
+                    <tr>
+                        <td><?php echo $lang->translate('why_us_comparison_apps'); ?></td>
+                        <td class="highlight"><?php echo $lang->translate('why_us_comparison_apps_qr'); ?></td>
+                        <td><?php echo $lang->translate('why_us_comparison_apps_banking'); ?></td>
+                        <td><?php echo $lang->translate('why_us_comparison_apps_payment'); ?></td>
+                    </tr>
+                    <tr>
+                        <td><?php echo $lang->translate('why_us_comparison_account'); ?></td>
+                        <td class="highlight"><?php echo $lang->translate('why_us_comparison_account_qr'); ?></td>
+                        <td><?php echo $lang->translate('why_us_comparison_account_banking'); ?></td>
+                        <td><?php echo $lang->translate('why_us_comparison_account_payment'); ?></td>
+                    </tr>
+                    <tr>
+                        <td><?php echo $lang->translate('why_us_comparison_notification'); ?></td>
+                        <td class="highlight"><?php echo $lang->translate('why_us_comparison_notification_qr'); ?></td>
+                        <td><?php echo $lang->translate('why_us_comparison_notification_banking'); ?></td>
+                        <td><?php echo $lang->translate('why_us_comparison_notification_payment'); ?></td>
+                    </tr>
+                    <tr>
+                        <td><?php echo $lang->translate('why_us_comparison_static'); ?></td>
+                        <td class="highlight"><?php echo $lang->translate('why_us_comparison_static_qr'); ?></td>
+                        <td><?php echo $lang->translate('why_us_comparison_static_banking'); ?></td>
+                        <td><?php echo $lang->translate('why_us_comparison_static_payment'); ?></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <style>
+        .comparison-section {
+            margin: 3rem 0;
+        }
+        
+        .comparison-table-container {
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid var(--border-color);
+            font-size: 0.95rem;
+        }
+        
+        .comparison-table th,
+        .comparison-table td {
+            padding: 0.75rem;
+            text-align: left;
+            border: 1px solid var(--border-color);
+        }
+        
+        .comparison-table th {
+            background-color: var(--secondary-bg);
+            font-weight: 600;
+        }
+        
+        .comparison-table .highlight {
+            background-color: rgba(var(--primary-rgb), 0.1);
+            font-weight: 500;
+        }
+        
+        .comparison-table tr:nth-child(even) {
+            background-color: var(--table-alt-bg);
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            .comparison-table th {
+                background-color: var(--secondary-bg-dark);
+            }
+            
+            .comparison-table .highlight {
+                background-color: rgba(var(--primary-rgb), 0.15);
+            }
+            
+            .comparison-table tr:nth-child(even) {
+                background-color: var(--table-alt-bg-dark);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .comparison-table {
+                font-size: 0.85rem;
+            }
+            
+            .comparison-table th,
+            .comparison-table td {
+                padding: 0.5rem;
+            }
+        }
+    </style>
+
     <section>
         <h2><?php echo $lang->translate('why_us_use_cases_title'); ?></h2>
         <div class="grid">

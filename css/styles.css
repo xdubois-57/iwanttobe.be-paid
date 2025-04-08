@@ -23,6 +23,8 @@ html {
     --secondary: #f0f0f0;
     --muted-color: #666666;
     --border-radius: 4px;
+    --table-alt-bg: #f5f5f5;
+    --table-alt-bg-dark: #2a2a2a;
 }
 
 /* Dark theme */

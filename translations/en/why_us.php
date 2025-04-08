@@ -21,4 +21,36 @@ return [
     'why_us_use_case_3_text' => 'Perfect for scout units, sports clubs, and associations to collect membership fees, event payments, or donations.',
     'why_us_use_case_4_title' => 'Event Planning',
     'why_us_use_case_4_text' => 'Simplify group payments for events, team activities, or shared purchases.',
+    
+    // Comparison table translations
+    'why_us_comparison_title' => 'QR Transfer vs Other Payment Solutions',
+    'why_us_comparison_feature' => 'Feature',
+    'why_us_comparison_qr_transfer' => 'QR Transfer',
+    'why_us_comparison_banking_apps' => 'Banking Apps',
+    'why_us_comparison_payment_apps' => 'Payment Apps',
+    
+    'why_us_comparison_price' => 'Price',
+    'why_us_comparison_price_qr' => 'Free',
+    'why_us_comparison_price_banking' => 'Free with bank account',
+    'why_us_comparison_price_payment' => 'Often includes fees',
+    
+    'why_us_comparison_apps' => 'Requires dedicated app',
+    'why_us_comparison_apps_qr' => 'No, works in any browser',
+    'why_us_comparison_apps_banking' => 'Yes, specific banking app',
+    'why_us_comparison_apps_payment' => 'Yes, specific payment app',
+    
+    'why_us_comparison_account' => 'Need to be account owner',
+    'why_us_comparison_account_qr' => 'No, anyone can generate a QR code',
+    'why_us_comparison_account_banking' => 'Yes, must be account holder',
+    'why_us_comparison_account_payment' => 'Yes, requires account',
+    
+    'why_us_comparison_notification' => 'Immediate payment notification',
+    'why_us_comparison_notification_qr' => 'Depends on bank',
+    'why_us_comparison_notification_banking' => 'Yes, via banking app',
+    'why_us_comparison_notification_payment' => 'Yes, in-app notifications',
+    
+    'why_us_comparison_static' => 'Static QR codes for events',
+    'why_us_comparison_static_qr' => 'Yes, easily printable',
+    'why_us_comparison_static_banking' => 'Limited options',
+    'why_us_comparison_static_payment' => 'Often requires merchant account',
 ];
