@@ -7,22 +7,18 @@ $lang = LanguageController::getInstance();
     <h1><?php echo $lang->translate('why_us_title'); ?></h1>
 
     <div class="grid">
-        <article>
-            <header>
-                <h3><?php echo $lang->translate('why_us_secure_title'); ?></h3>
-            </header>
+        <article class="content-box">
+            <h3><?php echo $lang->translate('why_us_secure_title'); ?></h3>
             <p><?php echo $lang->translate('why_us_secure_text'); ?></p>
         </article>
-        <article>
-            <header>
-                <h3><?php echo $lang->translate('why_us_easy_title'); ?></h3>
-            </header>
+        
+        <article class="content-box">
+            <h3><?php echo $lang->translate('why_us_easy_title'); ?></h3>
             <p><?php echo $lang->translate('why_us_easy_text'); ?></p>
         </article>
-        <article>
-            <header>
-                <h3><?php echo $lang->translate('why_us_free_title'); ?></h3>
-            </header>
+        
+        <article class="content-box">
+            <h3><?php echo $lang->translate('why_us_free_title'); ?></h3>
             <p><?php echo $lang->translate('why_us_free_text'); ?></p>
         </article>
     </div>
