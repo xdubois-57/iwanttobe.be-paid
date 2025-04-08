@@ -114,21 +114,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
 
-        // Format IBAN as user types
-        document.getElementById('beneficiary_iban').addEventListener('input', function(e) {
-            // Remove all non-alphanumeric characters and convert to uppercase
-            let value = e.target.value.replace(/[^A-Z0-9]/gi, '').toUpperCase();
-            
-            // Insert space every 4 characters
-            let formatted = value.replace(/(.{4})/g, '$1 ').trim();
-            
-            // Update input value while preserving cursor position
-            const start = e.target.selectionStart;
-            const end = e.target.selectionEnd;
-            e.target.value = formatted;
-            e.target.setSelectionRange(start, end);
-        });
-
         // Listen for favorites changes
         favoritesSelect.addEventListener('change', () => {
             console.log('Favorite selection changed');
