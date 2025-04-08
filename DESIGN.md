@@ -268,13 +268,15 @@ Several enhancements have been made to improve the user interface and experience
 
 #### Menu and Navigation:
 - Consistent text color for menu items
-- Black hamburger menu icon for better visibility
+- Hamburger menu icon color matches text color in both light and dark modes
+- Mobile menu background properly adapts to theme (light/dark)
 - Improved dropdown sizing with dynamic width adaptation
 - Enhanced language and theme selectors with consistent styling
 - Added hover and focus states for better accessibility
+- Added functionality to close the mobile menu when clicking anywhere else on the page
 
 #### Form Interactions:
-- IBAN auto-formatting with spaces on blur
+- IBAN auto-formatting with spaces only on blur (not while typing)
 - Removed JavaScript alerts in favor of console logging
 - Enhanced favorites management with automatic validation
 - Automatic QR code generation when loading favorites
@@ -284,6 +286,18 @@ Several enhancements have been made to improve the user interface and experience
 - Standardized dropdown styling across the application
 - Consistent interactive states for form elements
 - Improved mobile responsiveness
+- Consistent styling in dark mode across all UI elements
+
+#### SEO and Marketing:
+- Added comparison table on the "Why Us" page highlighting advantages over other payment solutions
+- Added meta tags with descriptions and keywords focusing on concrete use cases
+- Implemented structured data markup using JSON-LD for better search engine understanding
+- Added Google site verification meta tag
+
+#### Legal Protection:
+- Added a disclaimer footer to all pages in all supported languages
+- Clarified that QR Transfer is not liable for any financial losses
+- Explained that all payments are processed by banks, not QR Transfer
 
 Last updated: 2025-04-08
 
