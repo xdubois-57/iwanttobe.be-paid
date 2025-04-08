@@ -322,6 +322,32 @@ nav select {
     }
 }
 
+.nav-header .app-name {
+    color: var(--text-color);
+    text-decoration: none;
+    font-weight: 600;
+    display: inline-block;
+    padding: 0.25rem 0;
+    transition: color 0.2s ease;
+}
+
+.nav-header .app-name:hover {
+    color: var(--link-color);
+}
+
+/* Ensure the app name stays on one line */
+.nav-header .app-name {
+    white-space: nowrap;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .nav-header .app-name {
+        font-size: 0.9rem;
+        padding: 0.2rem 0;
+    }
+}
+
 /* Desktop navigation styles */
 @media (min-width: 769px) {
     .nav-header {

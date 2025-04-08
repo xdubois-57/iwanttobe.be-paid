@@ -49,7 +49,7 @@ $lang = LanguageController::getInstance();
                         <rect y="60" width="100" height="10"></rect>
                     </svg>
                 </button>
-                <strong><?php echo $lang->translate('app_name'); ?></strong>
+                <a href="/" class="app-name"><?php echo $lang->translate('app_name'); ?></a>
             </div>
 
             <div class="nav-links">
