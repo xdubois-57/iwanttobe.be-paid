@@ -87,7 +87,8 @@ require_once __DIR__ . '/header.php';
             <article class="qr-display">
                 <!-- Support QR code -->
                 <div id="support-qr" class="text-center">
-                    
+                <p class="support-message clickable" onclick="window.location.href='/support'">☕ <?php echo $lang->translate('support_text_alt'); ?></p>
+                     
                 </div>
 
                 <!-- User generated QR -->
