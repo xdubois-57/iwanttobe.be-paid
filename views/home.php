@@ -92,7 +92,7 @@ require_once __DIR__ . '/header.php';
 
                 <!-- User generated QR -->
                 <div id="user-qr" class="text-center" style="display: none;">
-                    <p class="support-message clickable" onclick="window.location.href='/support'"><?php echo $lang->translate('support_text_alt'); ?></p>
+                    <p class="support-message clickable" onclick="window.location.href='/support'">☕ <?php echo $lang->translate('support_text_alt'); ?></p>
                     <div class="qr-wrapper">
                         <img id="qr-image" src="" alt="Generated QR Code">
                     </div>
