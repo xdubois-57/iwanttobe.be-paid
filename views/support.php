@@ -48,6 +48,9 @@ document.addEventListener('DOMContentLoaded', function() {
     formData.append('amount', '5.00');
     formData.append('communication', 'Get a coffee');
 
+    // Store error message for later use
+    const errorMessage = "<?php echo $lang->translate('support_qr_error'); ?>";
+
     // Make AJAX request to generate QR code
     fetch('/generate-qr', {
         method: 'POST',
@@ -71,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function() {
     })
     .catch(error => {
         console.error('Error generating QR code:', error);
-        document.getElementById('support-qr').innerHTML = '<p class="error"><?php echo $lang->translate('support_qr_error'); ?></p>';
+        document.getElementById('support-qr').innerHTML = '<p class="error">' + errorMessage + '</p>';
     });
 });
 </script>
