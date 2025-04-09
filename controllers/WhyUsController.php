@@ -19,8 +19,16 @@
 
 declare(strict_types=1);
 
+/**
+ * Manages the "Why Us" page functionality
+ */
 class WhyUsController {
-    public function index() {
+    /**
+     * Display the "Why Us" page
+     *
+     * @return void
+     */
+    public function index(): void {
         require_once __DIR__ . '/../views/why-us.php';
     }
 }

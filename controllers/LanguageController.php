@@ -17,11 +17,22 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+declare(strict_types=1);
+
+/**
+ * Manages language translations and localization for the application
+ */
 class LanguageController {
-    private static $instance = null;
-    private $translations = [];
-    private $currentLang;
-    
+    /** @var LanguageController|null Singleton instance */
+    private static ?LanguageController $instance = null;
+    /** @var array Translation data */
+    private array $translations = [];
+    /** @var string Current language code */
+    private string $currentLang;
+
+    /**
+     * Private constructor to enforce singleton pattern
+     */
     private function __construct() {
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
@@ -29,15 +40,26 @@ class LanguageController {
         $this->currentLang = $this->determineLanguage();
         $this->loadTranslations();
     }
-    
-    public static function getInstance() {
+
+    /**
+     * Get the singleton instance of LanguageController
+     *
+     * @return LanguageController The singleton instance
+     */
+    public static function getInstance(): LanguageController {
         if (self::$instance === null) {
             self::$instance = new self();
         }
         return self::$instance;
     }
 
-    public function change($params) {
+    /**
+     * Change the current language
+     *
+     * @param array $params URL parameters
+     * @return void
+     */
+    public function change(array $params): void {
         // Get language code from either POST data or URL parameter
         $lang = $_POST['lang'] ?? ($params['lang'] ?? null);
         
@@ -51,8 +73,13 @@ class LanguageController {
         }
         exit;
     }
-    
-    private function determineLanguage() {
+
+    /**
+     * Determine the current language based on session, cookie, and browser settings
+     *
+     * @return string The current language code
+     */
+    private function determineLanguage(): string {
         // First check session
         if (isset($_SESSION['lang'])) {
             return $_SESSION['lang'];
@@ -82,23 +109,45 @@ class LanguageController {
         $_SESSION['lang'] = 'en';
         return 'en';
     }
-    
-    public function getCurrentLanguage() {
+
+    /**
+     * Get the current language code
+     *
+     * @return string Current language code (e.g., 'en', 'fr', 'nl')
+     */
+    public function getCurrentLanguage(): string {
         return $this->currentLang;
     }
-    
-    private function loadTranslations() {
+
+    /**
+     * Load translations from the current language file
+     *
+     * @return void
+     */
+    private function loadTranslations(): void {
         $langFile = __DIR__ . '/../translations/' . $this->currentLang . '.php';
         if (file_exists($langFile)) {
             $this->translations = require $langFile;
         }
     }
-    
-    public function translate($key) {
+
+    /**
+     * Get a translated string by key
+     *
+     * @param string $key The translation key
+     * @return string The translated string, or the key if not found
+     */
+    public function translate(string $key): string {
         return $this->translations[$key] ?? $key;
     }
 
-    public function setLanguage($lang) {
+    /**
+     * Set the current language
+     *
+     * @param string $lang The language code (e.g., 'en', 'fr', 'nl')
+     * @return bool True if the language was set successfully, false otherwise
+     */
+    public function setLanguage(string $lang): bool {
         $config = require __DIR__ . '/../config/languages.php';
         if (!isset($config['available_languages'][$lang])) {
             return false;

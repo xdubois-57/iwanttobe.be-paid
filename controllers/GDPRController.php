@@ -19,8 +19,16 @@
 
 declare(strict_types=1);
 
+/**
+ * Manages GDPR compliance and privacy policy
+ */
 class GDPRController {
-    public function index() {
+    /**
+     * Display the GDPR page
+     *
+     * @return void
+     */
+    public function index(): void {
         include __DIR__ . '/../views/gdpr.php';
     }
 }

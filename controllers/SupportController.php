@@ -19,8 +19,16 @@
 
 declare(strict_types=1);
 
+/**
+ * Manages support functionality and contact form
+ */
 class SupportController {
-    public function index() {
+    /**
+     * Display the support page
+     *
+     * @return void
+     */
+    public function index(): void {
         require_once __DIR__ . '/../views/support.php';
     }
 }

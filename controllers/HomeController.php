@@ -19,8 +19,16 @@
 
 declare(strict_types=1);
 
+/**
+ * Manages the home page functionality
+ */
 class HomeController {
-    public function index() {
+    /**
+     * Display the home page
+     *
+     * @return void
+     */
+    public function index(): void {
         require_once __DIR__ . '/../views/home.php';
     }
 
