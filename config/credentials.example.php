@@ -8,9 +8,9 @@
 return [
     'production' => [
         'ftp' => [
-            'host' => 'ftp.iwantto.be',
-            'username' => 'iwant2570672',
-            'password' => 'yQ5*YTpU$Jyvwe5',
+            'host' => 'your-ftp-host',
+            'username' => 'your-ftp-username',
+            'password' => 'your-ftp-password',
             'port' => 21,
             'ssl' => true
         ],
