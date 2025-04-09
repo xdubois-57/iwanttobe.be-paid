@@ -1,22 +1,4 @@
 <?php
-/*
- * QR Transfer
- * Copyright (C) 2025 Xavier Dubois
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
- */
-
 /**
  * Handles all QR code generation functionality
  * 
@@ -38,17 +20,13 @@ class QRController {
     private const QR_API_URL = 'https://api.qrserver.com/v1/create-qr-code/';
     private const FONT_PATH = __DIR__ . '/../fonts/OpenSans-Regular.ttf';
 
-    /**
-     * Generate a QR code from payment data
-     *
-     * @param string $name Beneficiary name
-     * @param string $iban IBAN number
-     * @param float $amount Payment amount
-     * @param string $communication Payment communication
-     * @return string QR code image data
-     */
-    public function generate($name, $iban, $amount, $communication) {
+    public function generate() {
         try {
+            $name = $_POST['beneficiary_name'] ?? '';
+            $iban = $_POST['beneficiary_iban'] ?? '';
+            $amount = $_POST['amount'] ?? '';
+            $communication = $_POST['communication'] ?? '';
+
             // Validate inputs
             if (empty($name) || empty($iban) || empty($amount)) {
                 throw new Exception('Missing required fields');
@@ -84,12 +62,6 @@ class QRController {
         }
     }
 
-    /**
-     * Look up BIC code for a given IBAN
-     *
-     * @param string $iban IBAN number
-     * @return string BIC code
-     */
     public function lookupBIC($iban) {
         $url = 'https://openiban.com/validate/' . urlencode($iban) . '?getBIC=true&validateBankCode=true';
         
@@ -111,16 +83,6 @@ class QRController {
         return $data['bankData']['bic'] ?? '';
     }
 
-    /**
-     * Generate EPC QR code data from payment details
-     *
-     * @param string $name Beneficiary name
-     * @param string $iban IBAN number
-     * @param string $bic BIC code
-     * @param float $amount Payment amount
-     * @param string $communication Payment communication
-     * @return string EPC QR code data
-     */
     public function generateEPCData($name, $iban, $bic, $amount, $communication = '') {
         // Remove any special characters from name (keep only alphanumeric, spaces and /)
         $name = preg_replace('/[^a-zA-Z0-9\s\/]/', '', $name);
@@ -147,12 +109,6 @@ class QRController {
         return implode("\n", array_map('trim', $data));
     }
 
-    /**
-     * Generate a QR code image from EPC QR code data
-     *
-     * @param string $text EPC QR code data
-     * @return string QR code image data
-     */
     public function generateQRCode($text) {
         require_once __DIR__ . '/../controllers/LanguageController.php';
         $lang = LanguageController::getInstance();

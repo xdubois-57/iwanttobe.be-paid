@@ -1,38 +1,9 @@
 <?php
-/*
- * QR Transfer
- * Copyright (C) 2025 Xavier Dubois
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
- */
-
-declare(strict_types=1);
-
-/**
- * Manages language translations and localization for the application
- */
 class LanguageController {
-    /** @var LanguageController|null Singleton instance */
-    private static ?LanguageController $instance = null;
-    /** @var array Translation data */
-    private array $translations = [];
-    /** @var string Current language code */
-    private string $currentLang;
-
-    /**
-     * Private constructor to enforce singleton pattern
-     */
+    private static $instance = null;
+    private $translations = [];
+    private $currentLang;
+    
     private function __construct() {
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
@@ -40,26 +11,15 @@ class LanguageController {
         $this->currentLang = $this->determineLanguage();
         $this->loadTranslations();
     }
-
-    /**
-     * Get the singleton instance of LanguageController
-     *
-     * @return LanguageController The singleton instance
-     */
-    public static function getInstance(): LanguageController {
+    
+    public static function getInstance() {
         if (self::$instance === null) {
             self::$instance = new self();
         }
         return self::$instance;
     }
 
-    /**
-     * Change the current language
-     *
-     * @param array $params URL parameters
-     * @return void
-     */
-    public function change(array $params): void {
+    public function change($params) {
         // Get language code from either POST data or URL parameter
         $lang = $_POST['lang'] ?? ($params['lang'] ?? null);
         
@@ -73,13 +33,8 @@ class LanguageController {
         }
         exit;
     }
-
-    /**
-     * Determine the current language based on session, cookie, and browser settings
-     *
-     * @return string The current language code
-     */
-    private function determineLanguage(): string {
+    
+    private function determineLanguage() {
         // First check session
         if (isset($_SESSION['lang'])) {
             return $_SESSION['lang'];
@@ -109,45 +64,23 @@ class LanguageController {
         $_SESSION['lang'] = 'en';
         return 'en';
     }
-
-    /**
-     * Get the current language code
-     *
-     * @return string Current language code (e.g., 'en', 'fr', 'nl')
-     */
-    public function getCurrentLanguage(): string {
+    
+    public function getCurrentLanguage() {
         return $this->currentLang;
     }
-
-    /**
-     * Load translations from the current language file
-     *
-     * @return void
-     */
-    private function loadTranslations(): void {
+    
+    private function loadTranslations() {
         $langFile = __DIR__ . '/../translations/' . $this->currentLang . '.php';
         if (file_exists($langFile)) {
             $this->translations = require $langFile;
         }
     }
-
-    /**
-     * Get a translated string by key
-     *
-     * @param string $key The translation key
-     * @return string The translated string, or the key if not found
-     */
-    public function translate(string $key): string {
+    
+    public function translate($key) {
         return $this->translations[$key] ?? $key;
     }
 
-    /**
-     * Set the current language
-     *
-     * @param string $lang The language code (e.g., 'en', 'fr', 'nl')
-     * @return bool True if the language was set successfully, false otherwise
-     */
-    public function setLanguage(string $lang): bool {
+    public function setLanguage($lang) {
         $config = require __DIR__ . '/../config/languages.php';
         if (!isset($config['available_languages'][$lang])) {
             return false;
