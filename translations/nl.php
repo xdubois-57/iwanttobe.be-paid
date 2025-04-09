@@ -1,4 +1,8 @@
 <?php
+// Dutch language definition file for QR Transfer application
+// Contains core language settings and configuration
+// Last updated: 2025-04-09
+
 return array_merge(
     require __DIR__.'/nl/menu.php',
     require __DIR__.'/nl/form.php',

@@ -1,5 +1,10 @@
 <?php
+// English form translations for QR Transfer application
+// Contains all form-related text and validation messages
+// Last updated: 2025-04-09
+
 return [
+    // Form labels and placeholders
     'beneficiary_name' => 'Beneficiary Name',
     'beneficiary_iban' => 'IBAN',
     'amount' => 'Amount',
