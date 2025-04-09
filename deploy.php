@@ -5,11 +5,11 @@
  */
 
 // Load credentials
-if (!file_exists(__DIR__ . '/credentials.php')) {
+if (!file_exists(__DIR__ . '/config/credentials.php')) {
     die("Error: credentials.php not found. Copy credentials.example.php to credentials.php and add your credentials.\n");
 }
 
-$credentials = require_once __DIR__ . '/credentials.php';
+$credentials = require_once __DIR__ . '/config/credentials.php';
 $ftp = $credentials['production']['ftp'];
 
 // Files to exclude from deployment

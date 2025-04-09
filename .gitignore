@@ -6,7 +6,7 @@
 .DS_Store
 
 # Configuration files with sensitive data
-credentials.php
+config/credentials.php
 .env
 
 # Dependency directories
