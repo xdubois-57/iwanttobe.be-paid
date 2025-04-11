@@ -13,7 +13,7 @@ return [
     // Button labels
     'generate_qr' => 'QR-code genereren',
     'generating' => 'Genereren...',
-    'generated_by' => 'Gegenereerd door QR Transfer',
+    'generated_by' => 'Gegenereerd op iwantto.be',
     'payment_to' => 'Betaling aan %s',
     'clear_form' => 'Formulier wissen',
     'select_favorite' => 'Aangepaste begunstigde',

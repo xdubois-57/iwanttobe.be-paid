@@ -11,7 +11,7 @@ return [
     'communication' => 'Communication',
     'generate_qr' => 'Générer le QR code',
     'generating' => 'Génération en cours...',
-    'generated_by' => 'Généré par QR Transfer',
+    'generated_by' => 'Généré sur iwantto.be',
     'payment_to' => 'Paiement à %s',
     'clear_form' => 'Effacer',
     'select_favorite' => 'Bénéficiaire personnalisé',
