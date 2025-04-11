@@ -176,8 +176,9 @@ async function generateQRCode(form, submitButton, submitButtonOriginalText, trus
             lastGeneratedValues = getFormValuesString(inputs);
             console.log('Stored last generated values:', lastGeneratedValues);
             
-            // Keep button disabled after successful generation
-            submitButton.disabled = true;
+            // Enable button after successful generation
+            submitButton.disabled = false;
+            submitButton.textContent = submitButtonOriginalText;
 
             // Scroll to QR code on mobile mode only if the event is trusted
             if (trustedEvent) {
@@ -202,7 +203,7 @@ async function generateQRCode(form, submitButton, submitButtonOriginalText, trus
         submitButton.disabled = false;
     } finally {
         // Reset button text
-        submitButton.textContent = submitButtonOriginalText;
+        // submitButton.textContent = submitButtonOriginalText;
     }
 }
 

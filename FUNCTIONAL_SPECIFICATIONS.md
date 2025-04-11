@@ -44,6 +44,8 @@
 - Validates form data before generation
 - Shows loading state during generation
 - Displays generated QR code in right column
+- Re-enables generate button after successful generation
+- Resets button text to original state
 
 ### 3.2 QR Code Display
 - Responsive sizing
