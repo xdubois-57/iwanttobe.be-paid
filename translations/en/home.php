@@ -1,4 +1,8 @@
 <?php
+// English home page translations for QR Transfer application
+// Contains all text for the main landing page
+// Last updated: 2025-04-09
+
 return [
     'home_intro_title' => 'Be paid, now',
     'home_intro_text' => 'Generate a QR code that your friends can scan with their banking app to transfer money to you. Just fill in your details below and share the QR code.',

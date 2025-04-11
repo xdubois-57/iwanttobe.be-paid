@@ -65,7 +65,7 @@ require_once __DIR__ . '/header.php';
                         <div class="primary-button-row">
                             <button type="submit" id="generate-qr-button"><?php echo $lang->translate('generate_qr'); ?></button>
                         </div>
-                        <div class="secondary-button-row">
+                        <div class="secondary-button-row flex gap-1">
                             <button type="button" class="secondary outline" id="clear-form">
                                 <?php echo $lang->translate('clear_form'); ?>
                             </button>
@@ -107,31 +107,6 @@ require_once __DIR__ . '/header.php';
         </div>
     </div>
 </main>
-
-<!-- Structured data for search engines -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  "name": "QR Transfer",
-  "applicationCategory": "FinanceApplication",
-  "operatingSystem": "Web",
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "EUR"
-  },
-  "description": "<?php echo $lang->translate('meta_description'); ?>",
-  "keywords": "<?php echo $lang->translate('meta_keywords'); ?>",
-  "potentialAction": {
-    "@type": "UseAction",
-    "target": {
-      "@type": "EntryPoint",
-      "urlTemplate": "https://qrtransfer.eu"
-    }
-  }
-}
-</script>
 
 <script src="js/form-validation.js"></script>
 

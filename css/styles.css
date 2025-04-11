@@ -553,19 +553,10 @@ nav select {
     #qr-placeholder img, #qr-code img {
         max-height: 300px;
     }
-    .secondary-button-row {
-        flex-direction: column;
-    }
-    .secondary-button-row button {
-        width: 100%;
-    }
 }
 
 /* Desktop form layout */
 @media (min-width: 769px) {
-    .secondary-button-row {
-        flex-direction: row;
-    }
     .secondary-button-row button {
         flex: 1;
     }
