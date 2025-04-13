@@ -18,6 +18,7 @@
 
 import constants from './constants.js';
 import translations from './translations.js';
+import IBANValidation from './iban-validation.js';
 
 /**
  * Validates a single field
@@ -44,7 +45,7 @@ function validateField(fieldId, value) {
             // Consider disabled fields valid
             // Always remove spaces for validation regardless of where it's called from
             const cleanIban = value ? value.replace(/\s/g, '').toUpperCase() : '';
-            isValid = field.disabled || (cleanIban && /^[A-Z]{2}[0-9]{2}[A-Z0-9]{4}[0-9]{7}([A-Z0-9]?){0,16}$/.test(cleanIban));
+            isValid = field.disabled || (cleanIban && IBANValidation.validateIBAN(cleanIban));
             break;
 
         case 'amount':
