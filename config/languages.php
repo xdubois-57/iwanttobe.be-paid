@@ -23,6 +23,7 @@ return [
         'fr' => 'Français',         // French
         'nl' => 'Nederlands',       // Dutch
         'pl' => 'Polski',           // Polish
+        'it' => 'Italiano',         // Italian
     ],
     'default_language' => 'en'
 ];
