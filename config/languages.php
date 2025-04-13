@@ -33,6 +33,7 @@ return [
         'hu' => 'Magyar',           // Hungarian
         'sl' => 'Slovenščina',      // Slovenian
         'fi' => 'Suomi',            // Finnish
+        'da' => 'Dansk',            // Danish
     ],
     'default_language' => 'en'
 ];
