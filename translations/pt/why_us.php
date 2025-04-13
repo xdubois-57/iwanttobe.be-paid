@@ -1,0 +1,56 @@
+<?php
+return [
+    'why_us_title' => 'Por que escolher QR Transfer?',
+    'why_us_secure_title' => 'Seguro & Privado',
+    'why_us_secure_text' => 'Seus dados são processados localmente no seu navegador. Nunca armazenamos informações de pagamento sensíveis em nossos servidores.',
+    'why_us_easy_title' => 'Fácil de usar',
+    'why_us_easy_text' => 'Gere códigos QR para pagamentos em segundos. Sem necessidade de registro, sem configuração complicada.',
+    'why_us_free_title' => 'Completamente gratuito',
+    'why_us_free_text' => 'Nosso serviço é gratuito, sem custos ocultos ou recursos premium. Se você gostar, considere apoiar nosso desenvolvimento!',
+    'why_us_features_title' => 'Principais recursos',
+    'why_us_feature_1' => 'Geração instantânea de códigos QR para pagamentos SEPA',
+    'why_us_feature_2' => 'Suporte para todos os bancos europeus',
+    'why_us_feature_3' => 'Disponível em múltiplos idiomas',
+    'why_us_feature_4' => 'Funciona em todos os dispositivos - computador, tablet e celular',
+    'why_us_use_cases_title' => 'Perfeito para',
+    'why_us_use_case_1_title' => 'Uso pessoal',
+    'why_us_use_case_1_text' => 'Solicite reembolsos de amigos por despesas compartilhadas como jantares, viagens ou presentes.',
+    'why_us_use_case_2_title' => 'Pequenas empresas',
+    'why_us_use_case_2_text' => 'Adicione códigos QR às suas faturas para facilitar os pagamentos e reduzir a necessidade de lembretes de pagamento.',
+    'why_us_use_case_3_title' => 'Organizações',
+    'why_us_use_case_3_text' => 'Perfeito para unidades escoteiras, clubes esportivos e associações para coletar taxas de associação, pagamentos por eventos ou doações.',
+    'why_us_use_case_4_title' => 'Planejamento de eventos',
+    'why_us_use_case_4_text' => 'Simplifique os pagamentos em grupo para eventos, atividades em equipe ou compras compartilhadas.',
+    
+    // Tabela de comparação
+    'why_us_comparison_title' => 'QR Transfer vs Outras Soluções de Pagamento',
+    'why_us_comparison_feature' => 'Recurso',
+    'why_us_comparison_qr_transfer' => 'QR Transfer',
+    'why_us_comparison_banking_apps' => 'Aplicativos Bancários',
+    'why_us_comparison_payment_apps' => 'Aplicativos de Pagamento',
+    
+    'why_us_comparison_price' => 'Preço',
+    'why_us_comparison_price_qr' => 'Gratuito',
+    'why_us_comparison_price_banking' => 'Gratuito com conta bancária',
+    'why_us_comparison_price_payment' => 'Muitas vezes inclui taxas',
+    
+    'why_us_comparison_apps' => 'Requer aplicativo dedicado',
+    'why_us_comparison_apps_qr' => 'Não, funciona em qualquer navegador',
+    'why_us_comparison_apps_banking' => 'Sim, aplicativo bancário específico',
+    'why_us_comparison_apps_payment' => 'Sim, aplicativo de pagamento específico',
+    
+    'why_us_comparison_account' => 'Precisa ser proprietário da conta',
+    'why_us_comparison_account_qr' => 'Não, qualquer pessoa pode gerar um código QR',
+    'why_us_comparison_account_banking' => 'Sim, deve ser proprietário da conta',
+    'why_us_comparison_account_payment' => 'Sim, requer conta',
+    
+    'why_us_comparison_notification' => 'Notificação imediata de pagamento',
+    'why_us_comparison_notification_qr' => 'Depende do banco',
+    'why_us_comparison_notification_banking' => 'Sim, via aplicativo bancário',
+    'why_us_comparison_notification_payment' => 'Sim, notificações no aplicativo',
+    
+    'why_us_comparison_static' => 'Códigos QR estáticos para eventos',
+    'why_us_comparison_static_qr' => 'Sim, facilmente imprimíveis',
+    'why_us_comparison_static_banking' => 'Opções limitadas',
+    'why_us_comparison_static_payment' => 'Muitas vezes requer conta de comerciante',
+];

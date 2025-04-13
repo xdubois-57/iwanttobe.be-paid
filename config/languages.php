@@ -25,6 +25,7 @@ return [
         'pl' => 'Polski',           // Polish
         'it' => 'Italiano',         // Italian
         'es' => 'Español',          // Spanish
+        'pt' => 'Português',        // Portuguese
     ],
     'default_language' => 'en'
 ];
