@@ -18,7 +18,7 @@ return [
     // Payment information section
     'gdpr_payment_info_title' => 'Informations de paiement',
     'gdpr_payment_info_desc' => 'Lorsque vous générez un code QR, nous traitons les informations suivantes :',
-    'gdpr_payment_storage_note' => 'Si vous choisissez de sauvegarder vos informations de paiement, elles seront stockées localement dans le stockage de votre navigateur. Ces données ne quittent jamais votre appareil et ne nous sont pas accessibles.',
+    'gdpr_payment_storage_note' => 'Ces données sont envoyées à notre serveur pour générer l\'image du QR code, mais ne sont jamais stockées en dehors de votre appareil.',
     
     // Technical data section
     'gdpr_technical_data' => 'Données techniques',
@@ -31,7 +31,7 @@ return [
     'gdpr_use_local_storage' => 'Stocker vos détails de paiement préférés localement dans votre navigateur (seulement si vous choisissez explicitement cette option)',
     'gdpr_use_technical' => 'Assurer le bon fonctionnement technique de notre service',
     'gdpr_use_improvement' => 'Améliorer notre service sur la base de modèles d\'utilisation anonymes',
-    'gdpr_storage_note' => 'Bien que nous traitons temporairement les informations de paiement pour générer des codes QR, nous ne stockons pas ces informations de manière permanente sur nos serveurs. Toute information de paiement sauvegardée est stockée uniquement dans le stockage local de votre navigateur si vous choisissez de la sauvegarder.',
+    'gdpr_storage_note' => 'Bien que nous traitions temporairement les informations de paiement pour générer des codes QR, nous ne stockons pas ces informations de manière permanente sur nos serveurs. Toute information de paiement sauvegardée est stockée uniquement dans le stockage local de votre navigateur si vous choisissez de la sauvegarder.',
     
     // Security section
     'gdpr_security_title' => 'Stockage et sécurité des données',
@@ -62,7 +62,7 @@ return [
     'gdpr_right_restrict' => 'Droit à la limitation du traitement',
     'gdpr_right_portability' => 'Droit à la portabilité des données',
     'gdpr_right_object' => 'Droit d\'opposition',
-    'gdpr_rights_note' => 'Bien que nous traitons temporairement des données pour générer des codes QR, nous ne stockons pas de données personnelles de manière permanente sur nos serveurs. Toutes les données sauvegardées sont stockées localement dans votre navigateur, vous donnant un contrôle total via les paramètres de votre navigateur. Pour toute question relative à la confidentialité, veuillez nous contacter.',
+    'gdpr_rights_note' => 'Bien que nous traitions temporairement des données pour générer des codes QR, nous ne stockons pas de données personnelles de manière permanente sur nos serveurs. Toutes les données sauvegardées sont stockées localement dans votre navigateur, vous donnant un contrôle total via les paramètres de votre navigateur. Pour toute question relative à la confidentialité, veuillez nous contacter.',
     
     // Third-party services section
     'gdpr_third_party_title' => 'Services tiers',

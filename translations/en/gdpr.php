@@ -18,7 +18,7 @@ return [
     // Payment information section
     'gdpr_payment_info_title' => 'Payment Information',
     'gdpr_payment_info_desc' => 'When you generate a QR code, we process the following information:',
-    'gdpr_payment_storage_note' => 'If you choose to save your payment information, it will be stored locally in your browser\'s storage. This data never leaves your device and is not accessible to us.',
+    'gdpr_payment_storage_note' => 'This data is sent to our server to generate the QR code image, but is never stored outside your device.',
     
     // Technical data section
     'gdpr_technical_data' => 'Technical Data',

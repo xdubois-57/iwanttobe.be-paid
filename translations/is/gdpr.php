@@ -18,7 +18,7 @@ return [
     // Payment information section
     'gdpr_payment_info_title' => 'Greiðsluupplýsingar',
     'gdpr_payment_info_desc' => 'Þegar þú býr til QR kóða, vinnum við með eftirfarandi upplýsingar:',
-    'gdpr_payment_storage_note' => 'Ef þú vilt geyma greiðsluupplýsingar, verða þær geymdar í vafra vafra vafra. Þessar upplýsingar verða aldrei sendar út af kerfinu, og við getum ekki komið í samband við þær.',
+    'gdpr_payment_storage_note' => 'Þessar upplýsingar verða sendar til vafra vafra til að búa til QR kóða mynd, en verða aldrei geymdar út fyrir vafra vafra.',
     
     // Technical data section
     'gdpr_technical_data' => 'Tekniskar upplýsingar',

@@ -18,7 +18,7 @@ return [
     // Payment information section
     'gdpr_payment_info_title' => 'Betalningsinformation',
     'gdpr_payment_info_desc' => 'När du genererar en QR-kod bearbetar vi följande information:',
-    'gdpr_payment_storage_note' => 'Om du väljer att spara din betalningsinformation kommer den att lagras lokalt i webbläsarens minne. Dessa data lämnar aldrig ditt enhet och är inte tillgängliga för oss.',
+    'gdpr_payment_storage_note' => 'Dessa data skickas till vår server för att generera QR-kodsbilden, men sparas aldrig utanför ditt enhet.',
     
     // Technical data section
     'gdpr_technical_data' => 'Tekniska data',

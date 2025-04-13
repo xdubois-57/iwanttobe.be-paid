@@ -18,7 +18,7 @@ return [
     // Payment information section
     'gdpr_payment_info_title' => 'Platební údaje',
     'gdpr_payment_info_desc' => 'Když generujete QR kód, zpracováváme následující údaje:',
-    'gdpr_payment_storage_note' => 'Pokud si vyberete ukládání platebních údajů, tyto údaje budou uloženy lokálně v paměti prohlížeče. Tyto údaje nikdy nebudou odeslány mimo váš systém a nejsou pro nás přístupné.',
+    'gdpr_payment_storage_note' => 'Tyto údaje jsou odesílány na naši server pro generování obrázku QR kódu, ale nikdy nejsou ukládány mimo vaše zařízení.',
     
     // Technical data section
     'gdpr_technical_data' => 'Technická data',

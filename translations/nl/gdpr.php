@@ -21,7 +21,7 @@ return [
     // Payment information section
     'gdpr_payment_info_title' => 'Betalingsgegevens',
     'gdpr_payment_info_desc' => 'Wanneer je een QR code genereert, verwerken we de volgende gegevens:',
-    'gdpr_payment_storage_note' => 'Als je kiest om je betalingsgegevens op te slaan, worden deze opgeslagen in de lokale opslag van je browser. Deze gegevens verlaten je apparaat nooit en zijn voor ons niet toegankelijk.',
+    'gdpr_payment_storage_note' => 'Deze gegevens worden naar onze server verzonden om de QR-code afbeelding te genereren, maar worden nooit opgeslagen buiten uw apparaat.',
     
     // Technical data section
     'gdpr_technical_data' => 'Technische gegevens',

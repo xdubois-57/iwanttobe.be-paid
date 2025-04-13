@@ -18,7 +18,7 @@ return [
     // Payment information section
     'gdpr_payment_info_title' => 'Podatki o plačilu',
     'gdpr_payment_info_desc' => 'Ko generirate QR kod, obdelujemo naslednje podatke:',
-    'gdpr_payment_storage_note' => 'Če želite shraniti podatke o plačilu, bodo shranjeni v lokalnem shranjevanju brskalnika. Te podatke nikoli ne pošiljamo iz vašega sistema in do njih ne moremo priti.',
+    'gdpr_payment_storage_note' => 'Te podatki se pošiljajo na naš strežnik za generiranje slike QR kode, vendar nikoli ne bodo shranjeni izven vašega naprave.',
     
     // Technical data section
     'gdpr_technical_data' => 'Tehnični podatki',

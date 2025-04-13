@@ -18,7 +18,7 @@ return [
     // Payment information section
     'gdpr_payment_info_title' => 'Date de plată',
     'gdpr_payment_info_desc' => 'Când generați un cod QR, procesăm următoarele date:',
-    'gdpr_payment_storage_note' => 'Dacă alegeți să salvați datele de plată, acestea vor fi stocate local în memorie browser. Aceste date nu vor fi niciodată trimise în afara sistemului dumneavoastră și nu sunt accesibile pentru noi.',
+    'gdpr_payment_storage_note' => 'Aceste date sunt trimise pe serverul nostru pentru a genera imaginea codului QR, dar nu sunt stocate niciodată în afara dispozitivului dumneavoastră.',
     
     // Technical data section
     'gdpr_technical_data' => 'Date tehnice',

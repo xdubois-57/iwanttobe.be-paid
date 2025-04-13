@@ -18,7 +18,7 @@ return [
     // Payment information section
     'gdpr_payment_info_title' => 'Maksutiedot',
     'gdpr_payment_info_desc' => 'Kun luot QR-koodin, käsittelemme seuraavia tietoja:',
-    'gdpr_payment_storage_note' => 'Jos haluat tallentaa maksutiedot, ne tallennetaan selaimen paikalliseen tallennukseen. Nämä tiedot eivät koskaan lähetetä ulos järjestelmästä ja emme voi päästä niihin.',
+    'gdpr_payment_storage_note' => 'Nämä tiedot lähetetään palvelimelle QR-koodin kuvan luomiseen, mutta ne eivät koskaan tallenneta laitteestasi ulkopuolella.',
     
     // Technical data section
     'gdpr_technical_data' => 'Tekninen tieto',
