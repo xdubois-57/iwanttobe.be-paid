@@ -11,6 +11,13 @@ return [
     'app_name' => 'QR Transfer',
     'app_version' => 'v%s',
     
+    // Language and theme settings
+    'language' => 'Taal',
+    'theme' => 'Thema',
+    'theme_light' => 'Licht',
+    'theme_dark' => 'Donker',
+    'theme_auto' => 'Automatisch',
+    
     // Main navigation menu
     'menu_home' => 'Home',
     'menu_about' => 'Over',

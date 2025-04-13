@@ -21,3 +21,5 @@ return [
     'update_favorite' => 'Bijwerken',
     'delete_favorite' => 'Verwijderen',
 ];
+
+?>
