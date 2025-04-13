@@ -26,6 +26,7 @@ return [
         'it' => 'Italiano',         // Italian
         'es' => 'Español',          // Spanish
         'pt' => 'Português',        // Portuguese
+        'sv' => 'Svenska',          // Swedish
     ],
     'default_language' => 'en'
 ];
