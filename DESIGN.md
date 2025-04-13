@@ -104,6 +104,7 @@ graph TD
     T[Translations] --> EN[English]
     T --> FR[French]
     T --> NL[Dutch]
+    T --> SL[Slovenian]
 ```
 
 - Location: `/translations` directory
@@ -121,6 +122,7 @@ graph TD
 1. en (English)
 2. fr (French)
 3. nl (Dutch)
+4. sl (Slovenian)
 
 ### 2.4 Form Handling
 
