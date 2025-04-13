@@ -1,0 +1,56 @@
+<?php
+return [
+    'why_us_title' => 'Γιατί να επιλέξετε το QR Transfer?',
+    'why_us_secure_title' => 'Ασφαλές & Ιδιωτικό',
+    'why_us_secure_text' => 'Τα δεδομένα σας επεξεργάζονται τοπικά στον περιηγητή σας. Δεν αποθηκεύουμε ποτέ ασφαλή δεδομένα πληρωμής στους διακομιστές μας.',
+    'why_us_easy_title' => 'Εύκολο να χρησιμοποιηθεί',
+    'why_us_easy_text' => 'Δημιουργήστε QR codes για πληρωμές σε δευτερόλεπτα. Δεν χρειάζεται εγγραφή, δεν χρειάζεται περίπλοκες ρυθμίσεις.',
+    'why_us_free_title' => 'Απόλυτα δωρεάν',
+    'why_us_free_text' => 'Η υπηρεσία μας είναι δωρεάν, χωρίς κρυφές δαπάνες ή προνομιακές λειτουργίες. Εάν σας αρέσει, σκεφτείτε να υποστηρίξετε την ανάπτυξή μας!',
+    'why_us_features_title' => 'Βασικές λειτουργίες',
+    'why_us_feature_1' => 'Αμέσως δημιουργία QR codes για SEPA πληρωμές',
+    'why_us_feature_2' => 'Υποστήριξη για όλες τις ευρωπαϊκές τράπεζες',
+    'why_us_feature_3' => 'Διαθέσιμο σε πολλές γλώσσες',
+    'why_us_feature_4' => 'Λειτουργεί σε όλα τα συστήματα - υπολογιστή, τα블ετ και κινητό',
+    'why_us_use_cases_title' => 'Ιδανικό για',
+    'why_us_use_case_1_title' => 'Προσωπική χρήση',
+    'why_us_use_case_1_text' => 'Ζητήστε επιστροφές από φίλους για κοινές δαπάνες όπως τρόφιμα, ταξίδια ή δώρα.',
+    'why_us_use_case_2_title' => 'Μικρές επιχειρήσεις',
+    'why_us_use_case_2_text' => 'Προσθέστε QR codes στις λογαριασμολογίες σας για να εξυπηρετήσετε τις πληρωμές και να μειώσετε τον ανάγκη να θυμάστε τις πληρωμές.',
+    'why_us_use_case_3_title' => 'Οργανισμοί',
+    'why_us_use_case_3_text' => 'Ιδανικό για σκούτ, κλάδους ποδοσφαίρου και συνδυασμοί για να συλλέγουν τα μέλη τους, πληρωμές για εκδηλώσεις ή δωρεές.',
+    'why_us_use_case_4_title' => 'Προγραμματισμός εκδηλώσεων',
+    'why_us_use_case_4_text' => 'Εξυπηρετήστε τις πληρωμές στο κλάδο για εκδηλώσεις, ομαδικές δραστηριότητες ή κοινές αγορές.',
+    
+    // Ταβλό σύγκρισης
+    'why_us_comparison_title' => 'QR Transfer vs Άλλες Υπηρεσίες Πληρωμής',
+    'why_us_comparison_feature' => 'Λειτουργία',
+    'why_us_comparison_qr_transfer' => 'QR Transfer',
+    'why_us_comparison_banking_apps' => 'Εφαρμογές τραπεζών',
+    'why_us_comparison_payment_apps' => 'Εφαρμογές πληρωμής',
+    
+    'why_us_comparison_price' => 'Τιμή',
+    'why_us_comparison_price_qr' => 'Δωρεάν',
+    'why_us_comparison_price_banking' => 'Δωρεάν με λογαριασμό τραπεζής',
+    'why_us_comparison_price_payment' => 'Συχνά περιλαμβάνει δίδακτρα',
+    
+    'why_us_comparison_apps' => 'Χρειάζεται εξιδικευμένη εφαρμογή',
+    'why_us_comparison_apps_qr' => 'Όχι, λειτουργεί σε οποιονδήποτε περιηγητή',
+    'why_us_comparison_apps_banking' => 'Ναι, εξιδικευμένη εφαρμογή τράπεζας',
+    'why_us_comparison_apps_payment' => 'Ναι, εξιδικευμένη εφαρμογή πληρωμής',
+    
+    'why_us_comparison_account' => 'Πρέπει να είστε ο κάτοχος του λογαριασμού',
+    'why_us_comparison_account_qr' => 'Όχι, οποιοσδήποτε μπορεί να δημιουργήσει ένα QR code',
+    'why_us_comparison_account_banking' => 'Ναι, πρέπει να είστε ο κάτοχος του λογαριασμού',
+    'why_us_comparison_account_payment' => 'Ναι, απαιτείται λογαριασμός',
+    
+    'why_us_comparison_notification' => 'Αμεσή πληροφορία πληρωμής',
+    'why_us_comparison_notification_qr' => 'Εξαρτάται από την τράπεζα',
+    'why_us_comparison_notification_banking' => 'Ναι, μέσω της εφαρμογής τράπεζας',
+    'why_us_comparison_notification_payment' => 'Ναι, ειδοποιήσεις στην εφαρμογή',
+    
+    'why_us_comparison_static' => 'Στατικοί QR codes για εκδηλώσεις',
+    'why_us_comparison_static_qr' => 'Ναι, εύκολα γραπτά',
+    'why_us_comparison_static_banking' => 'Περιορισμένες επιλογές',
+    'why_us_comparison_static_payment' => 'Συχνά απαιτεί λογαριασμό εμπορικού',
+];

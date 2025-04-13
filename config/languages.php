@@ -27,6 +27,7 @@ return [
         'es' => 'Español',          // Spanish
         'pt' => 'Português',        // Portuguese
         'sv' => 'Svenska',          // Swedish
+        'el' => 'Ελληνικά',        // Greek
     ],
     'default_language' => 'en'
 ];
