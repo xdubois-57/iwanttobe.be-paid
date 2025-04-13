@@ -24,6 +24,7 @@ return [
         'nl' => 'Nederlands',       // Dutch
         'pl' => 'Polski',           // Polish
         'it' => 'Italiano',         // Italian
+        'es' => 'Español',          // Spanish
     ],
     'default_language' => 'en'
 ];
