@@ -30,6 +30,8 @@ return [
         'el' => 'Ελληνικά',        // Greek
         'ro' => 'Română',           // Romanian
         'cs' => 'Čeština',          // Czech
+        'hu' => 'Magyar',           // Hungarian
+        'sl' => 'Slovenščina',      // Slovenian
     ],
     'default_language' => 'en'
 ];
