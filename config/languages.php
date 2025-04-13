@@ -29,6 +29,7 @@ return [
         'sv' => 'Svenska',          // Swedish
         'el' => 'Ελληνικά',        // Greek
         'ro' => 'Română',           // Romanian
+        'cs' => 'Čeština',          // Czech
     ],
     'default_language' => 'en'
 ];
