@@ -140,8 +140,8 @@ function loadFavorites(favoritesSelect) {
     }
     
     // Update storage with cleaned favorites if any were removed
-    if (favorites.length !== JSON.parse(localStorage.getItem(constants.FAVORITES_KEY) || '[]').length) {
-        localStorage.setItem(constants.FAVORITES_KEY, JSON.stringify(favorites));
+    if (favorites.length !== JSON.parse(localStorage.getItem(FAVORITES_KEY) || '[]').length) {
+        localStorage.setItem(FAVORITES_KEY, JSON.stringify(favorites));
     }
     
     // Restore selected favorite if any
@@ -154,9 +154,10 @@ function loadFavorites(favoritesSelect) {
 
 /**
  * Loads a selected favorite into the form
+ * @param {boolean} [shouldScroll] - Whether to scroll to the QR code after loading a favorite
  */
-function loadFavorite() {
-    console.log('loadFavorite called');
+function loadFavorite(shouldScroll = false) {
+    console.log('loadFavorite called with shouldScroll:', shouldScroll);
     const favoritesSelect = document.getElementById('favorites');
     const selectedIndex = favoritesSelect?.value;
     
@@ -237,8 +238,8 @@ function loadFavorite() {
     if (isValid) {
         // Import QR generator module dynamically
         import('./qr-generator.js').then(qrGenerator => {
-            // Generate QR code without scrolling
-            console.log('Generating QR code for favorite');
+            // Generate QR code with scrolling if triggered by user action
+            console.log('Generating QR code for favorite with shouldScroll:', shouldScroll);
             console.trace();
             
             // Check if QR code generation is already in progress
@@ -247,7 +248,7 @@ function loadFavorite() {
                 return;
             }
 
-            qrGenerator.default.generateQRCode(form, submitButton, submitButtonOriginalText, false);
+            qrGenerator.default.generateQRCode(form, submitButton, submitButtonOriginalText, true, shouldScroll);
         }).catch(error => {
             console.error('Error importing QR generator module:', error);
         });

@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             if (validation.default.validateAllFields(inputs)) {
-                qrGenerator.default.generateQRCode(form, submitButton, submitButtonOriginalText);
+                qrGenerator.default.generateQRCode(form, submitButton, submitButtonOriginalText, true, true);
             }
         });
 
@@ -143,7 +143,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Listen for favorites changes
         favoritesSelect.addEventListener('change', () => {
             console.log('Favorite selection changed');
-            favorites.default.loadFavorite();
+            favorites.default.loadFavorite(true);
             // Small delay to ensure inputs are updated
             setTimeout(() => {
                 qrGenerator.default.updateButtonState(inputs, submitButton);

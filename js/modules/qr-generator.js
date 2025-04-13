@@ -106,9 +106,10 @@ function createFormData(form, inputs) {
  * @param {HTMLButtonElement} submitButton - The submit button
  * @param {string} submitButtonOriginalText - The original text of the submit button
  * @param {boolean} [trustedEvent] - Whether the event triggering this generation is trusted
+ * @param {boolean} [shouldScroll] - Whether to scroll to the QR code on mobile
  * @returns {Promise<void>} - A promise that resolves when the QR code is generated
  */
-async function generateQRCode(form, submitButton, submitButtonOriginalText, trustedEvent = false) {
+async function generateQRCode(form, submitButton, submitButtonOriginalText, trustedEvent = false, shouldScroll = false) {
     // Prevent multiple concurrent requests
     if (isGeneratingQR) {
         console.log('QR code generation already in progress');
@@ -191,14 +192,41 @@ async function generateQRCode(form, submitButton, submitButtonOriginalText, trus
             submitButton.disabled = false;
             submitButton.textContent = submitButtonOriginalText;
 
-            // Scroll to QR code on mobile mode only if the event is trusted
-            if (trustedEvent) {
-                const qrContainer = document.getElementById('user-qr');
+            // Scroll to QR code on mobile when shouldScroll is true
+            if (shouldScroll && isMobile()) {
+                console.log('Attempting to scroll to QR code');
+                console.log('isMobile:', isMobile());
+                console.log('shouldScroll:', shouldScroll);
+                
+                // Try different element IDs for the QR container
+                let qrContainer = document.querySelector('.qr-display');
+                if (!qrContainer) {
+                    qrContainer = document.getElementById('user-qr');
+                }
+                
                 if (qrContainer) {
-                    const isMobile = window.innerWidth < 768; // Using 768px as the breakpoint for mobile
-                    if (isMobile) {
-                        qrContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    }
+                    console.log('Found QR container:', qrContainer);
+                    console.log('Container display:', qrContainer.style.display);
+                    
+                    // Ensure the container is visible
+                    qrContainer.style.display = 'block';
+                    
+                    // Scroll with smooth behavior
+                    qrContainer.scrollIntoView({ 
+                        behavior: 'smooth', 
+                        block: 'center',
+                        inline: 'center'
+                    });
+                    
+                    // Add a small delay to ensure the scroll is visible
+                    setTimeout(() => {
+                        console.log('Scroll completed');
+                        // Add a small animation to make the scroll more noticeable
+                        qrContainer.style.transform = 'translateY(0)';
+                        qrContainer.style.transition = 'transform 0.3s ease-out';
+                    }, 500);
+                } else {
+                    console.error('Could not find QR container element');
                 }
             }
         } else {
@@ -219,6 +247,11 @@ async function generateQRCode(form, submitButton, submitButtonOriginalText, trus
         // Reset button text
         // submitButton.textContent = submitButtonOriginalText;
     }
+}
+
+// Add isMobile function
+function isMobile() {
+    return window.innerWidth < 768; // Using 768px as the breakpoint for mobile
 }
 
 /**
@@ -256,7 +289,7 @@ function initializeFormListeners() {
     form.addEventListener('submit', async (event) => {
         event.preventDefault();
         console.log('Form submitted', { isTrusted: event.isTrusted });
-        await generateQRCode(form, generateButton, generateButton.textContent, event.isTrusted);
+        await generateQRCode(form, generateButton, generateButton.textContent, event.isTrusted, true);
     });
 
     // Initial button state
