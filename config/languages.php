@@ -28,6 +28,7 @@ return [
         'pt' => 'Português',        // Portuguese
         'sv' => 'Svenska',          // Swedish
         'el' => 'Ελληνικά',        // Greek
+        'ro' => 'Română',           // Romanian
     ],
     'default_language' => 'en'
 ];
