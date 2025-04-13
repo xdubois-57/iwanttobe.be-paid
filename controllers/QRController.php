@@ -162,7 +162,7 @@ class QRController {
         }
 
         $width = imagesx($im);
-        $height = imagesy($im) + 80;
+        $height = imagesy($im) + 100; 
         $newIm = imagecreatetruecolor($width, $height);
         if ($newIm === false) {
             imagedestroy($im);
@@ -184,13 +184,15 @@ class QRController {
         $iban = rtrim($epcLines[6]);
         $amountStr = rtrim($epcLines[7]);
         $amount = floatval(str_replace('EUR', '', $amountStr));
+        $communication = rtrim($epcLines[10]); 
         
         $generatedBy = $lang->translate('generated_by');
         $summaryText = sprintf(
-            "%s\nIBAN: %s\n%.2f EUR",
+            "%s\n%s\n%.2f EUR\n%s",
             sprintf($lang->translate('payment_to'), $name),
             $iban,
-            $amount
+            $amount,
+            $communication
         );
         
         $bbox = imagettfbbox($fontSize, 0, $fontPath, $generatedBy);
@@ -200,8 +202,8 @@ class QRController {
         
         $textWidth = abs($bbox[4] - $bbox[0]);
         $x = intval(($width - $textWidth) / 2);
-        $y = intval($height - 55);
-
+        $y = intval($height - 75); 
+        
         $result = imagettftext($newIm, $fontSize, 0, $x, $y, $black, $fontPath, $generatedBy);
         if ($result === false) {
             throw new Exception('Failed to add text to image');
@@ -209,7 +211,7 @@ class QRController {
 
         $lines = explode("\n", $summaryText);
         $smallerFontSize = 10;
-        $lineHeight = 15;
+        $lineHeight = 15; 
         
         foreach ($lines as $index => $line) {
             $bbox = imagettfbbox($smallerFontSize, 0, $fontPath, $line);
@@ -217,7 +219,7 @@ class QRController {
             
             $textWidth = abs($bbox[4] - $bbox[0]);
             $x = intval(($width - $textWidth) / 2);
-            $y = intval($height - 35 + ($index * $lineHeight));
+            $y = intval($height - 55 + ($index * $lineHeight)); 
             
             imagettftext($newIm, $smallerFontSize, 0, $x, $y, $gray, $fontPath, $line);
         }
