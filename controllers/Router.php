@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * QR Transfer
  * Copyright (C) 2025 Xavier Dubois
  *
