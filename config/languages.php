@@ -35,6 +35,7 @@ return [
         'fi' => 'Suomi',            // Finnish
         'da' => 'Dansk',            // Danish
         'no' => 'Norsk',            // Norwegian
+        'is' => 'Íslenska',         // Icelandic
     ],
     'default_language' => 'en'
 ];
