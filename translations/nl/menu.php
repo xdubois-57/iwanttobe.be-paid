@@ -39,6 +39,7 @@ return [
     'disclaimer_terms' => 'Gebruiksvoorwaarden',
     'disclaimer_cookies' => 'Cookies',
     'disclaimer_security' => 'Veiligheid',
+    'disclaimer_text' => 'QR Transfer is niet aansprakelijk voor financiële problemen of verliezen die gerelateerd zijn aan het gebruik van deze dienst. Het gebruik van dit hulpmiddel is op eigen risico. Alle betalingen worden verwerkt door de respectievelijke banken, en QR Transfer verwerkt geen financiële transacties. Deze website is gelicenseerd onder de <a href="https://www.gnu.org/licenses/gpl-3.0.nl.html">GNU General Public License v3.0 (GPLv3)</a>.',
     
     // Support section
     'support_title' => 'Steun het Project',

@@ -33,5 +33,5 @@ return [
     'meta_keywords' => 'événements scouts, association de parents d\'élèves, club de football, collecte de fonds caritatifs, événements communautaires, code QR, paiement SEPA, virement bancaire, QR de paiement, paiement européen, paiement sécurisé, don, soutien, offre-moi un café, générateur de code QR gratuit',
     
     // Legal disclaimer
-    'disclaimer_text' => 'QR Transfer n\'est pas responsable des problèmes ou pertes financières liés à l\'utilisation de ce service. L\'utilisation de cet outil est à vos propres risques. Tous les paiements sont traités par les banques respectives, et QR Transfer ne gère aucune transaction monétaire. Ce site web est soumis à la GNU General Public License v3.0 (GPLv3).',
+    'disclaimer_text' => 'QR Transfer n\'est pas responsable des problèmes ou pertes financières liés à l\'utilisation de ce service. L\'utilisation de cet outil est à vos propres risques. Tous les paiements sont traités par les banques respectives, et QR Transfer ne gère aucune transaction monétaire. Ce site web est soumis à la <a href="https://www.gnu.org/licenses/gpl-3.0.fr.html">GNU General Public License v3.0 (GPLv3)</a>.',
 ];

@@ -30,5 +30,5 @@ return [
     'meta_keywords' => 'scout events, parent associations, football clubs, community fundraising, community events, QR code, SEPA payment, bank transfer, payment QR, European payment, secure payment, donation, support, buy me a coffee, free QR code generator',
     
     // Legal disclaimer
-    'disclaimer_text' => 'QR Transfer is not liable for any financial issues or losses related to the use of this service. Use of this tool is at your own risk. All payments are processed by the respective banks, and QR Transfer does not handle any monetary transactions. This website is licensed under the GNU General Public License v3.0 (GPLv3).',
+    'disclaimer_text' => 'QR Transfer is not liable for any financial issues or losses related to the use of this service. Use of this tool is at your own risk. All payments are processed by the respective banks, and QR Transfer does not handle any monetary transactions. This website is licensed under the <a href="https://www.gnu.org/licenses/gpl-3.0.html">GNU General Public License v3.0 (GPLv3)</a>.',
 ];
