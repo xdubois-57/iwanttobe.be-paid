@@ -71,6 +71,7 @@
 - English (en)
 - French (fr)
 - Dutch (nl)
+- Latvian (lv)
 
 ### 5.2 Translation Files
 - Located in /translations directory

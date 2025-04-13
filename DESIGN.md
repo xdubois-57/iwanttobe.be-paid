@@ -104,7 +104,21 @@ graph TD
     T[Translations] --> EN[English]
     T --> FR[French]
     T --> NL[Dutch]
+    T --> PL[Polish]
+    T --> IT[Italian]
+    T --> ES[Spanish]
+    T --> PT[Portuguese]
+    T --> SV[Swedish]
+    T --> EL[Greek]
+    T --> RO[Romanian]
+    T --> CS[Czech]
+    T --> HU[Hungarian]
     T --> SL[Slovenian]
+    T --> FI[Finnish]
+    T --> DA[Danish]
+    T --> NO[Norwegian]
+    T --> IS[Icelandic]
+    T --> LV[Latvian]
 ```
 
 - Location: `/translations` directory
@@ -122,7 +136,21 @@ graph TD
 1. en (English)
 2. fr (French)
 3. nl (Dutch)
-4. sl (Slovenian)
+4. pl (Polish)
+5. it (Italian)
+6. es (Spanish)
+7. pt (Portuguese)
+8. sv (Swedish)
+9. el (Greek)
+10. ro (Romanian)
+11. cs (Czech)
+12. hu (Hungarian)
+13. sl (Slovenian)
+14. fi (Finnish)
+15. da (Danish)
+16. no (Norwegian)
+17. is (Icelandic)
+18. lv (Latvian)
 
 ### 2.4 Form Handling
 
