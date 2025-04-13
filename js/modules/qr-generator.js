@@ -22,6 +22,9 @@ import translations from './translations.js';
 // Store the last generated QR code values
 let lastGeneratedValues = null;
 
+// Flag to track if a QR code generation is in progress
+let isGeneratingQR = false;
+
 /**
  * Gets normalized form values as a string for comparison
  * @param {Object} inputs - Object containing form input elements
@@ -106,25 +109,33 @@ function createFormData(form, inputs) {
  * @returns {Promise<void>} - A promise that resolves when the QR code is generated
  */
 async function generateQRCode(form, submitButton, submitButtonOriginalText, trustedEvent = false) {
-    console.log('Generating QR code', { trustedEvent });
-    const inputs = {
-        beneficiary_name: document.getElementById('beneficiary_name'),
-        beneficiary_iban: document.getElementById('beneficiary_iban'),
-        amount: document.getElementById('amount'),
-        communication: document.getElementById('communication')
-    };
-
-    // Validate all fields
-    if (!validation.validateAllFields(inputs)) {
-        console.warn(translations.translate('missing_required_fields'));
+    // Prevent multiple concurrent requests
+    if (isGeneratingQR) {
+        console.log('QR code generation already in progress');
         return;
     }
-
-    // Update button state
-    submitButton.textContent = translations.translate('generating');
-    submitButton.disabled = true;
+    isGeneratingQR = true;
 
     try {
+        console.log('Starting QR code generation');
+        console.log('Generating QR code', { trustedEvent });
+        const inputs = {
+            beneficiary_name: document.getElementById('beneficiary_name'),
+            beneficiary_iban: document.getElementById('beneficiary_iban'),
+            amount: document.getElementById('amount'),
+            communication: document.getElementById('communication')
+        };
+
+        // Validate all fields
+        if (!validation.validateAllFields(inputs)) {
+            console.warn(translations.translate('missing_required_fields'));
+            return;
+        }
+
+        // Update button state
+        submitButton.textContent = translations.translate('generating');
+        submitButton.disabled = true;
+
         // Get form data including disabled fields
         const formData = createFormData(form, inputs);
 
@@ -202,6 +213,9 @@ async function generateQRCode(form, submitButton, submitButtonOriginalText, trus
         lastGeneratedValues = null;
         submitButton.disabled = false;
     } finally {
+        // Always reset the state, even if there's an error
+        isGeneratingQR = false;
+        console.log('QR code generation completed');
         // Reset button text
         // submitButton.textContent = submitButtonOriginalText;
     }
@@ -254,7 +268,8 @@ const qrGenerator = {
     generateQRCode,
     resetRightPanel,
     initializeFormListeners,
-    updateButtonState
+    updateButtonState,
+    isGeneratingQR
 };
 
 // Make resetRightPanel globally available

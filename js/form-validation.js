@@ -66,6 +66,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Function to format IBAN with spaces
         function formatIBAN(iban) {
+            console.log('Formatting IBAN:', iban);
             // Remove existing spaces
             iban = iban.replace(/\s/g, '').toUpperCase();
             // Add a space every 4 characters
@@ -97,7 +98,14 @@ document.addEventListener('DOMContentLoaded', function() {
         form.addEventListener('submit', function(e) {
             e.preventDefault();
             if (!submitButton) return;
+            console.log('Form submitted');
             
+            // Check if QR code generation is already in progress
+            if (qrGenerator.default.isGeneratingQR) {
+                console.log('QR code generation already in progress, ignoring submit');
+                return;
+            }
+
             if (validation.default.validateAllFields(inputs)) {
                 qrGenerator.default.generateQRCode(form, submitButton, submitButtonOriginalText);
             }

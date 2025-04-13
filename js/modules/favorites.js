@@ -238,6 +238,15 @@ function loadFavorite() {
         // Import QR generator module dynamically
         import('./qr-generator.js').then(qrGenerator => {
             // Generate QR code without scrolling
+            console.log('Generating QR code for favorite');
+            console.trace();
+            
+            // Check if QR code generation is already in progress
+            if (qrGenerator.default.isGeneratingQR) {
+                console.log('QR code generation already in progress, ignoring request');
+                return;
+            }
+
             qrGenerator.default.generateQRCode(form, submitButton, submitButtonOriginalText, false);
         }).catch(error => {
             console.error('Error importing QR generator module:', error);
