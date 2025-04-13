@@ -1,0 +1,37 @@
+<?php
+// German support page translations
+
+return [
+    'support_title' => 'Kaufe mir einen Kaffee',
+    'support_hosting_title' => 'Hosting-Kosten',
+    'support_hosting_text' => 'QR Transfer wird auf sicheren Servern gehostet, um Ihre Daten privat zu halten und den Service schnell zu gestalten. Ihre Unterstützung hilft uns, diese Hosting-Kosten zu decken.',
+    'support_development_title' => 'Fortlaufende Entwicklung',
+    'support_development_text' => 'Wir verbessern QR Transfer ständig mit neuen Funktionen und einer besseren Benutzeroberfläche. Ihre Beiträge helfen uns, mehr Zeit für die Entwicklung zu investieren.',
+    'support_future_title' => 'Zukünftige Funktionen',
+    'support_future_text' => 'Wir haben spannende Pläne für die Zukunft, einschließlich weiterer Zahlungsoptionen, verbesserten Teilenfunktionen und erhöhter Sicherheit. Ihre Unterstützung macht dies möglich!',
+    'support_coffee_title' => 'Kaufe mir einen Kaffee',
+    'support_text' => 'Wenn Ihnen QR Transfer nützlich ist, überlegen Sie bitte, uns einen Kaffee zu kaufen, um unsere Arbeit zu unterstützen.',
+    'support_coffee_message' => 'Kaffee-Support',
+    'support_qr_alt' => 'QR-Code für Spende',
+    'support_qr_error' => 'Entschuldigung, wir konnten den QR-Code nicht generieren. Bitte versuchen Sie es später erneut.',
+    'support_thanks' => 'Vielen Dank für Ihre Unterstützung! Jeder Beitrag hilft uns, QR Transfer zu verbessern.',
+    'support_button' => 'Kaufe mir einen Kaffee',
+    'support_note' => 'Deine Unterstützung hilft mir dabei, die Serverkosten zu decken und neue Funktionen zu entwickeln.',
+    'support_qr_text' => 'Scanne diesen QR-Code, um mir zu helfen',
+    'support_qr_note' => 'Der QR-Code enthält eine SEPA-Überweisung an mein Konto.',
+    'support_clear_form' => 'Formular zurücksetzen',
+    'support_clear_form_note' => 'Löscht alle eingegebenen Werte und setzt das Formular zurück.',
+    'support_copy_qr' => 'QR-Code kopieren',
+    'support_copy_qr_note' => 'Kopiert den QR-Code in die Zwischenablage.',
+    'support_share_qr' => 'QR-Code teilen',
+    'support_share_qr_note' => 'Teilt den QR-Code über verschiedene Apps.',
+    'support_download_qr' => 'QR-Code herunterladen',
+    'support_download_qr_note' => 'Lädt den QR-Code als PNG-Datei herunter.',
+    'support_generate_new' => 'Neuen QR-Code generieren',
+    'support_generate_new_note' => 'Generiert einen neuen QR-Code mit den aktuellen Werten.',
+    'support_back_to_home' => 'Zurück zur Startseite',
+    'support_back_to_home_note' => 'Lädt die Startseite neu und setzt alles zurück.',
+    'support_back_to_support' => 'Zurück zum Support',
+    'support_back_to_support_note' => 'Lädt die Support-Seite neu und setzt alles zurück.',
+    'menu_support' => 'Kaufe mir einen Kaffee'
+];

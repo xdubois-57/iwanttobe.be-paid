@@ -119,6 +119,7 @@ graph TD
     T --> NO[Norwegian]
     T --> IS[Icelandic]
     T --> LV[Latvian]
+    T --> DE[German]
 ```
 
 - Location: `/translations` directory
@@ -151,6 +152,7 @@ graph TD
 16. no (Norwegian)
 17. is (Icelandic)
 18. lv (Latvian)
+19. de (German)
 
 ### 2.4 Form Handling
 
@@ -240,6 +242,7 @@ graph TD
 ### PHP Translations
 1. Managed by LanguageController
 2. Stored in `/translations/[lang]/` directories
+   - Supported languages: en (English), fr (French), nl (Dutch), pl (Polish), it (Italian), es (Spanish), pt (Portuguese), sv (Swedish), el (Greek), ro (Romanian), cs (Czech), hu (Hungarian), sl (Slovenian), fi (Finnish), da (Danish), no (Norwegian), is (Icelandic), lv (Latvian), de (German)
 3. Accessed via `$lang->translate('key')` in PHP
 
 ### JavaScript Access

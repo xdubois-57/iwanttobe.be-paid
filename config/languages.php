@@ -37,6 +37,7 @@ return [
         'no' => 'Norsk',            // Norwegian
         'is' => 'Íslenska',         // Icelandic
         'lv' => 'Latviešu',          // Latvian
+        'de' => 'Deutsch',          // German
     ],
     'default_language' => 'en'
 ];
