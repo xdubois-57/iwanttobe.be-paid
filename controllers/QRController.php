@@ -116,7 +116,7 @@ class QRController {
             self::IDENTIFICATION,
             $bic,
             $name,
-            $iban,
+            str_replace(' ', '', $iban),
             'EUR' . $amount,
             'CHAR', // Purpose
             '', // Structured remittance
