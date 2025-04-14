@@ -1,7 +1,7 @@
 <?php
 // English GDPR translations for QR Transfer application
 // Contains all privacy policy and GDPR-related text
-// Last updated: 2025-04-09
+// Last updated: 2025-04-14
 
 return [
     // Page title and metadata
@@ -66,7 +66,7 @@ return [
     
     // Third-party services section
     'gdpr_third_party_title' => 'Third-Party Services',
-    'gdpr_third_party_desc' => 'Our service does not integrate with any third-party services that collect personal data. The QR codes generated are compatible with standard banking applications but the actual payment processing is handled by your bank.',
+    'gdpr_third_party_desc' => 'We use GoQR (<a href="https://goqr.me/privacy-safety-security/">see Go QR privacy policy</a>) to generate QR codes. When you enter payment information to create a QR code, this data is sent to GoQR\'s API solely for the purpose of generating the QR code image. According to their privacy policy, GoQR\'s servers are located within the European Union, and they do not store the content of the QR codes.',
     
     // Policy updates section
     'gdpr_updates_title' => 'Changes to This Policy',
