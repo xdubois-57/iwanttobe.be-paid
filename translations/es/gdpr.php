@@ -66,7 +66,7 @@ return [
     
     // Third-party services section
     'gdpr_third_party_title' => 'Servicios de terceros',
-    'gdpr_third_party_desc' => 'Nuestro servicio no se integra con servicios de terceros que recojan datos personales. Los códigos QR generados son compatibles con aplicaciones bancarias estándar pero el procesamiento de pagos real es gestionado por tu banco.',
+    'gdpr_third_party_desc' => 'Utilizamos GoQR (<a href="https://goqr.me/privacy-safety-security/">ver la política de privacidad de GoQR</a>) para generar códigos QR. Cuando ingresas información de pago para crear un código QR, estos datos se envían a la API de GoQR únicamente para generar la imagen del código QR. Según su política de privacidad, los servidores de GoQR están ubicados en la Unión Europea y no almacenan el contenido de los códigos QR.',
     
     // Policy updates section
     'gdpr_updates_title' => 'Cambios en esta política',

@@ -66,7 +66,7 @@ return [
     
     // Third-party services section
     'gdpr_third_party_title' => 'Harmadik felek szolgáltatásai',
-    'gdpr_third_party_desc' => 'A szolgáltatásunk nem használ harmadik felek adatait gyűjtő szolgáltatásait. A generált QR kódok kompatibilisek a bankok standard mobil alkalmazásaihoz, de a befizetések feldolgozása a bankok kezében van.',
+    'gdpr_third_party_desc' => 'A GoQR-t használjuk (<a href="https://goqr.me/privacy-safety-security/">lásd a GoQR adatvédelmi szabályzatát</a>) QR kódok generálásához. Amikor beírja a befizetési adatokat egy QR kód generálásához, ezeket az adatokat a GoQR API-nak küldjük csak a QR kód kép generálásához. Azzal a szabályzattal, hogy a GoQR szerverei az Európai Unióban vannak és nem tárolják a QR kód tartalmát.',
     
     // Policy updates section
     'gdpr_updates_title' => 'Szabályzat módosításai',

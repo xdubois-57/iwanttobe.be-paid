@@ -66,7 +66,7 @@ return [
     
     // Third-party services section
     'gdpr_third_party_title' => 'Kolmannen osapuolen palvelut',
-    'gdpr_third_party_desc' => 'Palvelumme ei käytä palveluita, jotka keräävät tietoja. Luodut QR-koodit ovat yhteensopivia kaikkien pankkien standardimobiilisovellusten kanssa, mutta maksut käsittelevät pankit.',
+    'gdpr_third_party_desc' => 'Käytämme GoQRia (<a href="https://goqr.me/privacy-safety-security/">katso GoQR:n tietosuojakäytäntö</a>) QR-koodien luomiseen. Kun syötät maksutietoja QR-koodin luomiseen, nämä tiedot lähetetään GoQR:n API:hin vain QR-koodin kuvan luomiseen. GoQR:n tietosuojakäytännön mukaan GoQR:n palvelimet sijaitsevat Euroopan unionissa eivätkä ne tallenna QR-koodin sisältöä.',
     
     // Policy updates section
     'gdpr_updates_title' => 'Käytännön päivitykset',

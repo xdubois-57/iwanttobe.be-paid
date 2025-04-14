@@ -66,7 +66,7 @@ return [
     
     // Third-party services section
     'gdpr_third_party_title' => 'Služby třetích stran',
-    'gdpr_third_party_desc' => 'Naše služba nepoužívá služby třetích stran, které sbírají osobní údaje. Generované QR kódy jsou kompatibilní s standardními bankovními aplikacemi, ale zpracování plateb je spravováno bankami.',
+    'gdpr_third_party_desc' => 'Používáme GoQR (<a href="https://goqr.me/privacy-safety-security/">viz politika ochrany osobních údajů GoQR</a>) pro generování QR kódů. Když zadáte platební údaje pro generování QR kódu, tyto údaje jsou odesílány do API GoQR pouze pro generování obrázku QR kódu. Podle jejich politiky ochrany osobních údajů jsou servery GoQR umístěny v Evropské unii a neukládají obsah QR kódů.',
     
     // Policy updates section
     'gdpr_updates_title' => 'Změny politiky',

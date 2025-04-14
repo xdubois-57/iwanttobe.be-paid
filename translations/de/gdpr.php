@@ -62,8 +62,8 @@ return [
     'gdpr_rights_note' => 'Obwohl wir Daten temporär verarbeiten, um QR-Codes zu generieren, speichern wir keine persönlichen Daten dauerhaft auf unseren Servern. Alle gespeicherten Daten werden lokal in Ihrem Browser gespeichert, wodurch Sie durch Ihre Browser-Einstellungen die volle Kontrolle haben. Bei allen Datenschutzfragen wenden Sie sich bitte an uns.',
     
     // Third-party services section
-    'gdpr_third_party_title' => 'Dienste Dritter',
-    'gdpr_third_party_desc' => 'Unser Service integriert sich nicht mit Diensten Dritter, die persönliche Daten sammeln. Die generierten QR-Codes sind mit Standard-Banking-Apps kompatibel, aber die eigentliche Zahlungsverarbeitung erfolgt durch Ihre Bank.',
+    'gdpr_third_party_title' => 'Drittanbieter-Dienste',
+    'gdpr_third_party_desc' => 'Wir verwenden GoQR (<a href="https://goqr.me/privacy-safety-security/">siehe GoQR Datenschutzrichtlinie</a>) zur Erstellung von QR-Codes. Wenn Sie Zahlungsinformationen eingeben, um einen QR-Code zu erstellen, werden diese Daten an die GoQR API gesendet, ausschließlich zum Zweck der Erstellung des QR-Code-Bildes. Laut ihrer Datenschutzrichtlinie befinden sich die GoQR-Server innerhalb der Europäischen Union und speichern sie keinen QR-Code-Inhalt.',
     
     // Policy updates section
     'gdpr_updates_title' => 'Änderungen an dieser Richtlinie',

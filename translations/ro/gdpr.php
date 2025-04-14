@@ -66,7 +66,7 @@ return [
     
     // Third-party services section
     'gdpr_third_party_title' => 'Servicii de terți',
-    'gdpr_third_party_desc' => 'Serviciul nostru nu folosește servicii de terți care colectează date personale. Codurile QR generate sunt compatibile cu aplicațiile standard ale băncilor dar procesarea plăților este gestionată de băncile dumneavoastră.',
+    'gdpr_third_party_desc' => 'Folosim GoQR (<a href="https://goqr.me/privacy-safety-security/">vezi politica de confidențialitate a GoQR</a>) pentru generarea codurilor QR. Când introduceți datele de plată pentru a genera un cod QR, aceste date sunt trimise către API-ul GoQR doar pentru a genera imaginea codului QR. Conform politicii lor de confidențialitate, serverele GoQR sunt situate în Uniunea Europeană și nu păstrează conținutul codurilor QR.',
     
     // Policy updates section
     'gdpr_updates_title' => 'Modificări ale politicii',

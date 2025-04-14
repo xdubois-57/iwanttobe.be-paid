@@ -66,7 +66,7 @@ return [
     
     // Third-party services section
     'gdpr_third_party_title' => 'Tredjeparts tjenester',
-    'gdpr_third_party_desc' => 'Vår tjeneste bruker ikke tjenester som samler inn data. De genererte QR-kodene er kompatibelt med alle standardmobilapps fra banker, men betalinger behandles av banker.',
+    'gdpr_third_party_desc' => 'Vi bruker GoQR (<a href="https://goqr.me/privacy-safety-security/">se GoQRs personvernpolicy</a>) for å generere QR-koder. Når du skriver inn betalingsinformasjon for å generere en QR-kode, sendes disse opplysningene til GoQR API kun for å generere QR-kodebilledet. Ifølge deres personvernpolicy er GoQRs servere beliggende i EU og de lagrer ikke innholdet i QR-koder.',
     
     // Policy updates section
     'gdpr_updates_title' => 'Oppdateringer av politikken',

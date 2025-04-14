@@ -69,7 +69,7 @@ return [
     
     // Third-party services section
     'gdpr_third_party_title' => 'Derden',
-    'gdpr_third_party_desc' => 'Onze service integreert niet met diensten van derden die persoonlijke gegevens verzamelen. De gegenereerde QR codes zijn compatibel met standaard bank-apps, maar de verwerking van betalingen wordt beheerd door je bank.',
+    'gdpr_third_party_desc' => 'We gebruiken GoQR (<a href="https://goqr.me/privacy-safety-security/">zie de GoQR privacyverklaring</a>) voor het genereren van QR codes. Wanneer je betalingsgegevens invoert om een QR code te genereren, worden deze gegevens naar de GoQR API verzonden alleen voor het genereren van de QR code afbeelding. Volgens hun privacyverklaring zijn de GoQR servers gevestigd in de Europese Unie en bewaren ze geen QR code inhoud.',
     
     // Policy updates section
     'gdpr_updates_title' => 'Wijzigingen in dit beleid',

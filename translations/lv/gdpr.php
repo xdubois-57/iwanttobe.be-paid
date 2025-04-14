@@ -66,7 +66,7 @@ return [
     
     // Third-party services section
     'gdpr_third_party_title' => 'Trešo pušu pakalpojumi',
-    'gdpr_third_party_desc' => 'Mūsu pakalpojums neintegrējas ar nevienu trešo pušu pakalpojumu, kas iegūst personiskās datus. Ģenerētie QR kodi ir saderīgi ar standarta banku lietotnēm, bet faktiskais maksājumu apstrādes notiek jūsu bankā.',
+    'gdpr_third_party_desc' => 'Mēs izmantojam GoQR (<a href="https://goqr.me/privacy-safety-security/">skatiet GoQR privātuma politiku</a>) QR kodu ģenerēšanai. Ievadot maksājuma informāciju, lai izveidotu QR kodu, šie dati tiek nosūtīti uz GoQR API tikai QR kodu attēla ģenerēšanai. Saskaņā ar to privātuma politiku, GoQR serveri atrodas Eiropas Savienībā, un tie neuzglabā QR kodu saturu.',
     
     // Policy updates section
     'gdpr_updates_title' => 'Izmaiņas šajā politikā',

@@ -66,7 +66,7 @@ return [
     
     // Third-party services section
     'gdpr_third_party_title' => 'Þriðja aðila þjónustur',
-    'gdpr_third_party_desc' => 'Þjónustan okkar notar ekki þjónustur sem samþæt upplýsingar. Búið til QR kóða eru samþæt við öll staðbundna bankaþjónustu, en greiðslur vinnum með bankum.',
+    'gdpr_third_party_desc' => 'Við notum GoQR (<a href="https://goqr.me/privacy-safety-security/">skoða GoQR persónuverndarstefnu</a>) til að búa til QR kóða. Þegar þú skrifar inn greiðsluupplýsingar til að búa til QR kóða, verða þessar upplýsingar sendar til GoQR API einungis til að búa til QR kóða mynd. Eftir persónuverndarstefnu þeirra eru GoQR vafra vafra í Evrópska fylki og þeir geyma ekki QR kóða efnið.',
     
     // Policy updates section
     'gdpr_updates_title' => 'Uppfærslur á stefnu',
