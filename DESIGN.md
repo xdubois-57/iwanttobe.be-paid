@@ -332,7 +332,18 @@ Several enhancements have been made to improve the user interface and experience
 - Clarified that QR Transfer is not liable for any financial losses
 - Explained that all payments are processed by banks, not QR Transfer
 
-Last updated: 2025-04-08
+### Recent Changes (2025-04-14)
+
+1. **Translation Updates**
+   - Added missing Romanian form translations
+   - Updated GDPR third-party description to include GoQR information
+   - Added link to GoQR privacy policy in GDPR documentation
+
+2. **Security Updates**
+   - Updated third-party service description in GDPR policy
+   - Added specific details about GoQR's data handling practices
+
+Last updated: 2025-04-14
 
 ## Removed Components
 - About page (controller, view and route)
@@ -340,4 +351,4 @@ Last updated: 2025-04-08
 
 ---
 
-*Last updated: 2025-04-08*
+*Last updated: 2025-04-14*

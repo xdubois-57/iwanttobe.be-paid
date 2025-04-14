@@ -72,11 +72,14 @@
 - French (fr)
 - Dutch (nl)
 - Latvian (lv)
+- Romanian (ro)
 
 ### 5.2 Translation Files
 - Located in /translations directory
 - PHP array format
 - All user-facing text must be translated
+- Translation keys must be consistent across all languages
+- HTML links must be properly escaped in PHP translations
 
 ## 6. Security Requirements
 
@@ -84,6 +87,10 @@
 - No sensitive data stored in QR codes
 - Essential cookies only
 - GDPR compliance
+- Third-party services (GoQR) used for QR generation
+- Data sent to GoQR's API for QR code generation
+- GoQR servers located within the European Union
+- GoQR does not store QR code content
 
 ### 6.2 Input Validation
 - All form inputs validated
@@ -107,4 +114,4 @@
 - Test on Android
 - Test on iPhone
 
-Last updated: 2025-04-11
+Last updated: 2025-04-14
