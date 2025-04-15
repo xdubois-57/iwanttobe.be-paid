@@ -35,7 +35,6 @@ class QRController {
     private const SERVICE_TAG = 'BCD';
     private const VERSION = '002';
     private const IDENTIFICATION = 'SCT';
-    private const QR_API_URL = 'https://api.qrserver.com/v1/create-qr-code/';
     private const FONT_PATH = __DIR__ . '/../fonts/OpenSans-Regular.ttf';
 
     public function generate() {
@@ -127,38 +126,44 @@ class QRController {
         return implode("\n", array_map('trim', $data));
     }
 
+    /**
+     * Generates a QR code image and outputs it as PNG.
+     * @param string $data The data to encode in the QR code
+     * @param int $size The size of the QR code (pixels)
+     * @param bool $outputDirectly If true, outputs image to browser. If false, returns PNG binary string.
+     * @return string|null PNG image data if $outputDirectly is false, otherwise null
+     */
+    public static function generateQrPng(string $data, int $size = 300, bool $outputDirectly = false): ?string {
+        $options = new \chillerlan\QRCode\QROptions([
+            'outputType' => \chillerlan\QRCode\QRCode::OUTPUT_IMAGE_PNG,
+            'imageBase64' => false,
+            'scale' => max(1, intval($size / 33)), // 33 is the default QR code matrix size
+            'eccLevel' => \chillerlan\QRCode\QRCode::ECC_L,
+        ]);
+
+        $qrcode = new \chillerlan\QRCode\QRCode($options);
+        $pngData = $qrcode->render($data);
+
+        if ($outputDirectly) {
+            header('Content-Type: image/png');
+            echo $pngData;
+            return null;
+        }
+        return $pngData;
+    }
+
     public function generateQRCode($text) {
         require_once __DIR__ . '/../controllers/LanguageController.php';
         $lang = LanguageController::getInstance();
 
-        $params = [
-            'data' => $text,
-            'size' => '300x300',
-            'charset-source' => 'UTF-8',
-            'charset-target' => 'UTF-8',
-            'ecc' => 'M',
-            'margin' => '2',
-            'format' => 'png'
-        ];
-
-        $url = self::QR_API_URL . '?' . http_build_query($params);
-        
-        $context = stream_context_create([
-            'http' => [
-                'ignore_errors' => true,
-                'timeout' => 10,
-                'user_agent' => 'QRTransfer/1.0'
-            ]
-        ]);
-
-        $qrImage = @file_get_contents($url, false, $context);
-        if ($qrImage === false) {
-            throw new Exception('Failed to generate QR code');
+        $size = 300;
+        $pngData = self::generateQrPng($text, $size, false);
+        if ($pngData === false) {
+            throw new \Exception('Failed to generate QR code locally');
         }
-
-        $im = @imagecreatefromstring($qrImage);
+        $im = @imagecreatefromstring($pngData);
         if ($im === false) {
-            throw new Exception('Failed to process QR code image');
+            throw new \Exception('Failed to process QR code image');
         }
 
         $width = imagesx($im);
@@ -166,7 +171,7 @@ class QRController {
         $newIm = imagecreatetruecolor($width, $height);
         if ($newIm === false) {
             imagedestroy($im);
-            throw new Exception('Failed to create image canvas');
+            throw new \Exception('Failed to create image canvas');
         }
 
         $white = imagecolorallocate($newIm, 255, 255, 255);
@@ -197,7 +202,7 @@ class QRController {
         
         $bbox = imagettfbbox($fontSize, 0, $fontPath, $generatedBy);
         if ($bbox === false) {
-            throw new Exception('Failed to calculate text dimensions');
+            throw new \Exception('Failed to calculate text dimensions');
         }
         
         $textWidth = abs($bbox[4] - $bbox[0]);
@@ -206,7 +211,7 @@ class QRController {
         
         $result = imagettftext($newIm, $fontSize, 0, $x, $y, $black, $fontPath, $generatedBy);
         if ($result === false) {
-            throw new Exception('Failed to add text to image');
+            throw new \Exception('Failed to add text to image');
         }
 
         $lines = explode("\n", $summaryText);

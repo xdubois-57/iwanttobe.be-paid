@@ -30,6 +30,7 @@ if (session_status() === PHP_SESSION_NONE) {
 require_once __DIR__ . '/controllers/Router.php';
 $router = new Router();
 require_once __DIR__ . '/routes.php';
+require_once __DIR__ . '/vendor/autoload.php';
 
 try {
     // Remove query string from URI
