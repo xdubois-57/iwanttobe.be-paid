@@ -102,24 +102,25 @@ graph LR
 ```mermaid
 graph TD
     T[Translations] --> EN[English]
-    T --> FR[French]
-    T --> NL[Dutch]
-    T --> PL[Polish]
-    T --> IT[Italian]
-    T --> ES[Spanish]
-    T --> PT[Portuguese]
-    T --> SV[Swedish]
-    T --> EL[Greek]
-    T --> RO[Romanian]
-    T --> CS[Czech]
-    T --> HU[Hungarian]
-    T --> SL[Slovenian]
-    T --> FI[Finnish]
-    T --> DA[Danish]
-    T --> NO[Norwegian]
-    T --> IS[Icelandic]
-    T --> LV[Latvian]
-    T --> DE[German]
+    T --> FR[Français]
+    T --> NL[Nederlands]
+    T --> PL[Polski]
+    T --> IT[Italiano]
+    T --> ES[Español]
+    T --> PT[Português]
+    T --> SV[Svenska]
+    T --> EL[Ελληνικά]
+    T --> RO[Română]
+    T --> CS[Čeština]
+    T --> HU[Magyar]
+    T --> SL[Slovenščina]
+    T --> FI[Suomi]
+    T --> DA[Dansk]
+    T --> NO[Norsk]
+    T --> IS[Íslenska]
+    T --> LV[Latviešu]
+    T --> HR[Hrvatski]
+    T --> DE[Deutsch]
 ```
 
 - Location: `/translations` directory
@@ -135,24 +136,25 @@ graph TD
 
 **Supported Languages:**
 1. en (English)
-2. fr (French)
-3. nl (Dutch)
-4. pl (Polish)
-5. it (Italian)
-6. es (Spanish)
-7. pt (Portuguese)
-8. sv (Swedish)
-9. el (Greek)
-10. ro (Romanian)
-11. cs (Czech)
-12. hu (Hungarian)
-13. sl (Slovenian)
-14. fi (Finnish)
-15. da (Danish)
-16. no (Norwegian)
-17. is (Icelandic)
-18. lv (Latvian)
-19. de (German)
+2. fr (Français)
+3. nl (Nederlands)
+4. pl (Polski)
+5. it (Italiano)
+6. es (Español)
+7. pt (Português)
+8. sv (Svenska)
+9. el (Ελληνικά)
+10. ro (Română)
+11. cs (Čeština)
+12. hu (Magyar)
+13. sl (Slovenščina)
+14. fi (Suomi)
+15. da (Dansk)
+16. no (Norsk)
+17. is (Íslenska)
+18. lv (Latviešu)
+19. hr (Hrvatski)
+20. de (Deutsch)
 
 ### 2.4 Form Handling
 
