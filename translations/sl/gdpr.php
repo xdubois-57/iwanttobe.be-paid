@@ -65,8 +65,8 @@ return [
     'gdpr_rights_note' => 'Čeprav privzeto obdelujemo podatke za generiranje QR kod, nikoli ne shranjujemo teh podatkov na naših strežnikih. Podatki so shranjeni v lokalnem shranjevanju brskalnika le v primeru, da to izberete. Če imate vprašanja o varnosti podatkov, se s nama kontaktirajte.',
     
     // Third-party services section
-    'gdpr_third_party_title' => 'Storitve tretjih strani',
-    'gdpr_third_party_desc' => 'Uporabljamo GoQR (<a href="https://goqr.me/privacy-safety-security/">glej politiko zasebnosti GoQR</a>) za generiranje QR kod. Ko vnesete podatke o plačilu za generiranje QR kode, te podatke pošljemo na API GoQR le za generiranje slike QR kode. Soglasno z njihovo politiko zasebnosti so strežniki GoQR v Evropski uniji in ne shranjujejo vsebine QR kod.',
+    'gdpr_third_party_title' => 'Storitve tretjih oseb',
+    'gdpr_third_party_desc' => 'Uporabljamo storitev OpenIBAN (glejte <a href="https://openiban.com/">OpenIBAN</a>) izključno za iskanje kode BIC na podlagi podanega IBAN. OpenIBAN-u se pošlje samo IBAN; nobeni drugi plačilni ali osebni podatki se ne delijo s tretjimi osebami.',
     
     // Policy updates section
     'gdpr_updates_title' => 'Posodobitve politike',

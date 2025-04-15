@@ -68,8 +68,8 @@ return [
     'gdpr_rights_note' => 'Hoewel we tijdelijk gegevens verwerken voor het genereren van QR codes, bewaren we geen persoonlijke gegevens permanent op onze servers. Alle opgeslagen gegevens worden opgeslagen in de lokale opslag van je browser, waardoor je volledig controle hebt via de instellingen van je browser. Voor vragen over privacy, neem contact met ons op.',
     
     // Third-party services section
-    'gdpr_third_party_title' => 'Derden',
-    'gdpr_third_party_desc' => 'We gebruiken GoQR (<a href="https://goqr.me/privacy-safety-security/">zie de GoQR privacyverklaring</a>) voor het genereren van QR codes. Wanneer je betalingsgegevens invoert om een QR code te genereren, worden deze gegevens naar de GoQR API verzonden alleen voor het genereren van de QR code afbeelding. Volgens hun privacyverklaring zijn de GoQR servers gevestigd in de Europese Unie en bewaren ze geen QR code inhoud.',
+    'gdpr_third_party_title' => 'Diensten van derden',
+    'gdpr_third_party_desc' => 'We gebruiken de dienst OpenIBAN (zie <a href="https://openiban.com/">OpenIBAN</a>) uitsluitend om de BIC-code op te zoeken voor een opgegeven IBAN. Alleen het IBAN wordt naar OpenIBAN verzonden; geen andere betaal- of persoonsgegevens worden gedeeld met een externe dienst.',
     
     // Policy updates section
     'gdpr_updates_title' => 'Wijzigingen in dit beleid',

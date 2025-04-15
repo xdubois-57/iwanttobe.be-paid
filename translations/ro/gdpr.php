@@ -65,8 +65,8 @@ return [
     'gdpr_rights_note' => 'Deși procesăm date temporar pentru a genera coduri QR, nu stocăm date personale permanent pe serverele noastre. Orice date stocate sunt stocate doar în memorie locală browser, oferindu-vă control complet prin setările browserului dumneavoastră. Pentru întrebări privind confidențialitatea, contactați-ne.',
     
     // Third-party services section
-    'gdpr_third_party_title' => 'Servicii de terți',
-    'gdpr_third_party_desc' => 'Folosim GoQR (<a href="https://goqr.me/privacy-safety-security/">vezi politica de confidențialitate a GoQR</a>) pentru generarea codurilor QR. Când introduceți datele de plată pentru a genera un cod QR, aceste date sunt trimise către API-ul GoQR doar pentru a genera imaginea codului QR. Conform politicii lor de confidențialitate, serverele GoQR sunt situate în Uniunea Europeană și nu păstrează conținutul codurilor QR.',
+    'gdpr_third_party_title' => 'Servicii terțe',
+    'gdpr_third_party_desc' => 'Folosim serviciul OpenIBAN (vezi <a href="https://openiban.com/">OpenIBAN</a>) doar pentru a căuta codul BIC pe baza unui IBAN furnizat. Numai IBAN-ul este trimis către OpenIBAN; nicio altă informație de plată sau personală nu este partajată cu servicii terțe.',
     
     // Policy updates section
     'gdpr_updates_title' => 'Modificări ale politicii',

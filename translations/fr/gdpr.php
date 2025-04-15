@@ -66,7 +66,7 @@ return [
     
     // Third-party services section
     'gdpr_third_party_title' => 'Services tiers',
-    'gdpr_third_party_desc' => 'Nous utilisons GoQR (<a href="https://goqr.me/privacy-safety-security/">voir la politique de confidentialité de GoQR</a>) pour générer des codes QR. Lorsque vous entrez des informations de paiement pour créer un code QR, ces données sont envoyées à l\'API de GoQR uniquement dans le but de générer l\'image du code QR. Selon leur politique de confidentialité, les serveurs de GoQR sont situés dans l\'Union Européenne et ils ne conservent pas le contenu des codes QR.',
+    'gdpr_third_party_desc' => 'Nous utilisons le service OpenIBAN (voir <a href="https://openiban.com/">OpenIBAN</a>) uniquement pour rechercher le code BIC à partir d\'un IBAN. Seul l\'IBAN est transmis à OpenIBAN ; aucune autre donnée de paiement ou personnelle n\'est partagée avec un service tiers.',
     
     // Policy updates section
     'gdpr_updates_title' => 'Modifications de cette politique',

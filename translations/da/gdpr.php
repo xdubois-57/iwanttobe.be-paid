@@ -65,8 +65,8 @@ return [
     'gdpr_rights_note' => 'Selvom vi behandler betalingsoplysninger midlertidigt til generering af QR-koder, gemmer vi dem aldrig permanent på vores servere. Data gemmes kun i din browsers lokale lagring, hvis du vælger det. Hvis du har spørgsmål om persondatapolitikken eller vores praksis, kontakt os.',
     
     // Third-party services section
-    'gdpr_third_party_title' => 'Tredjeparts tjenester',
-    'gdpr_third_party_desc' => 'Vi bruger GoQR (<a href="https://goqr.me/privacy-safety-security/">se GoQRs persondatapolitik</a>) til at generere QR-koder. Når du indtaster betalingsoplysninger til generering af en QR-kode, sendes disse oplysninger til GoQRs API kun for at generere QR-kodebilledet. Ifølge deres persondatapolitik er GoQRs servere beliggende i EU og gemmer de ikke indholdet af QR-koder.',
+    'gdpr_third_party_title' => 'Tredjepartstjenester',
+    'gdpr_third_party_desc' => 'Vi bruger OpenIBAN-tjenesten (se <a href="https://openiban.com/">OpenIBAN</a>) udelukkende til at slå BIC-koden op for et givet IBAN. Kun IBAN sendes til OpenIBAN; ingen andre betalings- eller personoplysninger deles med tredjepartstjenester.',
     
     // Policy updates section
     'gdpr_updates_title' => 'Opdateringer af politikken',

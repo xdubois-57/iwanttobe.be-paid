@@ -8,6 +8,7 @@
 5. [Security Considerations](#5-security-considerations)
 6. [Translation System](#6-translation-system)
 7. [Architecture Changes](#7-architecture-changes)
+8. [Dependencies](#8-dependencies)
 
 ## 1. Architecture Overview
 
@@ -345,12 +346,30 @@ Several enhancements have been made to improve the user interface and experience
    - Updated third-party service description in GDPR policy
    - Added specific details about GoQR's data handling practices
 
-Last updated: 2025-04-14
+### Removal of Unsupported Languages (2025-04-15)
+
+- The list of supported languages has been updated. Bulgarian (bg), British English (gb), and Slovak (sk) are no longer supported. Their translation directories and references have been removed from the codebase.
+- The translation system continues to use a main language file referencing modular translation files for each language.
+- When removing a language, both its directory and any references in configuration files must be deleted to maintain consistency.
+
+## 8. Dependencies
+
+- The application now depends on [chillerlan/php-qrcode](https://github.com/chillerlan/php-qrcode) for local QR code generation in PHP.
+    - This library is managed via Composer and installed in the `vendor/` directory.
+    - See `composer.json` for version details.
+    - The QR code generation logic was moved from a utility class to the `QRController` for direct integration.
+
+- All previous reliance on remote QR code APIs (such as GoQR) has been removed. QR codes are now generated entirely locally for improved privacy, reliability, and performance.
+
+- Ensure Composer autoloading is included (see `index.php`).
+
+Last updated: 2025-04-15
 
 ## Removed Components
 - About page (controller, view and route)
 - Related menu item
+- Bulgarian (bg), British English (gb), and Slovak (sk) languages
 
 ---
 
-*Last updated: 2025-04-14*
+*Last updated: 2025-04-15*

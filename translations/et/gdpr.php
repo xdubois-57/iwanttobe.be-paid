@@ -66,7 +66,7 @@ return [
     
     // Third-party services section
     'gdpr_third_party_title' => 'Kolmandate osapoolte teenused',
-    'gdpr_third_party_desc' => 'Me kasutame GoQRi teenuseid QR-koodide genereerimiseks. Kui sisestate makseandmeid QR-koodi genereerimiseks, saadetakse need andmed GoQRi API-le vaid QR-koodi pildi genereerimiseks. GoQRi serverid asuvad Euroopa Liidus ning nad ei salvesta QR-koodide sisu.',
+    'gdpr_third_party_desc' => 'Kasutame OpenIBAN teenust (vt <a href="https://openiban.com/">OpenIBAN</a>) ainult BIC-koodi leidmiseks antud IBAN-i jaoks. OpenIBANile saadetakse ainult IBAN; muid makse- ega isikuandmeid kolmandatele osapooltele ei jagata.',
     
     // Policy updates section
     'gdpr_updates_title' => 'Poliitika uuendused',

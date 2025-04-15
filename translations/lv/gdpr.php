@@ -66,7 +66,7 @@ return [
     
     // Third-party services section
     'gdpr_third_party_title' => 'Trešo pušu pakalpojumi',
-    'gdpr_third_party_desc' => 'Mēs izmantojam GoQR (<a href="https://goqr.me/privacy-safety-security/">skatiet GoQR privātuma politiku</a>) QR kodu ģenerēšanai. Ievadot maksājuma informāciju, lai izveidotu QR kodu, šie dati tiek nosūtīti uz GoQR API tikai QR kodu attēla ģenerēšanai. Saskaņā ar to privātuma politiku, GoQR serveri atrodas Eiropas Savienībā, un tie neuzglabā QR kodu saturu.',
+    'gdpr_third_party_desc' => 'Mēs izmantojam OpenIBAN pakalpojumu (skatīt <a href="https://openiban.com/">OpenIBAN</a>) tikai BIC koda meklēšanai pēc IBAN. Tikai IBAN tiek nosūtīts uz OpenIBAN; nekādi citi maksājumu vai personīgie dati netiek kopīgoti ar trešajām pusēm.',
     
     // Policy updates section
     'gdpr_updates_title' => 'Izmaiņas šajā politikā',

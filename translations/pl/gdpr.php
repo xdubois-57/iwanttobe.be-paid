@@ -65,8 +65,8 @@ return [
     'gdpr_rights_note' => 'Podczas gdy przetwarzamy dane tymczasowo w celu wygenerowania kodów QR, nie przechowujemy na stałe danych osobowych na naszych serwerach. Wszelkie zapisane dane są przechowywane lokalnie w Twojej przeglądarce, dając Ci pełną kontrolę poprzez ustawienia przeglądarki. Dla wszelkich pytań dotyczących prywatności, prosimy o kontakt z nami.',
     
     // Third-party services section
-    'gdpr_third_party_title' => 'Usługi trzecich stron',
-    'gdpr_third_party_desc' => 'Używamy GoQR (<a href="https://goqr.me/privacy-safety-security/">zobacz politykę prywatności GoQR</a>) do generowania kodów QR. Gdy wpisujesz dane płatnicze do wygenerowania kodu QR, te dane są wysyłane do API GoQR tylko w celu wygenerowania obrazu kodu QR. Zgodnie z ich polityką prywatności, serwery GoQR są zlokalizowane w Unii Europejskiej i nie przechowują zawartości kodów QR.',
+    'gdpr_third_party_title' => 'Usługi stron trzecich',
+    'gdpr_third_party_desc' => 'Korzystamy z usługi OpenIBAN (zobacz <a href="https://openiban.com/">OpenIBAN</a>) wyłącznie do wyszukiwania kodu BIC na podstawie podanego IBAN. Tylko IBAN jest przekazywany do OpenIBAN; żadne inne dane płatnicze ani osobowe nie są udostępniane stronom trzecim.',
     
     // Policy updates section
     'gdpr_updates_title' => 'Zmiany w tej polityce',

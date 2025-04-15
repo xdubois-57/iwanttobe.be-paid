@@ -66,7 +66,7 @@ return [
     
     // Third-party services section
     'gdpr_third_party_title' => 'Služby třetích stran',
-    'gdpr_third_party_desc' => 'Používáme GoQR (<a href="https://goqr.me/privacy-safety-security/">viz politika ochrany osobních údajů GoQR</a>) pro generování QR kódů. Když zadáte platební údaje pro generování QR kódu, tyto údaje jsou odesílány do API GoQR pouze pro generování obrázku QR kódu. Podle jejich politiky ochrany osobních údajů jsou servery GoQR umístěny v Evropské unii a neukládají obsah QR kódů.',
+    'gdpr_third_party_desc' => 'Používáme službu OpenIBAN (viz <a href="https://openiban.com/">OpenIBAN</a>) pouze pro vyhledání kódu BIC podle zadaného IBAN. OpenIBAN je zasílán pouze IBAN; žádné další platební nebo osobní údaje nejsou sdíleny se žádnou třetí stranou.',
     
     // Policy updates section
     'gdpr_updates_title' => 'Změny politiky',

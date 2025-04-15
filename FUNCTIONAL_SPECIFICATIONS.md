@@ -81,6 +81,11 @@
 - Translation keys must be consistent across all languages
 - HTML links must be properly escaped in PHP translations
 
+### 5.3 Removed Languages
+- Bulgarian (bg), British English (gb), and Slovak (sk) are no longer available in the application.
+- All related translation files and configuration entries have been removed.
+- The application will not offer these languages in the language selector or fallback logic.
+
 ## 6. Security Requirements
 
 ### 6.1 Data Protection
@@ -114,4 +119,4 @@
 - Test on Android
 - Test on iPhone
 
-Last updated: 2025-04-14
+Last updated: 2025-04-15

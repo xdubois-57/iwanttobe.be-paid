@@ -66,10 +66,8 @@ return [
     
     // Third-party services section
     'gdpr_third_party_title' => 'Usluge trećih strana',
-    'gdpr_third_party_desc' => 'Koristimo usluge trećih strana kako bismo pružili našu uslugu:',
-    'gdpr_third_party_goqr' => 'GoQR: Koristimo <a href="https://goqr.me/privacy-safety-security/">Go QR</a> kako bi se generirali QR kodovi.',
-    'gdpr_third_party_openiban' => 'OpenIBAN: Koristimo <a href="https://openiban.com/">OpenIBAN</a> kako bismo provjerili IBAN-e i pronašli povezani BIC kod.',
-
+    'gdpr_third_party_desc' => 'Koristimo uslugu OpenIBAN (vidi <a href="https://openiban.com/">OpenIBAN</a>) isključivo za pronalaženje BIC koda na temelju IBAN-a. Samo IBAN se šalje OpenIBAN-u; nijedni drugi podaci o plaćanju ili osobni podaci se ne dijele s trećim stranama.',
+    
     // Policy updates section
     'gdpr_updates_title' => 'Promjene u ovoj politici',
     'gdpr_updates_desc' => 'Možemo ažurirati ovu Politiku privatnosti od vremena do vremena. Obavještavati ćemo vas o svim promjenama objavljivanjem nove Politike privatnosti na ovoj stranici i ažuriranjem datuma "Zadnja ažuriranja".',

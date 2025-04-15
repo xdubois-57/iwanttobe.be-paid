@@ -64,11 +64,9 @@ return [
     'gdpr_right_object' => 'Jog a felügyelésre',
     'gdpr_rights_note' => 'Bár átmenetileg feldolgozunk adatokat QR kódok generálásához, soha nem tároljuk az adatokat állandóan a szervereinken. A tárolt adatok csak akkor kerülnek tárolásra a böngésző helyi tárolóban, amely Önnek biztosítja a teljes kontrollt a böngésző beállításaival. Ha adatvédelmi kérdései vannak, vegye fel velünk a kapcsolatot.',
     
-    // Third-party services section
-    'gdpr_third_party_title' => 'Harmadik felek szolgáltatásai',
-    'gdpr_third_party_desc' => 'Harmadik felek szolgáltatásait használjuk a szolgáltatásunk nyújtásához:',
-    'gdpr_third_party_goqr' => 'GoQR: A <a href="https://goqr.me/privacy-safety-security/">GoQR</a>-t használjuk QR kódok generálásához.',
-    'gdpr_third_party_openiban' => 'OpenIBAN: A <a href="https://openiban.com/">OpenIBAN</a>-t használjuk IBAN ellenőrzésére és a hozzá tartozó BIC kód megtalálására.',
+    // Harmadik fél szolgáltatások
+    'gdpr_third_party_title' => 'Harmadik fél szolgáltatások',
+    'gdpr_third_party_desc' => 'Csak az OpenIBAN szolgáltatást használjuk (lásd: <a href="https://openiban.com/">OpenIBAN</a>) kizárólag az IBAN-hoz tartozó BIC kód lekérdezésére. Csak az IBAN kerül elküldésre az OpenIBAN-nak; más fizetési vagy személyes adatot nem osztunk meg harmadik féllel.',
     
     // Policy updates section
     'gdpr_updates_title' => 'Szabályzat módosításai',
