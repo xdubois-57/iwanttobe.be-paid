@@ -19,6 +19,16 @@ A web application for generating QR codes for SEPA bank transfers, following the
 - LocalStorage for form data persistence
 - Session-based language management
 
+## Dependencies
+
+This project requires the [chillerlan/php-qrcode](https://github.com/chillerlan/php-qrcode) library for QR code generation. Install it using Composer:
+
+```bash
+composer require chillerlan/php-qrcode
+```
+
+If you do not have Composer installed, see https://getcomposer.org/
+
 ## Installation
 
 1. Clone the repository:
