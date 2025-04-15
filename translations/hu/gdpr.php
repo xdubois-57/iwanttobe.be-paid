@@ -58,7 +58,7 @@ return [
     'gdpr_rights_intro' => 'A GDPR szerint a következő jogokat élvezheti:',
     'gdpr_right_access' => 'Hozzáférési jog',
     'gdpr_right_rectification' => 'Jog a helyesbítésre',
-    'gdpr_right_erasure' => 'Hozzáférési jog',
+    'gdpr_right_erasure' => 'Jog a törlésre',
     'gdpr_right_restrict' => 'Jog a feldolgozás korlátozására',
     'gdpr_right_portability' => 'Jog az adatok átvitelére',
     'gdpr_right_object' => 'Jog a felügyelésre',
@@ -66,7 +66,9 @@ return [
     
     // Third-party services section
     'gdpr_third_party_title' => 'Harmadik felek szolgáltatásai',
-    'gdpr_third_party_desc' => 'A GoQR-t használjuk (<a href="https://goqr.me/privacy-safety-security/">lásd a GoQR adatvédelmi szabályzatát</a>) QR kódok generálásához. Amikor beírja a befizetési adatokat egy QR kód generálásához, ezeket az adatokat a GoQR API-nak küldjük csak a QR kód kép generálásához. Azzal a szabályzattal, hogy a GoQR szerverei az Európai Unióban vannak és nem tárolják a QR kód tartalmát.',
+    'gdpr_third_party_desc' => 'Harmadik felek szolgáltatásait használjuk a szolgáltatásunk nyújtásához:',
+    'gdpr_third_party_goqr' => 'GoQR: A <a href="https://goqr.me/privacy-safety-security/">GoQR</a>-t használjuk QR kódok generálásához.',
+    'gdpr_third_party_openiban' => 'OpenIBAN: A <a href="https://openiban.com/">OpenIBAN</a>-t használjuk IBAN ellenőrzésére és a hozzá tartozó BIC kód megtalálására.',
     
     // Policy updates section
     'gdpr_updates_title' => 'Szabályzat módosításai',
