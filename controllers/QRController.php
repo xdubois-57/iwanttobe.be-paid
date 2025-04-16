@@ -154,43 +154,65 @@ class QRController {
 
     public function generateQRCode($text) {
         require_once __DIR__ . '/../controllers/LanguageController.php';
+        require_once __DIR__ . '/../lib/QRImageWithLogo.php';
+        require_once __DIR__ . '/../lib/TextLogoHelper.php';
         $lang = LanguageController::getInstance();
 
-        $size = 300;
-        $pngData = self::generateQrPng($text, $size, false);
-        if ($pngData === false) {
-            throw new \Exception('Failed to generate QR code locally');
-        }
-        $im = @imagecreatefromstring($pngData);
-        if ($im === false) {
+        // QR options
+        $options = new \chillerlan\QRCode\QROptions([
+            'outputBase64'        => false,
+            'scale'               => 6,
+            'imageTransparent'    => false,
+            'drawCircularModules' => true,
+            'circleRadius'        => 0.45,
+            'keepAsSquare'        => [
+                \chillerlan\QRCode\Data\QRMatrix::M_FINDER,
+                \chillerlan\QRCode\Data\QRMatrix::M_FINDER_DOT,
+            ],
+            'eccLevel'            => \chillerlan\QRCode\Common\EccLevel::H,
+            'addLogoSpace'        => true,
+            'logoSpaceWidth'      => 13,
+            'logoSpaceHeight'     => 13,
+        ]);
+        $qrcode = new \chillerlan\QRCode\QRCode($options);
+        $qrcode->addByteSegment($text);
+        $matrix = $qrcode->getQRMatrix();
+
+        // Generate logo image with text
+        $fontPath = __DIR__ . '/../fonts/OpenSans-Regular.ttf';
+        $logoFile = sys_get_temp_dir() . '/qr_logo_text.png';
+        \TextLogoHelper::makeTextLogo('iwantto.be', $fontPath, 156, $logoFile); // 156px = 13*12 (scale)
+
+        // Output QR with logo
+        $qrOutput = new \QRImageWithLogo($options, $matrix);
+        $qrImageData = $qrOutput->dump(null, $logoFile);
+
+        // Remove temp logo file
+        @unlink($logoFile);
+
+        // --- Compose final image with payment info below QR ---
+        $qrIm = imagecreatefromstring($qrImageData);
+        if ($qrIm === false) {
             throw new \Exception('Failed to process QR code image');
         }
-
-        $width = imagesx($im);
-        $height = imagesy($im) + 100; 
-        $newIm = imagecreatetruecolor($width, $height);
-        if ($newIm === false) {
-            imagedestroy($im);
-            throw new \Exception('Failed to create image canvas');
-        }
-
-        $white = imagecolorallocate($newIm, 255, 255, 255);
-        imagefill($newIm, 0, 0, $white);
-        imagecopy($newIm, $im, 0, 0, 0, 0, imagesx($im), imagesy($im));
-
-        $black = imagecolorallocate($newIm, 0, 0, 0);
-        $gray = imagecolorallocate($newIm, 100, 100, 100);
-        
+        $width = imagesx($qrIm);
+        $height = imagesy($qrIm);
+        $extraHeight = 100;
+        $finalIm = imagecreatetruecolor($width, $height + $extraHeight);
+        $white = imagecolorallocate($finalIm, 255, 255, 255);
+        imagefill($finalIm, 0, 0, $white);
+        imagecopy($finalIm, $qrIm, 0, 0, 0, 0, $width, $height);
+        $black = imagecolorallocate($finalIm, 0, 0, 0);
+        $gray = imagecolorallocate($finalIm, 100, 100, 100);
         $fontSize = 12;
         $fontPath = self::FONT_PATH;
-        
+        // Parse EPC for info
         $epcLines = explode("\n", $text);
         $name = rtrim($epcLines[5]);
         $iban = rtrim($epcLines[6]);
         $amountStr = rtrim($epcLines[7]);
         $amount = floatval(str_replace('EUR', '', $amountStr));
-        $communication = rtrim($epcLines[10]); 
-        
+        $communication = rtrim($epcLines[10]);
         $generatedBy = $lang->translate('generated_by');
         $summaryText = sprintf(
             "%s\n%s\n%.2f EUR\n%s",
@@ -199,43 +221,27 @@ class QRController {
             $amount,
             $communication
         );
-        
         $bbox = imagettfbbox($fontSize, 0, $fontPath, $generatedBy);
-        if ($bbox === false) {
-            throw new \Exception('Failed to calculate text dimensions');
-        }
-        
         $textWidth = abs($bbox[4] - $bbox[0]);
         $x = intval(($width - $textWidth) / 2);
-        $y = intval($height - 75); 
-        
-        $result = imagettftext($newIm, $fontSize, 0, $x, $y, $black, $fontPath, $generatedBy);
-        if ($result === false) {
-            throw new \Exception('Failed to add text to image');
-        }
-
+        $y = intval($height + 25);
+        imagettftext($finalIm, $fontSize, 0, $x, $y, $black, $fontPath, $generatedBy);
         $lines = explode("\n", $summaryText);
         $smallerFontSize = 10;
-        $lineHeight = 15; 
-        
+        $lineHeight = 15;
         foreach ($lines as $index => $line) {
             $bbox = imagettfbbox($smallerFontSize, 0, $fontPath, $line);
             if ($bbox === false) continue;
-            
             $textWidth = abs($bbox[4] - $bbox[0]);
             $x = intval(($width - $textWidth) / 2);
-            $y = intval($height - 55 + ($index * $lineHeight)); 
-            
-            imagettftext($newIm, $smallerFontSize, 0, $x, $y, $gray, $fontPath, $line);
+            $y = intval($height + 45 + ($index * $lineHeight));
+            imagettftext($finalIm, $smallerFontSize, 0, $x, $y, $gray, $fontPath, $line);
         }
-
         ob_start();
-        imagepng($newIm);
+        imagepng($finalIm);
         $imageData = ob_get_clean();
-
-        imagedestroy($im);
-        imagedestroy($newIm);
-
+        imagedestroy($qrIm);
+        imagedestroy($finalIm);
         return 'data:image/png;base64,' . base64_encode($imageData);
     }
 }
