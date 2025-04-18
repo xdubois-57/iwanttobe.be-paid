@@ -30,11 +30,11 @@ $lang = LanguageController::getInstance();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>iwantto.be Paid</title>
+    <title>Paid!</title>
     <meta name="description" content="<?php echo $lang->translate('meta_description'); ?>">
     <meta name="keywords" content="<?php echo $lang->translate('meta_keywords'); ?>">
     <meta name="robots" content="index, follow">
-    <meta property="og:title" content="iwantto.be Paid">
+    <meta property="og:title" content="Paid!">
     <meta property="og:description" content="<?php echo $lang->translate('meta_description'); ?>">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://iwantto.be">
