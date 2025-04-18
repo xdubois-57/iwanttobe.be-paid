@@ -10,7 +10,7 @@ class QRImageWithLogo extends QRGdImagePNG {
     /**
      * @throws QRCodeOutputException
      */
-    public function dump(string $file = null, string $logo = null): string {
+    public function dump(?string $file = null, ?string $logo = null): string {
         $logo ??= '';
         $this->options->returnResource = true;
         parent::dump($file);
