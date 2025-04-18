@@ -197,7 +197,24 @@ class QRController {
         }
         $width = imagesx($qrIm);
         $height = imagesy($qrIm);
-        $extraHeight = 100;
+        // Dynamically calculate extra height based on payment info lines
+        $smallerFontSize = 10;
+        $lineHeight = 17;
+        $lines = explode("\n", $text);
+        $name = rtrim($lines[5]);
+        $iban = rtrim($lines[6]);
+        $amountStr = rtrim($lines[7]);
+        $amount = floatval(str_replace('EUR', '', $amountStr));
+        $communication = rtrim($lines[10]);
+        $summaryText = sprintf(
+            "%s\n%s\n%.2f EUR\n%s",
+            sprintf($lang->translate('payment_to'), $name),
+            $iban,
+            $amount,
+            $communication
+        );
+        $lines = explode("\n", $summaryText);
+        $extraHeight = ($lineHeight * count($lines)) + 15; // Only 2px padding below last line
         $finalIm = imagecreatetruecolor($width, $height + $extraHeight);
         $white = imagecolorallocate($finalIm, 255, 255, 255);
         imagefill($finalIm, 0, 0, $white);
@@ -206,35 +223,13 @@ class QRController {
         $gray = imagecolorallocate($finalIm, 100, 100, 100);
         $fontSize = 12;
         $fontPath = self::FONT_PATH;
-        // Parse EPC for info
-        $epcLines = explode("\n", $text);
-        $name = rtrim($epcLines[5]);
-        $iban = rtrim($epcLines[6]);
-        $amountStr = rtrim($epcLines[7]);
-        $amount = floatval(str_replace('EUR', '', $amountStr));
-        $communication = rtrim($epcLines[10]);
-        $generatedBy = $lang->translate('generated_by');
-        $summaryText = sprintf(
-            "%s\n%s\n%.2f EUR\n%s",
-            sprintf($lang->translate('payment_to'), $name),
-            $iban,
-            $amount,
-            $communication
-        );
-        $bbox = imagettfbbox($fontSize, 0, $fontPath, $generatedBy);
-        $textWidth = abs($bbox[4] - $bbox[0]);
-        $x = intval(($width - $textWidth) / 2);
-        $y = intval($height + 25);
-        imagettftext($finalIm, $fontSize, 0, $x, $y, $black, $fontPath, $generatedBy);
-        $lines = explode("\n", $summaryText);
-        $smallerFontSize = 10;
-        $lineHeight = 15;
+        $verticalOffset = 15; // Space between QR and first payment info line
         foreach ($lines as $index => $line) {
             $bbox = imagettfbbox($smallerFontSize, 0, $fontPath, $line);
             if ($bbox === false) continue;
             $textWidth = abs($bbox[4] - $bbox[0]);
             $x = intval(($width - $textWidth) / 2);
-            $y = intval($height + 45 + ($index * $lineHeight));
+            $y = intval($height + $verticalOffset + ($index * $lineHeight));
             imagettftext($finalIm, $smallerFontSize, 0, $x, $y, $gray, $fontPath, $line);
         }
         ob_start();
