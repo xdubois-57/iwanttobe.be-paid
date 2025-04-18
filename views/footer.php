@@ -28,7 +28,7 @@
 <footer class="disclaimer-footer">
     <div class="container">
         <p class="disclaimer-text"><?php echo $lang->translate('disclaimer_text'); ?></p>
-        <p class="copyright">&copy; <?php echo date('Y'); ?> QR Transfer</p>
+        <p class="copyright">&copy; <?php echo date('Y'); ?> Xavier Dubois</p>
     </div>
 </footer>
 

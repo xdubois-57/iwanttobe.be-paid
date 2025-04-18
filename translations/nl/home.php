@@ -1,11 +1,11 @@
 <?php
-// Dutch home page translations for QR Transfer application
+// Dutch home page translations for <strong>Paid!</strong> application
 // Contains all text for the main landing page
 // Last updated: 2025-04-09
 
 return [
     // Main heading and introduction
-    'home_title' => 'QR Transfer - Gratis SEPA Betalings QR Code Generator',
+    'home_title' => '<strong>Paid!</strong> - Gratis SEPA Betalings QR Code Generator',
     'home_subtitle' => 'Maak QR codes voor directe betalingen in Europa',
     
     // Key features section
@@ -61,7 +61,7 @@ return [
     'support_button' => 'Koop me een koffie',
     
     // Footer section
-    'footer_copyright' => '  QR Transfer. Alle rechten voorbehouden.',
+    'footer_copyright' => '  <strong>Paid!</strong>. Alle rechten voorbehouden.',
     'footer_privacy' => 'Privacybeleid',
     'footer_terms' => 'Gebruiksvoorwaarden',
     
@@ -69,7 +69,7 @@ return [
     'home_intro_text' => 'Genereer een QR-code die je vrienden kunnen scannen met hun bankapp om geld naar je over te maken. Vul hieronder je gegevens in en deel de QR-code.',
     'support_text' => 'Deze app is gratis. Als je hem leuk vindt, trakteer me dan op een koffie door de onderstaande QR-code te scannen met je bankapp!',
     'support_text_alt' => 'Deze app is gratis. Als je hem leuk vindt, trakteer me dan op een koffie door hier te klikken!',
-    'support_thanks' => 'Bedankt voor het ondersteunen van QR Transfer!',
+    'support_thanks' => 'Bedankt voor het ondersteunen van <strong>Paid!</strong>!',
     'download_qr' => 'QR-code downloaden',
     'share_qr' => 'QR-code delen',
     'cookie_notice' => 'Deze site gebruikt essentiële cookies',

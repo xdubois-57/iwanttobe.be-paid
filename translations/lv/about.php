@@ -5,7 +5,7 @@
 
 return [
     // About section
-    'about_title' => 'Par QR Transfer',
+    'about_title' => 'Par <strong>Paid!</strong>',
     'about_description' => 'QR Transfer ir bezmaksas, drošs un privāts SEPA maksājumu ģeneratoris, kas strādā tieši uz visiem ierīcēm.',
     'about_mission' => 'Mūsu mērķis ir palīdzēt cilvēkiem vieglāk veikt maksājumus, izmantojot modernāko tehnoloģiju.',
     'about_features' => 'Funkcijas',

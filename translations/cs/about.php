@@ -4,5 +4,5 @@
 // Last updated: 2025-04-13
 
 return [
-    'about_title' => 'O QR Transfer',
+    'about_title' => 'O <strong>Paid!</strong>',
 ];

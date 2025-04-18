@@ -1,7 +1,7 @@
 <?php
-// Danish GDPR translations for QR Transfer application
+// Danish GDPR translations for <strong>Paid!</strong> application
 // Contains all privacy policy and GDPR-related text
-// Last updated: 2025-04-13
+// Last updated: 2025-04-18
 
 return [
     // Page title and metadata
@@ -9,7 +9,7 @@ return [
     'gdpr_last_updated' => 'Sidst opdateret: %s',
     
     // Introduction section
-    'gdpr_intro' => 'Denne persondatapolitik beskriver, hvordan vi indsamler, behandler og beskytter dine data i forbindelse med brugen af QR Transfer ("vi", "os").',
+    'gdpr_intro' => 'Denne privatlivspolitik beskriver, hvordan <strong>Paid!</strong> ("vi", "os" eller "vores") indsamler, bruger og beskytter dine personlige oplysninger, når du bruger vores QR-kodegenereringstjeneste.',
     
     // Information collection section
     'gdpr_info_collect_title' => 'Indsamlede data',
@@ -35,7 +35,7 @@ return [
     
     // Security section
     'gdpr_security_title' => 'Dataopbevaring og beskyttelse',
-    'gdpr_security_intro' => 'QR Transfer er designet med sikkerhed i tankerne:',
+    'gdpr_security_intro' => '<strong>Paid!</strong> er designet med privatliv for øje:',
     'gdpr_security_processing' => 'Betalingsoplysninger behandles sikkert på vores servere til generering af QR-koder',
     'gdpr_security_no_storage' => 'Vi gemmer aldrig betalingsoplysninger permanent på vores servere',
     'gdpr_security_local_storage' => 'Betalingsoplysninger gemmes kun i din browsers lokale lagring, hvis du vælger det',

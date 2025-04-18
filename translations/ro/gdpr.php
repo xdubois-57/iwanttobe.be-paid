@@ -1,7 +1,7 @@
 <?php
-// Romanian GDPR translations for QR Transfer application
+// Romanian GDPR translations for <strong>Paid!</strong> application
 // Contains all privacy policy and GDPR-related text
-// Last updated: 2025-04-13
+// Last updated: 2025-04-18
 
 return [
     // Page title and metadata
@@ -9,7 +9,7 @@ return [
     'gdpr_last_updated' => 'Ultima actualizare: %s',
     
     // Introduction section
-    'gdpr_intro' => 'Această politică de confidențialitate descrie modul în care QR Transfer ("noi", "noi") colectează, procesează și protejează datele personale ale dumneavoastră atunci când folosiți serviciul nostru pentru generarea codurilor QR.',
+    'gdpr_intro' => 'Această Politică de Confidențialitate descrie modul în care <strong>Paid!</strong> ("noi", "al nostru") colectează, utilizează și protejează informațiile dvs. personale atunci când utilizați serviciul nostru de generare a codurilor QR.',
     
     // Information collection section
     'gdpr_info_collect_title' => 'Informații colectate',
@@ -35,7 +35,7 @@ return [
     
     // Security section
     'gdpr_security_title' => 'Stocare și securitate date',
-    'gdpr_security_intro' => 'QR Transfer a fost conceput cu confidențialitate în minte:',
+    'gdpr_security_intro' => '<strong>Paid!</strong> este proiectat cu confidențialitatea în minte:',
     'gdpr_security_processing' => 'Datele de plată sunt procesate în siguranță pe serverele noastre pentru a genera coduri QR',
     'gdpr_security_no_storage' => 'Nu stocăm date de plată permanent pe serverele noastre',
     'gdpr_security_local_storage' => 'Datele de plată stocate sunt stocate doar în memorie locală browser dacă alegeți să le salvați',

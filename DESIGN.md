@@ -1,4 +1,4 @@
-# QR Transfer - Software Design Document
+# **Paid!** - Software Design Document
 
 ## Table of Contents
 1. [Architecture Overview](#1-architecture-overview)
@@ -157,6 +157,8 @@ graph TD
 19. hr (Hrvatski)
 20. de (Deutsch)
 
+> The application name is consistently presented as **Paid!** in all translations and user-facing content. Any previous references to "QR Transfer" or "iwantto.be" have been replaced. Unsupported languages (bg, et, ga, lt, mt, sk) are not included.
+
 ### 2.4 Form Handling
 
 ```mermaid
@@ -242,43 +244,52 @@ graph TD
 
 ## 6. Translation System
 
-### PHP Translations
-1. Managed by LanguageController
-2. Stored in `/translations/[lang]/` directories
-   - Supported languages: en (English), fr (French), nl (Dutch), pl (Polish), it (Italian), es (Spanish), pt (Portuguese), sv (Swedish), el (Greek), ro (Romanian), cs (Czech), hu (Hungarian), sl (Slovenian), fi (Finnish), da (Danish), no (Norwegian), is (Icelandic), lv (Latvian), de (German)
-3. Accessed via `$lang->translate('key')` in PHP
+The **Paid!** application supports the following languages:
+- cs (Czech)
+- da (Danish)
+- de (German)
+- el (Greek)
+- en (English)
+- es (Spanish)
+- et (Estonian)
+- fi (Finnish)
+- fr (French)
+- ga (Irish)
+- hr (Croatian)
+- hu (Hungarian)
+- is (Icelandic)
+- it (Italian)
+- lt (Lithuanian)
+- lv (Latvian)
+- mt (Maltese)
+- nl (Dutch)
+- no (Norwegian)
+- pl (Polish)
+- pt (Portuguese)
+- ro (Romanian)
+- sl (Slovenian)
+- sv (Swedish)
 
-### JavaScript Access
-1. **Initialization**:
-   - `window.t()` function defined in header.php
-   - Preloads common translations (save_favorite, update_favorite)
-   ```php
-   window.t = function(key) {
-       const translations = {
-           'save_favorite': '<?= $lang->translate('save_favorite') ?>',
-           // ...
-       };
-       return translations[key] || key;
-   };
-   ```
+### Translation Consistency
+- All supported languages must have up-to-date translation files for every user-facing section, including the "Why Us" page.
+- All translation files must refer to the application name as **Paid!** in all languages and contexts, including new and existing translations (see list of supported languages).
+- Update the Why Us and GDPR translation files for every supported language when making changes to branding or core features.
+- Translation files are organized under `/translations/<lang>/why_us.php`.
 
-2. **Usage**:
-   - Directly via `window.t('key')`
-   - Through the `translate()` module for better abstraction
-   ```javascript
-   import { translate } from './modules/translations';
-   translate('update_favorite');
-   ```
+### Branding Update
 
-3. **Data Attributes**:
-   - Some translations passed via HTML data attributes
-   ```php
-   <button data-update-text="<?= $lang->translate('update_favorite')">
-   ```
+- As of April 18, 2025, the application is branded as **Paid!** throughout all user interfaces, documentation, and translations.
+- All references to "QR Transfer" or "iwantto.be" have been replaced with **Paid!**.
+- Only supported languages are included in the translation system.
 
-### Key Locations
-- PHP: `LanguageController.php`, view templates
-- JS: `modules/translations.js`, component files
+### Branding and Repository Update
+
+- As of April 18, 2025, the application is branded as **Paid!** throughout all user interfaces, documentation, and translations.
+- All references to "QR Transfer" or "iwantto.be" have been replaced with **Paid!**.
+- Only supported languages are included in the translation system.
+
+### Last updated
+- 2025-04-18: Updated translation requirements and branding for "Why Us" page. All supported languages now use the standardized title and branding.
 
 ## 7. Architecture Changes
 
@@ -332,8 +343,8 @@ Several enhancements have been made to improve the user interface and experience
 
 #### Legal Protection:
 - Added a disclaimer footer to all pages in all supported languages
-- Clarified that QR Transfer is not liable for any financial losses
-- Explained that all payments are processed by banks, not QR Transfer
+- Clarified that **Paid!** is not liable for any financial losses
+- Explained that all payments are processed by banks, not **Paid!**
 
 ### Recent Changes (2025-04-14)
 
@@ -363,7 +374,7 @@ Several enhancements have been made to improve the user interface and experience
 
 - Ensure Composer autoloading is included (see `index.php`).
 
-Last updated: 2025-04-15
+Last updated: 2025-04-18
 
 ## Removed Components
 - About page (controller, view and route)
@@ -372,4 +383,4 @@ Last updated: 2025-04-15
 
 ---
 
-*Last updated: 2025-04-15*
+*Last updated: 2025-04-18*

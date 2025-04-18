@@ -1,6 +1,6 @@
 <?php
 return [
-    'why_us_title' => 'Varför välja QR Transfer?',
+    'why_us_title' => 'Varför <strong>Paid!</strong>?',
     'why_us_secure_title' => 'Säkert & Privat',
     'why_us_secure_text' => 'Dina data bearbetas lokalt i din webbläsare. Vi lagrar aldrig känslig betalningsinformation på våra servrar.',
     'why_us_easy_title' => 'Lätt att använda',
@@ -23,9 +23,9 @@ return [
     'why_us_use_case_4_text' => 'Förenkla gruppbetalningar för evenemang, teamaktiviteter eller gemensamma inköp.',
     
     // Jämförelsetabell
-    'why_us_comparison_title' => 'QR Transfer vs Andra Betalningstjänster',
+    'why_us_comparison_title' => '<strong>Paid!</strong> vs Andra Betalningstjänster',
     'why_us_comparison_feature' => 'Funktion',
-    'why_us_comparison_qr_transfer' => 'QR Transfer',
+    'why_us_comparison_qr_transfer' => '<strong>Paid!</strong>',
     'why_us_comparison_banking_apps' => 'Bankappar',
     'why_us_comparison_payment_apps' => 'Betalningsappar',
     
@@ -53,4 +53,7 @@ return [
     'why_us_comparison_static_qr' => 'Ja, lätt att skriva ut',
     'why_us_comparison_static_banking' => 'Begränsade alternativ',
     'why_us_comparison_static_payment' => 'Ofta kräver handlarkonto',
+    'why_us_intro' => 'Upptäck fördelarna med <strong>Paid!</strong> för QR-betalningar.',
 ];
+
+// Swedish Why Us translations for <strong>Paid!</strong> application

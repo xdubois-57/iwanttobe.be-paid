@@ -1,7 +1,7 @@
 <?php
-// Finnish GDPR translations for QR Transfer application
+// Finnish GDPR translations for <strong>Paid!</strong> application
 // Contains all privacy policy and GDPR-related text
-// Last updated: 2025-04-13
+// Last updated: 2025-04-18
 
 return [
     // Page title and metadata
@@ -9,7 +9,7 @@ return [
     'gdpr_last_updated' => 'Viimeksi päivitetty: %s',
     
     // Introduction section
-    'gdpr_intro' => 'Tämä tietosuojakäytäntö kuvaa, miten keräämme, käsittelemme ja suojamme tietoja QR Transferin ("me", "me") käytössä.',
+    'gdpr_intro' => 'Tämä tietosuojakäytäntö kuvaa, miten keräämme, käsittelemme ja suojamme tietoja <strong>Paid!</strong> ("me", "me") käytössä.',
     
     // Information collection section
     'gdpr_info_collect_title' => 'Kerätty tieto',
@@ -35,7 +35,7 @@ return [
     
     // Security section
     'gdpr_security_title' => 'Tietojen tallennus ja suojelu',
-    'gdpr_security_intro' => 'QR Transfer on suunniteltu tietosuojan huomioon:',
+    'gdpr_security_intro' => '<strong>Paid!</strong> on suunniteltu tietosuojan huomioon:',
     'gdpr_security_processing' => 'Maksutiedot käsitellään turvallisesti palvelimillamme QR-koodien luomiseen',
     'gdpr_security_no_storage' => 'Emme koskaan tallenna maksutietoja pysyvästi palvelimillamme',
     'gdpr_security_local_storage' => 'Maksutiedot tallennetaan vain selaimen paikalliseen tallennukseen, jos valitset',

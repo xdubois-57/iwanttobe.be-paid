@@ -1,7 +1,7 @@
 <?php
-// Portuguese GDPR translations for QR Transfer application
+// Portuguese GDPR translations for <strong>Paid!</strong> application
 // Contains all privacy policy and GDPR-related text
-// Last updated: 2025-04-13
+// Last updated: 2025-04-18
 
 return [
     // Page title and metadata
@@ -9,7 +9,7 @@ return [
     'gdpr_last_updated' => 'Última atualização: %s',
     
     // Introduction section
-    'gdpr_intro' => 'Esta Política de Privacidade descreve como QR Transfer ("nós", "nossos") coleta, usa e protege suas informações pessoais quando você usa nosso serviço de geração de códigos QR.',
+    'gdpr_intro' => 'Esta Política de Privacidade descreve como <strong>Paid!</strong> ("nós", "nosso") coleta, usa e protege suas informações pessoais ao usar nosso serviço de geração de QR codes.',
     
     // Information collection section
     'gdpr_info_collect_title' => 'Informações que coletamos',
@@ -35,7 +35,7 @@ return [
     
     // Security section
     'gdpr_security_title' => 'Armazenamento e segurança de dados',
-    'gdpr_security_intro' => 'QR Transfer foi projetado com privacidade em mente:',
+    'gdpr_security_intro' => '<strong>Paid!</strong> foi projetado pensando na privacidade:',
     'gdpr_security_processing' => 'As informações de pagamento são processadas de forma segura em nossos servidores para gerar códigos QR',
     'gdpr_security_no_storage' => 'Não armazenamos permanentemente as informações de pagamento em nossos servidores',
     'gdpr_security_local_storage' => 'Suas informações de pagamento salvas são armazenadas apenas na memória local do seu navegador se você optar por salvá-las',

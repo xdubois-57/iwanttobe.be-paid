@@ -1,8 +1,8 @@
 <?php
-// German support page translations
+// German support translations for <strong>Paid!</strong> application
 
 return [
-    'support_title' => 'Kaufe mir einen Kaffee',
+    'support_title' => 'Unterstütze <strong>Paid!</strong>',
     'support_hosting_title' => 'Hosting-Kosten',
     'support_hosting_text' => 'QR Transfer wird auf sicheren Servern gehostet, um Ihre Daten privat zu halten und den Service schnell zu gestalten. Ihre Unterstützung hilft uns, diese Hosting-Kosten zu decken.',
     'support_development_title' => 'Fortlaufende Entwicklung',
@@ -14,7 +14,7 @@ return [
     'support_coffee_message' => 'Kaffee-Support',
     'support_qr_alt' => 'QR-Code für Spende',
     'support_qr_error' => 'Entschuldigung, wir konnten den QR-Code nicht generieren. Bitte versuchen Sie es später erneut.',
-    'support_thanks' => 'Vielen Dank für Ihre Unterstützung! Jeder Beitrag hilft uns, QR Transfer zu verbessern.',
+    'support_thanks' => 'Danke für deine Unterstützung von <strong>Paid!</strong>!',
     'support_button' => 'Kaufe mir einen Kaffee',
     'support_note' => 'Deine Unterstützung hilft mir dabei, die Serverkosten zu decken und neue Funktionen zu entwickeln.',
     'support_qr_text' => 'Scanne diesen QR-Code, um mir zu helfen',

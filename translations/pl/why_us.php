@@ -1,6 +1,6 @@
 <?php
 return [
-    'why_us_title' => 'Dlaczego wybrać QR Transfer?',
+    'why_us_title' => 'Dlaczego <strong>Paid!</strong>?',
     'why_us_secure_title' => 'Bezpieczne & Prywatne',
     'why_us_secure_text' => 'Twoje dane są przetwarzane lokalnie w Twojej przeglądarce. Nigdy nie przechowujemy wrażliwych danych płatniczych na naszych serwerach.',
     'why_us_easy_title' => 'Łatwe w użyciu',
@@ -23,9 +23,9 @@ return [
     'why_us_use_case_4_text' => 'Upraszczaj płatności grupowe dla wydarzeń, aktywności zespołowych lub zakupów wspólnych.',
     
     // Tłumaczenia tabeli porównawczej
-    'why_us_comparison_title' => 'QR Transfer vs Inne Rozwiązania Płatnicze',
+    'why_us_comparison_title' => '<strong>Paid!</strong> vs Inne Rozwiązania Płatnicze',
     'why_us_comparison_feature' => 'Funkcja',
-    'why_us_comparison_qr_transfer' => 'QR Transfer',
+    'why_us_comparison_qr_transfer' => '<strong>Paid!</strong>',
     'why_us_comparison_banking_apps' => 'Aplikacje Bankowe',
     'why_us_comparison_payment_apps' => 'Aplikacje Płatnicze',
     
@@ -53,4 +53,5 @@ return [
     'why_us_comparison_static_qr' => 'Tak, łatwo do wydrukowania',
     'why_us_comparison_static_banking' => 'Ograniczone opcje',
     'why_us_comparison_static_payment' => 'Często wymaga konta sprzedawcy',
+    'why_us_intro' => 'Poznaj zalety korzystania z <strong>Paid!</strong> do płatności QR.',
 ];

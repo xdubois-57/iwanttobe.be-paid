@@ -1,6 +1,7 @@
 <?php
 return [
-    'why_us_title' => 'Waarom QR Transfer?',
+    // Dutch Why Us translations for <strong>Paid!</strong> application
+    'why_us_title' => 'Waarom <strong>Paid!</strong>?',
     'why_us_secure_title' => 'Veilig & Privé',
     'why_us_secure_text' => 'Uw gegevens worden verwerkt in uw browser. We bewaren geen gevoelige betalingsinformatie op onze servers.',
     'why_us_easy_title' => 'Gemakkelijk te Gebruiken',
@@ -21,11 +22,12 @@ return [
     'why_us_use_case_3_text' => 'Verzamel donaties of inschrijfgelden voor evenementen of activiteiten.',
     'why_us_use_case_4_title' => 'Evenementplanning',
     'why_us_use_case_4_text' => 'Vereenvoudig groepsbetalingen voor evenementen, teamactiviteiten of gedeelde aankopen.',
+    'why_us_intro' => 'Ontdek de voordelen van <strong>Paid!</strong> voor QR-betalingen.',
     
     // Comparison table translations
-    'why_us_comparison_title' => 'QR Transfer vs Andere Betaaloplossingen',
+    'why_us_comparison_title' => '<strong>Paid!</strong> vs Andere Betaaloplossingen',
     'why_us_comparison_feature' => 'Functie',
-    'why_us_comparison_qr_transfer' => 'QR Transfer',
+    'why_us_comparison_qr_transfer' => '<strong>Paid!</strong>',
     'why_us_comparison_banking_apps' => 'Bank Apps',
     'why_us_comparison_payment_apps' => 'Betaal Apps',
     

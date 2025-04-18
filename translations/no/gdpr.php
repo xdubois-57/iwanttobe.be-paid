@@ -1,7 +1,7 @@
 <?php
-// Norwegian GDPR translations for QR Transfer application
+// Norwegian GDPR translations for <strong>Paid!</strong> application
 // Contains all privacy policy and GDPR-related text
-// Last updated: 2025-04-13
+// Last updated: 2025-04-18
 
 return [
     // Page title and metadata
@@ -9,7 +9,7 @@ return [
     'gdpr_last_updated' => 'Sist oppdatert: %s',
     
     // Introduction section
-    'gdpr_intro' => 'Denne personvernpolicyen beskriver hvordan vi samler inn, behandler og beskytter dine data i forbindelse med bruk av QR Transfer ("vi", "oss").',
+    'gdpr_intro' => 'Denne personvernerklæringen beskriver hvordan <strong>Paid!</strong> ("vi", "oss") samler inn, bruker og beskytter dine personopplysninger når du bruker vår QR-kodegenereringstjeneste.',
     
     // Information collection section
     'gdpr_info_collect_title' => 'Samlede data',
@@ -35,7 +35,7 @@ return [
     
     // Security section
     'gdpr_security_title' => 'Dataopbevaring og beskyttelse',
-    'gdpr_security_intro' => 'QR Transfer er designet med sikkerhet i tankene:',
+    'gdpr_security_intro' => '<strong>Paid!</strong> er utformet med personvern i tankene:',
     'gdpr_security_processing' => 'Betalingsinformasjon behandles sikkert på våre servere for generering av QR-koder',
     'gdpr_security_no_storage' => 'Vi lagrer aldri betalingsinformasjon permanent på våre servere',
     'gdpr_security_local_storage' => 'Betalingsinformasjon lagres kun i din browsers lokale lagring, hvis du velger det',

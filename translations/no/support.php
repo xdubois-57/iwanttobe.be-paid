@@ -1,14 +1,14 @@
 <?php
-// Norwegian support translations for QR Transfer application
+// Norwegian support translations for <strong>Paid!</strong> application
 // Contains all text for the support page
 // Last updated: 2025-04-13
 
 return [
-    'support_title' => 'Støtt QR Transfer',
+    'support_title' => 'Støtt <strong>Paid!</strong>',
     'support_hosting_title' => 'Hosting-kost',
-    'support_hosting_text' => 'QR Transfer er hostet på sikre servere for å sikre at dine data forblir private og at tjenesten er rask. Din støtte hjelper med å dække hosting-kost.',
+    'support_hosting_text' => '<strong>Paid!</strong> er hostet på sikre servere for å sikre at dine data forblir private og at tjenesten er rask. Din støtte hjelper med å dække hosting-kost.',
     'support_development_title' => 'Kontinuerlig utvikling',
-    'support_development_text' => 'Vi utvikler QR Transfer kontinuerlig med nye funksjoner og bedre brukeropplevelse. Din støtte sikrer mer tid til utvikling.',
+    'support_development_text' => 'Vi utvikler <strong>Paid!</strong> kontinuerlig med nye funksjoner og bedre brukeropplevelse. Din støtte sikrer mer tid til utvikling.',
     'support_future_title' => 'Kjente funksjoner',
     'support_future_text' => 'Vi har planer for fremtiden, som omfatter flere betalingsmuligheter, forbedrede delingsfunksjoner og bedre sikkerhet. Din støtte gjør dette mulig!',
     'support_coffee_title' => 'Kjøp meg en kaffe',
@@ -16,6 +16,6 @@ return [
     'support_coffee_message' => 'Støtt med en donasjon',
     'support_qr_alt' => 'QR-kode for donasjon',
     'support_qr_error' => 'Beklager, kunne ikke generere QR-kode. Prøv igjen senere.',
-    'support_thanks' => 'Takk for din støtte! Hver donasjon hjelper med å utvikle QR Transfer.',
+    'support_thanks' => 'Takk for støtten til <strong>Paid!</strong>!',
     'menu_support' => 'Kjøp meg en kaffe',
 ];

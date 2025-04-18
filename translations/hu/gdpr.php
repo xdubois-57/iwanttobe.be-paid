@@ -1,7 +1,7 @@
 <?php
-// Hungarian GDPR translations for QR Transfer application
+// Hungarian GDPR translations for <strong>Paid!</strong> application
 // Contains all privacy policy and GDPR-related text
-// Last updated: 2025-04-13
+// Last updated: 2025-04-18
 
 return [
     // Page title and metadata
@@ -9,7 +9,7 @@ return [
     'gdpr_last_updated' => 'Utolsó frissítés: %s',
     
     // Introduction section
-    'gdpr_intro' => 'Ez az adatvédelmi szabályzat leírja, hogyan gyűjtjük, feldolgozzuk és védelmezzük a személyes adatait a QR Transfer ("mi", "mi") szolgáltatásunk használatával generált QR kódokhoz.',
+    'gdpr_intro' => 'Ez az Adatvédelmi szabályzat leírja, hogyan gyűjti, használja és védi az Ön személyes adatait a <strong>Paid!</strong> ("mi", "minket" vagy "miénk") QR-kód generáló szolgáltatás használata során.',
     
     // Information collection section
     'gdpr_info_collect_title' => 'Gyűjtött információk',
@@ -35,7 +35,7 @@ return [
     
     // Security section
     'gdpr_security_title' => 'Adatok tárolása és biztonsága',
-    'gdpr_security_intro' => 'A QR Transfer adatvédelmet észre se vetve tervezett:',
+    'gdpr_security_intro' => '<strong>Paid!</strong> úgy lett kialakítva, hogy szem előtt tartsa az adatvédelmet:',
     'gdpr_security_processing' => 'A befizetési adatok biztonságban feldolgozódnak a szervereinken a QR kódok generálásához',
     'gdpr_security_no_storage' => 'Soha nem tároljuk a befizetési adatokat állandóan a szervereinken',
     'gdpr_security_local_storage' => 'A befizetési adatok tárolása csak akkor történik a böngésző helyi tárolóban, ha ezt választja',

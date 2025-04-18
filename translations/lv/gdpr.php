@@ -1,7 +1,7 @@
 <?php
-// Latvian GDPR translations for QR Transfer application
+// Latvian GDPR translations for <strong>Paid!</strong> application
 // Contains all privacy policy and GDPR-related text
-// Last updated: 2025-04-13
+// Last updated: 2025-04-18
 
 return [
     // Page title and metadata
@@ -9,7 +9,7 @@ return [
     'gdpr_last_updated' => 'Pēdējā atjaunināšana: %s',
     
     // Introduction section
-    'gdpr_intro' => 'Šī privātuma politika apraksta, kā QR Transfer ("mēs", "mēs", vai "mūsu") savā QR koda ģenerēšanas pakalpojumā iegūst, izmanto un aizsargā jūsu personiskās informācijas.',
+    'gdpr_intro' => 'Šī privātuma politika apraksta, kā <strong>Paid!</strong> ("mēs", "mūsu" vai "mūs") vāc, izmanto un aizsargā jūsu personas datus, kad izmantojat mūsu QR kodu ģenerēšanas pakalpojumu.',
     
     // Information collection section
     'gdpr_info_collect_title' => 'Informācija, ko mēs iegūstam',
@@ -35,7 +35,7 @@ return [
     
     // Security section
     'gdpr_security_title' => 'Datu glabāšana un drošība',
-    'gdpr_security_intro' => 'QR Transfer ir izveidots, ņemot vērā privātumu:',
+    'gdpr_security_intro' => '<strong>Paid!</strong> ir izstrādāta ar privātumu prātā:',
     'gdpr_security_processing' => 'Maksājuma informācija tiek droši apstrādāta mūsu serveros, lai ģenerētu QR kodus',
     'gdpr_security_no_storage' => 'Mēs neuzglabājam maksājuma informāciju mūsu serveros',
     'gdpr_security_local_storage' => 'Jūs saglabātā maksājuma informācija tiek glabāta tikai jūsu pārlūkprogrammas vietējā atmiņā, ja izvēlēsieties to saglabāt',

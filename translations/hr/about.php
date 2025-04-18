@@ -1,4 +1,4 @@
 <?php
 return [
-    'about_title' => 'O QR Transferu',
+    'about_title' => 'O <strong>Paid!</strong>',
 ];

@@ -1,7 +1,7 @@
 <?php
-// Icelandic GDPR translations for QR Transfer application
+// Icelandic GDPR translations for <strong>Paid!</strong> application
 // Contains all privacy policy and GDPR-related text
-// Last updated: 2025-04-13
+// Last updated: 2025-04-18
 
 return [
     // Page title and metadata
@@ -9,7 +9,7 @@ return [
     'gdpr_last_updated' => 'Síðast uppfært: %s',
     
     // Introduction section
-    'gdpr_intro' => 'Þessi persónuverndarstefna lýsir hvernig við samþætum, vinnum með og vörum persónuupplýsingum í tengslum við notkun QR Transfer ("vi", "okkur").',
+    'gdpr_intro' => 'Þessi persónuverndarstefna lýsir hvernig <strong>Paid!</strong> ("við", "okkur" eða "okkar") safnar, notar og verndar persónuupplýsingar þínar þegar þú notar QR kóða þjónustuna okkar.',
     
     // Information collection section
     'gdpr_info_collect_title' => 'Samþæt upplýsingar',
@@ -35,7 +35,7 @@ return [
     
     // Security section
     'gdpr_security_title' => 'Geymsla og vör',
-    'gdpr_security_intro' => 'QR Transfer er skilgreint með vörn í hugum:',
+    'gdpr_security_intro' => '<strong>Paid!</strong> er hönnuð með persónuvernd í huga:',
     'gdpr_security_processing' => 'Greiðsluupplýsingar vinnum sérlega á vafra vafra til að búa til QR kóða',
     'gdpr_security_no_storage' => 'Við geymum aldrei greiðsluupplýsingar stöðugt á vafra vafra',
     'gdpr_security_local_storage' => 'Greiðsluupplýsingar eru geymdar einungis í vafra vafra vafra, ef þú velur það',

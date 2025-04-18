@@ -1,10 +1,10 @@
 <?php
-// Icelandic why_us translations for QR Transfer application
+// Icelandic Why Us translations for <strong>Paid!</strong> application
 // Contains all text for the why us page
 // Last updated: 2025-04-13
 
 return [
-    'why_us_title' => 'Af hverju skaltu velja QR Transfer?',
+    'why_us_title' => 'Af hverju <strong>Paid!</strong>?',
     'why_us_secure_title' => 'Öruggt og einkamanns',
     'why_us_secure_text' => 'Upplýsingar vinnum staðbundna í vafra. Við geymum aldrei örugga greiðsluupplýsingar á vafra vafra.',
     'why_us_easy_title' => 'Auðvelt að nota',
@@ -27,9 +27,9 @@ return [
     'why_us_use_case_4_text' => 'Greiðslur auðveldar í banka, gruppamenn og félagsaðgerðir.',
     
     // Comparison table
-    'why_us_comparison_title' => 'QR Transfer vs Aðrar greiðsluþjónustur',
+    'why_us_comparison_title' => '<strong>Paid!</strong> vs Aðrar greiðsluþjónustur',
     'why_us_comparison_feature' => 'Atriði',
-    'why_us_comparison_qr_transfer' => 'QR Transfer',
+    'why_us_comparison_qr_transfer' => '<strong>Paid!</strong>',
     'why_us_comparison_banking_apps' => 'Bankaþjónustur',
     'why_us_comparison_payment_apps' => 'Greiðsluþjónustur',
     
@@ -57,4 +57,5 @@ return [
     'why_us_comparison_static_qr' => 'Já, auðvelt að prenta',
     'why_us_comparison_static_banking' => 'Breytt tilgæfleika',
     'why_us_comparison_static_payment' => 'Aðeins þarf starfsmannsreikning',
+    'why_us_intro' => 'Kynntu þér kosti <strong>Paid!</strong> fyrir QR-greiðslur.',
 ];

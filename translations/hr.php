@@ -1,7 +1,7 @@
 <?php
-// Croatian language definition file for QR Transfer application
+// Croatian language definition file for <strong>Paid!</strong> application
 // Contains core language settings and configuration
-// Last updated: 2025-04-15
+// Last updated: 2025-04-18
 
 return array_merge(
     require __DIR__.'/hr/menu.php',

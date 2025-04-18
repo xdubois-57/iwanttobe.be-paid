@@ -1,12 +1,13 @@
 <?php
 return [
-    'why_us_title' => 'Perché scegliere QR Transfer?',
+    // Italian Why Us translations for <strong>Paid!</strong> application
+    'why_us_title' => 'Perché <strong>Paid!</strong>?',
     'why_us_secure_title' => 'Sicuro & Privato',
     'why_us_secure_text' => 'I tuoi dati vengono processati localmente nel tuo browser. Non memorizziamo mai informazioni di pagamento sensibili sui nostri server.',
     'why_us_easy_title' => 'Facile da usare',
     'why_us_easy_text' => 'Genera codici QR per i pagamenti in secondi. Nessuna registrazione richiesta, nessuna configurazione complessa.',
     'why_us_free_title' => 'Completamente gratuito',
-    'why_us_free_text' => 'Il nostro servizio è gratuito, senza costi nascosti o funzionalità premium. Se ti piace, considera di supportare il nostro sviluppo!',
+    'why_us_free_text' => 'Il nostro servizio è gratuito, senza costi nascosti o funzionalità premium. Se ti piace, considera di supportare lo sviluppo di <strong>Paid!</strong>!',
     'why_us_features_title' => 'Funzionalità principali',
     'why_us_feature_1' => 'Generazione istantanea di codici QR per pagamenti SEPA',
     'why_us_feature_2' => 'Supporto per tutti i banchi europei',
@@ -21,11 +22,12 @@ return [
     'why_us_use_case_3_text' => 'Perfetto per unità scout, club sportivi e associazioni per raccogliere le quote di iscrizione, i pagamenti per eventi o le donazioni.',
     'why_us_use_case_4_title' => 'Pianificazione eventi',
     'why_us_use_case_4_text' => 'Semplifica i pagamenti di gruppo per eventi, attività di squadra o acquisti condivisi.',
+    'why_us_intro' => 'Scopri i vantaggi di <strong>Paid!</strong> per i pagamenti QR.',
     
     // Tabelle di confronto
-    'why_us_comparison_title' => 'QR Transfer vs Altre soluzioni di pagamento',
+    'why_us_comparison_title' => '<strong>Paid!</strong> vs Altre soluzioni di pagamento',
     'why_us_comparison_feature' => 'Funzionalità',
-    'why_us_comparison_qr_transfer' => 'QR Transfer',
+    'why_us_comparison_qr_transfer' => '<strong>Paid!</strong>',
     'why_us_comparison_banking_apps' => 'App Bancarie',
     'why_us_comparison_payment_apps' => 'App di Pagamento',
     

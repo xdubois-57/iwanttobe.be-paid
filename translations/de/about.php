@@ -2,5 +2,5 @@
 // German about page translations
 
 return [
-    'about_title' => 'Über QR Transfer'
+    'about_title' => 'Über <strong>Paid!</strong>'
 ];

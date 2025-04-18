@@ -1,10 +1,10 @@
 <?php
-// Finnish why_us translations for QR Transfer application
+// Finnish Why Us translations for <strong>Paid!</strong> application
 // Contains all text for the why us page
 // Last updated: 2025-04-13
 
 return [
-    'why_us_title' => 'Miksi valitset QR Transferin?',
+    'why_us_title' => 'Miksi <strong>Paid!</strong>?',
     'why_us_secure_title' => 'Turvallinen ja yksityinen',
     'why_us_secure_text' => 'Tiedot käsitellään selaimessa paikallisesti. Emme koskaan tallenna turvallisia maksutietoja palvelimillamme.',
     'why_us_easy_title' => 'Helppo käyttää',
@@ -25,11 +25,12 @@ return [
     'why_us_use_case_3_text' => 'Täydellinen koulujen, jalkapallojoukkueiden ja yhdistysten jäsenmaksujen, tapahtumamaksujen tai lahjoitusten keräämiseen.',
     'why_us_use_case_4_title' => 'Tapahtumien järjestäminen',
     'why_us_use_case_4_text' => 'Luo helpottavaa maksujen tekemistä pankkien tapahtumissa, ryhmätoiminnassa ja yhteisnäköisissä ostoksissa.',
+    'why_us_intro' => 'Tutustu <strong>Paid!</strong>-sovelluksen etuihin QR-maksuissa.',
     
     // Comparison table
-    'why_us_comparison_title' => 'QR Transfer vs Muut maksupalvelut',
+    'why_us_comparison_title' => '<strong>Paid!</strong> vs Muut maksupalvelut',
     'why_us_comparison_feature' => 'Ominaisuus',
-    'why_us_comparison_qr_transfer' => 'QR Transfer',
+    'why_us_comparison_qr_transfer' => '<strong>Paid!</strong>',
     'why_us_comparison_banking_apps' => 'Pankkisovellukset',
     'why_us_comparison_payment_apps' => 'Maksupalvelut',
     

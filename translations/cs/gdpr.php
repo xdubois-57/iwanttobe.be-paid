@@ -1,7 +1,7 @@
 <?php
-// Czech GDPR translations for QR Transfer application
+// Czech GDPR translations for <strong>Paid!</strong> application
 // Contains all privacy policy and GDPR-related text
-// Last updated: 2025-04-13
+// Last updated: 2025-04-18
 
 return [
     // Page title and metadata
@@ -9,7 +9,7 @@ return [
     'gdpr_last_updated' => 'Poslední aktualizace: %s',
     
     // Introduction section
-    'gdpr_intro' => 'Tato politika ochrany osobních údajů popisuje, jak QR Transfer ("my", "my") sbírá, zpracovává a chrání osobní údaje při používání našeho služby pro generování QR kódů.',
+    'gdpr_intro' => 'Tato politika ochrany osobních údajů popisuje, jak <strong>Paid!</strong> ("my", "my") sbírá, zpracovává a chrání osobní údaje při používání našeho služby pro generování QR kódů.',
     
     // Information collection section
     'gdpr_info_collect_title' => 'Sbírané informace',
@@ -35,7 +35,7 @@ return [
     
     // Security section
     'gdpr_security_title' => 'Uložení a bezpečnost dat',
-    'gdpr_security_intro' => 'QR Transfer byl navržen s ochranou osobních údajů v mysli:',
+    'gdpr_security_intro' => '<strong>Paid!</strong> byl navržen s ochranou osobních údajů v mysli:',
     'gdpr_security_processing' => 'Platební údaje jsou zpracovávány v bezpečí na našich serverech pro generování QR kódů',
     'gdpr_security_no_storage' => 'Nikdy neukládáme platební údaje trvale na našich serverech',
     'gdpr_security_local_storage' => 'Platební údaje jsou uloženy pouze v místním úložišti prohlížeče, pokud si to vyberete',

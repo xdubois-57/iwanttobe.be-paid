@@ -1,10 +1,10 @@
 <?php
-// Slovenian why_us translations for QR Transfer application
+// Slovenian Why Us translations for <strong>Paid!</strong> application
 // Contains all text for the why us page
 // Last updated: 2025-04-13
 
 return [
-    'why_us_title' => 'Zakaj izberete QR Transfer?',
+    'why_us_title' => 'Zakaj <strong>Paid!</strong>?',
     'why_us_secure_title' => 'Varno in zasebno',
     'why_us_secure_text' => 'Vaši podatki so obdelovani lokalno v brskalniku. Nikoli ne shranjujemo varnih podatkov o plačilu na naših strežnikih.',
     'why_us_easy_title' => 'Preprosto za uporabo',
@@ -25,11 +25,12 @@ return [
     'why_us_use_case_3_text' => 'Ustrezen za šole, nogometne klube in združitve za zbiranje članarskih sredstev, dogodkovnih plačil ali daril.',
     'why_us_use_case_4_title' => 'Organizacija dogodkov',
     'why_us_use_case_4_text' => 'Ustvarite olajšanje pri plačilih za dogodke v bankah, skupne aktivnosti in skupne nakupi.',
+    'why_us_intro' => 'Odkrijte prednosti uporabe <strong>Paid!</strong> za QR plačila.',
     
     // Comparison table
-    'why_us_comparison_title' => 'QR Transfer vs Druga storitva za plačila',
+    'why_us_comparison_title' => '<strong>Paid!</strong> vs Druga storitva za plačila',
     'why_us_comparison_feature' => 'Funkcija',
-    'why_us_comparison_qr_transfer' => 'QR Transfer',
+    'why_us_comparison_qr_transfer' => '<strong>Paid!</strong>',
     'why_us_comparison_banking_apps' => 'Mobilne aplikacije bank',
     'why_us_comparison_payment_apps' => 'Storitve za plačila',
     

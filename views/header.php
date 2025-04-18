@@ -30,11 +30,11 @@ $lang = LanguageController::getInstance();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $lang->translate('app_name'); ?></title>
+    <title>iwantto.be Paid</title>
     <meta name="description" content="<?php echo $lang->translate('meta_description'); ?>">
     <meta name="keywords" content="<?php echo $lang->translate('meta_keywords'); ?>">
     <meta name="robots" content="index, follow">
-    <meta property="og:title" content="<?php echo $lang->translate('app_name'); ?>">
+    <meta property="og:title" content="iwantto.be Paid">
     <meta property="og:description" content="<?php echo $lang->translate('meta_description'); ?>">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://iwantto.be">
@@ -50,7 +50,7 @@ $lang = LanguageController::getInstance();
             'save_favorite': '<?php echo $lang->translate('save_favorite'); ?>',
             'update_favorite': '<?php echo $lang->translate('update_favorite'); ?>',
             // Add other frequently used translations
-            'app_name': '<?php echo $lang->translate('app_name'); ?>',
+            'app_name': 'iwantto.be Paid',
             'generating': '<?php echo $lang->translate('generating'); ?>',
             'share_text': '<?php echo $lang->translate('share_text'); ?>'
         };
@@ -69,7 +69,7 @@ $lang = LanguageController::getInstance();
                         <rect y="60" width="100" height="10"></rect>
                     </svg>
                 </button>
-                <a href="/" class="app-name"><?php echo $lang->translate('app_name'); ?></a>
+                <a href="/" class="app-name"><em style="font-size: 0.6em;">iwantto.be</em> <span style="font-size: 1.1em; font-weight: bold;">Paid!</span></a>
             </div>
 
             <div class="nav-links">

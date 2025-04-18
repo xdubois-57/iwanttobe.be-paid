@@ -1,10 +1,10 @@
 <?php
-// Latvian why us page translations for QR Transfer application
+// Latvian Why Us translations for <strong>Paid!</strong> application
 // Contains all text for the why us page
 // Last updated: 2025-04-13
 
 return [
-    'why_us_title' => 'Kāpēc izvēlēties QR Transfer?',
+    'why_us_title' => 'Kāpēc <strong>Paid!</strong>?',
     'why_us_secure_title' => 'Drošs un privāts',
     'why_us_secure_text' => 'Jūsu dati tiek apstrādāti vietējā pārlūkprogrammā. Mēs neuzglabājam jūsu maksājuma informāciju mūsu serveros.',
     'why_us_easy_title' => 'Lētāks',
@@ -27,9 +27,9 @@ return [
     'why_us_use_case_4_text' => 'Vieglāka grupas maksājumu organizācija notikumu, komandas aktivitāšu vai kopīgās iepirkumu dēļ.',
     
     // Salīdzinājuma tabulas tulkojumi
-    'why_us_comparison_title' => 'QR Transfer salīdzinājumā ar citiem maksājumu risinājumiem',
+    'why_us_comparison_title' => '<strong>Paid!</strong> salīdzinājumā ar citiem maksājumu risinājumiem',
     'why_us_comparison_feature' => 'Funkcija',
-    'why_us_comparison_qr_transfer' => 'QR Transfer',
+    'why_us_comparison_qr_transfer' => '<strong>Paid!</strong>',
     'why_us_comparison_banking_apps' => 'Bankas lietotnes',
     'why_us_comparison_payment_apps' => 'Maksājumu lietotnes',
     
@@ -52,4 +52,5 @@ return [
     'why_us_comparison_notification_qr' => 'Atkarīgs no bankas',
     'why_us_comparison_notification_banking' => 'Jā, caur bankas lietotni',
     'why_us_comparison_notification_payment' => 'Jā, lietotnes paziņojumi',
+    'why_us_intro' => 'Uzziniet <strong>Paid!</strong> priekšrocības QR maksājumiem.',
 ];

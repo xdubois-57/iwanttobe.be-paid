@@ -1,10 +1,10 @@
 <?php
-// Hungarian why_us translations for QR Transfer application
+// Hungarian Why Us translations for <strong>Paid!</strong> application
 // Contains all text for the why us page
 // Last updated: 2025-04-13
 
 return [
-    'why_us_title' => 'Miért válassza a QR Transfer-t?',
+    'why_us_title' => 'Miért <strong>Paid!</strong>?',
     'why_us_secure_title' => 'Biztonságos és magánélet védelme',
     'why_us_secure_text' => 'Az adatai a böngészőben helyileg feldolgozódnak. Soha nem tároljuk a biztonságos befizetési adatokat a szervereinken.',
     'why_us_easy_title' => 'Könnyen használható',
@@ -27,9 +27,9 @@ return [
     'why_us_use_case_4_text' => 'Könnyítséget teremtse a befizetésekben bankoknál eseményeknél, csoportos aktivitásoknál és közös vásárlásoknál.',
     
     // Comparison table
-    'why_us_comparison_title' => 'QR Transfer vs Egyéb befizetési szolgáltatások',
+    'why_us_comparison_title' => '<strong>Paid!</strong> vs Egyéb befizetési szolgáltatások',
     'why_us_comparison_feature' => 'Funkció',
-    'why_us_comparison_qr_transfer' => 'QR Transfer',
+    'why_us_comparison_qr_transfer' => '<strong>Paid!</strong>',
     'why_us_comparison_banking_apps' => 'Bank alkalmazások',
     'why_us_comparison_payment_apps' => 'Befizetési alkalmazások',
     
@@ -57,4 +57,5 @@ return [
     'why_us_comparison_static_qr' => 'Igen, könnyű nyomtatni',
     'why_us_comparison_static_banking' => 'Korlátozott lehetőségek',
     'why_us_comparison_static_payment' => 'Gyakran szükséges merchant fiók',
+    'why_us_intro' => 'Ismerje meg a <strong>Paid!</strong> QR-fizetések előnyeit.',
 ];

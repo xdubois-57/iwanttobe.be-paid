@@ -4,5 +4,5 @@
 // Last updated: 2025-04-13
 
 return [
-    'about_title' => 'A QR Transfer-ről',
+    'about_title' => '<strong>Paid!</strong> bemutatása',
 ];

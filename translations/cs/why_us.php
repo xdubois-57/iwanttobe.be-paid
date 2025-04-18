@@ -1,10 +1,10 @@
 <?php
-// Czech why_us translations for QR Transfer application
+// Czech Why Us translations for <strong>Paid!</strong> application
 // Contains all text for the why us page
 // Last updated: 2025-04-13
 
 return [
-    'why_us_title' => 'Proč zvolit QR Transfer?',
+    'why_us_title' => 'Proč <strong>Paid!</strong>?',
     'why_us_secure_title' => 'Bezpečné a soukromé',
     'why_us_secure_text' => 'Vaše údaje jsou zpracovávány lokálně v prohlížeči. Nikdy neukládáme platební údaje na našich serverech.',
     'why_us_easy_title' => 'Snadné použití',
@@ -27,9 +27,9 @@ return [
     'why_us_use_case_4_text' => 'Umožněte platby pro banky na akcích, skupinových aktivitách a společných nákupů.',
     
     // Comparison table
-    'why_us_comparison_title' => 'QR Transfer vs Jiné platobní služby',
+    'why_us_comparison_title' => '<strong>Paid!</strong> vs Jiné platobní služby',
     'why_us_comparison_feature' => 'Funkce',
-    'why_us_comparison_qr_transfer' => 'QR Transfer',
+    'why_us_comparison_qr_transfer' => '<strong>Paid!</strong>',
     'why_us_comparison_banking_apps' => 'Bankovní aplikace',
     'why_us_comparison_payment_apps' => 'Platobní aplikace',
     
@@ -57,4 +57,5 @@ return [
     'why_us_comparison_static_qr' => 'Ano, snadné tisknutí',
     'why_us_comparison_static_banking' => 'Omezené možnosti',
     'why_us_comparison_static_payment' => 'Často vyžaduje merchant účet',
+    'why_us_intro' => 'Objevte výhody používání <strong>Paid!</strong> pro vaše QR platby.',
 ];

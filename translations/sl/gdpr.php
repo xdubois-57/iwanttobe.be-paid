@@ -1,7 +1,7 @@
 <?php
-// Slovenian GDPR translations for QR Transfer application
+// Slovenian GDPR translations for <strong>Paid!</strong> application
 // Contains all privacy policy and GDPR-related text
-// Last updated: 2025-04-13
+// Last updated: 2025-04-18
 
 return [
     // Page title and metadata
@@ -9,7 +9,7 @@ return [
     'gdpr_last_updated' => 'Zadnja posodobitev: %s',
     
     // Introduction section
-    'gdpr_intro' => 'Ta politika zasebnosti opisuje, kako zbiramo, obdelujemo in zaščitimo osebne podatke pri uporabi storitve QR Transfer ("mi", "mi").',
+    'gdpr_intro' => 'Ta politika zasebnosti opisuje, kako <strong>Paid!</strong> ("mi", "naš") zbira, uporablja in ščiti vaše osebne podatke, ko uporabljate našo storitev za generiranje QR kod.',
     
     // Information collection section
     'gdpr_info_collect_title' => 'Zbirani podatki',
@@ -35,7 +35,7 @@ return [
     
     // Security section
     'gdpr_security_title' => 'Shranjevanje in varnost podatkov',
-    'gdpr_security_intro' => 'QR Transfer je zasnovan z vidika varnosti in zasebnosti:',
+    'gdpr_security_intro' => '<strong>Paid!</strong> je zasnovan z mislijo na zasebnost:',
     'gdpr_security_processing' => 'Podatki o plačilu varno obdelujemo na naših strežnikih za generiranje QR kod',
     'gdpr_security_no_storage' => 'Nikoli ne shranjujemo podatkov o plačilu na naših strežnikih',
     'gdpr_security_local_storage' => 'Podatki o plačilu so shranjeni le v lokalnem shranjevanju brskalnika, če to izberete',

@@ -1,12 +1,12 @@
 <?php
-// German home page translations
+// German home page translations for <strong>Paid!</strong> application
 
 return [
     'home_intro_title' => 'Wird bezahlt',
     'home_intro_text' => 'Generieren Sie einen QR-Code, den Ihre Freunde mit ihrer Bank-App scannen können, um Ihnen Geld zu überweisen. Füllen Sie einfach Ihre Daten unten ein und teilen Sie den QR-Code.',
     'support_text' => 'Diese App ist kostenlos. Wenn Ihnen die App gefällt, kaufen Sie mir einen Kaffee, indem Sie den unten stehenden QR-Code mit Ihrer Bank-App scannen!',
     'support_text_alt' => 'Diese App ist kostenlos. Wenn Ihnen die App gefällt, kaufen Sie mir einen Kaffee, indem Sie hier klicken!',
-    'support_thanks' => 'Vielen Dank für Ihre Unterstützung von QR Transfer!',
+    'support_thanks' => 'Danke für die Unterstützung von <strong>Paid!</strong>!',
     'download_qr' => 'QR-Code herunterladen',
     'share_qr' => 'QR-Code teilen',
     'cookie_notice' => 'Diese Seite verwendet essentielle Cookies',

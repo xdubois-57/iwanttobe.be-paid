@@ -22,9 +22,7 @@ $excludePatterns = [
     '.env',
     '.env.example',
     'README.md',
-    'DESIGN.md',
-    'node_modules',
-    'vendor'
+    'DESIGN.md'
 ];
 
 // Connect to FTP

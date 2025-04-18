@@ -1,10 +1,10 @@
 <?php
-// Danish why_us translations for QR Transfer application
+// Danish Why Us translations for <strong>Paid!</strong> application
 // Contains all text for the why us page
 // Last updated: 2025-04-13
 
 return [
-    'why_us_title' => 'Hvorfor vælge QR Transfer?',
+    'why_us_title' => 'Hvorfor <strong>Paid!</strong>?',
     'why_us_secure_title' => 'Sikker og privat',
     'why_us_secure_text' => 'Data behandles lokalt i browseren. Vi gemmer aldrig sikre betalingsoplysninger på vores servere.',
     'why_us_easy_title' => 'Lidt at bruge',
@@ -25,11 +25,12 @@ return [
     'why_us_use_case_3_text' => 'Perfekt til at indsamle medlemskontingenter, begivenhedsbetalinger eller donationer for skoler, fodboldhold og foreninger.',
     'why_us_use_case_4_title' => 'Arrangementer',
     'why_us_use_case_4_text' => 'Gør betalinger nemme i banker, gruppemedlemmer og fælleskøb.',
+    'why_us_intro' => 'Oplev fordelene ved at bruge <strong>Paid!</strong> til QR-betalinger.',
     
     // Comparison table
-    'why_us_comparison_title' => 'QR Transfer vs Andre betalingsapps',
+    'why_us_comparison_title' => '<strong>Paid!</strong> vs Andre betalingsapps',
     'why_us_comparison_feature' => 'Funktion',
-    'why_us_comparison_qr_transfer' => 'QR Transfer',
+    'why_us_comparison_qr_transfer' => '<strong>Paid!</strong>',
     'why_us_comparison_banking_apps' => 'Bankapps',
     'why_us_comparison_payment_apps' => 'Betalingsapps',
     

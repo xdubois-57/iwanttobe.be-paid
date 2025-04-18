@@ -1,8 +1,8 @@
 <?php
-// German "Why Us" page translations
+// German Why Us translations for <strong>Paid!</strong> application
 
 return [
-    'why_us_title' => 'Warum QR Transfer?',
+    'why_us_title' => 'Warum <strong>Paid!</strong>?',
     'why_us_secure_title' => 'Sicher & Privat',
     'why_us_secure_text' => 'Ihre Daten werden lokal in Ihrem Browser verarbeitet. Wir speichern keine sensiblen Zahlungsinformationen auf unseren Servern.',
     'why_us_easy_title' => 'Einfach zu verwenden',
@@ -23,11 +23,12 @@ return [
     'why_us_use_case_3_text' => 'Perfekt für Pfadfindergruppen, Sportvereine und Verbände, um Mitgliedsbeiträge, Event-Zahlungen oder Spenden zu sammeln.',
     'why_us_use_case_4_title' => 'Eventplanung',
     'why_us_use_case_4_text' => 'Vereinfachen Sie Gruppenzahlungen für Events, Teamaktivitäten oder gemeinsame Einkäufe.',
+    'why_us_intro' => 'Entdecken Sie die Vorteile von <strong>Paid!</strong> für QR-Zahlungen.',
     
     // Comparison table translations
-    'why_us_comparison_title' => 'QR Transfer vs andere Zahlungslösungen',
+    'why_us_comparison_title' => '<strong>Paid!</strong> vs andere Zahlungslösungen',
     'why_us_comparison_feature' => 'Feature',
-    'why_us_comparison_qr_transfer' => 'QR Transfer',
+    'why_us_comparison_qr_transfer' => '<strong>Paid!</strong>',
     'why_us_comparison_banking_apps' => 'Banking Apps',
     'why_us_comparison_payment_apps' => 'Zahlungs-Apps',
     

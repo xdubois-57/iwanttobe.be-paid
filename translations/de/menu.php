@@ -3,7 +3,7 @@
 
 return [
     // Application name and main menu items
-    'app_name' => 'QR Transfer',
+    'app_name' => '<strong>Paid!</strong>',
     'menu_home' => 'Startseite',
     'menu_about' => 'Über',
     'menu_gdpr' => 'Datenschutz',
@@ -18,17 +18,17 @@ return [
     'theme_auto' => 'Automatisch',
     
     // Page titles
-    'welcome_message' => 'Willkommen bei QR Transfer',
-    'about_title' => 'Über QR Transfer',
+    'welcome_message' => 'Willkommen bei <strong>Paid!</strong>',
+    'about_title' => 'Über <strong>Paid!</strong>',
     'gdpr_title' => 'Datenschutz & GDPR',
-    'why_us_title' => 'Warum QR Transfer?',
+    'why_us_title' => 'Warum <strong>Paid!</strong>?',
     
     // SEO metadata
     'meta_description' => 'Erstellen Sie QR-Codes für Pfadfinder-Veranstaltungen, Elternvereine, Fußballclubs und kleine Unternehmen. Kostenlos, sicher und privat. SEPA-Zahlungs-Generator, der sofort auf allen Geräten funktioniert.',
     'meta_keywords' => 'Pfadfinder-Veranstaltungen, Elternvereine, Fußballclubs, Gemeinschaftsfundraising, Gemeinschaftsveranstaltungen, QR-Code, SEPA-Zahlung, Banküberweisung, Zahlungs-QR, Europäische Zahlung, sichere Zahlung, Spende, Support, Kaufe mir einen Kaffee, kostenlos QR-Code Generator',
     
     // Legal disclaimer
-    'disclaimer_text' => 'QR Transfer ist nicht für finanzielle Probleme oder Verluste verantwortlich, die mit der Nutzung dieses Dienstes zusammenhängen. Die Nutzung dieses Tools erfolgt auf eigene Gefahr. Alle Zahlungen werden durch die jeweiligen Banken verarbeitet, und QR Transfer führt keine Geldtransaktionen durch. Diese Website ist unter der <a href="https://www.gnu.org/licenses/gpl-3.0.html">GNU General Public License v3.0 (GPLv3)</a> lizenziert.',
+    'disclaimer_text' => '<strong>Paid!</strong> ist nicht für finanzielle Probleme oder Verluste verantwortlich, die mit der Nutzung dieses Dienstes zusammenhängen. Die Nutzung dieses Tools erfolgt auf eigene Gefahr. Alle Zahlungen werden durch die jeweiligen Banken verarbeitet, und <strong>Paid!</strong> führt keine Geldtransaktionen durch. Diese Website ist unter der <a href="https://www.gnu.org/licenses/gpl-3.0.html">GNU General Public License v3.0 (GPLv3)</a> lizenziert.',
     
     // Additional menu items
     'menu_favorites' => 'Favoriten',

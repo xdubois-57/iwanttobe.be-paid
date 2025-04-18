@@ -1,5 +1,5 @@
 <?php
-// Swedish home page translations for QR Transfer application
+// Swedish home page translations for <strong>Paid!</strong> application
 // Contains all text for the main landing page
 // Last updated: 2025-04-13
 
@@ -8,7 +8,7 @@ return [
     'home_intro_text' => 'Generera en QR-kod som dina vänner kan scanna med sin bankapp för att överföra pengar till dig. Fyll bara i dina uppgifter nedan och dela QR-koden.',
     'support_text' => 'Denna app är gratis. Om du tycker om den, köp mig en kaffe genom att scanna QR-koden nedan med din bankapp!',
     'support_text_alt' => 'Denna app är gratis. Om du tycker om den, köp mig en kaffe genom att klicka här!',
-    'support_thanks' => 'Tack för att du stödjer QR Transfer!',
+    'support_thanks' => 'Tack för att du stödjer <strong>Paid!</strong>!',
     'download_qr' => 'Ladda ner QR-kod',
     'share_qr' => 'Dela QR-kod',
     'cookie_notice' => 'Denna webbplats använder nödvändiga cookies',

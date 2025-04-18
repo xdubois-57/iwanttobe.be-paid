@@ -1,10 +1,10 @@
 <?php
-// Romanian why_us translations for QR Transfer application
+// Romanian Why Us translations for <strong>Paid!</strong> application
 // Contains all text for the why us page
 // Last updated: 2025-04-13
 
 return [
-    'why_us_title' => 'De ce să alegeți QR Transfer?',
+    'why_us_title' => 'De ce <strong>Paid!</strong>?',
     'why_us_secure_title' => 'Sigur și privat',
     'why_us_secure_text' => 'Datele dumneavoastră sunt procesate local în browser. Nu stocăm niciodată date de plată securizate pe serverele noastre.',
     'why_us_easy_title' => 'Ușor de folosit',
@@ -27,9 +27,9 @@ return [
     'why_us_use_case_4_text' => 'Facilitați plățile pentru bănci la evenimente, activități grup și achiziții comune.',
     
     // Comparison table
-    'why_us_comparison_title' => 'QR Transfer vs Alte servicii de plată',
+    'why_us_comparison_title' => '<strong>Paid!</strong> vs Alte servicii de plată',
     'why_us_comparison_feature' => 'Funcționalitate',
-    'why_us_comparison_qr_transfer' => 'QR Transfer',
+    'why_us_comparison_qr_transfer' => '<strong>Paid!</strong>',
     'why_us_comparison_banking_apps' => 'Aplicații bănci',
     'why_us_comparison_payment_apps' => 'Aplicații de plată',
     
@@ -57,4 +57,5 @@ return [
     'why_us_comparison_static_qr' => 'Da, ușor de imprimat',
     'why_us_comparison_static_banking' => 'Opțiuni limitate',
     'why_us_comparison_static_payment' => 'Adesea necesită cont merchant',
+    'why_us_intro' => 'Descoperă avantajele <strong>Paid!</strong> pentru plăți QR.',
 ];

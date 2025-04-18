@@ -1,12 +1,12 @@
 <?php
-// German GDPR translations
+// German GDPR translations for <strong>Paid!</strong> application
 
 return [
     'gdpr_title' => 'Datenschutz & GDPR',
     'gdpr_last_updated' => 'Letzte Aktualisierung: %s',
     
     // Introduction section
-    'gdpr_intro' => 'Diese Datenschutzrichtlinie beschreibt, wie QR Transfer ("wir", "uns" oder "wir") Ihre persönlichen Daten sammelt, verwendet und schützt, wenn Sie unseren QR-Code-Erstellungs-Service nutzen.',
+    'gdpr_intro' => 'Diese Datenschutzrichtlinie beschreibt, wie <strong>Paid!</strong> ("wir", "uns" oder "wir") Ihre persönlichen Daten sammelt, verwendet und schützt, wenn Sie unseren QR-Code-Erstellungs-Service nutzen.',
     
     // Information collection section
     'gdpr_info_collect_title' => 'Informationen, die wir sammeln',
@@ -32,7 +32,7 @@ return [
     
     // Security section
     'gdpr_security_title' => 'Datenspeicherung und Sicherheit',
-    'gdpr_security_intro' => 'QR Transfer wurde mit Datenschutz im Sinn entwickelt:',
+    'gdpr_security_intro' => '<strong>Paid!</strong> wurde mit Datenschutz im Sinn entwickelt:',
     'gdpr_security_processing' => 'Zahlungsinformationen werden sicher auf unseren Servern verarbeitet, um QR-Codes zu generieren',
     'gdpr_security_no_storage' => 'Wir speichern Zahlungsinformationen nicht dauerhaft auf unseren Servern',
     'gdpr_security_local_storage' => 'Ihre gespeicherten Zahlungsinformationen werden nur in Ihrem Browser-Speicher gespeichert, wenn Sie dies wählen',

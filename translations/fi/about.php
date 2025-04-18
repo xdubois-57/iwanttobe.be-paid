@@ -4,5 +4,5 @@
 // Last updated: 2025-04-13
 
 return [
-    'about_title' => 'Tietoa QR Transferista',
+    'about_title' => 'Tietoa <strong>Paid!</strong>-sovelluksesta',
 ];

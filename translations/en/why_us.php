@@ -1,6 +1,6 @@
 <?php
 return [
-    'why_us_title' => 'Why Choose QR Transfer?',
+    'why_us_title' => 'Why <strong>Paid!</strong>?',
     'why_us_secure_title' => 'Secure & Private',
     'why_us_secure_text' => 'Your data is processed locally in your browser. We never store sensitive payment information on our servers.',
     'why_us_easy_title' => 'Easy to Use',
@@ -21,11 +21,11 @@ return [
     'why_us_use_case_3_text' => 'Perfect for scout units, sports clubs, and associations to collect membership fees, event payments, or donations.',
     'why_us_use_case_4_title' => 'Event Planning',
     'why_us_use_case_4_text' => 'Simplify group payments for events, team activities, or shared purchases.',
-    
-    // Comparison table translations
-    'why_us_comparison_title' => 'QR Transfer vs Other Payment Solutions',
+    'why_us_intro' => 'Discover the benefits of using <strong>Paid!</strong> for your QR payments.',
+    // English Why Us translations for <strong>Paid!</strong> application
+    'why_us_comparison_title' => '<strong>Paid!</strong> vs Other Payment Solutions',
     'why_us_comparison_feature' => 'Feature',
-    'why_us_comparison_qr_transfer' => 'QR Transfer',
+    'why_us_comparison_qr_transfer' => '<strong>Paid!</strong>',
     'why_us_comparison_banking_apps' => 'Banking Apps',
     'why_us_comparison_payment_apps' => 'Payment Apps',
     

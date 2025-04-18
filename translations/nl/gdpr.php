@@ -1,7 +1,7 @@
 <?php
-// Dutch GDPR translations for QR Transfer application
+// Dutch GDPR translations for <strong>Paid!</strong> application
 // Contains all privacy policy and GDPR-related text
-// Last updated: 2025-04-09
+// Last updated: 2025-04-18
 
 // This file contains all the necessary translations for the Dutch GDPR policy
 // It is used to display the correct text on the website
@@ -12,7 +12,7 @@ return [
     'gdpr_last_updated' => 'Laatste update: %s',
     
     // Introduction section
-    'gdpr_intro' => 'Dit Privacybeleid beschrijft hoe QR Transfer ("wij", "ons" of "onze") je persoonlijke gegevens verzamelt, gebruikt en beschermt wanneer je onze QR code generatieservice gebruikt.',
+    'gdpr_intro' => 'Dit Privacybeleid beschrijft hoe <strong>Paid!</strong> ("wij", "ons" of "onze") je persoonlijke gegevens verzamelt, gebruikt en beschermt wanneer je onze QR code generatieservice gebruikt.',
     
     // Information collection section
     'gdpr_info_collect_title' => 'Gegevens die we verzamelen',
@@ -38,7 +38,7 @@ return [
     
     // Security section
     'gdpr_security_title' => 'Gegevensopslag en -beveiliging',
-    'gdpr_security_intro' => 'QR Transfer is ontworpen met privacy in gedachten:',
+    'gdpr_security_intro' => '<strong>Paid!</strong> is ontworpen met privacy in gedachten:',
     'gdpr_security_processing' => 'Betalingsgegevens worden veilig verwerkt op onze servers voor het genereren van QR codes',
     'gdpr_security_no_storage' => 'We bewaren geen betalingsgegevens permanent op onze servers',
     'gdpr_security_local_storage' => 'Je opgeslagen betalingsgegevens worden alleen opgeslagen in de lokale opslag van je browser als je ervoor kiest om ze op te slaan',

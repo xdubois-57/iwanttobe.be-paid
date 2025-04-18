@@ -1,4 +1,4 @@
-# QR Transfer - Functional Specifications
+# **Paid!** - Functional Specifications
 
 ## Table of Contents
 1. [Form Behavior](#1-form-behavior)
@@ -67,24 +67,25 @@
 
 ## 5. Translation System
 
-### 5.1 Supported Languages
-- English (en)
-- French (fr)
-- Dutch (nl)
-- Latvian (lv)
-- Romanian (ro)
+- The application supports the following languages for all user-facing content: cs, da, de, el, en, es, fi, fr, hr, hu, is, it, lv, nl, no, pl, pt, ro, sl, sv.
+- All user-facing translation files (including why_us.php and gdpr.php) must display the application name as **Paid!** in all supported languages.
+- Any future translations must follow this convention.
+- The "Why Us" page title is standardized as "Why choose **Paid!**?" and must be translated idiomatically for each language, retaining the bold formatting for "Paid!".
+- The comparison table on the "Why Us" page must reference **Paid!** in all languages.
+- All translation files are located under `/translations/<lang>/why_us.php`.
+- All changes to translation content must be reflected in every supported language.
+- No translation files or updates for unsupported languages (bg, et, ga, lt, mt, sk).
 
-### 5.2 Translation Files
-- Located in /translations directory
-- PHP array format
-- All user-facing text must be translated
-- Translation keys must be consistent across all languages
-- HTML links must be properly escaped in PHP translations
+> All references to "QR Transfer" or "iwantto.be" have been replaced with **Paid!** throughout the application and translation files. Only supported languages are included in the translation system.
 
-### 5.3 Removed Languages
-- Bulgarian (bg), British English (gb), and Slovak (sk) are no longer available in the application.
-- All related translation files and configuration entries have been removed.
-- The application will not offer these languages in the language selector or fallback logic.
+## Translation Branding Consistency (2025-04-18)
+
+- The application name is now consistently shown as **Paid!** in all translation files (about, home, menu, support) for supported languages.
+- No translation files or updates for unsupported languages (bg, et, ga, lt, mt, sk).
+
+## Branding Update
+
+All functional specifications and user-facing references now consistently use **Paid!** as the application name across all supported languages and translation files.
 
 ## 6. Security Requirements
 
@@ -119,4 +120,8 @@
 - Test on Android
 - Test on iPhone
 
-Last updated: 2025-04-15
+## Repository Rename
+
+- As of April 18, 2025, the GitHub repository for this project is: https://github.com/xdubois-57/iwanttobe.be-paid
+
+Last updated: 2025-04-18

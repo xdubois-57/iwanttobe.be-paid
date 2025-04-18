@@ -1,11 +1,11 @@
 <?php
-// Hungarian menu translations for QR Transfer application
+// Hungarian menu translations for <strong>Paid!</strong> application
 // Contains all navigation and header-related text
-// Last updated: 2025-04-13
+// Last updated: 2025-04-18
 
 return [
     // Application name and main menu items
-    'app_name' => 'QR Transfer',
+    'app_name' => '<strong>Paid!</strong>',
     'menu_home' => 'Kezdőlap',
     'menu_about' => 'Névjegy',
     'menu_gdpr' => 'GDPR',
@@ -20,17 +20,17 @@ return [
     'theme_auto' => 'Automatikus',
     
     // Page titles
-    'welcome_message' => 'Üdvözöljük a QR Transfer-nál',
-    'about_title' => 'A QR Transfer-ről',
+    'welcome_message' => 'Üdvözöljük a <strong>Paid!</strong> alkalmazásban',
+    'about_title' => 'A <strong>Paid!</strong> alkalmazásról',
     'gdpr_title' => 'Adatvédelmi szabályzat és GDPR',
-    'why_us_title' => 'Miért válassza a QR Transfer-t?',
+    'why_us_title' => 'Miért válassza a <strong>Paid!</strong>-t?',
     
     // SEO metadata
     'meta_description' => 'QR kódok generálása szcout eseményekhez, szülői szövetségekhez, labdarúgóklubokhoz és kisvállalkozásokhoz. Ingyenes, biztonságos és magánélet védelme alapján működő SEPA befizetési generátor, amely azonnal működik minden eszközön.',
     'meta_keywords' => 'szcout események, szülői szövetségek, labdarúgóklubok, közösségi összegyűjtők, közösségi események, QR kód, SEPA befizetés, banki átutalás, befizetési QR, európai befizetés, biztonságos befizetés, adomány, támogatás, kávé, ingyenes QR kód generátor',
     
     // Legal disclaimer
-    'disclaimer_text' => 'A QR Transfer nem felelős a szolgáltatás használatával kapcsolatos pénzügyi problémákkal vagy veszteségekért. A szolgáltatás használata Ön kockázata. A QR Transfer nem kezel pénzügyi tranzakciókat, minden befizetést a megfelelő bankok feldolgoznak. Ez a weboldal a <a href="https://www.gnu.org/licenses/gpl-3.0.html">GNU General Public License v3.0 (GPLv3)</a> alatt van licencelve.',
+    'disclaimer_text' => 'A <strong>Paid!</strong> nem vállal felelősséget semmilyen pénzügyi problémáért vagy veszteségért, amely a szolgáltatás használatából ered. Az eszköz használata saját felelősségre történik. Minden fizetést a megfelelő bankok dolgoznak fel, és a <strong>Paid!</strong> nem kezel pénzügyi tranzakciókat. Ez a weboldal a <a href="https://www.gnu.org/licenses/gpl-3.0.html">GNU General Public License v3.0 (GPLv3)</a> alatt van licencelve.',
     
     'language_code' => 'hu',
     'language_direction' => 'ltr',

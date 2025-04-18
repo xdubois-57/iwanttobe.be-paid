@@ -1,7 +1,7 @@
 <?php
-// Portuguese language definition file for QR Transfer application
+// Portuguese language definition file for <strong>Paid!</strong> application
 // Contains core language settings and configuration
-// Last updated: 2025-04-13
+// Last updated: 2025-04-18
 
 return array_merge(
     require __DIR__.'/pt/menu.php',

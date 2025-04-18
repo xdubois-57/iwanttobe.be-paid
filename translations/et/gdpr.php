@@ -1,5 +1,5 @@
 <?php
-// Estonian GDPR translations for QR Transfer application
+// Estonian GDPR translations for <strong>Paid!</strong> application
 // Contains all privacy policy and GDPR-related text
 // Last updated: 2025-04-14
 
@@ -9,7 +9,7 @@ return [
     'gdpr_last_updated' => 'Viimane uuendus: %s',
     
     // Introduction section
-    'gdpr_intro' => 'See privaatsuspoliitika kirjeldab, kuidas me kogume, töötleme ja kaitseme QR Transferi ("me", "me") QR-koodide loomiseks kasutatud isiklikke andmeid.',
+    'gdpr_intro' => 'Käesolev privaatsuspoliitika kirjeldab, kuidas <strong>Paid!</strong> ("meie", "meid" või "meie") kogub, kasutab ja kaitseb teie isikuandmeid, kui kasutate meie QR-koodi genereerimise teenust.',
     
     // Information collection section
     'gdpr_info_collect_title' => 'Kogutud info',
@@ -35,7 +35,7 @@ return [
     
     // Security section
     'gdpr_security_title' => 'Andmete salvestamine ja turvalisus',
-    'gdpr_security_intro' => 'QR Transfer on planeeritud turvalisusega meeles:',
+    'gdpr_security_intro' => '<strong>Paid!</strong> on loodud privaatsust silmas pidades:',
     'gdpr_security_processing' => 'Makseandmed töödeldakse turvaliselt meie serveritel QR-koodide genereerimiseks',
     'gdpr_security_no_storage' => 'Me ei salvesta kunagi makseandmeid püsivalt meie serveritel',
     'gdpr_security_local_storage' => 'Makseandmed salvestatakse vaid siis brauseri kohalikku salvestusruumi, kui see valite',
