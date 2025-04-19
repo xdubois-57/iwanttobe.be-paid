@@ -50,9 +50,15 @@ $router->get('/gdpr', 'GDPRController@index');     // GDPR/Privacy policy page
 $router->get('/why-us', 'WhyUsController@index');     // Why Us page
 $router->get('/support', 'SupportController@index');     // Support/Buy me a coffee page
 
-// Redirect root to default language
+// Redirect root to browser language if supported, else to English
 $router->get('/', function() {
-    header('Location: /en');
+    $config = require __DIR__ . '/config/languages.php';
+    $browserLang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'] ?? '', 0, 2);
+    if (isset($config['available_languages'][$browserLang])) {
+        header('Location: /' . $browserLang);
+    } else {
+        header('Location: /en');
+    }
     exit;
 });
 
