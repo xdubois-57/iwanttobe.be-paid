@@ -138,19 +138,20 @@ $lang = LanguageController::getInstance();
             }
         });
 
-        async function changeLanguage(lang) {
-            // Create a form and submit it to properly handle the language change
-            const form = document.createElement('form');
-            form.method = 'POST';
-            form.action = '/language/' + lang;
-            
-            const input = document.createElement('input');
-            input.type = 'hidden';
-            input.name = 'lang';
-            input.value = lang;
-            
-            form.appendChild(input);
-            document.body.appendChild(form);
-            form.submit();
+        function changeLanguage(lang) {
+            // Change URL to the selected language, preserving the current path after the language code
+            const pathParts = window.location.pathname.split('/').filter(Boolean);
+            if (pathParts.length === 0) {
+                window.location.href = '/' + lang;
+                return;
+            }
+            // Replace first segment if it's a supported language, otherwise add it
+            const supported = <?php echo json_encode(array_keys($languages)); ?>;
+            if (supported.includes(pathParts[0])) {
+                pathParts[0] = lang;
+            } else {
+                pathParts.unshift(lang);
+            }
+            window.location.href = '/' + pathParts.join('/');
         }
     </script>
