@@ -26,8 +26,9 @@ return [
     'why_us_title' => 'Miért válassza a <strong>Paid!</strong>-t?',
     
     // SEO metadata
-    'meta_description' => 'QR kódok generálása szcout eseményekhez, szülői szövetségekhez, labdarúgóklubokhoz és kisvállalkozásokhoz. Ingyenes, biztonságos és magánélet védelme alapján működő SEPA befizetési generátor, amely azonnal működik minden eszközön.',
-    'meta_keywords' => 'szcout események, szülői szövetségek, labdarúgóklubok, közösségi összegyűjtők, közösségi események, QR kód, SEPA befizetés, banki átutalás, befizetési QR, európai befizetés, biztonságos befizetés, adomány, támogatás, kávé, ingyenes QR kód generátor',
+    'meta_title' => 'Paid! Ingyenes fizetési QR egyesületeknek',
+    'meta_description' => 'QR-kódokat készíthet cserkész eseményekhez, szülői egyesületekhez, fociklubokhoz és kisvállalkozásokhoz. Ingyenes, biztonságos és privát SEPA fizetési generátor, amely azonnal működik minden eszközön.',
+    'meta_keywords' => 'cserkész események, szülői egyesületek, fociklubok, adománygyűjtés, közösségi események, QR-kód, SEPA fizetés, banki átutalás, fizetési QR, európai fizetés, biztonságos fizetés, adomány, támogatás, buy me a coffee, ingyenes QR-kód generátor',
     
     // Legal disclaimer
     'disclaimer_text' => 'A <strong>Paid!</strong> nem vállal felelősséget semmilyen pénzügyi problémáért vagy veszteségért, amely a szolgáltatás használatából ered. Az eszköz használata saját felelősségre történik. Minden fizetést a megfelelő bankok dolgoznak fel, és a <strong>Paid!</strong> nem kezel pénzügyi tranzakciókat. Ez a weboldal a <a href="https://www.gnu.org/licenses/gpl-3.0.html">GNU General Public License v3.0 (GPLv3)</a> alatt van licencelve.',

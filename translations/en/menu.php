@@ -26,6 +26,7 @@ return [
     'why_us_title' => 'Why choose <strong>Paid!</strong>?',
     
     // SEO metadata
+    'meta_title' => 'Paid! Free payment QR for associations',
     'meta_description' => 'Create QR codes for scout events, parent associations, football clubs, and small businesses. Free, secure, and private SEPA payment generator that works instantly on all devices.',
     'meta_keywords' => 'scout events, parent associations, football clubs, community fundraising, community events, QR code, SEPA payment, bank transfer, payment QR, European payment, secure payment, donation, support, buy me a coffee, free QR code generator',
     

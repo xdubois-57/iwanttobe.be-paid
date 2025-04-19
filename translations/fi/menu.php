@@ -26,6 +26,7 @@ return [
     'why_us_title' => 'Miksi valitset <strong>Paid!</strong>?',
     
     // SEO metadata
+    'meta_title' => 'Paid! Ilmainen maksu-QR yhdistyksille',
     'meta_description' => 'Luo QR-koodit skauttapahtumiin, vanhempien yhdistyksiin, jalkapallojoukkueisiin ja pienyrityksiin. Ilmainen, turvallinen ja yksityinen SEPA-maksugeneraattori, joka toimii välittömästi kaikilla laitteilla.',
     'meta_keywords' => 'skauttapahtumat, vanhempien yhdistykset, jalkapallojoukkueet, paikallinen rahoituskampanja, paikalliset tapahtumat, QR-koodi, SEPA-maksu, pankkitili, maksu QR, Eurooppalainen maksu, turvallinen maksu, lahjoitus, tuki, osta minulle kahvia, ilmais QR-koodigeneraattori',
     

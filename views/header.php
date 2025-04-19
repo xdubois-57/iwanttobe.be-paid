@@ -31,16 +31,16 @@ $lang = LanguageController::getInstance();
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo isset($pageTitle) ? $pageTitle : 'Paid!'; ?></title>
+    <title><?php echo isset($pageTitle) ? $pageTitle : $lang->translate('meta_title'); ?></title>
     <meta name="description" content="<?php echo isset($pageDescription) ? $pageDescription : $lang->translate('meta_description'); ?>">
     <meta name="keywords" content="<?php echo $lang->translate('meta_keywords'); ?>">
     <meta name="robots" content="index, follow">
-    <meta property="og:title" content="<?php echo isset($pageTitle) ? $pageTitle : 'Paid!'; ?>">
+    <meta property="og:title" content="<?php echo isset($pageTitle) ? $pageTitle : $lang->translate('meta_title'); ?>">
     <meta property="og:description" content="<?php echo isset($pageDescription) ? $pageDescription : $lang->translate('meta_description'); ?>">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://iwantto.be/<?php echo $lang->getCurrentLanguage(); ?><?php echo $_SERVER['REQUEST_URI']; ?>">
     <meta name="google-site-verification" content="VlG6fhlOB4LhJf2uMGbByhfL2mJ3ilaltvhI7i0ChnA" />
-    <link rel="canonical" href="https://iwantto.be/<?php echo $lang->getCurrentLanguage(); ?><?php echo $_SERVER['REQUEST_URI']; ?>">
+    <link rel="canonical" href="https://iwantto.be/<?php echo $_SERVER['REQUEST_URI']; ?>">
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
     <link rel="stylesheet" href="/css/styles.css">
@@ -54,7 +54,7 @@ $lang = LanguageController::getInstance();
     }
     ?>
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="<?php echo isset($pageTitle) ? $pageTitle : 'Paid!'; ?>">
+    <meta name="twitter:title" content="<?php echo isset($pageTitle) ? $pageTitle : $lang->translate('meta_title'); ?>">
     <meta name="twitter:description" content="<?php echo isset($pageDescription) ? $pageDescription : $lang->translate('meta_description'); ?>">
     <!-- If you want to add a twitter:image, add it here -->
     <?php if (in_array($lang->getCurrentLanguage(), ['ar', 'he', 'fa', 'ur'])): ?>

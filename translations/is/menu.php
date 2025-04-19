@@ -26,6 +26,7 @@ return [
     'why_us_title' => 'Af hverju að velja <strong>Paid!</strong>?',
     
     // SEO metadata
+    'meta_title' => 'Paid! Ókeypis greiðslu-QR fyrir félög',
     'meta_description' => 'Búðu til QR kóða fyrir skólaferðir, eldri fólk, fótbóltalag og smástarfsemi. Ókeypis, öruggt og einkamanns SEPA greiðsluþjónusta sem virkar beint á öllum tækinu.',
     'meta_keywords' => 'skólaferðir, eldri fólk, fótbóltalag, staðbundin finnsluferli, staðbundin aðgerðir, QR kóði, SEPA greiðsla, bankareikningur, greiðslu QR, evrópsk greiðsla, örugg greiðsla, gifi, styrking, kaupi mig kaffi, ókeypis QR kóðagerandi',
     

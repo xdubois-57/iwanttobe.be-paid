@@ -26,8 +26,9 @@ return [
     'why_us_title' => 'Hvorfor vælge <strong>Paid!</strong>?',
     
     // SEO metadata
-    'meta_description' => 'Opret QR-koder til skoleture, seniorforeninger, fodboldhold og små virksomheder. Gratis, sikker og privat SEPA-betalingsgenerator, der fungerer direkte på alle enheder.',
-    'meta_keywords' => 'skoleture, seniorforeninger, fodboldhold, lokal finansieringskampagne, lokale begivenheder, QR-kode, SEPA-betaling, bankkonto, betalings QR, europæisk betaling, sikker betaling, donation, støtte, køb mig en kaffe, gratis QR-kodegenerator',
+    'meta_title' => 'Paid! Gratis betalings-QR til foreninger',
+    'meta_description' => 'Opret QR-koder til spejderarrangementer, forældreforeninger, fodboldklubber og små virksomheder. Gratis, sikker og privat SEPA-betalingsgenerator, der virker med det samme på alle enheder.',
+    'meta_keywords' => 'spejderarrangementer, forældreforeninger, fodboldklubber, fundraising, fællesskabsarrangementer, QR-kode, SEPA-betaling, bankoverførsel, betalings-QR, europæisk betaling, sikker betaling, donation, støtte, buy me a coffee, gratis QR-kodegenerator',
     
     // Legal disclaimer
     'disclaimer_text' => '<strong>Paid!</strong> er ikke ansvarlig for økonomiske problemer eller tab i forbindelse med brugen af denne tjeneste. Brug af dette værktøj sker på eget ansvar. Alle betalinger behandles af de respektive banker, og <strong>Paid!</strong> håndterer ikke monetære transaktioner. Denne hjemmeside er licenseret under <a href="https://www.gnu.org/licenses/gpl-3.0.html">GNU General Public License v3.0 (GPLv3)</a>.',

@@ -26,8 +26,9 @@ return [
     'why_us_title' => 'Zašto odabrati <strong>Paid!</strong>?',
     
     // SEO metadata
-    'meta_description' => 'Generirajte QR kodove za skautske događaje, roditeljske udruge, nogometne klube i mala preduzeca. Besplatni, sigurni i privatni SEPA plaćanja generiraju se odmah na svim uređajima.',
-    'meta_keywords' => 'skautski događaji, roditeljske udruge, nogometni klubovi, lokalne akcije, lokalni događaji, QR kod, SEPA plaćanje, bankovno prebacivanje, QR kod za plaćanje, europsko plaćanje, sigurno plaćanje, darovanje, podrška, kupite mi kavu, besplatni QR kod generator',
+    'meta_title' => 'Paid! Besplatan platni QR za udruge',
+    'meta_description' => 'Izradite QR kodove za izviđačke događaje, udruge roditelja, nogometne klubove i mala poduzeća. Besplatan, siguran i privatan SEPA generator plaćanja koji radi odmah na svim uređajima.',
+    'meta_keywords' => 'izviđački događaji, udruge roditelja, nogometni klubovi, prikupljanje sredstava, društveni događaji, QR kod, SEPA plaćanje, bankovni prijenos, platni QR, europsko plaćanje, sigurno plaćanje, donacija, podrška, buy me a coffee, besplatan generator QR kodova',
     
     // Legal disclaimer
     'disclaimer_text' => '<strong>Paid!</strong> nije odgovoran za bilo kakve financijske probleme ili gubitke povezane s korištenjem ove usluge. Korištenje ovog alata je na vlastitu odgovornost. Sve uplate obrađuju odgovarajuće banke, a <strong>Paid!</strong> ne upravlja novčanim transakcijama. Ova web stranica je licencirana pod <a href="https://www.gnu.org/licenses/gpl-3.0.html">GNU General Public License v3.0 (GPLv3)</a>.',

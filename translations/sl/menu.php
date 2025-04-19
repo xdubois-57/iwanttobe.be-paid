@@ -26,6 +26,7 @@ return [
     'why_us_title' => 'Zakaj izbrati <strong>Paid!</strong>?',
     
     // SEO metadata
+    'meta_title' => 'Paid! Brezplačen plačilni QR za društva',
     'meta_description' => 'Ustvarjanje QR kod za skautske dogodke, starševske združitve, nogometne klube in majhne podjetja. Brezplačen, var in zasebni generator SEPA plačil, ki deluje takoj na vseh napravah.',
     'meta_keywords' => 'skautske dogodke, starševske združitve, nogometni klubi, lokalna zbiranje sredstev, lokalni dogodki, QR kod, SEPA plačilo, bankovni prenos, plačilna QR, evropsko plačilo, varno plačilo, darilo, podpora, kupi mi kavo, brezplačni generator QR kod',
     

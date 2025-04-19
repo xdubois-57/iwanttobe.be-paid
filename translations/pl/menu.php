@@ -26,8 +26,9 @@ return [
     'why_us_title' => 'Dlaczego wybrać <strong>Paid!</strong>?',
     
     // SEO metadata
-    'meta_description' => 'Twórz kody QR dla wydarzeń harcerskich, stowarzyszeń rodzicielskich, klubów piłkarskich i małych firm. Darmowy, bezpieczny i prywatny generator płatności SEPA działający natychmiast na wszystkich urządzeniach.',
-    'meta_keywords' => 'wydarzenia harcerskie, stowarzyszenia rodzicielskie, kluby piłkarskie, zbiórki funduszy lokalnych, wydarzenia lokalne, kod QR, płatność SEPA, przelew bankowy, QR płatności, europejska płatność, bezpieczna płatność, darowizna, wsparcie, kup mi kawę, darmowy generator kodu QR',
+    'meta_title' => 'Paid! Darmowy kod QR do płatności dla stowarzyszeń',
+    'meta_description' => 'Twórz kody QR dla wydarzeń harcerskich, stowarzyszeń rodziców, klubów piłkarskich i małych firm. Darmowy, bezpieczny i prywatny generator płatności SEPA, który działa natychmiast na wszystkich urządzeniach.',
+    'meta_keywords' => 'wydarzenia harcerskie, stowarzyszenia rodziców, kluby piłkarskie, zbiórki, wydarzenia społecznościowe, kod QR, płatność SEPA, przelew bankowy, QR płatności, płatność europejska, bezpieczna płatność, darowizna, wsparcie, buy me a coffee, darmowy generator kodów QR',
     
     // Legal disclaimer
     'disclaimer_text' => '<strong>Paid!</strong> nie ponosi odpowiedzialności za jakiekolwiek problemy finansowe lub straty związane z korzystaniem z tej usługi. Korzystanie z tego narzędzia odbywa się na własne ryzyko. Wszystkie płatności są przetwarzane przez odpowiednie banki, a <strong>Paid!</strong> nie obsługuje transakcji pieniężnych. Ta strona jest licencjonowana na podstawie <a href="https://www.gnu.org/licenses/gpl-3.0.html">GNU General Public License v3.0 (GPLv3)</a>.',

@@ -26,8 +26,9 @@ return [
     'why_us_title' => 'Kāpēc izvēlēties <strong>Paid!</strong>?',
     
     // SEO metadata
-    'meta_description' => 'Izveidojiet QR kodus skolotājiem, vecākiem cilvēkiem, futbola komandām un mazajiem uzņēmumiem. Bez maksas, drošs un privāts SEPA maksājumu ģeneratoris, kas strādā tieši uz visiem ierīcēm.',
-    'meta_keywords' => 'skolotāji, vecāki cilvēki, futbola komandas, vietējā finansēšana, vietējie notikumi, QR kods, SEPA maksājums, bankas konts, maksājuma QR, eiropeiskais maksājums, drošs maksājums, ziedojums, atbalsts, iedvesmojiet man kafiju, bezmaksas QR kodu ģeneratoris',
+    'meta_title' => 'Paid! Bezmaksas maksājumu QR asociācijām',
+    'meta_description' => 'Izveidojiet QR kodus skautu pasākumiem, vecāku asociācijām, futbola klubiem un mazajiem uzņēmumiem. Bezmaksas, drošs un privāts SEPA maksājumu ģenerators, kas darbojas uzreiz visās ierīcēs.',
+    'meta_keywords' => 'skautu pasākumi, vecāku asociācijas, futbola klubi, līdzekļu vākšana, kopienas pasākumi, QR kods, SEPA maksājums, bankas pārskaitījums, maksājumu QR, Eiropas maksājums, drošs maksājums, ziedojums, atbalsts, buy me a coffee, bezmaksas QR kodu ģenerators',
     
     // Legal disclaimer
     'disclaimer_text' => '<strong>Paid!</strong> nav atbildīgs par jebkādām finansiālām problēmām vai zaudējumiem, kas saistīti ar šī pakalpojuma izmantošanu. Šī rīka izmantošana ir uz jūsu pašu risku. Visus maksājumus apstrādā attiecīgās bankas, un <strong>Paid!</strong> neapstrādā nekādas naudas transakcijas. Šī vietne ir licencēta saskaņā ar <a href="https://www.gnu.org/licenses/gpl-3.0.html">GNU General Public License v3.0 (GPLv3)</a>.',

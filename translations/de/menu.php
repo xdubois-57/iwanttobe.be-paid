@@ -24,8 +24,9 @@ return [
     'why_us_title' => 'Warum <strong>Paid!</strong>?',
     
     // SEO metadata
-    'meta_description' => 'Erstellen Sie QR-Codes für Pfadfinder-Veranstaltungen, Elternvereine, Fußballclubs und kleine Unternehmen. Kostenlos, sicher und privat. SEPA-Zahlungs-Generator, der sofort auf allen Geräten funktioniert.',
-    'meta_keywords' => 'Pfadfinder-Veranstaltungen, Elternvereine, Fußballclubs, Gemeinschaftsfundraising, Gemeinschaftsveranstaltungen, QR-Code, SEPA-Zahlung, Banküberweisung, Zahlungs-QR, Europäische Zahlung, sichere Zahlung, Spende, Support, Kaufe mir einen Kaffee, kostenlos QR-Code Generator',
+    'meta_title' => 'Paid! Kostenloser Zahlungs-QR für Vereine',
+    'meta_description' => 'Erstellen Sie QR-Codes für Pfadfinderveranstaltungen, Elternvereine, Fußballclubs und kleine Unternehmen. Kostenloser, sicherer und privater SEPA-Zahlungsgenerator, der auf allen Geräten sofort funktioniert.',
+    'meta_keywords' => 'Pfadfinderveranstaltungen, Elternvereine, Fußballclubs, Fundraising, Gemeinschaftsveranstaltungen, QR-Code, SEPA-Zahlung, Banküberweisung, Zahlungs-QR, europäische Zahlung, sichere Zahlung, Spende, Unterstützung, buy me a coffee, kostenloser QR-Code-Generator',
     
     // Legal disclaimer
     'disclaimer_text' => '<strong>Paid!</strong> ist nicht für finanzielle Probleme oder Verluste verantwortlich, die mit der Nutzung dieses Dienstes zusammenhängen. Die Nutzung dieses Tools erfolgt auf eigene Gefahr. Alle Zahlungen werden durch die jeweiligen Banken verarbeitet, und <strong>Paid!</strong> führt keine Geldtransaktionen durch. Diese Website ist unter der <a href="https://www.gnu.org/licenses/gpl-3.0.html">GNU General Public License v3.0 (GPLv3)</a> lizenziert.',

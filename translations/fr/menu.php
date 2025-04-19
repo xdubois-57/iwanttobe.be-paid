@@ -29,8 +29,9 @@ return [
     'why_us_title' => 'Pourquoi choisir <strong>Paid!</strong>?',
     
     // SEO metadata
-    'meta_description' => 'Créez des codes QR pour événements scouts, associations de parents d\'élèves, clubs de football et petites entreprises. Générateur de paiements SEPA gratuit, sécurisé et privé qui fonctionne instantanément sur tous les appareils.',
-    'meta_keywords' => 'événements scouts, association de parents d\'élèves, club de football, collecte de fonds caritatifs, événements communautaires, code QR, paiement SEPA, virement bancaire, QR de paiement, paiement européen, paiement sécurisé, don, soutien, offre-moi un café, générateur de code QR gratuit',
+    'meta_title' => 'Paid! QR de paiement gratuit pour associations',
+    'meta_description' => 'Créez des QR codes pour événements scouts, associations de parents, clubs sportifs et petites entreprises. Générateur SEPA gratuit, sécurisé et privé, fonctionnant instantanément sur tous les appareils.',
+    'meta_keywords' => 'événements scouts, associations de parents, clubs sportifs, collecte de fonds, événements communautaires, QR code, paiement SEPA, virement bancaire, QR paiement, paiement européen, paiement sécurisé, don, soutien, buy me a coffee, générateur QR code gratuit',
     
     // Legal disclaimer
     'disclaimer_text' => '<strong>Paid!</strong> n\'est pas responsable des problèmes ou pertes financières liés à l\'utilisation de ce service. L\'utilisation de cet outil est à vos propres risques. Tous les paiements sont traités par les banques respectives, et <strong>Paid!</strong> ne gère aucune transaction monétaire. Ce site web est soumis à la <a href="https://www.gnu.org/licenses/gpl-3.0.fr.html">GNU General Public License v3.0 (GPLv3)</a>.',
