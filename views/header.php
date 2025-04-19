@@ -38,9 +38,9 @@ $lang = LanguageController::getInstance();
     <meta property="og:title" content="<?php echo isset($pageTitle) ? $pageTitle : 'Paid!'; ?>">
     <meta property="og:description" content="<?php echo isset($pageDescription) ? $pageDescription : $lang->translate('meta_description'); ?>">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://iwantto.be<?php echo $_SERVER['REQUEST_URI']; ?>">
+    <meta property="og:url" content="https://iwantto.be/<?php echo $lang->getCurrentLanguage(); ?><?php echo $_SERVER['REQUEST_URI']; ?>">
     <meta name="google-site-verification" content="VlG6fhlOB4LhJf2uMGbByhfL2mJ3ilaltvhI7i0ChnA" />
-    <link rel="canonical" href="https://iwantto.be<?php echo $_SERVER['REQUEST_URI']; ?>">
+    <link rel="canonical" href="https://iwantto.be/<?php echo $lang->getCurrentLanguage(); ?><?php echo $_SERVER['REQUEST_URI']; ?>">
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
     <link rel="stylesheet" href="/css/styles.css">
@@ -86,15 +86,15 @@ $lang = LanguageController::getInstance();
                         <rect y="60" width="100" height="10"></rect>
                     </svg>
                 </button>
-                <a href="/" class="app-name"><em style="font-size: 0.6em;">iwantto.be</em> <span style="font-size: 1.1em; font-weight: bold;">Paid!</span></a>
+                <a href="/<?php echo $lang->getCurrentLanguage(); ?>" class="app-name"><em style="font-size: 0.6em;">iwantto.be</em> <span style="font-size: 1.1em; font-weight: bold;">Paid!</span></a>
             </div>
 
             <div class="nav-links">
                 <ul>
-                    <li><a href="/"><?php echo $lang->translate('menu_home'); ?></a></li>
-                    <li><a href="/why-us"><?php echo $lang->translate('menu_why_us'); ?></a></li>
-                    <li><a href="/support"><?php echo $lang->translate('menu_support'); ?></a></li>
-                    <li><a href="/gdpr"><?php echo $lang->translate('menu_gdpr'); ?></a></li>
+                    <li><a href="/<?php echo $lang->getCurrentLanguage(); ?>"><?php echo $lang->translate('menu_home'); ?></a></li>
+                    <li><a href="/<?php echo $lang->getCurrentLanguage(); ?>/why-us"><?php echo $lang->translate('menu_why_us'); ?></a></li>
+                    <li><a href="/<?php echo $lang->getCurrentLanguage(); ?>/support"><?php echo $lang->translate('menu_support'); ?></a></li>
+                    <li><a href="/<?php echo $lang->getCurrentLanguage(); ?>/gdpr"><?php echo $lang->translate('menu_gdpr'); ?></a></li>
                     <li class="language-selector">
                         <select onchange="changeLanguage(this.value)" aria-label="<?php echo $lang->translate('language'); ?>">
                             <?php

@@ -38,12 +38,23 @@ require_once 'controllers/SupportController.php';
 // Initialize the router
 $router = new Router();
 
+// Localized page routes
+$router->get('/{lang}', 'HomeController@index');
+$router->get('/{lang}/gdpr', 'GDPRController@index');
+$router->get('/{lang}/why-us', 'WhyUsController@index');
+$router->get('/{lang}/support', 'SupportController@index');
+
 // Page routes
 // These routes handle the main navigation of the site
-$router->get('/', 'HomeController@index');          // Homepage with QR code generation form
 $router->get('/gdpr', 'GDPRController@index');     // GDPR/Privacy policy page
 $router->get('/why-us', 'WhyUsController@index');     // Why Us page
 $router->get('/support', 'SupportController@index');     // Support/Buy me a coffee page
+
+// Redirect root to default language
+$router->get('/', function() {
+    header('Location: /en');
+    exit;
+});
 
 // Language routes
 // These routes handle language changes via both GET and POST requests

@@ -23,9 +23,6 @@ class LanguageController {
     private $currentLang;
     
     private function __construct() {
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
         $this->currentLang = $this->determineLanguage();
         $this->loadTranslations();
     }
@@ -53,33 +50,20 @@ class LanguageController {
     }
     
     private function determineLanguage() {
-        // First check session
-        if (isset($_SESSION['lang'])) {
-            return $_SESSION['lang'];
+        // Extract language from the URL path (e.g., /en/why-us)
+        $uri = $_SERVER['REQUEST_URI'] ?? '/';
+        $segments = explode('/', trim($uri, '/'));
+        $config = require __DIR__ . '/../config/languages.php';
+        $langFromUrl = $segments[0] ?? null;
+        if ($langFromUrl && isset($config['available_languages'][$langFromUrl])) {
+            return $langFromUrl;
         }
-        
-        // Then check cookie
-        if (isset($_COOKIE['lang'])) {
-            $cookieLang = $_COOKIE['lang'];
-            $config = require __DIR__ . '/../config/languages.php';
-            if (isset($config['available_languages'][$cookieLang])) {
-                $_SESSION['lang'] = $cookieLang;
-                return $cookieLang;
-            }
-        }
-        
         // Then check browser language
         $browserLang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'] ?? 'en', 0, 2);
-        $config = require __DIR__ . '/../config/languages.php';
-        
-        // If browser language is supported, use it
         if (isset($config['available_languages'][$browserLang])) {
-            $_SESSION['lang'] = $browserLang;
             return $browserLang;
         }
-        
         // Default to English if browser language not supported
-        $_SESSION['lang'] = 'en';
         return 'en';
     }
     
@@ -103,9 +87,6 @@ class LanguageController {
         if (!isset($config['available_languages'][$lang])) {
             return false;
         }
-
-        $_SESSION['lang'] = $lang;
-        setcookie('lang', $lang, time() + (86400 * 30), '/'); // 30 days
         $this->currentLang = $lang;
         $this->loadTranslations();
         return true;
