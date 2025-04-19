@@ -40,7 +40,7 @@ $lang = LanguageController::getInstance();
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://iwantto.be/<?php echo $lang->getCurrentLanguage(); ?><?php echo $_SERVER['REQUEST_URI']; ?>">
     <meta name="google-site-verification" content="VlG6fhlOB4LhJf2uMGbByhfL2mJ3ilaltvhI7i0ChnA" />
-    <link rel="canonical" href="https://iwantto.be/<?php echo $_SERVER['REQUEST_URI']; ?>">
+    <link rel="canonical" href="https://iwantto.be<?php echo $_SERVER['REQUEST_URI']; ?>">
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
     <link rel="stylesheet" href="/css/styles.css">
