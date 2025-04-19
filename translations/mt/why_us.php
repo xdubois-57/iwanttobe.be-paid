@@ -13,4 +13,12 @@ return [
     'why_us_comparison_qr_transfer' => '<strong>Paid!</strong>',
     'why_us_comparison_banking_apps' => 'Apps Bankarji',
     'why_us_comparison_payment_apps' => 'Apps ta’ Ħlas',
+    'why_us_feature_1' => 'QR istantanju',
+    'why_us_feature_1_desc' => 'Ġenera QR codes SEPA istantanejament għal ħlasijiet rapidi u siguri.',
+    'why_us_feature_2' => 'L-istituti kollha',
+    'why_us_feature_2_desc' => 'Kompatibbli ma’ kull bank fil-qasam SEPA.',
+    'why_us_feature_3' => 'Bosta lingwi',
+    'why_us_feature_3_desc' => 'Uża l-applikazzjoni fil-lingwa preferuta tiegħek.',
+    'why_us_feature_4' => 'Kull mezz',
+    'why_us_feature_4_desc' => 'Jgawdi ħlasijiet QR bla problemi fuq desktop, tablet, jew mobile.',
 ];

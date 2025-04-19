@@ -13,4 +13,12 @@ return [
     'why_us_comparison_qr_transfer' => '<strong>Paid!</strong>',
     'why_us_comparison_banking_apps' => 'Pangarakendused',
     'why_us_comparison_payment_apps' => 'Makseäpid',
+    'why_us_feature_1' => 'Kohene QR',
+    'why_us_feature_1_desc' => 'Genereerige SEPA QR-koode kohe, et teha kiire ja turvalise makse.',
+    'why_us_feature_2' => 'Kõik pangad',
+    'why_us_feature_2_desc' => 'Kõigi SEPA ala pankadega ühilduv.',
+    'why_us_feature_3' => 'Mitu keelt',
+    'why_us_feature_3_desc' => 'Kasutage rakendust oma eelistatud keeles.',
+    'why_us_feature_4' => 'Kõik seadmed',
+    'why_us_feature_4_desc' => 'Nautige QR-maksete sujuvat kasutamist arvutis, tahvelarvutis või mobiiltelefonis.',
 ];
