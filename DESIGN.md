@@ -10,6 +10,7 @@
 7. [Architecture Changes](#7-architecture-changes)
 8. [Dependencies](#8-dependencies)
 9. [Supported Languages Requirement](#9-supported-languages-requirement)
+10. [Internationalization, SEO & Sitemap Maintenance](#10-internationalization-seo--sitemap-maintenance)
 
 ## 1. Architecture Overview
 
@@ -410,7 +411,12 @@ Only the languages explicitly listed in `config/languages.php` under `'available
 
 To update supported languages, modify the `'available_languages'` array in `config/languages.php` and ensure all translation files reflect this list.
 
-Last updated: 2025-04-18
+## 10. Internationalization, SEO & Sitemap Maintenance
+
+- **Supported Languages:** Defined in `config/languages.php` under `available_languages`.
+- **Sitemap Updates:** Whenever a new language is added or a new page/route is introduced, update `sitemap.xml` to include all new routes for every language.
+- **Alternate URLs:** Always update `<link rel="alternate" hreflang=...>` tags in `header.php` for every supported language whenever a new language is added.
+- **Process:** These updates are mandatory for every release that changes language support or adds/removes pages. Failure to do so may impact SEO and discoverability.
 
 ## Removed Components
 - About page (controller, view and route)
