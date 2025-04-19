@@ -69,4 +69,5 @@ $router->post('/language', 'LanguageController@change');        // For form subm
 
 // API routes
 // These routes handle AJAX requests and return JSON responses
-$router->post('/generate-qr', 'QRController@generate');     // Handles QR code generation requests
+$router->post('/{lang}/generate-qr', 'QRController@generate');     // Handles QR code generation requests
+$router->post('/generate-qr', 'QRController@generate');     // Fallback for legacy/non-localized requests

@@ -140,8 +140,12 @@ async function generateQRCode(form, submitButton, submitButtonOriginalText, trus
         // Get form data including disabled fields
         const formData = createFormData(form, inputs);
 
+        // Get language from the URL
+        const lang = document.documentElement.lang || (window.location.pathname.split('/')[1] || 'en');
+        const url = `/${lang}/generate-qr`;
+
         // Make the AJAX request
-        const response = await fetch('/generate-qr', {
+        const response = await fetch(url, {
             method: 'POST',
             headers: {
                 'X-Requested-With': 'XMLHttpRequest'
