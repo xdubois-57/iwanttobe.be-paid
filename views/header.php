@@ -28,21 +28,38 @@ $lang = LanguageController::getInstance();
 <!DOCTYPE html>
 <html lang="<?php echo $lang->getCurrentLanguage(); ?>">
 <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Paid!</title>
-    <meta name="description" content="<?php echo $lang->translate('meta_description'); ?>">
+    <title><?php echo isset($pageTitle) ? $pageTitle : 'Paid!'; ?></title>
+    <meta name="description" content="<?php echo isset($pageDescription) ? $pageDescription : $lang->translate('meta_description'); ?>">
     <meta name="keywords" content="<?php echo $lang->translate('meta_keywords'); ?>">
     <meta name="robots" content="index, follow">
-    <meta property="og:title" content="Paid!">
-    <meta property="og:description" content="<?php echo $lang->translate('meta_description'); ?>">
+    <meta property="og:title" content="<?php echo isset($pageTitle) ? $pageTitle : 'Paid!'; ?>">
+    <meta property="og:description" content="<?php echo isset($pageDescription) ? $pageDescription : $lang->translate('meta_description'); ?>">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://iwantto.be">
+    <meta property="og:url" content="https://iwantto.be<?php echo $_SERVER['REQUEST_URI']; ?>">
     <meta name="google-site-verification" content="VlG6fhlOB4LhJf2uMGbByhfL2mJ3ilaltvhI7i0ChnA" />
     <link rel="canonical" href="https://iwantto.be<?php echo $_SERVER['REQUEST_URI']; ?>">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
     <link rel="stylesheet" href="/css/styles.css">
-    
+    <?php
+    $config = require __DIR__ . '/../config/languages.php';
+    $languages = $config['available_languages'];
+    asort($languages); // Sort languages by name
+    // Add hreflang alternate links for all supported languages
+    foreach ($languages as $code => $name) {
+        echo '<link rel="alternate" hreflang="' . $code . '" href="https://iwantto.be/' . $code . '/" />';
+    }
+    ?>
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="<?php echo isset($pageTitle) ? $pageTitle : 'Paid!'; ?>">
+    <meta name="twitter:description" content="<?php echo isset($pageDescription) ? $pageDescription : $lang->translate('meta_description'); ?>">
+    <!-- If you want to add a twitter:image, add it here -->
+    <?php if (in_array($lang->getCurrentLanguage(), ['ar', 'he', 'fa', 'ur'])): ?>
+        <script>document.documentElement.setAttribute('dir', 'rtl');</script>
+    <?php endif; ?>
     <script>
     // Expose PHP translations to JavaScript
     window.t = function(key) {
@@ -81,8 +98,6 @@ $lang = LanguageController::getInstance();
                     <li class="language-selector">
                         <select onchange="changeLanguage(this.value)" aria-label="<?php echo $lang->translate('language'); ?>">
                             <?php
-                            $config = require __DIR__ . '/../config/languages.php';
-                            $languages = $config['available_languages'];
                             asort($languages); // Sort languages by name
                             foreach ($languages as $code => $name) {
                                 $selected = $lang->getCurrentLanguage() === $code ? 'selected' : '';
