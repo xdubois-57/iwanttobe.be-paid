@@ -358,6 +358,12 @@ Several enhancements have been made to improve the user interface and experience
    - Updated third-party service description in GDPR policy
    - Added specific details about GoQR's data handling practices
 
+### Recent Changes (2025-04-19)
+- QR code generation endpoint is now localized: AJAX requests for QR generation are sent to `/{lang}/generate-qr` (e.g., `/en/generate-qr`, `/fr/generate-qr`).
+- The backend now supports both `/{lang}/generate-qr` and `/generate-qr` routes for backward compatibility.
+- The language for QR code captions (e.g., "Paiement à") is always determined from the URL, ensuring the generated image matches the user's selected language.
+- The frontend JavaScript dynamically constructs the AJAX URL to include the current language code, making the system robust and generic for all supported languages.
+
 ### Removal of Unsupported Languages (2025-04-15)
 
 - The list of supported languages has been updated. Bulgarian (bg), British English (gb), and Slovak (sk) are no longer supported. Their translation directories and references have been removed from the codebase.
