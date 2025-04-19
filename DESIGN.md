@@ -9,6 +9,7 @@
 6. [Translation System](#6-translation-system)
 7. [Architecture Changes](#7-architecture-changes)
 8. [Dependencies](#8-dependencies)
+9. [Supported Languages Requirement](#9-supported-languages-requirement)
 
 ## 1. Architecture Overview
 
@@ -373,6 +374,35 @@ Several enhancements have been made to improve the user interface and experience
 - All previous reliance on remote QR code APIs (such as GoQR) has been removed. QR codes are now generated entirely locally for improved privacy, reliability, and performance.
 
 - Ensure Composer autoloading is included (see `index.php`).
+
+## 9. Supported Languages Requirement
+
+**Requirement:**
+Only the languages explicitly listed in `config/languages.php` under `'available_languages'` are supported by the application. No other languages should be referenced, included, or checked for translations. Any translation audit, addition, or update must strictly adhere to this list.
+
+**Current Supported Languages:**
+- en (English)
+- fr (Français)
+- nl (Nederlands)
+- pl (Polski)
+- it (Italiano)
+- es (Español)
+- pt (Português)
+- sv (Svenska)
+- el (Ελληνικά)
+- ro (Română)
+- cs (Čeština)
+- hu (Magyar)
+- sl (Slovenščina)
+- fi (Suomi)
+- da (Dansk)
+- no (Norsk)
+- is (Íslenska)
+- lv (Latviešu)
+- hr (Hrvatski)
+- de (Deutsch)
+
+To update supported languages, modify the `'available_languages'` array in `config/languages.php` and ensure all translation files reflect this list.
 
 Last updated: 2025-04-18
 
