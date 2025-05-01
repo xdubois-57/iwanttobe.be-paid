@@ -1,17 +1,9 @@
 <?php
-// Italian menu translations for <strong>Paid!</strong> application
-// Contains navigation and header-related text
-// Last updated: 2025-04-18
+// Global Italian menu translations
+// Contains shared menu items across all apps
+// Last updated: 2025-05-01
 
 return [
-    // Application name and main menu items
-    'app_name' => '<strong>Paid!</strong>',
-    'menu_home' => 'Home',
-    'menu_about' => 'Informazioni',
-    'menu_gdpr' => 'Privacy',
-    'menu_why_us' => 'Perché noi',
-    'menu_support' => 'Offrimi un caffè',
-    
     // Language and theme settings
     'language' => 'Lingua',
     'theme' => 'Tema',
@@ -19,17 +11,17 @@ return [
     'theme_dark' => 'Scuro',
     'theme_auto' => 'Automatico',
     
-    // Page titles
-    'welcome_message' => 'Benvenuto su <strong>Paid!</strong>',
-    'about_title' => 'Informazioni su <strong>Paid!</strong>',
-    'gdpr_title' => 'Politica sulla privacy e GDPR',
-    'why_us_title' => 'Perché scegliere <strong>Paid!</strong>?',
+    // Apps and landing
+    'landing_choose_app' => 'Scegli un\'applicazione',
+    'app_paid' => 'Paid!',
+    'app_involved' => 'Involved!',
+    'app_drive' => 'Drive',
     
-    // SEO metadata
-    'meta_title' => 'Paid! QR di pagamento gratuito per associazioni',
-    'meta_description' => 'Crea codici QR per eventi scout, associazioni di genitori, club sportivi e piccole imprese. Generatore SEPA gratuito, sicuro e privato che funziona istantaneamente su tutti i dispositivi.',
-    'meta_keywords' => 'eventi scout, associazioni di genitori, club sportivi, raccolta fondi, eventi comunitari, codice QR, pagamento SEPA, bonifico bancario, QR pagamento, pagamento europeo, pagamento sicuro, donazione, supporto, buy me a coffee, generatore QR code gratuito',
+    // Core settings
+    'language_code' => 'it',
+    'language_direction' => 'ltr',
+    'language_flag' => 'it',
     
     // Legal disclaimer
-    'disclaimer_text' => '<strong>Paid!</strong> non è responsabile per eventuali problemi finanziari o perdite legate all\'uso di questo servizio. L\'uso di questo strumento è a proprio rischio. Tutti i pagamenti sono elaborati dalle rispettive banche e <strong>Paid!</strong> non gestisce transazioni monetarie. Questo sito è concesso in licenza secondo la <a href="https://www.gnu.org/licenses/gpl-3.0.html">GNU General Public License v3.0 (GPLv3)</a>.',
+    'disclaimer_text' => 'iwantto.be non è responsabile per eventuali problemi legati all\'uso di questo servizio. L\'uso di questo strumento è a proprio rischio. Questo sito è concesso in licenza secondo la <a href="https://www.gnu.org/licenses/gpl-3.0.html">GNU General Public License v3.0 (GPLv3)</a>.',
 ];

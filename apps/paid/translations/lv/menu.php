@@ -1,0 +1,19 @@
+<?php
+// Latvian menu translations for Paid! application
+// Contains app-specific navigation items
+// Last updated: 2025-05-01
+
+return [
+    // Application name and main menu items
+    'app_name' => '<strong>Paid!</strong>',
+    'menu_home' => 'Sākums',
+    'menu_about' => 'Par mums',
+    'menu_gdpr' => 'GDPR',
+    'menu_why_us' => 'Kāpēc mēs?',
+    'menu_support' => 'Iedvesmojiet man kafiju',
+    
+    // Page titles
+    'welcome_message' => 'Laipni lūdzam <strong>Paid!</strong>',
+    'about_title' => 'Par <strong>Paid!</strong>',
+    'why_us_title' => 'Kāpēc izvēlēties <strong>Paid!</strong>?',
+];

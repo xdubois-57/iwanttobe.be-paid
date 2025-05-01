@@ -1,15 +1,21 @@
 <?php
-// Portuguese language definition file for <strong>Paid!</strong> application
-// Contains core language settings and configuration
-// Last updated: 2025-04-18
+// Global Portuguese language definition file
+// Contains common translations shared across all apps
+// Last updated: 2025-05-01
 
 return array_merge(
     require __DIR__.'/pt/menu.php',
-    require __DIR__.'/pt/form.php',
-    require __DIR__.'/pt/errors.php',
-    require __DIR__.'/pt/home.php',
-    require __DIR__.'/pt/about.php',
     require __DIR__.'/pt/gdpr.php',
-    require __DIR__.'/pt/why_us.php',
-    require __DIR__.'/pt/support.php'
+    require __DIR__.'/pt/support.php',
+    [
+        'cookie_notice' => 'Este site usa cookies essenciais',
+        'cookie_accept' => 'OK',
+        'meta_title' => 'iwantto.be - Aplicações para o dia a dia',
+        'meta_description' => 'Um conjunto de aplicações que ajudam nas suas tarefas diárias',
+        'meta_keywords' => 'pagamentos, código QR, comunidade, armazenamento',
+        'loading' => 'Carregando...',
+        'generating' => 'Gerando...',
+        'share_text' => 'Compartilhar',
+        'disclaimer_text' => 'iwantto.be não se responsabiliza por quaisquer problemas relacionados ao uso deste serviço. O uso desta ferramenta é por sua conta e risco. Este site está licenciado sob a <a href="https://www.gnu.org/licenses/gpl-3.0.html">GNU General Public License v3.0 (GPLv3)</a>.'
+    ]
 );

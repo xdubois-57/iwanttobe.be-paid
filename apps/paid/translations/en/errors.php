@@ -1,4 +1,7 @@
 <?php
+// English error message translations for Paid! application
+// Last updated: 2025-05-01
+
 return [
     'error_required_fields' => 'Please fill all required fields correctly',
     'error_saving_favorite' => 'Error saving to favorites',

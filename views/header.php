@@ -25,7 +25,10 @@ if (session_status() === PHP_SESSION_NONE) {
 require_once __DIR__ . '/../controllers/LanguageController.php';
 require_once __DIR__ . '/../core/AppRegistry.php';
 
+// Initialize the language controller
 $lang = LanguageController::getInstance();
+
+// Determine current app
 $uriSegments = explode('/', trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/'));
 $possibleApp = $uriSegments[1] ?? null; // after lang code
 $validApps = ['paid','involved','drive'];
@@ -35,6 +38,12 @@ $_SESSION['current_app'] = $cur;
 // Set current app in registry
 $registry = AppRegistry::getInstance();
 $registry->setCurrent($cur);
+
+// Reload translations to include app-specific translations
+// This ensures we get both global and app-specific translations
+if (method_exists($lang, 'loadTranslations')) {
+    $lang->loadTranslations();
+}
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo $lang->getCurrentLanguage(); ?>">

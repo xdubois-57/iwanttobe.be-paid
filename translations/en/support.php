@@ -1,5 +1,7 @@
 <?php
-// English support translations for <strong>Paid!</strong> application
+// Global English support translations
+// Last updated: 2025-05-01
+
 return [
     'support_title' => 'Support <strong>Paid!</strong>',
     'support_hosting_title' => 'Hosting Costs',

@@ -1,7 +1,7 @@
 <?php
-// English GDPR translations for <strong>Paid!</strong> application
+// Global English GDPR translations
 // Contains all privacy policy and GDPR-related text
-// Last updated: 2025-04-18
+// Last updated: 2025-05-01
 
 return [
     // Page title and metadata
@@ -29,51 +29,48 @@ return [
     'gdpr_info_use_intro' => 'The information you provide is used solely for:',
     'gdpr_use_qr_generation' => 'Processing your payment information to generate QR codes',
     'gdpr_use_local_storage' => 'Storing your preferred payment details locally in your browser (only if you explicitly choose this option)',
-    'gdpr_use_technical' => 'Ensuring the proper technical functioning of our service',
-    'gdpr_use_improvement' => 'Improving our service based on anonymous usage patterns',
-    'gdpr_storage_note' => 'While we temporarily process payment information to generate QR codes, we do not permanently store this information on our servers. Any saved payment information is stored only in your browser\'s local storage if you choose to save it.',
+    'gdpr_use_language' => 'Remembering your language preference',
+    'gdpr_use_theme' => 'Remembering your theme preference (light/dark mode)',
     
-    // Security section
-    'gdpr_security_title' => 'Data Storage and Security',
-    'gdpr_security_intro' => '<strong>Paid!</strong> is designed with privacy in mind:',
-    'gdpr_security_processing' => 'Payment information is processed securely on our servers to generate QR codes',
-    'gdpr_security_no_storage' => 'We do not permanently store payment information on our servers',
-    'gdpr_security_local_storage' => 'Your saved payment details are stored only in your browser\'s local storage if you choose to save them',
-    'gdpr_security_encryption' => 'We use HTTPS encryption to protect data transmission',
-    'gdpr_security_standard' => 'QR codes are generated following the EPC QR standard for secure payments',
-    'gdpr_security_clear_data' => 'You can clear your saved payment information at any time by clearing your browser data',
-    
-    // Cookies and storage section
-    'gdpr_cookies_title' => 'Cookies and Local Storage',
-    'gdpr_cookies_intro' => 'We use essential cookies and local storage that are necessary for the website to function properly:',
-    'gdpr_cookies_section' => 'Cookies:',
-    'gdpr_cookie_consent_desc' => 'Remembers your cookie preferences',
-    'gdpr_cookie_language_desc' => 'Stores your preferred language setting',
-    'gdpr_local_storage_section' => 'Local Storage:',
-    'gdpr_local_storage_payment' => 'Stores your saved payment information (only if you choose to save it)',
-    'gdpr_cookies_note' => 'These cookies and local storage data do not track you or share information with third parties. You can clear this data at any time through your browser settings.',
-    
-    // User rights section
-    'gdpr_rights_title' => 'Your Rights',
-    'gdpr_rights_intro' => 'Under the GDPR, you have the following rights:',
-    'gdpr_right_access' => 'Right to access your data',
-    'gdpr_right_rectification' => 'Right to rectification',
-    'gdpr_right_erasure' => 'Right to erasure',
-    'gdpr_right_restrict' => 'Right to restrict processing',
-    'gdpr_right_portability' => 'Right to data portability',
-    'gdpr_right_object' => 'Right to object',
-    'gdpr_rights_note' => 'While we temporarily process data to generate QR codes, we don\'t permanently store personal data on our servers. Any saved data is stored locally in your browser, giving you full control through your browser settings. For any privacy-related questions, please contact us.',
+    // Information sharing section
+    'gdpr_info_sharing_title' => 'Information Sharing and Disclosure',
+    'gdpr_info_sharing_intro' => 'We do not sell, trade, or otherwise transfer your personally identifiable information to outside parties. This does not include trusted third parties who assist us in operating our website, conducting our business, or servicing you, so long as those parties agree to keep this information confidential.',
     
     // Third-party services section
     'gdpr_third_party_title' => 'Third-Party Services',
-    'gdpr_third_party_desc' => 'We use the OpenIBAN service (see <a href="https://openiban.com/">OpenIBAN</a>) solely to look up the BIC code for a given IBAN. Only the IBAN is sent to OpenIBAN; no other payment or personal data is shared with any third-party service.',
+    'gdpr_third_party_intro' => 'We use the following third-party services:',
+    'gdpr_third_party_qr' => '<strong>GoQR.me</strong>: For generating QR code images based on the payment information you provide',
+    'gdpr_third_party_note' => 'These services may collect their own data for their own purposes. We encourage you to review their privacy policies.',
+    
+    // Data security section
+    'gdpr_security_title' => 'Data Security',
+    'gdpr_security_desc' => 'We implement a variety of security measures to maintain the safety of your personal information. Your payment information is processed in your browser and is never stored on our servers.',
+    
+    // Your rights section
+    'gdpr_rights_title' => 'Your Rights',
+    'gdpr_rights_intro' => 'Under the General Data Protection Regulation (GDPR), you have certain rights regarding your personal data:',
+    'gdpr_right_access' => 'The right to access your data',
+    'gdpr_right_rectification' => 'The right to rectification',
+    'gdpr_right_erasure' => 'The right to erasure',
+    'gdpr_right_restriction' => 'The right to restrict processing',
+    'gdpr_right_portability' => 'The right to data portability',
+    'gdpr_right_object' => 'The right to object',
+    'gdpr_rights_note' => 'Since we process minimal data and do not store payment information, many of these rights are automatically fulfilled.',
+    
+    // Cookies and local storage section
+    'gdpr_cookies_title' => 'Cookies and Local Storage',
+    'gdpr_cookies_intro' => 'We use the following cookies and local storage items:',
+    'gdpr_cookie_language' => '<strong>Language preference</strong>: Stored to remember your preferred language',
+    'gdpr_cookie_theme' => '<strong>Theme preference</strong>: Stored to remember your preferred theme (light/dark)',
+    'gdpr_local_favorites' => '<strong>Favorites</strong>: Stored locally in your browser if you choose to save payment details for future use',
+    'gdpr_local_form' => '<strong>Form data</strong>: Temporarily stored in your session to maintain form state',
     
     // Policy updates section
-    'gdpr_updates_title' => 'Changes to This Policy',
+    'gdpr_updates_title' => 'Changes to This Privacy Policy',
     'gdpr_updates_desc' => 'We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "Last updated" date.',
     
     // Contact information section
     'gdpr_contact_title' => 'Contact Us',
     'gdpr_contact_intro' => 'If you have any questions about this Privacy Policy or our practices, please contact us:',
-    'gdpr_contact_github' => 'By creating an issue on our GitHub repository',
+    'gdpr_contact_email' => 'privacy@iwantto.be'
 ];

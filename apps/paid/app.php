@@ -70,6 +70,14 @@ class PaidApp implements AppInterface
         $router->get('/{lang}/paid/why-us', 'WhyUsController@index');
         $router->post('/{lang}/paid/api/generate-qr', 'QRController@generate');
     }
+    
+    /**
+     * @inheritDoc
+     */
+    public function getTranslationsPath(): string
+    {
+        return __DIR__ . '/translations';
+    }
 }
 
 // Auto-register this app when the file is included

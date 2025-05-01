@@ -17,6 +17,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+require_once __DIR__ . '/../core/AppRegistry.php';
+
 class LanguageController {
     private static $instance = null;
     private $translations = [];
@@ -72,16 +74,53 @@ class LanguageController {
         return $this->currentLang;
     }
     
-    private function loadTranslations() {
+    // Changed from private to public so it can be called from header.php
+    public function loadTranslations() {
+        // Load global translations first (common + fallbacks)
+        $this->loadGlobalTranslations();
+        
+        // Then overlay app-specific translations if available
+        $this->loadAppSpecificTranslations();
+    }
+    
+    private function loadGlobalTranslations() {
         // Load English base first for fallback
         $enFile = __DIR__ . '/../translations/en.php';
         $base = file_exists($enFile) ? require $enFile : [];
 
+        // Load current language global translations
         $langFile = __DIR__ . '/../translations/' . $this->currentLang . '.php';
         $current = file_exists($langFile) ? require $langFile : [];
 
         // Overlay current language on top of English
         $this->translations = array_merge($base, $current);
+    }
+    
+    private function loadAppSpecificTranslations() {
+        // Get current app from registry
+        $registry = AppRegistry::getInstance();
+        $currentApp = $registry->getCurrent();
+        
+        if (!$currentApp) {
+            return;
+        }
+        
+        // Get translations path for current app
+        $appTranslationsPath = $currentApp->getTranslationsPath();
+        
+        // Load English fallback app-specific translations
+        $appEnFile = $appTranslationsPath . '/en.php';
+        if (file_exists($appEnFile)) {
+            $appBaseTranslations = require $appEnFile;
+            $this->translations = array_merge($this->translations, $appBaseTranslations);
+        }
+        
+        // Load current language app-specific translations
+        $appLangFile = $appTranslationsPath . '/' . $this->currentLang . '.php';
+        if (file_exists($appLangFile)) {
+            $appCurrentTranslations = require $appLangFile;
+            $this->translations = array_merge($this->translations, $appCurrentTranslations);
+        }
     }
     
     public function translate($key) {

@@ -62,6 +62,14 @@ class InvolvedApp implements AppInterface
     {
         $router->get('/{lang}/involved', 'InvolvedHomeController@index');
     }
+    
+    /**
+     * @inheritDoc
+     */
+    public function getTranslationsPath(): string
+    {
+        return __DIR__ . '/translations';
+    }
 }
 
 // Auto-register this app when the file is included

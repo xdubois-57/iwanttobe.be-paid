@@ -19,11 +19,12 @@
 ?>
 
 <?php
-require_once __DIR__ . '/../../../controllers/LanguageController.php';
+// Include the header first, so AppRegistry has the current app set
 require_once __DIR__ . '/../controllers/QRController.php';
-$lang = LanguageController::getInstance();
 $qrController = new QRController();
 require_once __DIR__ . '/../../../views/header.php';
+// The header will have already initialized LanguageController with the proper app context
+$lang = LanguageController::getInstance();
 ?>
 
 <main class="container">

@@ -49,4 +49,10 @@ interface AppInterface
      * @param Router $router The router instance
      */
     public function registerRoutes(Router $router): void;
+    
+    /**
+     * Returns the path to app-specific translations
+     * @return string Absolute path to the translations directory
+     */
+    public function getTranslationsPath(): string;
 }

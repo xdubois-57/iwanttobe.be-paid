@@ -62,6 +62,14 @@ class DriveApp implements AppInterface
     {
         $router->get('/{lang}/drive', 'DriveHomeController@index');
     }
+    
+    /**
+     * @inheritDoc
+     */
+    public function getTranslationsPath(): string
+    {
+        return __DIR__ . '/translations';
+    }
 }
 
 // Auto-register this app when the file is included
