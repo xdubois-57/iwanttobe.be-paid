@@ -112,7 +112,7 @@ if (method_exists($lang, 'loadTranslations')) {
                 <?php
                 // Get app display name from registry
                 $currentApp = $registry->getCurrent();
-                $appDisplayName = $currentApp ? $currentApp->getDisplayName() : 'Apps';
+                $appDisplayName = $currentApp ? $currentApp->getDisplayName() : 'Good';
                 ?>
                 <a href="/<?php echo $lang->getCurrentLanguage(); ?>" class="app-name"><em style="font-size: 0.6em;">iwantto.be</em> <span style="font-size: 1.1em; font-weight: bold;"><?php echo $appDisplayName; ?></span></a>
             </div>
