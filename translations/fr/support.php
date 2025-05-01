@@ -13,6 +13,6 @@ return [
     'support_coffee_message' => 'Soutien café',
     'support_qr_alt' => 'Code QR pour faire un don',
     'support_qr_error' => 'Désolé, nous n\'avons pas pu générer le code QR. Merci de réessayer plus tard.',
-    'support_thanks' => 'Merci de soutenir <strong>Paid!</strong> !',
-    'menu_support' => 'Offre-moi un café',
+    'support_thanks' => 'Merci de soutenir <strong>Paid!</strong> !',
+    'menu_support' => 'Soutenez-nous !',
 ];

@@ -16,5 +16,5 @@ return [
     'support_qr_alt' => 'QR code for donation',
     'support_qr_error' => 'Sorry, we couldn\'t generate the QR code. Please try again later.',
     'support_thanks' => 'Thank you for supporting <strong>Paid!</strong>!',
-    'menu_support' => 'Buy me a coffee',
+    'menu_support' => 'Support us!',
 ];

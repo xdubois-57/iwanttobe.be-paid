@@ -14,5 +14,5 @@ return [
     'support_qr_alt' => 'QR-code voor donatie',
     'support_qr_error' => 'Sorry, we konden de QR-code niet genereren. Probeer het later nog eens.',
     'support_thanks' => 'Bedankt voor je steun aan <strong>Paid!</strong>!',
-    'menu_support' => 'Trakteer me op een koffie',
+    'menu_support' => 'Steun ons!',
 ];

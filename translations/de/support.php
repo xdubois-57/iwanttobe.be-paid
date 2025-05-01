@@ -33,5 +33,5 @@ return [
     'support_back_to_home_note' => 'Lädt die Startseite neu und setzt alles zurück.',
     'support_back_to_support' => 'Zurück zum Support',
     'support_back_to_support_note' => 'Lädt die Support-Seite neu und setzt alles zurück.',
-    'menu_support' => 'Kaufe mir einen Kaffee'
+    'menu_support' => 'Unterstütze uns!'
 ];

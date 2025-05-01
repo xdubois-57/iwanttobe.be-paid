@@ -14,5 +14,5 @@ return [
     'support_qr_alt' => 'Código QR para donación',
     'support_qr_error' => 'Lo siento, no pudimos generar el código QR. Por favor, inténtalo de nuevo más tarde.',
     'support_thanks' => '¡Gracias por apoyar a <strong>Paid!</strong>!',
-    'menu_support' => 'Invíteme un café',
+    'menu_support' => '¡Apóyanos!',
 ];
