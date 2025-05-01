@@ -7,6 +7,7 @@ return array_merge(
     require __DIR__.'/it/menu.php',
     require __DIR__.'/it/gdpr.php',
     require __DIR__.'/it/support.php',
+    require __DIR__.'/it/landing.php',
     [
         'cookie_notice' => 'Questo sito utilizza cookie essenziali',
         'cookie_accept' => 'OK',

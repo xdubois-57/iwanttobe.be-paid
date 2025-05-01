@@ -7,6 +7,7 @@ return array_merge(
     require __DIR__.'/sl/menu.php',
     require __DIR__.'/sl/gdpr.php',
     require __DIR__.'/sl/support.php',
+    require __DIR__.'/sl/landing.php',
     [
         'cookie_notice' => 'Ta spletna stran uporablja nujne piškotke',
         'cookie_accept' => 'OK',

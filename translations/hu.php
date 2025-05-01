@@ -7,6 +7,7 @@ return array_merge(
     require __DIR__.'/hu/menu.php',
     require __DIR__.'/hu/gdpr.php',
     require __DIR__.'/hu/support.php',
+    require __DIR__.'/hu/landing.php',
     [
         'cookie_notice' => 'Ez a weboldal szükséges sütiket használ',
         'cookie_accept' => 'OK',

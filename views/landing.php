@@ -12,6 +12,12 @@ $wordCloudData = WordCloudController::getWordCloudDataJson();
 $apps = AppRegistry::getInstance()->getAppInterfaces();
 ?>
 <main class="container">
+    <article class="content-box" style="text-align: center; margin-bottom: 2rem;">
+        <h2 style="margin-top: 0;"><?php echo $lang->translate('welcome_title'); ?></h2>
+        <p style="font-size:1.15em;margin:0 auto 0.5em auto;">
+            <?php echo $lang->translate('welcome_text'); ?>
+        </p>
+    </article>
     <div id="word-cloud-container" data-words='<?php echo $wordCloudData; ?>' class="word-cloud-wrapper"></div>
 
     <div class="grid">

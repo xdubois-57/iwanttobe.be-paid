@@ -7,6 +7,7 @@ return array_merge(
     require __DIR__.'/cs/menu.php',
     require __DIR__.'/cs/gdpr.php',
     require __DIR__.'/cs/support.php',
+    require __DIR__.'/cs/landing.php',
     [
         'cookie_notice' => 'Tento web používá nezbytné cookies',
         'cookie_accept' => 'OK',

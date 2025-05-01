@@ -7,6 +7,7 @@ return array_merge(
     require __DIR__.'/el/menu.php',
     require __DIR__.'/el/gdpr.php',
     require __DIR__.'/el/support.php',
+    require __DIR__.'/el/landing.php',
     [
         'cookie_notice' => 'Αυτός ο ιστότοπος χρησιμοποιεί απαραίτητα cookies',
         'cookie_accept' => 'ΟΚ',

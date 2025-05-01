@@ -7,6 +7,7 @@ return array_merge(
     require __DIR__.'/ga/menu.php',
     require __DIR__.'/ga/gdpr.php',
     require __DIR__.'/ga/support.php',
+    require __DIR__.'/ga/landing.php',
     [
         'cookie_notice' => 'Úsáideann an suíomh seo fianáin riachtanacha',
         'cookie_accept' => 'OK',

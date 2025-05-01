@@ -7,6 +7,7 @@ return array_merge(
     require __DIR__.'/is/menu.php',
     require __DIR__.'/is/gdpr.php',
     require __DIR__.'/is/support.php',
+    require __DIR__.'/is/landing.php',
     [
         'cookie_notice' => 'Þessi vefsíða notar nauðsynlegar kökur',
         'cookie_accept' => 'OK',

@@ -7,6 +7,7 @@ return array_merge(
     require __DIR__.'/sk/menu.php',
     require __DIR__.'/sk/gdpr.php',
     require __DIR__.'/sk/support.php',
+    require __DIR__.'/sk/landing.php',
     [
         'cookie_notice' => 'Táto stránka používa nevyhnutné cookies',
         'cookie_accept' => 'OK',

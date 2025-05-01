@@ -7,6 +7,7 @@ return array_merge(
     require __DIR__.'/lt/menu.php',
     require __DIR__.'/lt/gdpr.php',
     require __DIR__.'/lt/support.php',
+    require __DIR__.'/lt/landing.php',
     [
         'cookie_notice' => 'Ši svetainė naudoja būtinus slapukus',
         'cookie_accept' => 'Gerai',

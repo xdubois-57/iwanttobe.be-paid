@@ -7,6 +7,7 @@ return array_merge(
     require __DIR__.'/et/menu.php',
     require __DIR__.'/et/gdpr.php',
     require __DIR__.'/et/support.php',
+    require __DIR__.'/et/landing.php',
     [
         'cookie_notice' => 'See sait kasutab olulisi küpsiseid',
         'cookie_accept' => 'OK',

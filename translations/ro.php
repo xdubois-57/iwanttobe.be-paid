@@ -7,6 +7,7 @@ return array_merge(
     require __DIR__.'/ro/menu.php',
     require __DIR__.'/ro/gdpr.php',
     require __DIR__.'/ro/support.php',
+    require __DIR__.'/ro/landing.php',
     [
         'cookie_notice' => 'Acest site utilizează cookie-uri esențiale',
         'cookie_accept' => 'OK',

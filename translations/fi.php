@@ -7,6 +7,7 @@ return array_merge(
     require __DIR__.'/fi/menu.php',
     require __DIR__.'/fi/gdpr.php',
     require __DIR__.'/fi/support.php',
+    require __DIR__.'/fi/landing.php',
     [
         'cookie_notice' => 'Tämä sivusto käyttää välttämättömiä evästeitä',
         'cookie_accept' => 'OK',

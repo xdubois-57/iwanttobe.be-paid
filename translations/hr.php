@@ -7,6 +7,7 @@ return array_merge(
     require __DIR__.'/hr/menu.php',
     require __DIR__.'/hr/gdpr.php',
     require __DIR__.'/hr/support.php',
+    require __DIR__.'/hr/landing.php',
     [
         'cookie_notice' => 'Ova stranica koristi nužne kolačiće',
         'cookie_accept' => 'OK',

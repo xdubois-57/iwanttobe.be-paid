@@ -7,6 +7,7 @@ return array_merge(
     require __DIR__.'/lv/menu.php',
     require __DIR__.'/lv/gdpr.php',
     require __DIR__.'/lv/support.php',
+    require __DIR__.'/lv/landing.php',
     [
         'cookie_notice' => 'Šī vietne izmanto nepieciešamos sīkfailus',
         'cookie_accept' => 'OK',
