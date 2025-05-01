@@ -64,6 +64,7 @@ if (method_exists($lang, 'loadTranslations')) {
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
     <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/wordcloud.css">
     <?php
     $config = require __DIR__ . '/../config/languages.php';
     $languages = $config['available_languages'];
