@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Calculate available height (viewport height minus other elements)
     function calculateAvailableHeight() {
         // Simply use 70% of viewport height
-        return window.innerHeight * 0.5;
+        return window.innerHeight * 0.3;
     }
     
     // Create canvas element with full container width
@@ -59,18 +59,42 @@ document.addEventListener('DOMContentLoaded', function() {
         rotationSteps: 2, // Number of different rotation steps
         backgroundColor: 'transparent',
         shape: 'rectangle', // Rectangle shape fits better with screen width
-        ellipticity: 0.5, // Match canvas proportions
-        shrinkToFit: true, // Don't shrink - fill the canvas
+        ellipticity: window.innerHeight / window.innerWidth, // Responsive ellipticity
+        shrinkToFit: false, // Don't shrink - fill the canvas
         drawOutOfBound: false,
         classes: function(word) {
             // Add classes for app names to style them differently
-            return ['Paid!', 'Drive', 'Involved!'].includes(word) ? 'app-name' : '';
+            return ['Paid!', 'Driven!', 'Involved!'].includes(word) ? 'app-name' : '';
         }
     };
     
     // Generate the word cloud
     WordCloud(canvas, options);
-    
+
+    // --- Enhancement: Scroll to first article on mobile after click ---
+    function isMobile() {
+        return window.innerWidth <= 900 || /Mobi|Android/i.test(navigator.userAgent);
+    }
+
+    function scrollToFirstArticle() {
+        // Try to find the first article in the main container
+        const main = document.querySelector('main.container');
+        if (!main) return;
+        // Find the first <article> (skip word cloud container)
+        const articles = main.querySelectorAll('article');
+        if (articles.length > 0) {
+            articles[0].scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }
+
+    // Add click event to word cloud container
+    wordCloudContainer.addEventListener('click', function(e) {
+        if (isMobile()) {
+            scrollToFirstArticle();
+        }
+    });
+    // --- End enhancement ---
+
     // Make it responsive
     window.addEventListener('resize', function() {
         const newWidth = wordCloudContainer.offsetWidth;
@@ -81,8 +105,8 @@ document.addEventListener('DOMContentLoaded', function() {
             canvas.width = newWidth;
             canvas.height = newHeight;
             
-            // Update ellipticity based on new dimensions
-            options.ellipticity = newWidth / newHeight;
+            // Update ellipticity based on new dimensions and device type
+            options.ellipticity = window.innerWidth / window.innerHeight;
             
             // Update weight factor based on new dimensions
             options.weightFactor = function(size) {

@@ -22,7 +22,7 @@
     background-color: transparent;
     text-align: center;
     position: relative;
-    min-height: 400px;
+    min-height: 30%;
 }
 
 .word-cloud-wrapper canvas {
@@ -42,6 +42,11 @@
 /* Responsive styles */
 @media (max-width: 768px) {
     .word-cloud-wrapper {
-        min-height: 300px;
+        min-height: unset;
+        max-height: 30%;
+    }
+    .word-cloud-wrapper canvas {
+        min-height: unset;
+        max-height: 30%;
     }
 }
