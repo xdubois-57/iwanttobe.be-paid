@@ -76,7 +76,7 @@ class DriveApp implements AppInterface
      */
     public function getDescription(): string
     {
-        return 'Secure cloud storage and file sharing solution that keeps your files safe and accessible anywhere.';
+        return 'Easy car pooling for your events, camps, and more.';
     }
 }
 
