@@ -7,7 +7,10 @@ return array_merge(
     require __DIR__.'/de/form.php',
     require __DIR__.'/de/home.php',
     require __DIR__.'/de/why_us.php',
+    require __DIR__.'/de/menu.php',
     require __DIR__.'/de/errors.php',
     require __DIR__.'/de/about.php',
-    require __DIR__.'/de/menu.php'
+    [
+        'description' => 'QR-Code-Generator für Zahlungen, ideal für gemeinnützige Organisationen und Veranstaltungen.'
+    ]
 );

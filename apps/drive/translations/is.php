@@ -4,5 +4,8 @@
 // Last updated: 2025-05-01
 
 return array_merge(
-    require __DIR__.'/is/home.php'
+    require __DIR__.'/is/home.php',
+    [
+        'description' => 'Auðveld bílasamnýting fyrir viðburði, útilegur og fleira.'
+    ]
 );

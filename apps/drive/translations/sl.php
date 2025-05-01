@@ -4,5 +4,8 @@
 // Last updated: 2025-05-01
 
 return array_merge(
-    require __DIR__.'/sl/home.php'
+    require __DIR__.'/sl/home.php',
+    [
+        'description' => 'Enostavno skupno prevažanje za vaše dogodke, tabore in več.'
+    ]
 );

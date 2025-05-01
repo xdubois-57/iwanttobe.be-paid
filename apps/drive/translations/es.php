@@ -4,5 +4,8 @@
 // Last updated: 2025-05-01
 
 return array_merge(
-    require __DIR__.'/es/home.php'
+    require __DIR__.'/es/home.php',
+    [
+        'description' => 'Coche compartido fácil para tus eventos, campamentos y más.'
+    ]
 );

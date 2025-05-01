@@ -4,6 +4,9 @@
 // Last updated: 2025-05-01
 
 return array_merge(
+    require __DIR__.'/de/home.php',
     require __DIR__.'/de/menu.php',
-    require __DIR__.'/de/home.php'
+    [
+        'description' => 'Erstellen Sie Umfragen, Wortwolken und machen Sie jede Veranstaltung interaktiv und unterhaltsam.'
+    ]
 );

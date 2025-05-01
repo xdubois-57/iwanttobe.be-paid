@@ -4,6 +4,9 @@
 // Last updated: 2025-05-01
 
 return array_merge(
+    require __DIR__.'/fi/home.php',
     require __DIR__.'/fi/menu.php',
-    require __DIR__.'/fi/home.php'
+    [
+        'description' => 'Luo kyselyitä, sanapilviä ja tee tapahtumista vuorovaikutteisia ja hauskoja.'
+    ]
 );

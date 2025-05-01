@@ -4,5 +4,8 @@
 // Last updated: 2025-05-01
 
 return array_merge(
-    require __DIR__.'/pl/home.php'
+    require __DIR__.'/pl/home.php',
+    [
+        'description' => 'Łatwe wspólne przejazdy na wydarzenia, obozy i nie tylko.'
+    ]
 );

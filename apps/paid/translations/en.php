@@ -9,5 +9,8 @@ return array_merge(
     require __DIR__.'/en/why_us.php',
     require __DIR__.'/en/errors.php',
     require __DIR__.'/en/about.php',
-    require __DIR__.'/en/menu.php'
+    require __DIR__.'/en/menu.php',
+    [
+        'description' => 'QR code generator for payments, perfect for non-profits and events.'
+    ]
 );

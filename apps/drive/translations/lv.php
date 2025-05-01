@@ -4,5 +4,8 @@
 // Last updated: 2025-05-01
 
 return array_merge(
-    require __DIR__.'/lv/home.php'
+    require __DIR__.'/lv/home.php',
+    [
+        'description' => 'Viegla kopbraukšana jūsu pasākumiem, nometnēm un citam.'
+    ]
 );

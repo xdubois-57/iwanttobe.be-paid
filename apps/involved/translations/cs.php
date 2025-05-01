@@ -4,6 +4,9 @@
 // Last updated: 2025-05-01
 
 return array_merge(
+    require __DIR__.'/cs/home.php',
     require __DIR__.'/cs/menu.php',
-    require __DIR__.'/cs/home.php'
+    [
+        'description' => 'Vytvářejte ankety, slovní mraky a udělejte z každé akce interaktivní a zábavnou událost.'
+    ]
 );

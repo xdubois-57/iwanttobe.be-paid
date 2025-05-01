@@ -7,7 +7,10 @@ return array_merge(
     require __DIR__.'/ro/form.php',
     require __DIR__.'/ro/home.php',
     require __DIR__.'/ro/why_us.php',
+    require __DIR__.'/ro/menu.php',
     require __DIR__.'/ro/errors.php',
     require __DIR__.'/ro/about.php',
-    require __DIR__.'/ro/menu.php'
+    [
+        'description' => 'Generator de coduri QR pentru plăți, perfect pentru asociații și evenimente.'
+    ]
 );

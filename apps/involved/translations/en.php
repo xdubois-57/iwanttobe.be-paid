@@ -4,6 +4,9 @@
 // Last updated: 2025-05-01
 
 return array_merge(
+    require __DIR__.'/en/home.php',
     require __DIR__.'/en/menu.php',
-    require __DIR__.'/en/home.php'
+    [
+        'description' => 'Create polls, word clouds, and make any event interactive and fun.'
+    ]
 );

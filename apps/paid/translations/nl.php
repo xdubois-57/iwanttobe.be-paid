@@ -7,7 +7,10 @@ return array_merge(
     require __DIR__.'/nl/form.php',
     require __DIR__.'/nl/home.php',
     require __DIR__.'/nl/why_us.php',
+    require __DIR__.'/nl/menu.php',
     require __DIR__.'/nl/errors.php',
     require __DIR__.'/nl/about.php',
-    require __DIR__.'/nl/menu.php'
+    [
+        'description' => 'QR-codegenerator voor betalingen, ideaal voor verenigingen en evenementen.'
+    ]
 );

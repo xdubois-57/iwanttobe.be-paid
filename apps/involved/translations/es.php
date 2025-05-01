@@ -4,6 +4,9 @@
 // Last updated: 2025-05-01
 
 return array_merge(
+    require __DIR__.'/es/home.php',
     require __DIR__.'/es/menu.php',
-    require __DIR__.'/es/home.php'
+    [
+        'description' => 'Crea encuestas, nubes de palabras y haz que cualquier evento sea interactivo y divertido.'
+    ]
 );

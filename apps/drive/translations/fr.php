@@ -4,5 +4,8 @@
 // Last updated: 2025-05-01
 
 return array_merge(
-    require __DIR__.'/fr/home.php'
+    require __DIR__.'/fr/home.php',
+    [
+        'description' => 'Covoiturage facile pour vos événements, camps et plus encore.'
+    ]
 );

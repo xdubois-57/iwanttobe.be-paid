@@ -4,5 +4,8 @@
 // Last updated: 2025-05-01
 
 return array_merge(
-    require __DIR__.'/sv/home.php'
+    require __DIR__.'/sv/home.php',
+    [
+        'description' => 'Enkel samåkning till dina evenemang, läger och mer.'
+    ]
 );

@@ -84,7 +84,8 @@ class PaidApp implements AppInterface
      */
     public function getDescription(): string
     {
-        return 'QR code generator for payments, perfect for non-profits and events.';
+        $lang = \LanguageController::getInstance();
+        return $lang->translate('description');
     }
 }
 

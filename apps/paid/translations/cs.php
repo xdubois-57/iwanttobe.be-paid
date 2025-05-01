@@ -7,7 +7,10 @@ return array_merge(
     require __DIR__.'/cs/form.php',
     require __DIR__.'/cs/home.php',
     require __DIR__.'/cs/why_us.php',
+    require __DIR__.'/cs/menu.php',
     require __DIR__.'/cs/errors.php',
     require __DIR__.'/cs/about.php',
-    require __DIR__.'/cs/menu.php'
+    [
+        'description' => 'Generátor QR kódů pro platby, ideální pro neziskové organizace a akce.'
+    ]
 );

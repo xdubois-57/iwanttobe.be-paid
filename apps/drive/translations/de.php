@@ -4,5 +4,8 @@
 // Last updated: 2025-05-01
 
 return array_merge(
-    require __DIR__.'/de/home.php'
+    require __DIR__.'/de/home.php',
+    [
+        'description' => 'Einfache Fahrgemeinschaften für Ihre Veranstaltungen, Camps und mehr.'
+    ]
 );

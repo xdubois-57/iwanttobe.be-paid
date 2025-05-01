@@ -76,7 +76,8 @@ class InvolvedApp implements AppInterface
      */
     public function getDescription(): string
     {
-        return 'Create polls, word clouds, and make any event interactive and fun.';
+        $lang = \LanguageController::getInstance();
+        return $lang->translate('description');
     }
 }
 

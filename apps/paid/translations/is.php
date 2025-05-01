@@ -7,7 +7,10 @@ return array_merge(
     require __DIR__.'/is/form.php',
     require __DIR__.'/is/home.php',
     require __DIR__.'/is/why_us.php',
+    require __DIR__.'/is/menu.php',
     require __DIR__.'/is/errors.php',
     require __DIR__.'/is/about.php',
-    require __DIR__.'/is/menu.php'
+    [
+        'description' => 'QR kóða forrit fyrir greiðslur, fullkomið fyrir félagasamtök og viðburði.'
+    ]
 );

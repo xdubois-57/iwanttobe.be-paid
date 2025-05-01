@@ -76,7 +76,8 @@ class DriveApp implements AppInterface
      */
     public function getDescription(): string
     {
-        return 'Easy car pooling for your events, camps, and more.';
+        $lang = \LanguageController::getInstance();
+        return $lang->translate('description');
     }
 }
 

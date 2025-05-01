@@ -9,5 +9,8 @@ return array_merge(
     require __DIR__.'/fr/why_us.php',
     require __DIR__.'/fr/menu.php',
     require __DIR__.'/fr/errors.php',
-    require __DIR__.'/fr/about.php'
+    require __DIR__.'/fr/about.php',
+    [
+        'description' => 'Générateur de QR code pour les paiements, idéal pour les associations et les événements.'
+    ]
 );

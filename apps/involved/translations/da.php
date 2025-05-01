@@ -4,6 +4,9 @@
 // Last updated: 2025-05-01
 
 return array_merge(
+    require __DIR__.'/da/home.php',
     require __DIR__.'/da/menu.php',
-    require __DIR__.'/da/home.php'
+    [
+        'description' => 'Opret afstemninger, ordskyer og gør ethvert arrangement interaktivt og sjovt.'
+    ]
 );

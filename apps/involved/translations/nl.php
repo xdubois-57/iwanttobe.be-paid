@@ -4,6 +4,9 @@
 // Last updated: 2025-05-01
 
 return array_merge(
+    require __DIR__.'/nl/home.php',
     require __DIR__.'/nl/menu.php',
-    require __DIR__.'/nl/home.php'
+    [
+        'description' => 'Maak peilingen, woordwolken en maak elk evenement interactief en leuk.'
+    ]
 );

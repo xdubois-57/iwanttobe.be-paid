@@ -7,7 +7,10 @@ return array_merge(
     require __DIR__.'/es/form.php',
     require __DIR__.'/es/home.php',
     require __DIR__.'/es/why_us.php',
+    require __DIR__.'/es/menu.php',
     require __DIR__.'/es/errors.php',
     require __DIR__.'/es/about.php',
-    require __DIR__.'/es/menu.php'
+    [
+        'description' => 'Generador de códigos QR para pagos, perfecto para asociaciones y eventos.'
+    ]
 );

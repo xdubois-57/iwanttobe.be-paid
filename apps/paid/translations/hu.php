@@ -7,7 +7,10 @@ return array_merge(
     require __DIR__.'/hu/form.php',
     require __DIR__.'/hu/home.php',
     require __DIR__.'/hu/why_us.php',
+    require __DIR__.'/hu/menu.php',
     require __DIR__.'/hu/errors.php',
     require __DIR__.'/hu/about.php',
-    require __DIR__.'/hu/menu.php'
+    [
+        'description' => 'QR-kód generátor fizetésekhez, tökéletes egyesületeknek és rendezvényekhez.'
+    ]
 );

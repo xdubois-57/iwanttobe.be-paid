@@ -4,5 +4,8 @@
 // Last updated: 2025-05-01
 
 return array_merge(
-    require __DIR__.'/da/home.php'
+    require __DIR__.'/da/home.php',
+    [
+        'description' => 'Nem samkørsel til dine arrangementer, lejre og meget mere.'
+    ]
 );
