@@ -4,5 +4,6 @@
 // Last updated: 2025-05-01
 
 return array_merge(
+    require __DIR__.'/is/menu.php',
     require __DIR__.'/is/home.php'
 );

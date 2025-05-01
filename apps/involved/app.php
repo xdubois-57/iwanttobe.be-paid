@@ -49,7 +49,7 @@ class InvolvedApp implements AppInterface
     {
         return [
             [
-                'text' => 'menu_home',
+                'text' => 'menu_word_cloud',
                 'url' => '/{lang}/involved'
             ]
         ];
