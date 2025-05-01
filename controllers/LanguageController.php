@@ -35,15 +35,21 @@ class LanguageController {
     }
 
     public function change($params) {
-        // Get language code from either POST data or URL parameter
-        $lang = $_POST['lang'] ?? ($params['lang'] ?? null);
-        
+        // Get language code from URL parameter only
+        $lang = $params['lang'] ?? null;
         // Attempt to change the language if a valid language code is provided
         if ($lang && $this->setLanguage($lang)) {
-            // On success, redirect back to the previous page or home
-            header('Location: ' . ($_SERVER['HTTP_REFERER'] ?? '/'));
+            // Redirect to the same path but with new language code
+            $uri = $_SERVER['REQUEST_URI'] ?? '/';
+            $segments = explode('/', trim($uri, '/'));
+            if (!empty($segments) && isset($params['lang'])) {
+                $segments[0] = $params['lang'];
+                $newUri = '/' . implode('/', $segments);
+                header('Location: ' . $newUri);
+            } else {
+                header('Location: /' . $params['lang']);
+            }
         } else {
-            // On failure (invalid language code), redirect to homepage
             header('Location: /');
         }
         exit;
@@ -58,12 +64,7 @@ class LanguageController {
         if ($langFromUrl && isset($config['available_languages'][$langFromUrl])) {
             return $langFromUrl;
         }
-        // Then check browser language
-        $browserLang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'] ?? 'en', 0, 2);
-        if (isset($config['available_languages'][$browserLang])) {
-            return $browserLang;
-        }
-        // Default to English if browser language not supported
+        // Default to English if not present in URL
         return 'en';
     }
     

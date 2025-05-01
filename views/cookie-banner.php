@@ -18,7 +18,6 @@
  */
 ?>
 
-<?php if (!isset($_COOKIE['cookie_consent'])): ?>
 <div id="cookie-banner" class="cookie-banner">
     <div class="cookie-content">
         <p><?php echo $lang->translate('cookie_notice'); ?></p>
@@ -32,4 +31,3 @@ document.addEventListener('DOMContentLoaded', function() {
     // The main functionality is now in cookies.js
 });
 </script>
-<?php endif; ?>

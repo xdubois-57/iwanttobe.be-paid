@@ -44,30 +44,11 @@ $router->get('/{lang}/gdpr', 'GDPRController@index');
 $router->get('/{lang}/why-us', 'WhyUsController@index');
 $router->get('/{lang}/support', 'SupportController@index');
 
-// Page routes
-// These routes handle the main navigation of the site
-$router->get('/gdpr', 'GDPRController@index');     // GDPR/Privacy policy page
-$router->get('/why-us', 'WhyUsController@index');     // Why Us page
-$router->get('/support', 'SupportController@index');     // Support/Buy me a coffee page
-
-// Redirect root to browser language if supported, else to English
+// Redirect root to English (no browser language fallback)
 $router->get('/', function() {
-    $config = require __DIR__ . '/config/languages.php';
-    $browserLang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'] ?? '', 0, 2);
-    if (isset($config['available_languages'][$browserLang])) {
-        header('Location: /' . $browserLang);
-    } else {
-        header('Location: /en');
-    }
+    header('Location: /en');
     exit;
 });
 
-// Language routes
-// These routes handle language changes via both GET and POST requests
-$router->post('/language/{lang}', 'LanguageController@change');  // For direct language links
-$router->post('/language', 'LanguageController@change');        // For form submissions
-
 // API routes
-// These routes handle AJAX requests and return JSON responses
-$router->post('/{lang}/generate-qr', 'QRController@generate');     // Handles QR code generation requests
-$router->post('/generate-qr', 'QRController@generate');     // Fallback for legacy/non-localized requests
+$router->post('/{lang}/generate-qr', 'QRController@generate');
