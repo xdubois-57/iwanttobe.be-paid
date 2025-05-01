@@ -5,7 +5,7 @@
 
 return [
     'app_name' => '<strong>Paid!</strong>',
-    'menu_home' => 'Domů',
+    'menu_generate_qr' => 'Vytvořit QR',
     'menu_about' => 'O nás',
     'menu_why_us' => 'Proč my?',
     

@@ -6,7 +6,7 @@
 return [
     // Application name and main menu items
     'app_name' => '<strong>Paid!</strong>',
-    'menu_home' => 'Početna',
+    'menu_generate_qr' => 'Generiraj QR',
     'menu_about' => 'O nama',
     'menu_why_us' => 'Zašto mi?',
     

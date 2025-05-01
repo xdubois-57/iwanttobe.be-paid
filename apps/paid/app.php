@@ -51,7 +51,7 @@ class PaidApp implements AppInterface
     {
         return [
             [
-                'text' => 'menu_home',
+                'text' => 'menu_generate_qr',
                 'url' => '/{lang}/paid'
             ],
             [

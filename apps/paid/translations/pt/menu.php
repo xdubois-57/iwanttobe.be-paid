@@ -6,7 +6,7 @@
 return [
     // Application name and main menu items
     'app_name' => '<strong>Paid!</strong>',
-    'menu_home' => 'Início',
+    'menu_generate_qr' => 'Gerar QR',
     'menu_about' => 'Sobre',
     'menu_why_us' => 'Por que nós?',
     

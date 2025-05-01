@@ -6,7 +6,7 @@
 return [
     // Application name and main menu items
     'app_name' => '<strong>Paid!</strong>',
-    'menu_home' => 'Koti',
+    'menu_generate_qr' => 'Luo QR',
     'menu_about' => 'Tietoa',
     'menu_why_us' => 'Miksi me?',
     

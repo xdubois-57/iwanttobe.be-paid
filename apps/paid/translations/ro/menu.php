@@ -6,7 +6,7 @@
 return [
     // Application name and main menu items
     'app_name' => '<strong>Paid!</strong>',
-    'menu_home' => 'Acasă',
+    'menu_generate_qr' => 'Generează QR',
     'menu_about' => 'Despre',
     'menu_why_us' => 'De ce noi?',
     

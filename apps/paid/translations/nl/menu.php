@@ -9,7 +9,7 @@ return [
     'app_version' => 'v%s',
     
     // Main navigation menu
-    'menu_home' => 'Home',
+    'menu_generate_qr' => 'QR genereren',
     'menu_about' => 'Over',
     'menu_why_us' => 'Waarom wij?',
     
