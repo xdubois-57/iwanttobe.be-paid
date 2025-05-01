@@ -19,6 +19,12 @@ return [
     'theme_dark' => 'Dark',
     'theme_auto' => 'Auto',
     
+    // Apps and landing
+    'landing_choose_app' => 'Choose an application',
+    'app_paid' => 'Paid!',
+    'app_involved' => 'Involved!',
+    'app_drive' => 'Drive',
+    
     // Page titles
     'welcome_message' => 'Welcome to <strong>Paid!</strong>',
     'about_title' => 'About <strong>Paid!</strong>',

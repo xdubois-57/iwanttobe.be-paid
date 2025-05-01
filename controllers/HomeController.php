@@ -18,8 +18,9 @@
  */
 
 class HomeController {
-    public function index() {
+    public function index($params) {
+        // Set current app for header navigation
+        $currentApp = 'paid';
         require_once __DIR__ . '/../views/home.php';
     }
-
 }

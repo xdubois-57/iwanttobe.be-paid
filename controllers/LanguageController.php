@@ -73,10 +73,15 @@ class LanguageController {
     }
     
     private function loadTranslations() {
+        // Load English base first for fallback
+        $enFile = __DIR__ . '/../translations/en.php';
+        $base = file_exists($enFile) ? require $enFile : [];
+
         $langFile = __DIR__ . '/../translations/' . $this->currentLang . '.php';
-        if (file_exists($langFile)) {
-            $this->translations = require $langFile;
-        }
+        $current = file_exists($langFile) ? require $langFile : [];
+
+        // Overlay current language on top of English
+        $this->translations = array_merge($base, $current);
     }
     
     public function translate($key) {

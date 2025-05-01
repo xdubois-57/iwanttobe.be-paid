@@ -34,14 +34,29 @@ require_once 'controllers/Router.php';
 require_once 'controllers/LanguageController.php';
 require_once 'controllers/QRController.php';
 require_once 'controllers/SupportController.php';
+require_once 'controllers/LandingController.php';
+require_once 'controllers/InvolvedHomeController.php';
+require_once 'controllers/DriveHomeController.php';
 
 // Initialize the router
 $router = new Router();
 
-// Localized page routes
-$router->get('/{lang}', 'HomeController@index');
+// Landing page (select app)
+$router->get('/{lang}', 'LandingController@index');
+
+// Paid! app routes
+$router->get('/{lang}/paid', 'HomeController@index'); // QR generator home
+$router->get('/{lang}/paid/why-us', 'WhyUsController@index');
+$router->post('/{lang}/paid/api/generate-qr', 'QRController@generate');
+
+// Involved! app routes (placeholder)
+$router->get('/{lang}/involved', 'InvolvedHomeController@index');
+
+// Drive app routes (placeholder)
+$router->get('/{lang}/drive', 'DriveHomeController@index');
+
+// Global pages accessible from any app
 $router->get('/{lang}/gdpr', 'GDPRController@index');
-$router->get('/{lang}/why-us', 'WhyUsController@index');
 $router->get('/{lang}/support', 'SupportController@index');
 
 // Redirect root to English (no browser language fallback)
@@ -49,6 +64,3 @@ $router->get('/', function() {
     header('Location: /en');
     exit;
 });
-
-// API routes
-$router->post('/{lang}/generate-qr', 'QRController@generate');

@@ -142,7 +142,7 @@ async function generateQRCode(form, submitButton, submitButtonOriginalText, trus
 
         // Get language from the URL
         const lang = document.documentElement.lang || (window.location.pathname.split('/')[1] || 'en');
-        const url = `/${lang}/generate-qr`;
+        const url = `/${lang}/paid/api/generate-qr`;
 
         // Make the AJAX request
         const response = await fetch(url, {

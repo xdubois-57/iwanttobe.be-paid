@@ -86,15 +86,31 @@ $lang = LanguageController::getInstance();
                         <rect y="60" width="100" height="10"></rect>
                     </svg>
                 </button>
-                <a href="/<?php echo $lang->getCurrentLanguage(); ?>" class="app-name"><em style="font-size: 0.6em;">iwantto.be</em> <span style="font-size: 1.1em; font-weight: bold;">Paid!</span></a>
+                <a href="/<?php echo $lang->getCurrentLanguage(); ?>" class="app-name"><em style="font-size: 0.6em;">iwantto.be</em> <span style="font-size: 1.1em; font-weight: bold;"><?php echo ($currentApp ?? 'landing') === 'paid' ? 'Paid!' : ( ($currentApp ?? 'landing') === 'involved' ? 'Involved!' : ( ($currentApp ?? 'landing') === 'drive' ? 'Drive' : 'Apps' ) ); ?></span></a>
             </div>
 
             <div class="nav-links">
                 <ul>
-                    <li><a href="/<?php echo $lang->getCurrentLanguage(); ?>"><?php echo $lang->translate('menu_home'); ?></a></li>
-                    <li><a href="/<?php echo $lang->getCurrentLanguage(); ?>/why-us"><?php echo $lang->translate('menu_why_us'); ?></a></li>
-                    <li><a href="/<?php echo $lang->getCurrentLanguage(); ?>/support"><?php echo $lang->translate('menu_support'); ?></a></li>
-                    <li><a href="/<?php echo $lang->getCurrentLanguage(); ?>/gdpr"><?php echo $lang->translate('menu_gdpr'); ?></a></li>
+<?php
+$cur = $currentApp ?? 'landing';
+$langCode = $lang->getCurrentLanguage();
+if ($cur === 'landing') {
+    echo '<li><a href="/' . $langCode . '/paid">Paid!</a></li>';
+    echo '<li><a href="/' . $langCode . '/involved">Involved!</a></li>';
+    echo '<li><a href="/' . $langCode . '/drive">Drive</a></li>';
+    echo '<li><a href="/' . $langCode . '/support">' . $lang->translate('menu_support') . '</a></li>';
+    echo '<li><a href="/' . $langCode . '/gdpr">' . $lang->translate('menu_gdpr') . '</a></li>';
+} elseif ($cur === 'paid') {
+    echo '<li><a href="/' . $langCode . '/paid">' . $lang->translate('menu_home') . '</a></li>';
+    echo '<li><a href="/' . $langCode . '/paid/why-us">' . $lang->translate('menu_why_us') . '</a></li>';
+    echo '<li><a href="/' . $langCode . '/support">' . $lang->translate('menu_support') . '</a></li>';
+    echo '<li><a href="/' . $langCode . '/gdpr">' . $lang->translate('menu_gdpr') . '</a></li>';
+} else { // involved or drive
+    echo '<li><a href="/' . $langCode . '/' . $cur . '">' . $lang->translate('menu_home') . '</a></li>';
+    echo '<li><a href="/' . $langCode . '/support">' . $lang->translate('menu_support') . '</a></li>';
+    echo '<li><a href="/' . $langCode . '/gdpr">' . $lang->translate('menu_gdpr') . '</a></li>';
+}
+?>
                     <li class="language-selector">
                         <select onchange="changeLanguage(this.value)" aria-label="<?php echo $lang->translate('language'); ?>">
                             <?php
