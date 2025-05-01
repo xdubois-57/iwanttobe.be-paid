@@ -91,7 +91,16 @@ $_SESSION['current_app'] = $cur;
                         <rect y="60" width="100" height="10"></rect>
                     </svg>
                 </button>
-                <a href="/<?php echo $lang->getCurrentLanguage(); ?>" class="app-name"><em style="font-size: 0.6em;">iwantto.be</em> <span style="font-size: 1.1em; font-weight: bold;"><?php echo ($cur === 'paid' ? 'Paid!' : ( ($cur === 'involved' ? 'Involved!' : ( ($cur === 'drive' ? 'Drive' : 'Apps' ) ) ) ); ?></span></a>
+                <?php
+                // Map current app to display name
+                $appNames = [
+                    'paid' => 'Paid!',
+                    'involved' => 'Involved!',
+                    'drive' => 'Drive'
+                ];
+                $appDisplayName = isset($appNames[$cur]) ? $appNames[$cur] : 'Apps';
+                ?>
+                <a href="/<?php echo $lang->getCurrentLanguage(); ?>" class="app-name"><em style="font-size: 0.6em;">iwantto.be</em> <span style="font-size: 1.1em; font-weight: bold;"><?php echo $appDisplayName; ?></span></a>
             </div>
 
             <div class="nav-links">
