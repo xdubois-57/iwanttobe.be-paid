@@ -12,10 +12,15 @@ return [
     'theme_auto' => 'Automático',
     
     // Apps and landing
-    'landing_choose_app' => 'Elegir una aplicación',
+    'landing_choose_app' => 'Elija una aplicación',
     'app_paid' => 'Paid!',
     'app_involved' => 'Involved!',
     'app_drive' => 'Drive',
+    
+    // Global menu items
+    'menu_support' => '¡Apóyanos!',
+    'menu_gdpr' => 'Privacidad',
+    'menu_home' => 'Inicio',
     
     // Core settings
     'language_code' => 'es',

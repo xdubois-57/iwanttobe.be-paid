@@ -123,11 +123,9 @@ if (method_exists($lang, 'loadTranslations')) {
 $langCode = $lang->getCurrentLanguage();
 $currentApp = $registry->getCurrent();
 
-if ($cur === 'landing') {
-    // On landing page, list all registered apps
-    foreach ($registry->getApps() as $app) {
-        echo '<li><a href="/' . $langCode . '/' . $app->getSlug() . '">' . $app->getDisplayName() . '</a></li>';
-    }
+if ($cur === 'landing' || $cur === 'support' || $cur === 'gdpr') {
+    // For landing, support and gdpr pages, just show a Home link
+    echo '<li><a href="/' . $langCode . '">' . $lang->translate('menu_home') . '</a></li>';
 } else if ($currentApp) {
     // Get menu items from the current app
     $menuItems = $currentApp->getMenuItems();

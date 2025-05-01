@@ -8,9 +8,7 @@ return [
     'app_name' => '<strong>Paid!</strong>',
     'menu_home' => 'Sākums',
     'menu_about' => 'Par mums',
-    'menu_gdpr' => 'GDPR',
     'menu_why_us' => 'Kāpēc mēs?',
-    'menu_support' => 'Iedvesmojiet man kafiju',
     
     // Page titles
     'welcome_message' => 'Laipni lūdzam <strong>Paid!</strong>',

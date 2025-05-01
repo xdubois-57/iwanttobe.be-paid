@@ -8,9 +8,7 @@ return [
     'app_name' => '<strong>Paid!</strong>',
     'menu_home' => 'Koti',
     'menu_about' => 'Tietoa',
-    'menu_gdpr' => 'GDPR',
     'menu_why_us' => 'Miksi me?',
-    'menu_support' => 'Osta minulle kahvia',
     
     // Page titles
     'welcome_message' => 'Tervetuloa <strong>Paid!</strong>',

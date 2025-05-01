@@ -12,8 +12,13 @@ return [
     'theme_auto' => 'Automatisch',
     
     // Apps and landing
-    'landing_choose_app' => 'Wählen Sie eine Anwendung',
+    'landing_choose_app' => 'Wähle eine Anwendung',
     'app_paid' => 'Paid!',
     'app_involved' => 'Involved!',
-    'app_drive' => 'Drive'
+    'app_drive' => 'Drive',
+    
+    // Global menu items
+    'menu_support' => 'Unterstütze uns!',
+    'menu_gdpr' => 'Datenschutz',
+    'menu_home' => 'Startseite'
 ];

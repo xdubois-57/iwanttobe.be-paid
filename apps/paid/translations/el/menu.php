@@ -8,9 +8,7 @@ return [
     'app_name' => '<strong>Paid!</strong>',
     'menu_home' => 'Αρχική',
     'menu_about' => 'Σχετικά',
-    'menu_gdpr' => 'Πολιτική Απορρήτου',
     'menu_why_us' => 'Γιατί Εμείς;',
-    'menu_support' => 'Κάντε μου μια καφέ',
     
     // Page titles
     'welcome_message' => 'Καλώς ήρθατε στο <strong>Paid!</strong>',

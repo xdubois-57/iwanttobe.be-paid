@@ -8,9 +8,7 @@ return [
     'app_name' => '<strong>Paid!</strong>',
     'menu_home' => 'Início',
     'menu_about' => 'Sobre',
-    'menu_gdpr' => 'Política de Privacidade',
     'menu_why_us' => 'Por que nós?',
-    'menu_support' => 'Ofereça-me um café',
     
     // Page titles
     'welcome_message' => 'Bem-vindo ao <strong>Paid!</strong>',

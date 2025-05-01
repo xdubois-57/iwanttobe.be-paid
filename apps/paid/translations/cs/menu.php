@@ -7,9 +7,7 @@ return [
     'app_name' => '<strong>Paid!</strong>',
     'menu_home' => 'Domů',
     'menu_about' => 'O nás',
-    'menu_gdpr' => 'GDPR',
     'menu_why_us' => 'Proč my?',
-    'menu_support' => 'Koupit mi kafe',
     
     // Page titles
     'welcome_message' => 'Vítejte v <strong>Paid!</strong>',

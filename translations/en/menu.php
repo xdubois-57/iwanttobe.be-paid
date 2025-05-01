@@ -15,5 +15,10 @@ return [
     'landing_choose_app' => 'Choose an application',
     'app_paid' => 'Paid!',
     'app_involved' => 'Involved!',
-    'app_drive' => 'Drive'
+    'app_drive' => 'Drive',
+    
+    // Global menu items
+    'menu_support' => 'Support us!',
+    'menu_gdpr' => 'Privacy',
+    'menu_home' => 'Home'
 ];

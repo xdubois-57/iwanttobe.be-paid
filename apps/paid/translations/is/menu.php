@@ -8,9 +8,7 @@ return [
     'app_name' => '<strong>Paid!</strong>',
     'menu_home' => 'Heim',
     'menu_about' => 'Um',
-    'menu_gdpr' => 'GDPR',
     'menu_why_us' => 'Af hverju?',
-    'menu_support' => 'Kaupi mig kaffi',
     
     // Page titles
     'welcome_message' => 'Velkomin í <strong>Paid!</strong>',

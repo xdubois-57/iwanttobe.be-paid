@@ -8,9 +8,7 @@ return [
     'app_name' => '<strong>Paid!</strong>',
     'menu_home' => 'Hem',
     'menu_about' => 'Om',
-    'menu_gdpr' => 'Integritetspolicy',
     'menu_why_us' => 'Varför vi?',
-    'menu_support' => 'Köp mig en kaffe',
     
     // Page titles
     'welcome_message' => 'Välkommen till <strong>Paid!</strong>',

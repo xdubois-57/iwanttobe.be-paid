@@ -17,6 +17,10 @@ return [
     'app_involved' => 'Involved!',
     'app_drive' => 'Drive',
     
+    // Global menu items
+    'menu_support' => 'Steun ons!',
+    'menu_gdpr' => 'AVG',
+    
     // Core settings
     'language_code' => 'nl',
     'language_direction' => 'ltr',

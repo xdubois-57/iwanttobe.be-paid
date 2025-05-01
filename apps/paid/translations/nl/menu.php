@@ -11,9 +11,7 @@ return [
     // Main navigation menu
     'menu_home' => 'Home',
     'menu_about' => 'Over',
-    'menu_gdpr' => 'AVG',
     'menu_why_us' => 'Waarom wij?',
-    'menu_support' => 'Koop me een koffie',
     
     // Page titles
     'page_title_home' => '<strong>Paid!</strong> - Gratis SEPA Betalings QR Code Generator',

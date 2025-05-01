@@ -8,9 +8,7 @@ return [
     'app_name' => '<strong>Paid!</strong>',
     'menu_home' => 'Kezdőlap',
     'menu_about' => 'Névjegy',
-    'menu_gdpr' => 'GDPR',
     'menu_why_us' => 'Miért mi?',
-    'menu_support' => 'Koffein!',
     
     // Page titles
     'welcome_message' => 'Üdvözöljük a <strong>Paid!</strong> alkalmazásban',

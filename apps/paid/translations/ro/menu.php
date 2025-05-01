@@ -8,9 +8,7 @@ return [
     'app_name' => '<strong>Paid!</strong>',
     'menu_home' => 'Acasă',
     'menu_about' => 'Despre',
-    'menu_gdpr' => 'GDPR',
     'menu_why_us' => 'De ce noi?',
-    'menu_support' => 'Cumpără-mi un cafea',
     
     // Page titles
     'welcome_message' => 'Bine ați venit la <strong>Paid!</strong>',

@@ -17,6 +17,10 @@ return [
     'app_involved' => 'Involved!',
     'app_drive' => 'Drive',
     
+    // Global menu items
+    'menu_support' => 'Sostienici!',
+    'menu_gdpr' => 'Privacy',
+    
     // Core settings
     'language_code' => 'it',
     'language_direction' => 'ltr',
