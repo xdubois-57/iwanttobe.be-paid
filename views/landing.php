@@ -1,21 +1,28 @@
 <?php
 require_once __DIR__ . '/../controllers/LanguageController.php';
 require_once __DIR__ . '/../controllers/WordCloudController.php';
+require_once __DIR__ . '/../core/AppRegistry.php';
 $lang = LanguageController::getInstance();
 require_once __DIR__ . '/header.php';
 
 // Get word cloud data
 $wordCloudData = WordCloudController::getWordCloudDataJson();
+
+// Get app instances
+$apps = AppRegistry::getInstance()->getAppInterfaces();
 ?>
 <main class="container">
-    <h1><?php echo $lang->translate('landing_choose_app') ?? 'Choose an application'; ?></h1>
-    <ul class="app-list">
-        <li><a class="button" href="/<?php echo $lang->getCurrentLanguage(); ?>/paid">Paid!</a></li>
-        <li><a class="button" href="/<?php echo $lang->getCurrentLanguage(); ?>/involved">Involved!</a></li>
-        <li><a class="button" href="/<?php echo $lang->getCurrentLanguage(); ?>/drive">Drive</a></li>
-    </ul>
-    
     <div id="word-cloud-container" data-words='<?php echo $wordCloudData; ?>' class="word-cloud-wrapper"></div>
+
+    <div class="grid">
+        <?php foreach ($apps as $app): ?>
+        <a href="/<?php echo $lang->getCurrentLanguage(); ?>/<?php echo htmlspecialchars($app->getSlug()); ?>" class="app-card">
+            <img src="/assets/images/<?php echo htmlspecialchars($app->getSlug()); ?>-logo.png" alt="<?php echo htmlspecialchars($app->getDisplayName()); ?> logo">
+            <h3><?php echo htmlspecialchars($app->getDisplayName()); ?></h3>
+            <p><?php echo htmlspecialchars($app->getDescription()); ?></p>
+        </a>
+        <?php endforeach; ?>
+    </div>
 </main>
 
 <!-- Include WordCloud library -->

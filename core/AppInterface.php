@@ -55,4 +55,10 @@ interface AppInterface
      * @return string Absolute path to the translations directory
      */
     public function getTranslationsPath(): string;
+    
+    /**
+     * Returns a high-level description of the app
+     * @return string
+     */
+    public function getDescription(): string;
 }

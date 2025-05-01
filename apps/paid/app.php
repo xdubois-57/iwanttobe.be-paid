@@ -78,6 +78,14 @@ class PaidApp implements AppInterface
     {
         return __DIR__ . '/translations';
     }
+    
+    /**
+     * @inheritDoc
+     */
+    public function getDescription(): string
+    {
+        return 'QR code generator for payments, perfect for non-profits and events.';
+    }
 }
 
 // Auto-register this app when the file is included

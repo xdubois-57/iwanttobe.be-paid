@@ -70,6 +70,14 @@ class InvolvedApp implements AppInterface
     {
         return __DIR__ . '/translations';
     }
+    
+    /**
+     * @inheritDoc
+     */
+    public function getDescription(): string
+    {
+        return 'Create polls, word clouds, and make any event interactive and fun.';
+    }
 }
 
 // Auto-register this app when the file is included

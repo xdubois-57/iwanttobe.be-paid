@@ -89,6 +89,15 @@ class AppRegistry
     }
     
     /**
+     * Gets all AppInterface instances
+     * @return array Array of AppInterface instances
+     */
+    public function getAppInterfaces(): array
+    {
+        return array_values($this->apps);
+    }
+    
+    /**
      * Gets app by slug
      * @param string $slug
      * @return AppInterface|null

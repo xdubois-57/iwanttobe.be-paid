@@ -39,7 +39,7 @@ class DriveApp implements AppInterface
      */
     public function getDisplayName(): string
     {
-        return 'Drive';
+        return 'Driven!';
     }
     
     /**
@@ -69,6 +69,14 @@ class DriveApp implements AppInterface
     public function getTranslationsPath(): string
     {
         return __DIR__ . '/translations';
+    }
+    
+    /**
+     * @inheritDoc
+     */
+    public function getDescription(): string
+    {
+        return 'Secure cloud storage and file sharing solution that keeps your files safe and accessible anywhere.';
     }
 }
 
