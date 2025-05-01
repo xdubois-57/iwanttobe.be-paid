@@ -35,7 +35,7 @@ class QRController {
     private const SERVICE_TAG = 'BCD';
     private const VERSION = '002';
     private const IDENTIFICATION = 'SCT';
-    private const FONT_PATH = __DIR__ . '/../fonts/OpenSans-Regular.ttf';
+    private const FONT_PATH = __DIR__ . '/../../../fonts/OpenSans-Regular.ttf';
 
     public function generate() {
         try {
@@ -153,9 +153,9 @@ class QRController {
     }
 
     public function generateQRCode($text) {
-        require_once __DIR__ . '/../controllers/LanguageController.php';
-        require_once __DIR__ . '/../lib/QRImageWithLogo.php';
-        require_once __DIR__ . '/../lib/TextLogoHelper.php';
+        require_once __DIR__ . '/../../../controllers/LanguageController.php';
+        require_once __DIR__ . '/../../../lib/QRImageWithLogo.php';
+        require_once __DIR__ . '/../../../lib/TextLogoHelper.php';
         $lang = LanguageController::getInstance();
 
         // QR options
@@ -179,7 +179,7 @@ class QRController {
         $matrix = $qrcode->getQRMatrix();
 
         // Generate logo image with text
-        $fontPath = __DIR__ . '/../fonts/OpenSans-Regular.ttf';
+        $fontPath = self::FONT_PATH;
         $logoFile = sys_get_temp_dir() . '/qr_logo_text.png';
         \TextLogoHelper::makeTextLogo('iwantto.be', $fontPath, 156, $logoFile); // 156px = 13*12 (scale)
 

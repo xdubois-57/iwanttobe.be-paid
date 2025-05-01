@@ -19,11 +19,11 @@
 ?>
 
 <?php
-require_once __DIR__ . '/../controllers/LanguageController.php';
+require_once __DIR__ . '/../../../controllers/LanguageController.php';
 require_once __DIR__ . '/../controllers/QRController.php';
 $lang = LanguageController::getInstance();
 $qrController = new QRController();
-require_once __DIR__ . '/header.php';
+require_once __DIR__ . '/../../../views/header.php';
 ?>
 
 <main class="container">
@@ -128,7 +128,7 @@ require_once __DIR__ . '/header.php';
     </div>
 </main>
 
-<script src="js/form-validation.js"></script>
+<script src="/js/form-validation.js"></script>
 
 <script>
 function resetRightPanel() {
@@ -138,5 +138,5 @@ function resetRightPanel() {
 </script>
 
 <?php 
-require_once __DIR__ . '/footer.php';
+require_once __DIR__ . '/../../../views/footer.php';
 ?>
