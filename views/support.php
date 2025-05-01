@@ -19,8 +19,9 @@
 ?>
 
 <?php
-require_once __DIR__ . '/header.php';
-require_once __DIR__ . '/../controllers/QRController.php';
+require_once __DIR__ . '/../../../controllers/LanguageController.php';
+require_once __DIR__ . '/../../../apps/paid/controllers/QRController.php';
+require_once __DIR__ . '/../views/header.php';
 $lang = LanguageController::getInstance();
 $qrController = new QRController();
 ?>
@@ -126,4 +127,4 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
-<?php require_once __DIR__ . '/footer.php'; ?>
+<?php require_once __DIR__ . '/../views/footer.php'; ?>

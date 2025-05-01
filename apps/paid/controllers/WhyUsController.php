@@ -28,6 +28,7 @@ class WhyUsController {
      * Shows the comparison table and feature highlights
      */
     public function index() {
+        $currentApp = 'paid';
         require_once __DIR__ . '/../views/why-us.php';
     }
 }

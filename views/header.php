@@ -24,6 +24,11 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 require_once __DIR__ . '/../controllers/LanguageController.php';
 $lang = LanguageController::getInstance();
+$uriSegments = explode('/', trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/'));
+$possibleApp = $uriSegments[1] ?? null; // after lang code
+$validApps = ['paid','involved','drive'];
+$cur = $currentApp ?? ($_SESSION['current_app'] ?? (in_array($possibleApp, $validApps) ? $possibleApp : 'landing'));
+$_SESSION['current_app'] = $cur;
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo $lang->getCurrentLanguage(); ?>">
@@ -86,13 +91,12 @@ $lang = LanguageController::getInstance();
                         <rect y="60" width="100" height="10"></rect>
                     </svg>
                 </button>
-                <a href="/<?php echo $lang->getCurrentLanguage(); ?>" class="app-name"><em style="font-size: 0.6em;">iwantto.be</em> <span style="font-size: 1.1em; font-weight: bold;"><?php echo ($currentApp ?? 'landing') === 'paid' ? 'Paid!' : ( ($currentApp ?? 'landing') === 'involved' ? 'Involved!' : ( ($currentApp ?? 'landing') === 'drive' ? 'Drive' : 'Apps' ) ); ?></span></a>
+                <a href="/<?php echo $lang->getCurrentLanguage(); ?>" class="app-name"><em style="font-size: 0.6em;">iwantto.be</em> <span style="font-size: 1.1em; font-weight: bold;"><?php echo ($cur === 'paid' ? 'Paid!' : ( ($cur === 'involved' ? 'Involved!' : ( ($cur === 'drive' ? 'Drive' : 'Apps' ) ) ) ); ?></span></a>
             </div>
 
             <div class="nav-links">
                 <ul>
 <?php
-$cur = $currentApp ?? 'landing';
 $langCode = $lang->getCurrentLanguage();
 if ($cur === 'landing') {
     echo '<li><a href="/' . $langCode . '/paid">Paid!</a></li>';
