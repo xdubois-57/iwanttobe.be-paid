@@ -27,16 +27,24 @@
  */
 
 // Include necessary controller classes
-require_once 'controllers/HomeController.php';
-require_once 'controllers/GDPRController.php';
-require_once 'controllers/WhyUsController.php';
 require_once 'controllers/Router.php';
 require_once 'controllers/LanguageController.php';
-require_once 'controllers/QRController.php';
+
+// Core global controllers remain at root-level controllers
+require_once 'controllers/GDPRController.php';
 require_once 'controllers/SupportController.php';
+
+// Landing controller remains at root
 require_once 'controllers/LandingController.php';
-require_once 'controllers/InvolvedHomeController.php';
-require_once 'controllers/DriveHomeController.php';
+
+// Paid! app controllers
+require_once 'apps/paid/controllers/HomeController.php';
+require_once 'apps/paid/controllers/WhyUsController.php';
+require_once 'apps/paid/controllers/QRController.php';
+
+// Placeholder apps (involved, drive)
+require_once 'apps/involved/controllers/InvolvedHomeController.php';
+require_once 'apps/drive/controllers/DriveHomeController.php';
 
 // Initialize the router
 $router = new Router();
