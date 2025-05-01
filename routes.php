@@ -67,8 +67,18 @@ $router->get('/{lang}/drive', 'DriveHomeController@index');
 $router->get('/{lang}/gdpr', 'GDPRController@index');
 $router->get('/{lang}/support', 'SupportController@index');
 
-// Redirect root to English (no browser language fallback)
+// Redirect root to detected language based on browser preferences
 $router->get('/', function() {
-    header('Location: /en');
+    // Get available languages from config
+    $config = require __DIR__ . '/config/languages.php';
+    $availableLanguages = array_keys($config['available_languages']);
+    
+    // Get browser language preference
+    $browserLang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'] ?? '', 0, 2);
+    
+    // Use browser language if supported, otherwise default to English
+    $lang = in_array($browserLang, $availableLanguages) ? $browserLang : 'en';
+    
+    header('Location: /' . $lang);
     exit;
 });
