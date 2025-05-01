@@ -206,6 +206,10 @@ class QRController {
         $amountStr = rtrim($lines[7]);
         $amount = floatval(str_replace('EUR', '', $amountStr));
         $communication = rtrim($lines[10]);
+        
+        // Load app-specific translations
+        $lang->loadAppTranslationsForPath(__DIR__ . '/../../../apps/paid/translations');
+        
         $summaryText = sprintf(
             "%s\n%s\n%.2f EUR\n%s",
             sprintf($lang->translate('payment_to'), $name),
