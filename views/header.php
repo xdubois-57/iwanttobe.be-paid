@@ -74,7 +74,9 @@ $_SESSION['current_app'] = $cur;
             // Add other frequently used translations
             'app_name': 'iwantto.be Paid',
             'generating': '<?php echo $lang->translate('generating'); ?>',
-            'share_text': '<?php echo $lang->translate('share_text'); ?>'
+            'share_text': '<?php echo $lang->translate('share_text'); ?>',
+            'cookie_notice': '<?php echo $lang->translate('cookie_notice'); ?>',
+            'cookie_accept': '<?php echo $lang->translate('cookie_accept'); ?>'
         };
         return translations[key] || key;
     };
