@@ -23,12 +23,18 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 require_once __DIR__ . '/../controllers/LanguageController.php';
+require_once __DIR__ . '/../core/AppRegistry.php';
+
 $lang = LanguageController::getInstance();
 $uriSegments = explode('/', trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/'));
 $possibleApp = $uriSegments[1] ?? null; // after lang code
 $validApps = ['paid','involved','drive'];
 $cur = $currentApp ?? ($_SESSION['current_app'] ?? (in_array($possibleApp, $validApps) ? $possibleApp : 'landing'));
 $_SESSION['current_app'] = $cur;
+
+// Set current app in registry
+$registry = AppRegistry::getInstance();
+$registry->setCurrent($cur);
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo $lang->getCurrentLanguage(); ?>">
@@ -94,13 +100,9 @@ $_SESSION['current_app'] = $cur;
                     </svg>
                 </button>
                 <?php
-                // Map current app to display name
-                $appNames = [
-                    'paid' => 'Paid!',
-                    'involved' => 'Involved!',
-                    'drive' => 'Drive'
-                ];
-                $appDisplayName = isset($appNames[$cur]) ? $appNames[$cur] : 'Apps';
+                // Get app display name from registry
+                $currentApp = $registry->getCurrent();
+                $appDisplayName = $currentApp ? $currentApp->getDisplayName() : 'Apps';
                 ?>
                 <a href="/<?php echo $lang->getCurrentLanguage(); ?>" class="app-name"><em style="font-size: 0.6em;">iwantto.be</em> <span style="font-size: 1.1em; font-weight: bold;"><?php echo $appDisplayName; ?></span></a>
             </div>
@@ -109,22 +111,26 @@ $_SESSION['current_app'] = $cur;
                 <ul>
 <?php
 $langCode = $lang->getCurrentLanguage();
+$currentApp = $registry->getCurrent();
+
 if ($cur === 'landing') {
-    echo '<li><a href="/' . $langCode . '/paid">Paid!</a></li>';
-    echo '<li><a href="/' . $langCode . '/involved">Involved!</a></li>';
-    echo '<li><a href="/' . $langCode . '/drive">Drive</a></li>';
-    echo '<li><a href="/' . $langCode . '/support">' . $lang->translate('menu_support') . '</a></li>';
-    echo '<li><a href="/' . $langCode . '/gdpr">' . $lang->translate('menu_gdpr') . '</a></li>';
-} elseif ($cur === 'paid') {
-    echo '<li><a href="/' . $langCode . '/paid">' . $lang->translate('menu_home') . '</a></li>';
-    echo '<li><a href="/' . $langCode . '/paid/why-us">' . $lang->translate('menu_why_us') . '</a></li>';
-    echo '<li><a href="/' . $langCode . '/support">' . $lang->translate('menu_support') . '</a></li>';
-    echo '<li><a href="/' . $langCode . '/gdpr">' . $lang->translate('menu_gdpr') . '</a></li>';
-} else { // involved or drive
-    echo '<li><a href="/' . $langCode . '/' . $cur . '">' . $lang->translate('menu_home') . '</a></li>';
-    echo '<li><a href="/' . $langCode . '/support">' . $lang->translate('menu_support') . '</a></li>';
-    echo '<li><a href="/' . $langCode . '/gdpr">' . $lang->translate('menu_gdpr') . '</a></li>';
+    // On landing page, list all registered apps
+    foreach ($registry->getApps() as $app) {
+        echo '<li><a href="/' . $langCode . '/' . $app->getSlug() . '">' . $app->getDisplayName() . '</a></li>';
+    }
+} else if ($currentApp) {
+    // Get menu items from the current app
+    $menuItems = $currentApp->getMenuItems();
+    foreach ($menuItems as $item) {
+        $url = str_replace('{lang}', $langCode, $item['url']);
+        $text = $lang->translate($item['text']);
+        echo '<li><a href="' . $url . '">' . $text . '</a></li>';
+    }
 }
+
+// Common pages for all apps
+echo '<li><a href="/' . $langCode . '/support">' . $lang->translate('menu_support') . '</a></li>';
+echo '<li><a href="/' . $langCode . '/gdpr">' . $lang->translate('menu_gdpr') . '</a></li>';
 ?>
                     <li class="language-selector">
                         <select onchange="changeLanguage(this.value)" aria-label="<?php echo $lang->translate('language'); ?>">

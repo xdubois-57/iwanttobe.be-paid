@@ -26,42 +26,31 @@
  * - API routes (POST requests for AJAX operations)
  */
 
-// Include necessary controller classes
+// Include necessary controller classes and core framework
 require_once 'controllers/Router.php';
 require_once 'controllers/LanguageController.php';
+require_once 'core/AppRegistry.php';
 
 // Core global controllers remain at root-level controllers
 require_once 'controllers/GDPRController.php';
 require_once 'controllers/SupportController.php';
-
-// Landing controller remains at root
 require_once 'controllers/LandingController.php';
-
-// Paid! app controllers
-require_once 'apps/paid/controllers/HomeController.php';
-require_once 'apps/paid/controllers/WhyUsController.php';
-require_once 'apps/paid/controllers/QRController.php';
-
-// Placeholder apps (involved, drive)
-require_once 'apps/involved/controllers/InvolvedHomeController.php';
-require_once 'apps/drive/controllers/DriveHomeController.php';
 
 // Initialize the router
 $router = new Router();
 
+// Initialize app registry with the router
+$registry = AppRegistry::getInstance();
+$registry->setRouter($router);
+
+// Register all apps by scanning apps directory
+require_once 'apps/register_apps.php';
+
+// Register all app routes through the registry
+$registry->registerAllRoutes();
+
 // Landing page (select app)
 $router->get('/{lang}', 'LandingController@index');
-
-// Paid! app routes
-$router->get('/{lang}/paid', 'HomeController@index'); // QR generator home
-$router->get('/{lang}/paid/why-us', 'WhyUsController@index');
-$router->post('/{lang}/paid/api/generate-qr', 'QRController@generate');
-
-// Involved! app routes (placeholder)
-$router->get('/{lang}/involved', 'InvolvedHomeController@index');
-
-// Drive app routes (placeholder)
-$router->get('/{lang}/drive', 'DriveHomeController@index');
 
 // Global pages accessible from any app
 $router->get('/{lang}/gdpr', 'GDPRController@index');
