@@ -37,6 +37,11 @@ class WordCloudController
         $registry = AppRegistry::getInstance();
         $apps = $registry->getApps();
         
+        // Save original state before we start changing things
+        $languageController = LanguageController::getInstance();
+        $originalLang = $languageController->getCurrentLanguage();
+        $originalApp = $registry->getCurrent() ? $registry->getCurrent()->getSlug() : 'landing';
+        
         // Add app names to the word cloud (with high weight)
         foreach ($apps as $app) {
             $appName = $app->getDisplayName();
@@ -47,15 +52,11 @@ class WordCloudController
         }
         
         // Get all meta_keywords from all apps and languages
-        $languageController = LanguageController::getInstance();
         $config = require __DIR__ . '/../config/languages.php';
         $languages = array_keys($config['available_languages']);
         
         // First get global keywords
         foreach ($languages as $lang) {
-            // Save current language
-            $currentLang = $languageController->getCurrentLanguage();
-            
             // Temporarily switch language to get translations
             $languageController->setLanguage($lang);
             
@@ -64,9 +65,6 @@ class WordCloudController
             if ($keywords) {
                 self::processKeywords($keywords, $wordFrequencies);
             }
-            
-            // Reset to the original language
-            $languageController->setLanguage($currentLang);
         }
         
         // Then get app-specific keywords
@@ -79,11 +77,9 @@ class WordCloudController
                 
                 // Temporarily switch language to get translations
                 $languageController->setLanguage($lang);
-                
-                // Load app translations
                 $languageController->loadTranslations();
                 
-                // Get meta_keywords from app-specific translations
+                // Get app-specific meta_keywords if available
                 $keywords = $languageController->translate('meta_keywords');
                 if ($keywords) {
                     self::processKeywords($keywords, $wordFrequencies);
@@ -91,11 +87,16 @@ class WordCloudController
             }
         }
         
-        // Convert to required format: [[word, weight], [word, weight], ...]
+        // Convert to format required by wordcloud2.js
         $result = [];
         foreach ($wordFrequencies as $word => $frequency) {
             $result[] = [$word, $frequency];
         }
+        
+        // IMPORTANT: Restore original app and language state before returning
+        $registry->setCurrent($originalApp);
+        $languageController->setLanguage($originalLang);
+        $languageController->loadTranslations();
         
         return $result;
     }
@@ -108,14 +109,14 @@ class WordCloudController
      */
     private static function processKeywords($keywords, &$frequencies)
     {
-        $keywordList = explode(',', $keywords);
-        foreach ($keywordList as $keyword) {
+        $keywordArray = explode(',', $keywords);
+        foreach ($keywordArray as $keyword) {
             $keyword = trim($keyword);
-            if (strlen($keyword) > 2) { // Ignore very short words
+            if (!empty($keyword)) {
                 if (!isset($frequencies[$keyword])) {
                     $frequencies[$keyword] = 0;
                 }
-                $frequencies[$keyword]++;
+                $frequencies[$keyword] += 1;
             }
         }
     }
