@@ -138,7 +138,12 @@ if ($currentApp && $cur !== 'landing' && $cur !== 'support' && $cur !== 'gdpr') 
 
 // Common pages for all apps
 echo '<li><a href="/' . $langCode . '/support">' . $lang->translate('menu_support') . '</a></li>';
-echo '<li><a href="/' . $langCode . '/gdpr">' . $lang->translate('menu_gdpr') . '</a></li>';
+if ($cur === 'landing' || $cur === 'support' || $cur === 'gdpr') {
+    echo '<li><a href="/' . $langCode . '/gdpr">' . $lang->translate('menu_gdpr') . '</a></li>';
+}
+
+// Only show language and theme switchers on landing, support, and gdpr pages
+if ($cur === 'landing' || $cur === 'support' || $cur === 'gdpr') {
 ?>
                     <li class="language-selector">
                         <select onchange="changeLanguage(this.value)" aria-label="<?php echo $lang->translate('language'); ?>">
@@ -158,6 +163,9 @@ echo '<li><a href="/' . $langCode . '/gdpr">' . $lang->translate('menu_gdpr') . 
                             <option value="auto"><?php echo $lang->translate('theme_auto'); ?></option>
                         </select>
                     </li>
+<?php
+}
+?>
                 </ul>
             </div>
         </div>
