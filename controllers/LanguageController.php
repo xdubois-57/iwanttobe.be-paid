@@ -96,7 +96,7 @@ class LanguageController {
         $this->translations = array_merge($base, $current);
     }
     
-    private function loadAppSpecificTranslations() {
+    public function loadAppSpecificTranslations() {
         // Get current app from registry
         $registry = AppRegistry::getInstance();
         $currentApp = $registry->getCurrent();
@@ -117,6 +117,22 @@ class LanguageController {
         
         // Load current language app-specific translations
         $appLangFile = $appTranslationsPath . '/' . $this->currentLang . '.php';
+        if (file_exists($appLangFile)) {
+            $appCurrentTranslations = require $appLangFile;
+            $this->translations = array_merge($this->translations, $appCurrentTranslations);
+        }
+    }
+    
+    // Load app-specific translations for any given app path (not relying on registry)
+    public function loadAppTranslationsForPath($path) {
+        // Load English fallback
+        $appEnFile = $path . '/en.php';
+        if (file_exists($appEnFile)) {
+            $appBaseTranslations = require $appEnFile;
+            $this->translations = array_merge($this->translations, $appBaseTranslations);
+        }
+        // Load current language
+        $appLangFile = $path . '/' . $this->currentLang . '.php';
         if (file_exists($appLangFile)) {
             $appCurrentTranslations = require $appLangFile;
             $this->translations = array_merge($this->translations, $appCurrentTranslations);

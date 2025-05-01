@@ -77,7 +77,7 @@ class DriveApp implements AppInterface
     public function getDescription(): string
     {
         $lang = \LanguageController::getInstance();
-        $lang->loadAppSpecificTranslations($this->getTranslationsPath());
+        $lang->loadAppTranslationsForPath($this->getTranslationsPath());
         return $lang->translate('description');
     }
 }
