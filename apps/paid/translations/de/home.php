@@ -4,9 +4,8 @@
 return [
     'home_intro_title' => 'Wird bezahlt',
     'home_intro_text' => 'Generieren Sie einen QR-Code, den Ihre Freunde mit ihrer Bank-App scannen können, um Ihnen Geld zu überweisen. Füllen Sie einfach Ihre Daten unten ein und teilen Sie den QR-Code.',
-    'support_text' => 'Diese App ist kostenlos. Wenn Ihnen die App gefällt, kaufen Sie mir einen Kaffee, indem Sie den unten stehenden QR-Code mit Ihrer Bank-App scannen!',
-    'support_text_alt' => 'Diese App ist kostenlos. Wenn Ihnen die App gefällt, kaufen Sie mir einen Kaffee, indem Sie hier klicken!',
-    'support_thanks' => 'Danke für die Unterstützung von <strong>Paid!</strong>!',
+    'support_text' => 'Diese App ist kostenlos. Wenn sie dir gefällt, spendiere mir einen Kaffee, indem du den QR-Code unten mit deiner Banking-App scannst!',
+    'support_text_alt' => 'Diese App ist kostenlos. Wenn sie dir gefällt, spendiere mir einen Kaffee, indem du hier klickst!',
     'download_qr' => 'QR-Code herunterladen',
     'share_qr' => 'QR-Code teilen',
     'cookie_notice' => 'Diese Seite verwendet essentielle Cookies',

@@ -16,6 +16,6 @@ return [
     'support_coffee_message' => 'Támogassa a hozzájárulással',
     'support_qr_alt' => 'QR kód hozzájárulásra',
     'support_qr_error' => 'Sajnálom, nem sikerült generálni a QR kódot. Kérjük, próbálja újra később.',
-    'support_thanks' => 'Köszönjük, hogy támogatja a <strong><em>iwantto.be</em></strong> alkalmazást!',
+    'support_thanks' => 'Köszönjük, hogy támogatja a <em>iwantto.be</em> alkalmazást!',
     'menu_support' => 'Adj nekem egy kávét',
 ];

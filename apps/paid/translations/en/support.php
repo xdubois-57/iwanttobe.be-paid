@@ -15,5 +15,5 @@ return [
     'support_coffee_message' => 'Coffee Support',
     'support_qr_alt' => 'QR code for donation',
     'support_qr_error' => 'Sorry, we couldn\'t generate the QR code. Please try again later.',
-    'support_thanks' => 'Thank you for supporting <strong>Paid!</strong>!',
+    'support_thanks' => 'Thank you for supporting <em>iwantto.be</em>!',
 ];

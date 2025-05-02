@@ -6,9 +6,8 @@
 return [
     'home_intro_title' => 'Få betalt, nu',
     'home_intro_text' => 'Generera en QR-kod som dina vänner kan scanna med sin bankapp för att överföra pengar till dig. Fyll bara i dina uppgifter nedan och dela QR-koden.',
-    'support_text' => 'Denna app är gratis. Om du tycker om den, köp mig en kaffe genom att scanna QR-koden nedan med din bankapp!',
-    'support_text_alt' => 'Denna app är gratis. Om du tycker om den, köp mig en kaffe genom att klicka här!',
-    'support_thanks' => 'Tack för att du stödjer <strong>Paid!</strong>!',
+    'support_text' => 'Denna app är gratis. Om du gillar den, bjud mig på en kaffe genom att skanna QR-koden nedan med din bankapp!',
+    'support_text_alt' => 'Denna app är gratis. Om du gillar den, bjud mig på en kaffe genom att klicka här!',
     'download_qr' => 'Ladda ner QR-kod',
     'share_qr' => 'Dela QR-kod',
     'cookie_notice' => 'Denna webbplats använder nödvändiga cookies',

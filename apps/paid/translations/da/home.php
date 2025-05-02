@@ -6,9 +6,8 @@
 return [
     'home_intro_title' => 'Betal nu!',
     'home_intro_text' => 'Opret en QR-kode, som dine venner kan læse med deres banks mobilapp til at foretage en SEPA-betaling. Indtast kontoinformationer og del QR-koden.',
-    'support_text' => 'Dette program er gratis. Hvis du kan lide det, køb mig en kaffe ved at scannen QR-koden med din banks mobilapp!',
-    'support_text_alt' => 'Dette program er gratis. Hvis du kan lide det, køb mig en kaffe ved at trykke på knappen!',
-    'support_thanks' => 'Tak for at støtte <strong>Paid!</strong>!',
+    'support_text' => 'Denne app er gratis. Hvis du kan lide den, køb mig en kop kaffe ved at scanne QR-koden nedenfor med din bankapp!',
+    'support_text_alt' => 'Denne app er gratis. Hvis du kan lide den, køb mig en kop kaffe ved at klikke her!',
     'download_qr' => 'Download QR-kode',
     'share_qr' => 'Del QR-kode',
     'cookie_notice' => 'Denne hjemmeside bruger nødvendige cookies',

@@ -91,7 +91,7 @@ $qrController = new QRController();
 document.addEventListener('DOMContentLoaded', function() {
     // Create form data for QR code generation
     const formData = new FormData();
-    formData.append('beneficiary_name', 'QR Transfer');
+    formData.append('beneficiary_name', 'iwantto.be');
     formData.append('beneficiary_iban', 'LT103250087680814808');
     formData.append('amount', '5.00');
     formData.append('communication', 'Get a coffee');

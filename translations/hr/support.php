@@ -15,6 +15,6 @@ return [
     'support_coffee_message' => 'Podrška kavom',
     'support_qr_alt' => 'QR kod za darovanje',
     'support_qr_error' => 'Žao nam je, ne možemo generirati QR kod. Molimo pokušajte kasnije.',
-    'support_thanks' => 'Hvala na podršci <strong>iwantto.be</strong>!',
+    'support_thanks' => 'Hvala na podršci <em>iwantto.be</em>!',
     'menu_support' => 'Kupite mi kavu',
 ];

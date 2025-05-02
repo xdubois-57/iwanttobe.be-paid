@@ -16,6 +16,6 @@ return [
     'support_coffee_message' => 'Podpořte přispěním',
     'support_qr_alt' => 'QR kód pro příspěvek',
     'support_qr_error' => 'Omlouvám se, nepodařilo se vygenerovat QR kód. Prosím zkuste to znovu později.',
-    'support_thanks' => 'Děkuji za podporu <strong><em>iwantto.be</em></strong>!',
+    'support_thanks' => 'Děkuji za podporu <em>iwantto.be</em>!',
     'menu_support' => 'Koupit mi kafe',
 ];

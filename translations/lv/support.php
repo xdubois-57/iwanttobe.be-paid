@@ -17,6 +17,6 @@ return [
     'support_coffee_message' => 'Kafija atbalsts',
     'support_qr_alt' => 'QR kods ziedojumam',
     'support_qr_error' => 'Atvainojiet, neizdevās ģenerēt QR kodu. Lūdzu, mēģiniet vēlreiz vēlāk.',
-    'support_thanks' => 'Paldies par atbalstu <strong>Paid!</strong>!',
+    'support_thanks' => 'Paldies par atbalstu <em>iwantto.be</em>!',
     'menu_support' => 'Iedvesmojiet man kafiju',
 ];

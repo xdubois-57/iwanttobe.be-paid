@@ -6,9 +6,8 @@
 return [
     'home_intro_title' => 'Maksājiet tagad',
     'home_intro_text' => 'Izveidojiet QR kodu, ko jūsu draugi var lasīt ar bankas lietotni, lai jums pārsūtītu naudu. Ievadiet savus datus zemāk un kopā dalieties ar QR kodu.',
-    'support_text' => 'Šis lietotnis ir bezmaksas. Ja jums patīk, iedvesmojiet man kafiju, lasot QR kodu zemāk ar bankas lietotni!',
-    'support_text_alt' => 'Šis lietotnis ir bezmaksas. Ja jums patīk, iedvesmojiet man kafiju, nospiežot šeit!',
-    'support_thanks' => 'Paldies, ka atbalstāt <strong>Paid!</strong>!',
+    'support_text' => 'Šī lietotne ir bezmaksas. Ja jums tā patīk, uzcienājiet mani ar kafiju, skenējot zemāk esošo QR kodu ar savu bankas lietotni!',
+    'support_text_alt' => 'Šī lietotne ir bezmaksas. Ja jums tā patīk, uzcienājiet mani ar kafiju, noklikšķinot šeit!',
     'download_qr' => 'Lejupielādēt QR kodu',
     'share_qr' => 'Dalīties ar QR kodu',
     'cookie_notice' => 'Šī tīmekļa vietne izmanto obligātās sīkdatnes',

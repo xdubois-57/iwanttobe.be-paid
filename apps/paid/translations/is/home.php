@@ -6,9 +6,8 @@
 return [
     'home_intro_title' => 'Greiða núna!',
     'home_intro_text' => 'Búðu til QR kóða sem vinir þínir geta lesið með bankaþjónustu fyrir SEPA greiðslu. Settu inn reikningsupplýsingar og deildu QR kóða.',
-    'support_text' => 'Þessi forrit er ókeypis. Ef þú likar honum, kaupi mig kaffi með því að skanna QR kóða með bankaþjónustu!',
-    'support_text_alt' => 'Þessi forrit er ókeypis. Ef þú likar honum, kaupi mig kaffi með því að ýta á takka!',
-    'support_thanks' => 'Takk fyrir að styðja <strong>Paid!</strong>!',
+    'support_text' => 'Þetta forrit er ókeypis. Ef þér líkar það, kauptu mér kaffi með því að skanna QR kóðann hér að neðan með bankaforritinu þínu!',
+    'support_text_alt' => 'Þetta forrit er ókeypis. Ef þér líkar það, kauptu mér kaffi með því að smella hér!',
     'download_qr' => 'Sækja QR kóða',
     'share_qr' => 'Deildu QR kóða',
     'cookie_notice' => 'Þessi vefsíða notar nauðsynlega cookies',

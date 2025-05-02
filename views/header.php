@@ -126,6 +126,16 @@ $currentApp = $registry->getCurrent();
 // Always show Home link first (landing page)
 echo '<li><a href="/' . $langCode . '">' . $lang->translate('menu_home') . '</a></li>';
 
+// On non-app pages, show links to all apps after Home
+if ($cur === 'landing' || $cur === 'support' || $cur === 'gdpr') {
+    $apps = $registry->getAppInterfaces();
+    foreach ($apps as $app) {
+        $slug = htmlspecialchars($app->getSlug());
+        $name = htmlspecialchars($app->getDisplayName());
+        echo '<li><a href="/' . $langCode . '/' . $slug . '">' . $name . '</a></li>';
+    }
+}
+
 if ($currentApp && $cur !== 'landing' && $cur !== 'support' && $cur !== 'gdpr') {
     // Get menu items from the current app
     $menuItems = $currentApp->getMenuItems();
