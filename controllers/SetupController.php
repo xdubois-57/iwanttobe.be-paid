@@ -68,6 +68,12 @@ class SetupController {
                     $skipped = true;
                     $step++;
                 }
+                // Handle Go to Application button from step 4
+                else if ($step === 4 && isset($_POST['go_to_app']) && $_POST['go_to_app'] === '1') {
+                    // Redirect to the home page
+                    header('Location: /');
+                    exit;
+                }
             }
         }
         
@@ -202,15 +208,19 @@ class SetupController {
                         $dbConfig['password'],
                         [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
                     );
+                    
+                    // Check all tables from SQL file
                     $allTablesExist = true;
                     $sqlFile = __DIR__ . '/../sql/init_db.sql';
                     $tableNames = [];
+                    
                     if (file_exists($sqlFile)) {
                         $sqlContent = file_get_contents($sqlFile);
                         if (preg_match_all('/CREATE TABLE IF NOT EXISTS `([^`]+)`/i', $sqlContent, $matches)) {
                             $tableNames = $matches[1];
                         }
                     }
+                    
                     foreach ($tableNames as $table) {
                         $stmt = $pdo->prepare("SHOW TABLES LIKE ?");
                         $stmt->execute([$table]);
@@ -219,7 +229,21 @@ class SetupController {
                             break;
                         }
                     }
+                    
                     $databaseValid = $allTablesExist;
+                    
+                    // Generate table summary HTML
+                    $tableSummaryHtml = '<h3>Database Table Status</h3><ul>';
+                    foreach ($tableNames as $table) {
+                        $stmt = $pdo->prepare("SHOW TABLES LIKE ?");
+                        $stmt->execute([$table]);
+                        $exists = $stmt->fetch() !== false;
+                        $tableSummaryHtml .= '<li>' . htmlspecialchars($table) . ': <strong style="color:' . 
+                            ($exists ? 'green' : 'red') . ';">' . 
+                            ($exists ? 'Exists' : 'Missing') . '</strong></li>';
+                    }
+                    $tableSummaryHtml .= '</ul>';
+                    
                     $pdo = null;
                 }
             } catch (PDOException $e) {
@@ -247,6 +271,12 @@ class SetupController {
                 else if (isset($_POST['skip']) && $_POST['skip'] === '1') {
                     $skipped = true;
                     $step++;
+                }
+                // Handle Go to Application button from step 4
+                else if ($step === 4 && isset($_POST['go_to_app']) && $_POST['go_to_app'] === '1') {
+                    // Redirect to the home page
+                    header('Location: /');
+                    exit;
                 }
             }
         }

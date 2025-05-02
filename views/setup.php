@@ -67,6 +67,10 @@ if (!defined('QR_TRANSFER')) {
             background-color: #f8d7da;
             color: #721c24;
         }
+        .alert-warning {
+            background-color: #fff3cd;
+            color: #856404;
+        }
         .wizard-content .secondary {
             min-width: 160px;
             text-align: center;
@@ -97,11 +101,13 @@ if (!defined('QR_TRANSFER')) {
             </div>
             <!-- Global Connectivity Status Header (all steps except step 3 when there's a message) -->
             <?php if (!($step === 3 && isset($message) && $message)): ?>
-            <div class="alert <?php echo ($databaseExists && $databaseValid) ? 'alert-success' : 'alert-error'; ?>" style="margin-bottom:2rem;">
+            <div class="alert <?php echo ($databaseExists && $databaseValid) ? 'alert-success' : ($databaseExists ? 'alert-warning' : 'alert-error'); ?>" style="margin-bottom:2rem;">
                 <?php if ($databaseExists && $databaseValid): ?>
                     Database connectivity: <strong>Connected</strong> (all required tables found)
+                <?php elseif ($databaseExists): ?>
+                    Database connectivity: <strong>Connected</strong> (some tables are missing)
                 <?php else: ?>
-                    Database connectivity: <strong>Not connected or incomplete</strong>
+                    Database connectivity: <strong>Not connected</strong>
                     <?php if (!empty($connectivityError)): ?>
                         <br><small>Error: <?php echo htmlspecialchars($connectivityError); ?></small>
                     <?php endif; ?>
@@ -109,7 +115,7 @@ if (!defined('QR_TRANSFER')) {
             </div>
             <?php endif; ?>
 
-            <?php if (isset($message) && $message): ?>
+            <?php if (isset($message) && $message && $step !== 4): ?>
                 <div class="alert <?php echo $success ? 'alert-success' : 'alert-error'; ?>">
                     <?php echo $message; ?>
                 </div>
@@ -215,6 +221,7 @@ if (!defined('QR_TRANSFER')) {
                     <strong>Warning:</strong> Initializing the database will create the following tables and delete all existing data:
                     <ul>
                         <li>EVENT</li>
+                        <li>WORDCLOUD</li>
                     </ul>
                     <p>All existing data will be permanently lost. Please ensure you have backed up any important data before proceeding.</p>
                 </div>
@@ -245,10 +252,9 @@ if (!defined('QR_TRANSFER')) {
                 <?php if (!empty($skipped)): ?>
                     <p class="alert alert-error">Setup was skipped. The database may not be initialized or may be incomplete.</p>
                 <?php else: ?>
-                    <p>Your database is ready and the setup is complete.</p>
+                    <p class="alert alert-success">Your database is ready and the setup is complete.</p>
                 <?php endif; ?>
                 <div class="setup-summary">
-                    <h3>Setup Summary</h3>
                     <ul>
                         <li>Database Host: <strong><?php echo htmlspecialchars($dbConfig['host'] ?? ''); ?></strong></li>
                         <li>Database Name: <strong><?php echo htmlspecialchars($dbConfig['name'] ?? ''); ?></strong></li>
@@ -256,9 +262,13 @@ if (!defined('QR_TRANSFER')) {
                         <li>Status: <strong><?php echo !empty($skipped) ? 'Skipped' : 'Initialized'; ?></strong></li>
                     </ul>
                 </div>
-                <div class="nav-buttons" style="gap: 1rem;">
-                    <a href="/" class="primary">Go to Application</a>
-                </div>
+                <form method="post">
+                    <input type="hidden" name="wizard_step" value="4">
+                    <div class="nav-buttons" style="display: flex; gap: 1rem; align-items: center;">
+                        <button type="submit" name="previous" value="1" class="secondary outline">Previous</button>
+                        <button type="submit" name="go_to_app" value="1" class="primary">Go to Application</button>
+                    </div>
+                </form>
             </section>
             
             <footer>
