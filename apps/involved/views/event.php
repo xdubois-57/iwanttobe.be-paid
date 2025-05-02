@@ -2,6 +2,11 @@
 require_once __DIR__ . '/../../../controllers/LanguageController.php';
 $lang = LanguageController::getInstance();
 require_once __DIR__ . '/../../../views/header.php';
+
+// Include the chillerlan QR code library
+require_once __DIR__ . '/../../../vendor/autoload.php';
+use chillerlan\QRCode\QRCode;
+use chillerlan\QRCode\QROptions;
 ?>
 <main class="container">
     <article>
@@ -25,11 +30,28 @@ require_once __DIR__ . '/../../../views/header.php';
             <h2>QR Code</h2>
             <div style="margin: 1rem 0;">
                 <?php
-                // Generate QR code URL
+                // Generate QR code using chillerlan
                 $currentUrl = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-                $qrCodeUrl = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" . urlencode($currentUrl);
+                
+                // Configure QR code options
+                $options = new QROptions([
+                    'eccLevel' => QRCode::ECC_L,     // Lowest error correction level
+                    'outputType' => QRCode::OUTPUT_MARKUP_SVG,
+                    'scale' => 4,                    // Slightly smaller scale
+                    'imageBase64' => false,
+                    'addQuietzone' => true,
+                    'quietzoneSize' => 1             // Smaller quiet zone
+                ]);
+                
+                // Create QR code instance
+                $qrcode = new QRCode($options);
+                
+                // Generate QR code as SVG
+                $qrSvg = $qrcode->render($currentUrl);
                 ?>
-                <img src="<?php echo htmlspecialchars($qrCodeUrl); ?>" alt="QR Code" style="max-width: 100%;">
+                <div style="max-width: 200px; margin: 0 auto;">
+                    <?php echo $qrSvg; ?>
+                </div>
                 <p style="margin-top: 0.5rem; font-size: 0.8rem;">
                     Scan this QR code to access the event
                 </p>
