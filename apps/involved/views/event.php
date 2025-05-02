@@ -56,6 +56,11 @@ use chillerlan\QRCode\QROptions;
                 <p style="margin-top: 0.5rem; font-size: 0.8rem;">
                     Scan this QR code to access the event
                 </p>
+                <?php if (!empty($eventData['password'])): ?>
+                <p style="margin-top: 0.5rem; font-size: 0.8rem; color: #666;">
+                    Event password: <?php echo htmlspecialchars($eventData['password']); ?>
+                </p>
+                <?php endif; ?>
             </div>
         </article>
     </div>
