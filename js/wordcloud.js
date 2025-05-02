@@ -16,105 +16,175 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-document.addEventListener('DOMContentLoaded', function() {
-    const wordCloudContainer = document.getElementById('word-cloud-container');
-    if (!wordCloudContainer) return;
+class WordCloudManager {
+    constructor(containerId, options = {}) {
+        this.container = document.getElementById(containerId);
+        if (!this.container) {
+            throw new Error(`Container with id '${containerId}' not found`);
+        }
 
-    // Get word cloud data from the container's data attribute
-    const wordCloudData = JSON.parse(wordCloudContainer.getAttribute('data-words'));
-    
-    if (!wordCloudData || !wordCloudData.length) {
-        console.error('No word cloud data found');
-        return;
+        this.canvas = null;
+        this.previousData = null;
+        this.options = this.getDefaultOptions(options);
+        this.initializeCanvas();
     }
-    
-    // Calculate available height (viewport height minus other elements)
-    function calculateAvailableHeight() {
-        // Simply use 70% of viewport height
+
+    initializeCanvas() {
+        // Create canvas element with full container width
+        this.canvas = document.createElement('canvas');
+        const containerWidth = this.container.offsetWidth;
+        this.canvas.width = containerWidth;
+        
+        // Set height to fill available space
+        this.canvas.height = this.calculateAvailableHeight();
+        this.container.appendChild(this.canvas);
+    }
+
+    calculateAvailableHeight() {
+        // Use 30% of viewport height as default
         return window.innerHeight * 0.3;
     }
-    
-    // Create canvas element with full container width
-    const canvas = document.createElement('canvas');
-    const containerWidth = wordCloudContainer.offsetWidth;
-    canvas.width = containerWidth;
-    
-    // Set height to fill available screen space
-    canvas.height = calculateAvailableHeight();
-    wordCloudContainer.appendChild(canvas);
-    
-    // Default options
-    const options = {
-        list: wordCloudData,
-        gridSize: 2, // Much smaller grid for maximum word density
-        weightFactor: function(size) {
-            // Dramatically increase word size
-            const area = canvas.width * canvas.height;
-            return Math.pow(size, 1.2) * Math.sqrt(area) / 200;
-        },
-        fontFamily: 'Arial, sans-serif',
-        fontWeight: 'bold', // Make all words bold
-        color: 'random-dark', // Colors words in a dark palette
-        rotateRatio: 0.1, // Minimal rotation for better space usage
-        rotationSteps: 2, // Number of different rotation steps
-        backgroundColor: 'transparent',
-        shape: 'rectangle', // Rectangle shape fits better with screen width
-        ellipticity: window.innerHeight / window.innerWidth, // Responsive ellipticity
-        shrinkToFit: false, // Don't shrink - fill the canvas
-        drawOutOfBound: false,
-        classes: function(word) {
-            // Add classes for app names to style them differently
-            return ['Paid!', 'Driven!', 'Involved!'].includes(word) ? 'app-name' : '';
-        }
-    };
-    
-    // Generate the word cloud
-    WordCloud(canvas, options);
 
-    // --- Enhancement: Scroll to first article on mobile after click ---
-    function isMobile() {
-        return window.innerWidth <= 900 || /Mobi|Android/i.test(navigator.userAgent);
-    }
-
-    function scrollToFirstArticle() {
-        // Try to find the first article in the main container
-        const main = document.querySelector('main.container');
-        if (!main) return;
-        // Find the first <article> (skip word cloud container)
-        const articles = main.querySelectorAll('article');
-        if (articles.length > 0) {
-            articles[0].scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-    }
-
-    // Add click event to word cloud container
-    wordCloudContainer.addEventListener('click', function(e) {
-        if (isMobile()) {
-            scrollToFirstArticle();
-        }
-    });
-    // --- End enhancement ---
-
-    // Make it responsive
-    window.addEventListener('resize', function() {
-        const newWidth = wordCloudContainer.offsetWidth;
-        const newHeight = calculateAvailableHeight();
-        
-        // Only redraw if dimensions changed significantly
-        if (Math.abs(canvas.width - newWidth) > 10 || Math.abs(canvas.height - newHeight) > 10) {
-            canvas.width = newWidth;
-            canvas.height = newHeight;
-            
-            // Update ellipticity based on new dimensions and device type
-            options.ellipticity = window.innerWidth / window.innerHeight;
-            
-            // Update weight factor based on new dimensions
-            options.weightFactor = function(size) {
-                const area = newWidth * newHeight;
+    getDefaultOptions(customOptions = {}) {
+        const defaultOptions = {
+            gridSize: 2, // Smaller grid for maximum word density
+            weightFactor: (size) => {
+                // Get canvas dimensions from the WordCloudManager instance
+                const area = this.container.offsetWidth * this.calculateAvailableHeight();
                 return Math.pow(size, 1.2) * Math.sqrt(area) / 200;
-            };
-            
-            WordCloud(canvas, options);
+            },
+            fontFamily: 'Arial, sans-serif',
+            fontWeight: 'bold', // Make all words bold
+            color: 'random-dark', // Colors words in a dark palette
+            rotateRatio: 0.1, // Minimal rotation for better space usage
+            rotationSteps: 2, // Number of different rotation steps
+            backgroundColor: 'transparent',
+            shape: 'rectangle', // Rectangle shape fits better with screen width
+            ellipticity: window.innerHeight / window.innerWidth, // Responsive ellipticity
+            shrinkToFit: false, // Don't shrink - fill the canvas
+            drawOutOfBound: false,
+            classes: function(word) {
+                // Add classes for app names to style them differently
+                return ['Paid!', 'Driven!', 'Involved!'].includes(word) ? 'app-name' : '';
+            }
+        };
+        
+        return Object.assign({}, defaultOptions, customOptions);
+    }
+
+    updateWordCloud(data) {
+        if (!data || !data.length) {
+            console.error('No word cloud data provided');
+            return;
         }
-    });
-});
+
+        // Check if data has changed
+        const dataChanged = !this.previousData || 
+            JSON.stringify(data) !== JSON.stringify(this.previousData);
+            
+        if (!dataChanged) {
+            return; // Skip redraw if data hasn't changed
+        }
+
+        // Store current data for future comparison
+        this.previousData = JSON.parse(JSON.stringify(data));
+        
+        // Update options with new data
+        this.options.list = data;
+        // Generate the word cloud
+        WordCloud(this.canvas, this.options);
+    }
+
+    loadStaticData(data) {
+        this.updateWordCloud(data);
+    }
+
+    startPolling(apiUrl, interval = 2000) {
+        if (!this.container.hasAttribute('data-wordcloud-url')) {
+            throw new Error('Container must have data-wordcloud-url attribute for polling');
+        }
+
+        const fetchData = () => {
+            fetch(apiUrl)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    this.updateWordCloud(data);
+                })
+                .catch(error => {
+                    console.error('Error fetching word cloud data:', error);
+                });
+        };
+
+        // Initial load
+        fetchData();
+        
+        // Set up polling
+        setInterval(fetchData, interval);
+    }
+
+    makeResponsive() {
+        window.addEventListener('resize', () => {
+            const newWidth = this.container.offsetWidth;
+            this.canvas.width = newWidth;
+            
+            // Update ellipticity based on new dimensions
+            this.options.ellipticity = window.innerHeight / window.innerWidth;
+            
+            // Redraw with current data
+            if (this.options.list && this.options.list.length > 0) {
+                WordCloud(this.canvas, this.options);
+            }
+        });
+    }
+
+    addMobileScrollBehavior() {
+        function isMobile() {
+            return window.innerWidth <= 900 || /Mobi|Android/i.test(navigator.userAgent);
+        }
+
+        function scrollToFirstArticle() {
+            const main = document.querySelector('main.container');
+            if (!main) return;
+            
+            const articles = main.querySelectorAll('article');
+            if (articles.length > 0) {
+                articles[0].scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        this.container.addEventListener('click', (e) => {
+            if (isMobile()) {
+                scrollToFirstArticle();
+            }
+        });
+    }
+
+    static initialize() {
+        // Check for static word cloud on landing page
+        const staticContainer = document.getElementById('word-cloud-container');
+        if (staticContainer && staticContainer.hasAttribute('data-words')) {
+            const wordCloudData = JSON.parse(staticContainer.getAttribute('data-words'));
+            const wordCloud = new WordCloudManager('word-cloud-container');
+            wordCloud.loadStaticData(wordCloudData);
+            wordCloud.makeResponsive();
+            wordCloud.addMobileScrollBehavior();
+        }
+
+        // Check for dynamic word cloud with AJAX polling
+        const dynamicContainer = document.getElementById('word-cloud-container');
+        if (dynamicContainer && dynamicContainer.hasAttribute('data-wordcloud-url')) {
+            const apiUrl = dynamicContainer.getAttribute('data-wordcloud-url');
+            const wordCloud = new WordCloudManager('word-cloud-container');
+            wordCloud.startPolling(apiUrl);
+            wordCloud.makeResponsive();
+            wordCloud.addMobileScrollBehavior();
+        }
+    }
+}
+
+document.addEventListener('DOMContentLoaded', WordCloudManager.initialize);
