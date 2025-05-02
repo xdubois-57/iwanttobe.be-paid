@@ -294,4 +294,85 @@ class InvolvedHomeController {
         $currentApp = 'involved';
         require_once __DIR__ . '/../views/wordcloud.php';
     }
+    
+    /**
+     * Show form to add a word to a word cloud
+     */
+    public function showAddWordForm($params = []) {
+        $code = strtoupper($params['code'] ?? '');
+        $wcid = (int)($params['wcid'] ?? 0);
+        $langSlug = $params['lang'] ?? LanguageController::getInstance()->getCurrentLanguage();
+
+        $eventModel = new EventModel();
+        $event = $eventModel->getByKey($code);
+        if (!$event) {
+            http_response_code(404);
+            echo 'Event not found';
+            return;
+        }
+
+        // Authorization check
+        if (!empty($event['password']) && !$this->isAuthorized($code)) {
+            header('Location: /' . $langSlug . '/involved/' . urlencode($code));
+            exit;
+        }
+
+        $wcModel = new WordCloudModel();
+        $wordCloud = $wcModel->getById($wcid);
+        if (!$wordCloud || (int)$wordCloud['event_id'] !== (int)$event['id']) {
+            http_response_code(404);
+            echo 'Word cloud not found';
+            return;
+        }
+
+        $eventData = $event;
+        $wordCloudData = $wordCloud;
+
+        $currentApp = 'involved';
+        require_once __DIR__ . '/../views/add_word_form.php';
+    }
+    
+    /**
+     * Process adding a word to a word cloud
+     */
+    public function addWord($params = []) {
+        $code = strtoupper($params['code'] ?? '');
+        $wcid = (int)($params['wcid'] ?? 0);
+        $word = isset($_POST['word']) ? trim($_POST['word']) : '';
+        $langSlug = $params['lang'] ?? LanguageController::getInstance()->getCurrentLanguage();
+
+        if (empty($word)) {
+            header('Location: /' . $langSlug . '/involved/' . urlencode($code) . '/' . $wcid . '/add?error=missing_word');
+            exit;
+        }
+
+        $eventModel = new EventModel();
+        $event = $eventModel->getByKey($code);
+        if (!$event) {
+            http_response_code(404);
+            echo 'Event not found';
+            return;
+        }
+
+        // Authorization check
+        if (!empty($event['password']) && !$this->isAuthorized($code)) {
+            header('Location: /' . $langSlug . '/involved/' . urlencode($code));
+            exit;
+        }
+
+        $wcModel = new WordCloudModel();
+        $wordCloud = $wcModel->getById($wcid);
+        if (!$wordCloud || (int)$wordCloud['event_id'] !== (int)$event['id']) {
+            http_response_code(404);
+            echo 'Word cloud not found';
+            return;
+        }
+
+        // Add the word
+        $wcModel->addWord($wcid, $word);
+        
+        // Redirect back to the add word form instead of wordcloud
+        header('Location: /' . $langSlug . '/involved/' . urlencode($code) . '/' . $wcid . '/add?success=true');
+        exit;
+    }
 }

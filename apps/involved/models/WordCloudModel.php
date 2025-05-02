@@ -27,9 +27,46 @@ class WordCloudModel
         }
         return $this->db->insert('WORDCLOUD', [
             'event_id' => $eventId,
-            'question' => $question,
-            'data' => json_encode([])
+            'question' => $question
         ]);
+    }
+
+    /**
+     * Add a word to a word cloud
+     * @param int $wordCloudId
+     * @param string $word
+     * @return int|false inserted ID or false
+     */
+    public function addWord(int $wordCloudId, string $word): int|false
+    {
+        if (!$this->db->isConnected()) {
+            error_log('DB connection failed: ' . $this->db->getErrorMessage());
+            return false;
+        }
+        return $this->db->insert('WORD', [
+            'wordcloud_id' => $wordCloudId,
+            'word' => substr(trim($word), 0, 30) // Ensure word fits in VARCHAR(30)
+        ]);
+    }
+
+    /**
+     * Get all words for a word cloud
+     * @param int $wordCloudId
+     * @return array list of words
+     */
+    public function getWords(int $wordCloudId): array
+    {
+        return $this->db->fetchAll('SELECT * FROM WORD WHERE wordcloud_id = ? ORDER BY created_at DESC', [$wordCloudId]) ?? [];
+    }
+
+    /**
+     * Delete a word from a word cloud
+     * @param int $wordId
+     * @return bool success
+     */
+    public function deleteWord(int $wordId): bool
+    {
+        return $this->db->delete('WORD', 'id = ?', [$wordId]);
     }
 
     /**
