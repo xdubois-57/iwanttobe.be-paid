@@ -2,6 +2,26 @@
 require_once __DIR__ . '/../../../controllers/LanguageController.php';
 require_once __DIR__ . '/../../../lib/QrHelper.php';
 $lang = LanguageController::getInstance();
+?>
+<style>
+    .word-cloud-wrapper {
+        position: relative;
+        min-height: 400px;
+        margin-bottom: 2rem;
+    }
+    
+    @media (max-width: 768px) {
+        .word-cloud-wrapper {
+            margin-bottom: 1.5rem;
+        }
+        
+        .word-cloud-wrapper canvas {
+            max-width: 100%;
+            height: auto;
+        }
+    }
+</style>
+<?php
 require_once __DIR__ . '/../../../views/header.php';
 ?>
 <main class="container">
