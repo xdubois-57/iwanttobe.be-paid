@@ -31,7 +31,8 @@ use chillerlan\QRCode\QROptions;
             <div style="margin: 1rem 0;">
                 <?php
                 // Generate QR code using chillerlan
-                $currentUrl = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+                $scheme = isset($_SERVER['REQUEST_SCHEME']) ? $_SERVER['REQUEST_SCHEME'] : 'http';
+                $currentUrl = $scheme . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
                 
                 // Configure QR code options
                 $options = new QROptions([
