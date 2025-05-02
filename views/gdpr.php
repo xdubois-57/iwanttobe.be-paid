@@ -23,7 +23,7 @@ include 'header.php';
 ?>
 
 <main class="container">
-    <article>
+    <article class="content-box">
         <h1><?php echo $lang->translate('gdpr_title'); ?></h1>
         
         <section>

@@ -25,6 +25,22 @@ html {
     --border-radius: 4px;
     --table-alt-bg: #f5f5f5;
     --table-alt-bg-dark: #2a2a2a;
+    --card-background-color: #ffffff;
+    --card-border-color: #e0e0e0;
+    --card-bg: #ffffff;
+    --text-primary: #333333;
+    --text-secondary: #666666;
+    --input-bg: #ffffff;
+    --input-border: #e0e0e0;
+    --input-text: #333333;
+    --input-focus-border: #1a73e8;
+    --primary-rgb: 26, 115, 232;
+    --article-bg: #ffffff;
+    --article-border: #e0e0e0;
+    --form-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    --table-header-bg: #f8f9fa;
+    --table-cell-bg: #ffffff;
+    --table-highlight-bg: rgba(26, 115, 232, 0.1);
 }
 
 /* Dark theme */
@@ -45,6 +61,22 @@ html[data-theme="dark"] {
     --secondary-border: #333333;
     --secondary: #333333;
     --muted-color: #999999;
+    --card-background-color: #1e1e1e;
+    --card-border-color: #333333;
+    --card-bg: #1e1e1e;
+    --text-primary: #f0f0f0;
+    --text-secondary: #cccccc;
+    --input-bg: #2a2a2a;
+    --input-border: #444444;
+    --input-text: #f0f0f0;
+    --input-focus-border: #90caf9;
+    --primary-rgb: 144, 202, 249;
+    --article-bg: #1e1e1e;
+    --article-border: #333333;
+    --form-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    --table-header-bg: #2a2a2a;
+    --table-cell-bg: #1e1e1e;
+    --table-highlight-bg: rgba(144, 202, 249, 0.15);
 }
 
 body {
@@ -93,30 +125,27 @@ main {
     padding: 1.5rem;
     text-decoration: none;
     color: inherit;
-    transition: transform 0.2s ease-in-out;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    text-decoration: none;
+    box-shadow: var(--form-shadow);
+    border: 1px solid var(--article-border);
 }
 
 .app-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
 
-.app-card img {
-    width: 64px;
-    height: 64px;
-    object-fit: contain;
-    margin-bottom: 1rem;
+html[data-theme="dark"] .app-card:hover {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
 .app-card h3 {
     font-size: 1.25rem;
-    margin: 0 0 0.5rem 0;
+    margin: 0 0 0.75rem 0;
     color: var(--text-primary);
     font-weight: 600;
 }
@@ -126,6 +155,11 @@ main {
     margin: 0;
     line-height: 1.5;
     font-size: 0.95rem;
+}
+
+.app-logo {
+    color: var(--primary);
+    margin-bottom: 1rem;
 }
 
 @media (max-width: 768px) {
@@ -606,6 +640,89 @@ nav select {
     }
 }
 
+/* Unified form input styling */
+input, 
+select, 
+textarea {
+    background-color: var(--input-bg);
+    color: var(--input-text);
+    border: 1px solid var(--input-border);
+    border-radius: var(--border-radius);
+    padding: 0.6rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input:focus, 
+select:focus, 
+textarea:focus {
+    border-color: var(--input-focus-border);
+    box-shadow: 0 0 0 2px rgba(var(--primary-rgb), 0.2);
+    outline: none;
+}
+
+/* Article and content box styling */
+article, .content-box {
+    background-color: var(--article-bg);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--article-border);
+    box-shadow: var(--form-shadow);
+}
+
+/* Ensure article headers match the article background */
+article header, .content-box header {
+    background-color: var(--article-bg);
+    padding: 0;
+    margin: 0 0 1rem 0;
+    border: none;
+}
+
+.content-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+html[data-theme="dark"] .content-box:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Form container styling */
+.form-container {
+    background-color: var(--article-bg);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--article-border);
+    box-shadow: var(--form-shadow);
+}
+
+/* Button styling */
+button, .button, input[type="submit"] {
+    background-color: var(--primary);
+    color: var(--primary-inverse);
+    border-radius: var(--border-radius);
+    border: none;
+    padding: 0.6rem 1.2rem;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.1s;
+    font-weight: 500;
+}
+
+button:hover, .button:hover, input[type="submit"]:hover {
+    opacity: 0.9;
+}
+
+button:active, .button:active, input[type="submit"]:active {
+    transform: translateY(1px);
+}
+
+/* Secondary button styling */
+button.secondary, .button.secondary {
+    background-color: var(--secondary);
+    color: var(--text-color);
+}
+
 /* Theme selector styles */
 .theme-selector {
     display: flex;
@@ -738,4 +855,38 @@ nav select {
 
 .content-box:hover {
     transform: translateY(-5px);
+}
+
+/* Table styling */
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 1rem 0;
+    border: 1px solid var(--border-color);
+}
+
+th, td {
+    padding: 0.75rem;
+    text-align: left;
+    border: 1px solid var(--border-color);
+    background-color: transparent;
+}
+
+th {
+    background-color: var(--table-header-bg);
+    font-weight: 600;
+}
+
+.comparison-table .highlight {
+    background-color: var(--table-highlight-bg);
+    font-weight: 500;
+}
+
+/* Only apply alternating colors if explicitly needed */
+.table-striped tr:nth-child(even) td {
+    background-color: var(--table-alt-bg);
+}
+
+html[data-theme="dark"] .table-striped tr:nth-child(even) td {
+    background-color: var(--table-alt-bg-dark);
 }

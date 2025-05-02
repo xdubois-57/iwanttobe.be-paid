@@ -145,25 +145,25 @@ require_once __DIR__ . '/../../../views/header.php';
     <section>
         <h2><?php echo $lang->translate('why_us_use_cases_title'); ?></h2>
         <div class="grid">
-            <article>
+            <article class="content-box">
                 <header>
                     <h3><?php echo $lang->translate('why_us_use_case_1_title'); ?></h3>
                 </header>
                 <p><?php echo $lang->translate('why_us_use_case_1_text'); ?></p>
             </article>
-            <article>
+            <article class="content-box">
                 <header>
                     <h3><?php echo $lang->translate('why_us_use_case_2_title'); ?></h3>
                 </header>
                 <p><?php echo $lang->translate('why_us_use_case_2_text'); ?></p>
             </article>
-            <article>
+            <article class="content-box">
                 <header>
                     <h3><?php echo $lang->translate('why_us_use_case_3_title'); ?></h3>
                 </header>
                 <p><?php echo $lang->translate('why_us_use_case_3_text'); ?></p>
             </article>
-            <article>
+            <article class="content-box">
                 <header>
                     <h3><?php echo $lang->translate('why_us_use_case_4_title'); ?></h3>
                 </header>

@@ -28,7 +28,7 @@ $lang = LanguageController::getInstance();
 ?>
 
 <main class="container">
-    <article>
+    <article class="content-box">
         <h2><?php echo $lang->translate('home_intro_title'); ?></h2>
         <p><?php echo $lang->translate('home_intro_text'); ?></p>
     </article>
