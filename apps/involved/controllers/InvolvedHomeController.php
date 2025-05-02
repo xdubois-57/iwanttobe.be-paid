@@ -92,7 +92,7 @@ class InvolvedHomeController {
         }
         
         // Now check if a password is needed and if the provided one is correct
-        if ($eventExists['pwdhash'] && !empty($eventExists['pwdhash'])) {
+        if ($eventExists['password'] && !empty($eventExists['password'])) {
             // Password protected event
             if (empty($password)) {
                 // No password provided but needed - redirect to event page which will show password prompt

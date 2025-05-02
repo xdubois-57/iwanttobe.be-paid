@@ -36,7 +36,7 @@ class EventModel
         $insertId = $this->db->insert('EVENT', [
             'key' => $code,
             'description' => '',
-            'pwdhash' => $pwdhash
+            'password' => $password
         ]);
         
         return $insertId !== false ? $code : false;
@@ -55,10 +55,9 @@ class EventModel
             return null;
         }
         
-        // If password was provided, verify it against pwdhash
-        if ($password !== null && !empty($event['pwdhash'])) {
-            $hash = hash('sha256', $password);
-            if ($hash !== $event['pwdhash']) {
+        // If password was provided, verify it against stored password
+        if ($password !== null && !empty($event['password'])) {
+            if ($password !== $event['password']) {
                 return null;
             }
         }
