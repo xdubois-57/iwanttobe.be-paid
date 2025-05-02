@@ -133,7 +133,7 @@ class InvolvedHomeController {
         }
         
         // Check if this event requires a password and user isn't already authorized
-        if (!empty($event['pwdhash']) && !$this->isAuthorized($code)) {
+        if (!empty($event['password']) && !$this->isAuthorized($code)) {
             // Show password prompt form with error if applicable
             $currentApp = 'involved';
             $eventCode = $code;
