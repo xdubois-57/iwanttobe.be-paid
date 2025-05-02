@@ -17,7 +17,7 @@
  */
 
 class WordCloudManager {
-    constructor(containerId, options = {}) {
+    constructor(containerId, options = {}, canvasHeight = null) {
         this.container = document.getElementById(containerId);
         if (!this.container) {
             throw new Error(`Container with id '${containerId}' not found`);
@@ -26,6 +26,7 @@ class WordCloudManager {
         this.canvas = null;
         this.previousData = null;
         this.options = this.getDefaultOptions(options);
+        this.userCanvasHeight = canvasHeight;
         this.initializeCanvas();
     }
 
@@ -35,13 +36,21 @@ class WordCloudManager {
         const containerWidth = this.container.offsetWidth;
         this.canvas.width = containerWidth;
         
-        // Set height to fill available space
-        this.canvas.height = this.calculateAvailableHeight();
+        // Set height to user-provided value or fill available space
+        this.canvas.height = this.userCanvasHeight !== null ? this.userCanvasHeight : this.calculateAvailableHeight();
         this.container.appendChild(this.canvas);
     }
 
     calculateAvailableHeight() {
-        // Use 30% of viewport height as default
+        // Use the user-provided canvas height if set
+        if (this.userCanvasHeight !== null) {
+            return this.userCanvasHeight;
+        }
+        // Use the container's height if available, otherwise use 30% of viewport height
+        const containerHeight = this.container.offsetHeight;
+        if (containerHeight > 0) {
+            return containerHeight;
+        }
         return window.innerHeight * 0.3;
     }
 
@@ -51,7 +60,7 @@ class WordCloudManager {
             weightFactor: (size) => {
                 // Get canvas dimensions from the WordCloudManager instance
                 const area = this.container.offsetWidth * this.calculateAvailableHeight();
-                return Math.pow(size, 1.2) * Math.sqrt(area) / 200;
+                return Math.pow(size, 1.3) * Math.sqrt(area) / 120;
             },
             fontFamily: 'Arial, sans-serif',
             fontWeight: 'bold', // Make all words bold
@@ -61,7 +70,7 @@ class WordCloudManager {
             backgroundColor: 'transparent',
             shape: 'rectangle', // Rectangle shape fits better with screen width
             ellipticity: window.innerHeight / window.innerWidth, // Responsive ellipticity
-            shrinkToFit: false, // Don't shrink - fill the canvas
+            shrinkToFit: true, // Don't shrink - fill the canvas
             drawOutOfBound: false,
             classes: function(word) {
                 // Add classes for app names to style them differently
@@ -165,22 +174,19 @@ class WordCloudManager {
     }
 
     static initialize() {
-        // Check for static word cloud on landing page
-        const staticContainer = document.getElementById('word-cloud-container');
-        if (staticContainer && staticContainer.hasAttribute('data-words')) {
-            const wordCloudData = JSON.parse(staticContainer.getAttribute('data-words'));
-            const wordCloud = new WordCloudManager('word-cloud-container');
-            wordCloud.loadStaticData(wordCloudData);
+        const container = document.getElementById('word-cloud-container');
+        if (!container) return;
+        // Prioritize dynamic word cloud if data-wordcloud-url is present
+        if (container.hasAttribute('data-wordcloud-url')) {
+            const apiUrl = container.getAttribute('data-wordcloud-url');
+            const wordCloud = new WordCloudManager('word-cloud-container', {}, 400);
+            wordCloud.startPolling(apiUrl);
             wordCloud.makeResponsive();
             wordCloud.addMobileScrollBehavior();
-        }
-
-        // Check for dynamic word cloud with AJAX polling
-        const dynamicContainer = document.getElementById('word-cloud-container');
-        if (dynamicContainer && dynamicContainer.hasAttribute('data-wordcloud-url')) {
-            const apiUrl = dynamicContainer.getAttribute('data-wordcloud-url');
-            const wordCloud = new WordCloudManager('word-cloud-container');
-            wordCloud.startPolling(apiUrl);
+        } else if (container.hasAttribute('data-words')) {
+            const wordCloudData = JSON.parse(container.getAttribute('data-words'));
+            const wordCloud = new WordCloudManager('word-cloud-container', {}, 400);
+            wordCloud.loadStaticData(wordCloudData);
             wordCloud.makeResponsive();
             wordCloud.addMobileScrollBehavior();
         }

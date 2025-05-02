@@ -375,4 +375,31 @@ class InvolvedHomeController {
         header('Location: /' . $langSlug . '/involved/' . urlencode($code) . '/' . $wcid . '/add?success=true');
         exit;
     }
+
+    /**
+     * Serve word cloud words as JSON for AJAX endpoint
+     * GET /{lang}/involved/{code}/{wcid}/words
+     * @param array $params
+     */
+    public function getWordCloudWords($params) {
+        // $params['code'] = event key, $params['wcid'] = word cloud id
+        $eventKey = $params['code'] ?? null;
+        $cloudId = $params['wcid'] ?? null;
+        if (!$eventKey || !$cloudId) {
+            http_response_code(400);
+            header('Content-Type: application/json');
+            echo json_encode(['error' => 'Missing parameters']);
+            exit;
+        }
+        require_once __DIR__ . '/../models/WordCloudModel.php';
+        $wcModel = new \WordCloudModel();
+        $words = $wcModel->getWords($cloudId);
+        $result = [];
+        foreach ($words as $word) {
+            $result[] = [$word['word'], intval($word['weight'] ?? 1)];
+        }
+        header('Content-Type: application/json');
+        echo json_encode($result);
+        exit;
+    }
 }

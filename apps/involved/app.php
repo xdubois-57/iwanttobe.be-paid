@@ -74,6 +74,7 @@ class InvolvedApp implements AppInterface {
         $router->post('/{lang}/involved/create', 'InvolvedHomeController@create');
         $router->post('/{lang}/involved/join', 'InvolvedHomeController@join');
         $router->get('/{lang}/involved/{code}/{wcid}', 'InvolvedHomeController@showWordCloud');
+        $router->get('/{lang}/involved/{code}/{wcid}/words', 'InvolvedHomeController@getWordCloudWords');
         $router->post('/{lang}/involved/{code}/wordcloud/create', 'InvolvedHomeController@createWordCloud');
         $router->post('/{lang}/involved/{code}/wordcloud/{wcid}/delete', 'InvolvedHomeController@deleteWordCloud');
         $router->get('/{lang}/involved/{code}/{wcid}/add', 'InvolvedHomeController@showAddWordForm');

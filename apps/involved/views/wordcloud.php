@@ -12,8 +12,8 @@ require_once __DIR__ . '/../../../views/header.php';
     </article>
     <div class="grid" style="margin-top: 2rem; gap: 2rem;">
         <article style="grid-column: span 3;">
-            <!-- Placeholder for word cloud features (responses, visualization, etc.) -->
-            <p style="color:#888;">(Word cloud content will appear here.)</p>
+            <h3>Word Cloud Visualization</h3>
+            <div id="word-cloud-container" class="word-cloud-wrapper" data-wordcloud-url="/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/<?php echo urlencode($eventData['key']); ?>/<?php echo $wordCloudData['id']; ?>/words"></div>
             
             <div style="margin-top: 1.5rem;">
                 <a href="/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/<?php echo urlencode($eventData['key']); ?>/<?php echo $wordCloudData['id']; ?>/add" class="button">
@@ -63,4 +63,7 @@ require_once __DIR__ . '/../../../views/header.php';
         </article>
     </div>
 </main>
+<!-- Include WordCloud library -->
+<script src="/vendor/timdream/wordcloud2.js"></script>
+<script src="/js/wordcloud.js"></script>
 <?php require_once __DIR__ . '/../../../views/footer.php'; ?>
