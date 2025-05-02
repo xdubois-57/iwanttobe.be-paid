@@ -25,6 +25,8 @@ class WordCloudManager {
 
         this.canvas = null;
         this.previousData = null;
+        // Track max weight so weightFactor can scale words dynamically
+        this.currentMaxWeight = 1;
         this.options = this.getDefaultOptions(options);
         this.userCanvasHeight = canvasHeight;
         this.initializeCanvas();
@@ -57,15 +59,17 @@ class WordCloudManager {
     getDefaultOptions(customOptions = {}) {
         const defaultOptions = {
             gridSize: 2, // Smaller grid for maximum word density
-            weightFactor: (size) => {
-                // Get canvas dimensions from the WordCloudManager instance
-                const area = this.container.offsetWidth * this.calculateAvailableHeight();
-                return Math.pow(size, 1.3) * Math.sqrt(area) / 120;
+            // Dynamically scale words so the largest one takes ~20% of the
+            // shortest canvas dimension. This keeps the cloud full for any size.
+            weightFactor: (weight) => {
+                const shortestSide = Math.min(this.canvas.width, this.canvas.height);
+                const targetMaxFont = shortestSide * 0.20; // 20% of shorter side
+                return (weight / this.currentMaxWeight) * targetMaxFont;
             },
             fontFamily: 'Arial, sans-serif',
             fontWeight: 'bold', // Make all words bold
             color: 'random-dark', // Colors words in a dark palette
-            rotateRatio: 0.1, // Minimal rotation for better space usage
+            rotateRatio: 0.3, // Minimal rotation for better space usage
             rotationSteps: 2, // Number of different rotation steps
             backgroundColor: 'transparent',
             shape: 'rectangle', // Rectangle shape fits better with screen width
@@ -87,19 +91,35 @@ class WordCloudManager {
             return;
         }
 
+        // Consolidate duplicate words by summing weights
+        const aggregated = [];
+        const wordMap = new Map();
+        data.forEach(item => {
+            const word = Array.isArray(item) ? item[0] : item.word;
+            const weight = Array.isArray(item) ? item[1] : (item.weight || 1);
+            const current = wordMap.get(word) || 0;
+            wordMap.set(word, current + weight);
+        });
+        wordMap.forEach((weight, word) => aggregated.push([word, weight]));
+        // Sort by weight desc for consistency
+        aggregated.sort((a, b) => b[1] - a[1]);
+
         // Check if data has changed
         const dataChanged = !this.previousData || 
-            JSON.stringify(data) !== JSON.stringify(this.previousData);
+            JSON.stringify(aggregated) !== JSON.stringify(this.previousData);
             
         if (!dataChanged) {
             return; // Skip redraw if data hasn't changed
         }
 
         // Store current data for future comparison
-        this.previousData = JSON.parse(JSON.stringify(data));
+        this.previousData = JSON.parse(JSON.stringify(aggregated));
         
+        // Update the current maximum weight for adaptive scaling
+        this.currentMaxWeight = Math.max(...aggregated.map(item => item[1]));
+
         // Update options with new data
-        this.options.list = data;
+        this.options.list = aggregated;
         // Generate the word cloud
         WordCloud(this.canvas, this.options);
     }
