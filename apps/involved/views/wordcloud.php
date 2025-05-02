@@ -35,12 +35,6 @@ require_once __DIR__ . '/../../../views/header.php';
             <h3>Word Cloud Visualization</h3>
             <div id="word-cloud-container" class="word-cloud-wrapper" data-wordcloud-url="/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/<?php echo urlencode($eventData['key']); ?>/<?php echo $wordCloudData['id']; ?>/words"></div>
             
-            <div style="margin-top: 1.5rem;">
-                <a href="/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/<?php echo urlencode($eventData['key']); ?>/<?php echo $wordCloudData['id']; ?>/add" class="button">
-                    Add Your Word
-                </a>
-            </div>
-            
             <?php 
             // Fetch words for this cloud
             $wcModel = new WordCloudModel();
@@ -61,7 +55,6 @@ require_once __DIR__ . '/../../../views/header.php';
             <?php endif; ?>
         </article>
         <article style="grid-column: span 1; text-align: center;">
-            <h2>QR Code</h2>
             <div style="margin: 1rem 0;">
                 <?php
                 $scheme = isset($_SERVER['REQUEST_SCHEME']) ? $_SERVER['REQUEST_SCHEME'] : 'http';
@@ -69,16 +62,28 @@ require_once __DIR__ . '/../../../views/header.php';
                 // Change URL to point to the add word form
                 $addWordUrl = $scheme . "://" . $_SERVER['HTTP_HOST'] . '/' . 
                     htmlspecialchars($lang->getCurrentLanguage()) . '/involved/' . 
-                    urlencode($eventData['key']) . '/' . $wordCloudData['id'] . '/add';
+                    urlencode($eventData['key']) . '/' . 
+                    $wordCloudData['id'] . '/add';
                 $qrSvg = QrHelper::renderSvg($addWordUrl);
                 ?>
                 <div style="max-width: 200px; margin: 0 auto;">
-                   <a href="<?php echo $addWordUrl; ?>" target="_blank" title="Open add word form in new window">
-                    <?php echo $qrSvg; ?>
-                   </a>
+                    <a href="<?php echo $addWordUrl; ?>">
+                        <?php echo $qrSvg; ?>
+                    </a>
                 </div>
-                <p style="margin-top: 0.5rem; font-size: 0.8rem;">Scan this QR code to add your word</p>
-                <p style="margin-top: 0.5rem; font-size: 0.8rem;">Click to open the add word form</p>
+                <div style="margin-top: 1rem; display: flex; justify-content: center; align-items: center; height: 50px;">
+                    <a href="<?php echo $addWordUrl; ?>" role="button">
+                        Add Your Word
+                    </a>
+                </div>
+                <?php if (!empty($eventData['password'])): ?>
+                <div style="margin-top: 1rem; text-align: center;">
+                    <h3>Event Password</h3>
+                    <p style="word-break: break-all;">
+                        <?php echo htmlspecialchars($eventData['password']); ?>
+                    </p>
+                </div>
+                <?php endif; ?>
             </div>
         </article>
     </div>
