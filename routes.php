@@ -29,6 +29,7 @@
 // Include necessary controller classes and core framework
 require_once 'controllers/Router.php';
 require_once 'controllers/LanguageController.php';
+require_once 'controllers/SetupController.php';
 require_once 'core/AppRegistry.php';
 
 // Core global controllers remain at root-level controllers
@@ -38,6 +39,10 @@ require_once 'controllers/LandingController.php';
 
 // Initialize the router
 $router = new Router();
+
+// Setup pages (not visible in navigation)
+$router->get('/setup', 'SetupController@index');
+$router->post('/setup/db', 'SetupController@initializeDatabase');
 
 // Initialize app registry with the router
 $registry = AppRegistry::getInstance();
