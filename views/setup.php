@@ -95,7 +95,6 @@ if (!defined('QR_TRANSFER')) {
                     4. Completion
                 </div>
             </div>
-            <hr>
             <!-- Global Connectivity Status Header (all steps except step 3 when there's a message) -->
             <?php if (!($step === 3 && isset($message) && $message)): ?>
             <div class="alert <?php echo ($databaseExists && $databaseValid) ? 'alert-success' : 'alert-error'; ?>" style="margin-bottom:2rem;">
@@ -212,7 +211,13 @@ if (!defined('QR_TRANSFER')) {
             <!-- Step 3: Database Initialization -->
             <section class="wizard-content <?php echo $step !== 3 ? 'hide' : ''; ?>" id="step3">
                 <h2>Database Initialization</h2>
-                <p>Now that we have a successful database connection, we can create the necessary database tables.</p>
+                <div class="alert alert-warning" style="margin-bottom: 1.5rem;">
+                    <strong>Warning:</strong> Initializing the database will create the following tables and delete all existing data:
+                    <ul>
+                        <li>EVENT</li>
+                    </ul>
+                    <p>All existing data will be permanently lost. Please ensure you have backed up any important data before proceeding.</p>
+                </div>
                 
                 <div class="connection-summary">
                     <h3>Connection Summary</h3>
@@ -225,14 +230,6 @@ if (!defined('QR_TRANSFER')) {
                 
                 <form action="<?php echo $actionUrl; ?>" method="post" id="initialization-form">
                     <input type="hidden" name="wizard_step" value="3">
-                    
-                    <!-- Pass along all connection data for the next step -->
-                    <input type="hidden" name="environment" value="<?php echo htmlspecialchars($dbConfig['environment'] ?? 'development'); ?>">
-                    <input type="hidden" name="mysql_host" value="<?php echo htmlspecialchars($dbConfig['host'] ?? 'localhost'); ?>">
-                    <input type="hidden" name="mysql_port" value="<?php echo htmlspecialchars($dbConfig['port'] ?? '3306'); ?>">
-                    <input type="hidden" name="mysql_name" value="<?php echo htmlspecialchars($dbConfig['name'] ?? 'qrtransfer'); ?>">
-                    <input type="hidden" name="mysql_username" value="<?php echo htmlspecialchars($dbConfig['username'] ?? 'root'); ?>">
-                    <input type="hidden" name="mysql_password" value="<?php echo htmlspecialchars($dbConfig['password'] ?? ''); ?>">
                     
                     <div class="nav-buttons" style="display: flex; gap: 1rem; align-items: center;">
                         <button type="submit" name="previous" value="1" class="secondary outline">Previous</button>
