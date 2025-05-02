@@ -16,7 +16,7 @@ if (!defined('QR_TRANSFER')) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Setup - Paid!</title>
+    <title>Setup - iwantto.be</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
     <link rel="stylesheet" href="/css/styles.css">
     <style>
@@ -67,6 +67,10 @@ if (!defined('QR_TRANSFER')) {
             background-color: #f8d7da;
             color: #721c24;
         }
+        .wizard-content .secondary {
+            min-width: 160px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -74,8 +78,37 @@ if (!defined('QR_TRANSFER')) {
         <article>
             <header>
                 <h1>Website Setup Wizard</h1>
-                <p>This wizard will guide you through the setup process for the Paid! application.</p>
+                <p>This wizard will guide you through the setup process for the iwantto.be application.</p>
             </header>
+            <hr>
+            <div class="wizard-steps">
+                <div class="wizard-step <?php echo $step === 1 ? 'active' : ''; ?> <?php echo $step > 1 ? 'completed' : ''; ?>">
+                    1. Website configuration info
+                </div>
+                <div class="wizard-step <?php echo $step === 2 ? 'active' : ''; ?> <?php echo $step > 2 ? 'completed' : ''; ?>">
+                    2. Database Connection
+                </div>
+                <div class="wizard-step <?php echo $step === 3 ? 'active' : ''; ?> <?php echo $step > 3 ? 'completed' : ''; ?>">
+                    3. Database Initialization
+                </div>
+                <div class="wizard-step <?php echo $step === 4 ? 'active' : ''; ?>">
+                    4. Completion
+                </div>
+            </div>
+            <hr>
+            <!-- Global Connectivity Status Header (all steps except step 3 when there's a message) -->
+            <?php if (!($step === 3 && isset($message) && $message)): ?>
+            <div class="alert <?php echo ($databaseExists && $databaseValid) ? 'alert-success' : 'alert-error'; ?>" style="margin-bottom:2rem;">
+                <?php if ($databaseExists && $databaseValid): ?>
+                    Database connectivity: <strong>Connected</strong> (all required tables found)
+                <?php else: ?>
+                    Database connectivity: <strong>Not connected or incomplete</strong>
+                    <?php if (!empty($connectivityError)): ?>
+                        <br><small>Error: <?php echo htmlspecialchars($connectivityError); ?></small>
+                    <?php endif; ?>
+                <?php endif; ?>
+            </div>
+            <?php endif; ?>
 
             <?php if (isset($message) && $message): ?>
                 <div class="alert <?php echo $success ? 'alert-success' : 'alert-error'; ?>">
@@ -83,25 +116,37 @@ if (!defined('QR_TRANSFER')) {
                 </div>
             <?php endif; ?>
 
-            <div class="wizard-steps">
-                <div class="wizard-step <?php echo $step === 1 ? 'active' : ''; ?> <?php echo $step > 1 ? 'completed' : ''; ?>">
-                    1. Database Connection
-                </div>
-                <div class="wizard-step <?php echo $step === 2 ? 'active' : ''; ?> <?php echo $step > 2 ? 'completed' : ''; ?>">
-                    2. Database Initialization
-                </div>
-                <div class="wizard-step <?php echo $step === 3 ? 'active' : ''; ?>">
-                    3. Completion
-                </div>
-            </div>
-
-            <!-- Step 1: Database Connection -->
+            <!-- Step 1: Website configuration info and DB summary -->
             <section class="wizard-content <?php echo $step !== 1 ? 'hide' : ''; ?>" id="step1">
+                <h2>Website configuration info</h2>
+                <div class="setup-summary">
+                    <h3>Database Configuration</h3>
+                    <ul>
+                        <li>Host: <strong><?php echo htmlspecialchars($dbConfig['host'] ?? ''); ?></strong></li>
+                        <li>Name: <strong><?php echo htmlspecialchars($dbConfig['name'] ?? ''); ?></strong></li>
+                        <li>User: <strong><?php echo htmlspecialchars($dbConfig['username'] ?? ''); ?></strong></li>
+                        <li>Port: <strong><?php echo htmlspecialchars($dbConfig['port'] ?? '3306'); ?></strong></li>
+                    </ul>
+                    <div id="db-tables-summary">
+                        <!-- Table summary will be injected here -->
+                        <?php if (isset($tableSummaryHtml)) echo $tableSummaryHtml; ?>
+                    </div>
+                </div>
+                <form method="post" action="<?php echo htmlspecialchars($actionUrl); ?>" style="display: flex; gap: 1rem; align-items: center;">
+                    <input type="hidden" name="wizard_step" value="1">
+                    <input type="hidden" name="delete_confirmation" value="yes">
+                    <button type="submit" class="primary" style="min-width: 160px;">Proceed with configuration</button>
+                    <button type="submit" name="skip" value="1" class="secondary">Skip</button>
+                </form>
+            </section>
+
+            <!-- Step 2: Database Connection -->
+            <section class="wizard-content <?php echo $step !== 2 ? 'hide' : ''; ?>" id="step2">
                 <h2>Database Connection</h2>
                 <p>Enter your database connection information to establish a connection to your database server.</p>
                 
                 <form action="<?php echo $actionUrl; ?>" method="post" id="connection-form">
-                    <input type="hidden" name="wizard_step" value="1">
+                    <input type="hidden" name="wizard_step" value="2">
                     
                     <div class="grid">
                         <label for="environment">
@@ -145,13 +190,14 @@ if (!defined('QR_TRANSFER')) {
                         <label for="mysql_password">
                             Password
                             <input type="password" id="mysql_password" name="mysql_password" placeholder="Enter database password" 
-                                   value="<?php echo htmlspecialchars($_POST['mysql_password'] ?? ($dbConfig['password'] ?? '')); ?>">
+                                   value="<?php echo htmlspecialchars($dbConfig['password'] ?? ''); ?>">
                         </label>
                     </div>
                     
-                    <div class="nav-buttons">
-                        <div></div> <!-- Placeholder for back button -->
-                        <button type="submit" class="primary">Test Connection & Continue</button>
+                    <div class="nav-buttons" style="display: flex; gap: 1rem; align-items: center;">
+                        <button type="submit" name="previous" value="1" class="secondary outline">Previous</button>
+                        <button type="submit" class="primary">Test Connection &amp; Save</button>
+                        <button type="submit" name="skip" value="1" class="secondary">Skip</button>
                     </div>
                 </form>
                 
@@ -163,8 +209,8 @@ if (!defined('QR_TRANSFER')) {
                 </p>
             </section>
             
-            <!-- Step 2: Database Initialization -->
-            <section class="wizard-content <?php echo $step !== 2 ? 'hide' : ''; ?>" id="step2">
+            <!-- Step 3: Database Initialization -->
+            <section class="wizard-content <?php echo $step !== 3 ? 'hide' : ''; ?>" id="step3">
                 <h2>Database Initialization</h2>
                 <p>Now that we have a successful database connection, we can create the necessary database tables.</p>
                 
@@ -178,7 +224,7 @@ if (!defined('QR_TRANSFER')) {
                 </div>
                 
                 <form action="<?php echo $actionUrl; ?>" method="post" id="initialization-form">
-                    <input type="hidden" name="wizard_step" value="2">
+                    <input type="hidden" name="wizard_step" value="3">
                     
                     <!-- Pass along all connection data for the next step -->
                     <input type="hidden" name="environment" value="<?php echo htmlspecialchars($dbConfig['environment'] ?? 'development'); ?>">
@@ -188,29 +234,33 @@ if (!defined('QR_TRANSFER')) {
                     <input type="hidden" name="mysql_username" value="<?php echo htmlspecialchars($dbConfig['username'] ?? 'root'); ?>">
                     <input type="hidden" name="mysql_password" value="<?php echo htmlspecialchars($dbConfig['password'] ?? ''); ?>">
                     
-                    <div class="nav-buttons">
-                        <button type="button" onclick="window.location.href='<?php echo $actionUrl; ?>'">Back</button>
-                        <button type="submit" class="primary">Initialize Tables</button>
+                    <div class="nav-buttons" style="display: flex; gap: 1rem; align-items: center;">
+                        <button type="submit" name="previous" value="1" class="secondary outline">Previous</button>
+                        <button type="submit" class="primary">Initialize Database</button>
+                        <button type="submit" name="skip" value="1" class="secondary">Skip</button>
                     </div>
                 </form>
             </section>
             
-            <!-- Step 3: Completion -->
-            <section class="wizard-content <?php echo $step !== 3 ? 'hide' : ''; ?>" id="step3">
+            <!-- Step 4: Completion -->
+            <section class="wizard-content <?php echo $step !== 4 ? 'hide' : ''; ?>" id="step4">
                 <h2>Setup Complete</h2>
-                <p>Congratulations! The Paid! application has been successfully set up.</p>
-                
+                <?php if (!empty($skipped)): ?>
+                    <p class="alert alert-error">Setup was skipped. The database may not be initialized or may be incomplete.</p>
+                <?php else: ?>
+                    <p>Your database is ready and the setup is complete.</p>
+                <?php endif; ?>
                 <div class="setup-summary">
                     <h3>Setup Summary</h3>
                     <ul>
-                        <li><strong>Database Connection:</strong> ✓ Successful</li>
-                        <li><strong>Database Tables:</strong> ✓ Created</li>
-                        <li><strong>Configuration:</strong> ✓ Saved</li>
+                        <li>Database Host: <strong><?php echo htmlspecialchars($dbConfig['host'] ?? ''); ?></strong></li>
+                        <li>Database Name: <strong><?php echo htmlspecialchars($dbConfig['name'] ?? ''); ?></strong></li>
+                        <li>Database User: <strong><?php echo htmlspecialchars($dbConfig['username'] ?? ''); ?></strong></li>
+                        <li>Status: <strong><?php echo !empty($skipped) ? 'Skipped' : 'Initialized'; ?></strong></li>
                     </ul>
                 </div>
-                
-                <div class="nav-buttons">
-                    <button type="button" onclick="window.location.href='/'">Go to Homepage</button>
+                <div class="nav-buttons" style="gap: 1rem;">
+                    <a href="/" class="primary">Go to Application</a>
                 </div>
             </section>
             
