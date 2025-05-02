@@ -3,6 +3,7 @@
  * Controller for the Involved! app.
  */
 require_once __DIR__ . '/../models/EventModel.php';
+require_once __DIR__ . '/../models/WordCloudModel.php';
 
 class InvolvedHomeController {
     /**
@@ -145,6 +146,10 @@ class InvolvedHomeController {
         // User is authorized or event doesn't need password
         $eventData = $event;
         
+        // Fetch word clouds for this event
+        $wcModel = new WordCloudModel();
+        $wordClouds = $wcModel->getByEvent((int)$event['id']);
+        
         // Set current app for header navigation
         $currentApp = 'involved';
         require_once __DIR__ . '/../views/event.php';
@@ -183,5 +188,110 @@ class InvolvedHomeController {
         // Redirect to event page
         header('Location: /' . $langSlug . '/involved/' . urlencode($code));
         exit;
+    }
+
+    /**
+     * Create a word cloud for an event
+     */
+    public function createWordCloud($params = []) {
+        $code = strtoupper($params['code'] ?? '');
+        $question = isset($_POST['question']) ? trim($_POST['question']) : '';
+        $langSlug = $params['lang'] ?? LanguageController::getInstance()->getCurrentLanguage();
+
+        if ($code === '' || $question === '') {
+            header('Location: /' . $langSlug . '/involved/' . urlencode($code));
+            exit;
+        }
+
+        $eventModel = new EventModel();
+        $event = $eventModel->getByKey($code);
+        if (!$event) {
+            http_response_code(404);
+            echo 'Event not found';
+            return;
+        }
+
+        // Authorization check (password or session)
+        if (!empty($event['password']) && !$this->isAuthorized($code)) {
+            header('Location: /' . $langSlug . '/involved/' . urlencode($code));
+            exit;
+        }
+
+        $wcModel = new WordCloudModel();
+        $newId = $wcModel->create((int)$event['id'], $question);
+
+        header('Location: /' . $langSlug . '/involved/' . urlencode($code));
+        exit;
+    }
+
+    /**
+     * Delete a word cloud
+     */
+    public function deleteWordCloud($params = []) {
+        $code = strtoupper($params['code'] ?? '');
+        $wcid = (int)($params['wcid'] ?? 0);
+        $langSlug = $params['lang'] ?? LanguageController::getInstance()->getCurrentLanguage();
+
+        if ($code === '' || $wcid === 0) {
+            header('Location: /' . $langSlug . '/involved/' . urlencode($code));
+            exit;
+        }
+
+        $eventModel = new EventModel();
+        $event = $eventModel->getByKey($code);
+        if (!$event) {
+            http_response_code(404);
+            echo 'Event not found';
+            return;
+        }
+
+        // Authorization check
+        if (!empty($event['password']) && !$this->isAuthorized($code)) {
+            header('Location: /' . $langSlug . '/involved/' . urlencode($code));
+            exit;
+        }
+
+        $wcModel = new WordCloudModel();
+        $wcModel->delete($wcid);
+
+        header('Location: /' . $langSlug . '/involved/' . urlencode($code));
+        exit;
+    }
+
+    /**
+     * Show a word cloud page
+     */
+    public function showWordCloud($params = []) {
+        $code = strtoupper($params['code'] ?? '');
+        $wcid = (int)($params['wcid'] ?? 0);
+        $langSlug = $params['lang'] ?? LanguageController::getInstance()->getCurrentLanguage();
+
+        $eventModel = new EventModel();
+        $event = $eventModel->getByKey($code);
+        if (!$event) {
+            http_response_code(404);
+            echo 'Event not found';
+            return;
+        }
+
+        // Authorization check
+        if (!empty($event['password']) && !$this->isAuthorized($code)) {
+            header('Location: /' . $langSlug . '/involved/' . urlencode($code));
+            exit;
+        }
+
+        $wcModel = new WordCloudModel();
+        $wordCloud = $wcModel->getById($wcid);
+        if (!$wordCloud || (int)$wordCloud['event_id'] !== (int)$event['id']) {
+            http_response_code(404);
+            echo 'Word cloud not found';
+            return;
+        }
+
+        $eventData = $event;
+        $wordCloudData = $wordCloud;
+
+        $currentApp = 'involved';
+        require_once __DIR__ . '/../views/wordcloud.php';
     }
 }

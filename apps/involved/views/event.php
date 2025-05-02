@@ -23,6 +23,28 @@ use chillerlan\QRCode\QROptions;
             <p>Event code: <?php echo htmlspecialchars($eventData['key']); ?></p>
             <p>Created at: <?php echo htmlspecialchars($eventData['created_at']); ?></p>
             <p>Description: <?php echo htmlspecialchars($eventData['description'] ?? ''); ?></p>
+            <h3 style="margin-top:1.5rem;">Word Clouds</h3>
+            <form method="post" action="/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/<?php echo urlencode($eventData['key']); ?>/wordcloud/create" style="margin-bottom:1rem;">
+                <input type="text" name="question" placeholder="Enter question" required style="width:100%;margin-bottom:0.5rem;">
+                <button class="secondary" type="submit" style="width:100%;">Create Word Cloud</button>
+            </form>
+
+            <?php if (!empty($wordClouds)): ?>
+            <ul style="list-style:none;padding:0;">
+                <?php foreach ($wordClouds as $wc): ?>
+                <li style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #ddd;padding:0.5rem 0;">
+                    <a href="/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/<?php echo urlencode($eventData['key']); ?>/<?php echo $wc['id']; ?>" style="flex:1;">
+                        <?php echo htmlspecialchars($wc['question']); ?>
+                    </a>
+                    <form method="post" action="/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/<?php echo urlencode($eventData['key']); ?>/wordcloud/<?php echo $wc['id']; ?>/delete" style="margin:0;">
+                        <button type="submit" style="background:none;border:none;color:red;font-size:1rem;">&times;</button>
+                    </form>
+                </li>
+                <?php endforeach; ?>
+            </ul>
+            <?php else: ?>
+            <p>No word clouds yet.</p>
+            <?php endif; ?>
         </article>
 
         <!-- Right column (1/4 width) -->
