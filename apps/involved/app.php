@@ -61,6 +61,9 @@ class InvolvedApp implements AppInterface
     public function registerRoutes(Router $router): void
     {
         $router->get('/{lang}/involved', 'InvolvedHomeController@index');
+        $router->post('/{lang}/involved/create', 'InvolvedHomeController@create');
+        $router->post('/{lang}/involved/join', 'InvolvedHomeController@join');
+        $router->get('/{lang}/involved/{code}', 'InvolvedHomeController@show');
     }
     
     /**

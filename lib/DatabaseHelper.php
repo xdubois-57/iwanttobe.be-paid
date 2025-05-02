@@ -61,12 +61,15 @@ class DatabaseHelper {
             return false;
         }
         
-        require_once($credentialsFile);
+        $config = require($credentialsFile);
         
-        if (!isset($dbConfig) || !is_array($dbConfig)) {
+        // Use development environment as specified
+        if (!isset($config['development']['database']) || !is_array($config['development']['database'])) {
             $this->errorMessage = "Invalid credentials configuration.";
             return false;
         }
+        
+        $dbConfig = $config['development']['database'];
         
         try {
             $dsn = "mysql:host={$dbConfig['host']};port={$dbConfig['port']};dbname={$dbConfig['name']};charset=utf8mb4";
@@ -186,7 +189,10 @@ class DatabaseHelper {
             return false;
         }
         
-        $columns = implode(', ', array_keys($data));
+        // Escape column names with backticks to handle reserved words
+        $columns = implode(', ', array_map(function($col) {
+            return "`$col`";
+        }, array_keys($data)));
         $placeholders = implode(', ', array_fill(0, count($data), '?'));
         
         $query = "INSERT INTO `{$table}` ({$columns}) VALUES ({$placeholders})";
@@ -217,7 +223,7 @@ class DatabaseHelper {
         
         $setClauses = [];
         foreach ($data as $column => $value) {
-            $setClauses[] = "{$column} = ?";
+            $setClauses[] = "`{$column}` = ?";
         }
         
         $query = "UPDATE `{$table}` SET " . implode(', ', $setClauses) . " WHERE {$where}";
