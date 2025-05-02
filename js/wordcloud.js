@@ -30,8 +30,118 @@ class WordCloudManager {
         this.options = this.getDefaultOptions(options);
         this.userCanvasHeight = canvasHeight;
         this.initializeCanvas();
+        this.isFullScreen = false;
+        this.fullScreenOverlay = null;
+        this.setupFullScreenToggle();
     }
 
+    setupFullScreenToggle() {
+        // Add click event to toggle fullscreen
+        this.canvas.addEventListener('click', this.toggleFullScreen.bind(this));
+    }
+
+    toggleFullScreen() {
+        if (this.isFullScreen) {
+            this.exitFullScreen();
+        } else {
+            this.enterFullScreen();
+        }
+    }
+
+    enterFullScreen() {
+        // Create fullscreen overlay
+        this.fullScreenOverlay = document.createElement('div');
+        this.fullScreenOverlay.className = 'word-cloud-fullscreen-overlay';
+        
+        // Get background color of the page
+        const pageBackgroundColor = window.getComputedStyle(document.body).backgroundColor;
+        
+        // Style the overlay
+        Object.assign(this.fullScreenOverlay.style, {
+            position: 'fixed',
+            top: '0',
+            left: '0',
+            width: '100%',
+            height: '100%',
+            zIndex: '10000',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: pageBackgroundColor,
+            padding: '20px',
+            boxSizing: 'border-box'
+        });
+        
+        // Create new canvas for fullscreen
+        const fullScreenCanvas = document.createElement('canvas');
+        fullScreenCanvas.className = 'word-cloud-fullscreen-canvas';
+        
+        // Use almost the full viewport size to maximize space
+        const width = window.innerWidth - 40; // 20px padding on each side
+        const height = window.innerHeight - 40;
+        
+        fullScreenCanvas.width = width;
+        fullScreenCanvas.height = height;
+        
+        // Add click event to exit fullscreen
+        fullScreenCanvas.addEventListener('click', this.toggleFullScreen.bind(this));
+        
+        this.fullScreenOverlay.appendChild(fullScreenCanvas);
+        document.body.appendChild(this.fullScreenOverlay);
+        
+        // Create new options optimized for fullscreen
+        const fullScreenOptions = this.getFullscreenOptions(width, height);
+        
+        WordCloud(fullScreenCanvas, fullScreenOptions);
+        
+        // Set fullscreen state
+        this.isFullScreen = true;
+        
+        // Add escape key listener
+        this.escKeyHandler = (e) => {
+            if (e.key === 'Escape') {
+                this.exitFullScreen();
+            }
+        };
+        document.addEventListener('keydown', this.escKeyHandler);
+    }
+    
+    getFullscreenOptions(width, height) {
+        // Create optimized options for fullscreen mode
+        const fullScreenOptions = Object.assign({}, this.options);
+        fullScreenOptions.list = this.options.list;
+        
+        // Use finer grid for better quality
+        fullScreenOptions.gridSize = Math.max(1, Math.floor(this.options.gridSize * 0.75));
+        
+        // Adjust ellipticity for the new dimensions
+        fullScreenOptions.ellipticity = height / width;
+        
+        // Recompute fontSizes for the larger canvas
+        fullScreenOptions.weightFactor = (weight) => {
+            // Get the shorter dimension for scaling
+            const shortestSide = Math.min(width, height);
+            // Calculate ideal max font size (25% of shorter dimension)
+            const targetMaxFont = shortestSide * 0.25;
+            // Scale linearly based on weight
+            return (weight / this.currentMaxWeight) * targetMaxFont;
+        };
+        
+        // Slightly reduce rotation for better readability
+        fullScreenOptions.rotateRatio = Math.max(0.1, this.options.rotateRatio * 0.8);
+        
+        return fullScreenOptions;
+    }
+
+    exitFullScreen() {
+        if (this.fullScreenOverlay && document.body.contains(this.fullScreenOverlay)) {
+            document.body.removeChild(this.fullScreenOverlay);
+            document.removeEventListener('keydown', this.escKeyHandler);
+            this.fullScreenOverlay = null;
+            this.isFullScreen = false;
+        }
+    }
+    
     initializeCanvas() {
         // Create canvas element with full container width
         this.canvas = document.createElement('canvas');
@@ -40,6 +150,10 @@ class WordCloudManager {
         
         // Set height to user-provided value or fill available space
         this.canvas.height = this.userCanvasHeight !== null ? this.userCanvasHeight : this.calculateAvailableHeight();
+        
+        // Add cursor style to indicate it's clickable
+        this.canvas.style.cursor = 'pointer';
+        
         this.container.appendChild(this.canvas);
     }
 
@@ -122,6 +236,17 @@ class WordCloudManager {
         this.options.list = aggregated;
         // Generate the word cloud
         WordCloud(this.canvas, this.options);
+        
+        // Also update fullscreen canvas if it exists
+        if (this.isFullScreen && this.fullScreenOverlay) {
+            const fullScreenCanvas = this.fullScreenOverlay.querySelector('.word-cloud-fullscreen-canvas');
+            if (fullScreenCanvas) {
+                const width = fullScreenCanvas.width;
+                const height = fullScreenCanvas.height;
+                const fullScreenOptions = this.getFullscreenOptions(width, height);
+                WordCloud(fullScreenCanvas, fullScreenOptions);
+            }
+        }
     }
 
     loadStaticData(data) {
