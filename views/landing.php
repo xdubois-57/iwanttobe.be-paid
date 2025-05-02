@@ -1,15 +1,72 @@
 <?php
 require_once __DIR__ . '/../controllers/LanguageController.php';
-require_once __DIR__ . '/../controllers/WordCloudController.php';
 require_once __DIR__ . '/../core/AppRegistry.php';
 $lang = LanguageController::getInstance();
 require_once __DIR__ . '/header.php';
 
-// Get word cloud data
-$wordCloudData = WordCloudController::getWordCloudDataJson();
-
 // Get app instances
 $apps = AppRegistry::getInstance()->getAppInterfaces();
+
+// Build word cloud data from meta_keywords and app names
+$wordCloudWords = [];
+
+// Get keywords from all languages
+$config = require __DIR__ . '/../config/languages.php';
+$availableLanguages = array_keys($config['available_languages']);
+
+foreach ($availableLanguages as $langCode) {
+    // Load language file
+    $langFile = __DIR__ . '/../translations/' . $langCode . '.php';
+    if (file_exists($langFile)) {
+        $translations = require $langFile;
+        if (isset($translations['meta_keywords'])) {
+            // Split keywords by comma and add to word cloud
+            $keywords = explode(',', $translations['meta_keywords']);
+            foreach ($keywords as $keyword) {
+                $keyword = trim($keyword);
+                if (!empty($keyword)) {
+                    // Add or increment weight if keyword already exists
+                    $found = false;
+                    foreach ($wordCloudWords as &$word) {
+                        if (strtolower($word[0]) === strtolower($keyword)) {
+                            $word[1]++; // Increment weight
+                            $found = true;
+                            break;
+                        }
+                    }
+                    // Add new keyword if not found
+                    if (!$found) {
+                        $wordCloudWords[] = [$keyword, 1];
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Add app names with higher weight
+foreach ($apps as $app) {
+    $appName = $app->getDisplayName();
+    // Check if app name already exists
+    $found = false;
+    foreach ($wordCloudWords as &$word) {
+        if (strtolower($word[0]) === strtolower($appName)) {
+            $word[1] += 3; // Give apps higher weight
+            $found = true;
+            break;
+        }
+    }
+    // Add app name if not found
+    if (!$found) {
+        $wordCloudWords[] = [$appName, 3];
+    }
+}
+
+// Add iwantto.be with highest weight
+$wordCloudWords[] = ['iwantto.be', 5];
+
+// Encode for JavaScript
+$wordCloudData = json_encode($wordCloudWords);
 ?>
 <main class="container">
     <article class="content-box" style="text-align: center; margin-bottom: 2rem;">
