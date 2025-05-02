@@ -1,15 +1,17 @@
-# QR Transfer
+# iwantto.be Paid
 
 A web application for generating QR codes for SEPA bank transfers, following the EPC069-12 standard.
 
 ## Features
 
 - 🏦 Generate QR codes for SEPA bank transfers
-- 🌍 Multilingual support (EN, FR, NL)
-- 💾 Form data persistence
+- 🌍 Multilingual support (20+ languages)
+- 💾 Form data persistence with favorites
 - 📱 Responsive design for desktop and mobile
 - ✅ Real-time form validation
 - 🔒 GDPR compliant
+- 📱 Built-in QR code scanner
+- 📊 Word cloud visualization of payment trends
 
 ## Technical Stack
 
@@ -18,6 +20,8 @@ A web application for generating QR codes for SEPA bank transfers, following the
 - [PicoCSS](https://picocss.com/) for minimal, semantic HTML/CSS
 - LocalStorage for form data persistence
 - Session-based language management
+- Composer for dependency management
+- chillerlan/php-qrcode for QR code generation
 
 ## Dependencies
 
@@ -59,8 +63,9 @@ git clone https://github.com/xdubois-57/qrtransfer.git
 - `controllers/` - MVC Controllers
 - `views/` - PHP view templates
 - `js/` - JavaScript files for client-side functionality
-- `translations/` - Language files
+- `translations/` - Language files (global and app-specific)
 - `config/` - Configuration files
+- `apps/` - Application modules (Paid!, Drive, etc.)
 
 ## Contributing
 
@@ -77,3 +82,12 @@ This project is licensed under the GNU General Public License v3.0 (GPLv3). See 
 ## Author
 
 Xavier Dubois - [admin@iwantto.be](mailto:admin@iwantto.be)
+
+## Project Structure
+
+The project follows a modular architecture with multiple applications:
+
+- `paid/` - Main SEPA transfer QR code generator
+- `drive/` - Document management system
+- `involved/` - Community engagement platform
+- `register_apps.php` - Application registration system

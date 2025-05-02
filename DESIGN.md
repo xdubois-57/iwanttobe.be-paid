@@ -1,4 +1,4 @@
-# **Paid!** - Software Design Document
+# **iwantto.be Paid** - Software Design Document
 
 ## Table of Contents
 1. [Architecture Overview](#1-architecture-overview)
@@ -124,6 +124,12 @@ graph TD
     T --> LV[Latviešu]
     T --> HR[Hrvatski]
     T --> DE[Deutsch]
+    T --> BG[Bulgarian]
+    T --> ET[Estonian]
+    T --> GA[Irish]
+    T --> LT[Lithuanian]
+    T --> MT[Maltese]
+    T --> SK[Slovak]
 ```
 
 - Location: `/translations` directory
@@ -280,9 +286,10 @@ The **Paid!** application supports the following languages:
 
 ### Branding Update
 
-- As of April 18, 2025, the application is branded as **Paid!** throughout all user interfaces, documentation, and translations.
-- All references to "QR Transfer" or "iwantto.be" have been replaced with **Paid!**.
+- As of April 18, 2025, the application is branded as **iwantto.be Paid** throughout all user interfaces, documentation, and translations.
+- All references to "QR Transfer" or "Paid!" have been replaced with **iwantto.be Paid**.
 - Only supported languages are included in the translation system.
+- Branding is consistently applied across all applications (Paid, Drive, Involved)
 
 ### Branding and Repository Update
 
@@ -348,16 +355,24 @@ Several enhancements have been made to improve the user interface and experience
 - Clarified that **Paid!** is not liable for any financial losses
 - Explained that all payments are processed by banks, not **Paid!**
 
-### Recent Changes (2025-04-14)
+### Recent Changes (2025-05-02)
 
-1. **Translation Updates**
-   - Added missing Romanian form translations
-   - Updated GDPR third-party description to include GoQR information
-   - Added link to GoQR privacy policy in GDPR documentation
+1. **Translation System Reorganization**
+   - Separated global translations from app-specific translations
+   - Global translations now only contain shared content (menu, GDPR, support)
+   - App-specific translations moved to `/apps/{app}/translations/`
+   - Added missing translation files for partially supported languages
 
-2. **Security Updates**
-   - Updated third-party service description in GDPR policy
-   - Added specific details about GoQR's data handling practices
+2. **Styling Improvements**
+   - Unified article and content box styling across light and dark themes
+   - Improved table styling with consistent backgrounds
+   - Enhanced form input styling for better accessibility
+   - Fixed table cell backgrounds in dark mode
+
+3. **Brand Consistency**
+   - Updated all translation files to use **iwantto.be** instead of **Paid!**
+   - Removed duplicate `support_thanks` entries from app-specific translations
+   - Updated QR code generation to use **iwantto.be** as beneficiary name
 
 ### Recent Changes (2025-04-19)
 - QR code generation endpoint is now localized: AJAX requests for QR generation are sent to `/{lang}/generate-qr` (e.g., `/en/generate-qr`, `/fr/generate-qr`).
@@ -373,14 +388,22 @@ Several enhancements have been made to improve the user interface and experience
 
 ## 8. Dependencies
 
-- The application now depends on [chillerlan/php-qrcode](https://github.com/chillerlan/php-qrcode) for local QR code generation in PHP.
-    - This library is managed via Composer and installed in the `vendor/` directory.
-    - See `composer.json` for version details.
-    - The QR code generation logic was moved from a utility class to the `QRController` for direct integration.
+- [chillerlan/php-qrcode](https://github.com/chillerlan/php-qrcode) for QR code generation
+- Composer for dependency management
+- PicoCSS for minimal, semantic HTML/CSS
+- Modernizr for feature detection
 
-- All previous reliance on remote QR code APIs (such as GoQR) has been removed. QR codes are now generated entirely locally for improved privacy, reliability, and performance.
+### Dependency Management
 
-- Ensure Composer autoloading is included (see `index.php`).
+1. **QR Code Generation**
+   - Local QR code generation using chillerlan/php-qrcode
+   - No reliance on external APIs
+   - Secure and private implementation
+
+2. **Frontend Dependencies**
+   - PicoCSS for base styling
+   - Modernizr for feature detection
+   - Custom JavaScript for interactive features
 
 ## 9. Supported Languages Requirement
 
