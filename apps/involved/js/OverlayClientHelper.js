@@ -27,6 +27,22 @@ class OverlayClientHelper {
         urlObj.hash = '';
         urlObj.search = '';
         this.currentUrl = urlObj.toString();
+
+        // Check if we're on a wordcloud page
+        const pathSegments = urlObj.pathname.split('/');
+        
+        // URL format: /lang/involved/key/wordcloud/wcid[/add]
+        if (pathSegments.length >= 6 && pathSegments[2] === 'involved' && pathSegments[4] === 'wordcloud') {
+            // We're on a wordcloud page, normalize the URL to always track likes for the main wordcloud page
+            const baseUrl = urlObj.origin;
+            const lang = pathSegments[1];
+            const eventKey = pathSegments[3];
+            const wcid = pathSegments[5];
+            
+            // Normalize to base wordcloud URL, removing any extra paths like '/add'
+            this.currentUrl = `${baseUrl}/${lang}/involved/${eventKey}/wordcloud/${wcid}`;
+            console.log('[OverlayClientHelper] Normalized URL for tracking:', this.currentUrl);
+        }
     }
     
     /**

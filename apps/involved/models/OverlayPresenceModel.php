@@ -25,6 +25,26 @@ class OverlayPresenceModel {
         }
         
         try {
+            // Normalize URL for word cloud pages
+            $parsedUrl = parse_url($url);
+            $path = $parsedUrl['path'] ?? '';
+            $pathSegments = explode('/', trim($path, '/'));
+            
+            // Check if this is a wordcloud URL format: /lang/involved/eventkey/wordcloud/wcid[/add]
+            if (count($pathSegments) >= 5 && $pathSegments[1] === 'involved' && $pathSegments[3] === 'wordcloud') {
+                // Normalize URL to always match the main wordcloud URL
+                if (isset($pathSegments[5]) && $pathSegments[5] === 'add') {
+                    // This is an "add word" page - normalize to the main wordcloud URL
+                    $scheme = isset($parsedUrl['scheme']) ? $parsedUrl['scheme'] : 'http';
+                    $host = $parsedUrl['host'] ?? '';
+                    $port = isset($parsedUrl['port']) ? ':' . $parsedUrl['port'] : '';
+                    
+                    // Rebuild the URL up to the wordcloud ID (removing /add)
+                    $url = "$scheme://$host$port/{$pathSegments[0]}/{$pathSegments[1]}/{$pathSegments[2]}/{$pathSegments[3]}/{$pathSegments[4]}";
+                    error_log("Normalized URL for presence update: " . $url);
+                }
+            }
+            
             $this->db->beginTransaction();
             
             // First, get the overlay_object_id for this URL
