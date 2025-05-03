@@ -16,12 +16,16 @@ return [
     'create_event_button' => 'Créer un Nouvel Événement',
     
     // Password prompt page
-    'protected_event_title' => 'Événement Protégé',
-    'password_prompt_description' => 'Cet événement nécessite un mot de passe. Veuillez l\'entrer ci-dessous pour continuer.',
+    'password_prompt_title' => 'Mot de passe',
+    'password_prompt_text' => 'Cet événement nécessite un mot de passe :',
+    'password_submit' => 'Accéder à l\'événement',
+    'invalid_password' => 'Mot de passe incorrect, veuillez réessayer.',
+    'protected_event_title' => 'Événement protégé',
+    'error_heading' => 'Erreur :',
+    'password_prompt_description' => 'Veuillez entrer le mot de passe pour accéder à cet événement :',
     'password_label' => 'Mot de passe',
-    'password_prompt_placeholder' => 'Entrez le mot de passe de l\'événement',
+    'password_prompt_placeholder' => 'Entrez le mot de passe',
     'continue_button' => 'Continuer',
-    'error_heading' => 'Erreur:',
     
     // Add word form
     'back_to_wordcloud' => '← Retour au nuage de mots',

@@ -16,12 +16,15 @@ return [
     'create_event_button' => 'Crear Nuevo Evento',
     
     // Password prompt page
+    'password_prompt_title' => 'Contraseña del Evento',
+    'password_prompt_text' => 'Este evento requiere una contraseña:',
+    'password_submit' => 'Acceder al Evento',
+    'invalid_password' => 'Contraseña incorrecta, inténtelo de nuevo.',
     'protected_event_title' => 'Evento Protegido',
-    'password_prompt_description' => 'Este evento requiere una contraseña. Por favor, introdúcela a continuación para continuar.',
+    'password_prompt_description' => 'Por favor, introduzca la contraseña para acceder a este evento:',
     'password_label' => 'Contraseña',
-    'password_prompt_placeholder' => 'Introduce la contraseña del evento',
+    'password_prompt_placeholder' => 'Introduzca la contraseña del evento',
     'continue_button' => 'Continuar',
-    'error_heading' => 'Error:',
     
     // Add word form
     'back_to_wordcloud' => '← Volver a la nube de palabras',
@@ -67,5 +70,6 @@ return [
     'word_add_failed' => 'Error al añadir la palabra',
     'unauthorized_access' => 'Intento de acceso no autorizado',
     'word_parameter_is_required' => 'El parámetro de palabra es obligatorio',
-    'unauthorized' => 'No autorizado'
+    'unauthorized' => 'No autorizado',
+    'error_heading' => 'Error:',
 ];

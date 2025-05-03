@@ -16,8 +16,12 @@ return [
     'create_event_button' => 'Create New Event',
     
     // Password prompt page
+    'password_prompt_title' => 'Event Password',
+    'password_prompt_text' => 'This event requires a password:',
+    'password_submit' => 'Access Event',
+    'invalid_password' => 'Invalid password, please try again.',
     'protected_event_title' => 'Protected Event',
-    'password_prompt_description' => 'This event requires a password. Please enter it below to continue.',
+    'password_prompt_description' => 'Please enter the password to access this event:',
     'password_label' => 'Password',
     'password_prompt_placeholder' => 'Enter event password',
     'continue_button' => 'Continue',

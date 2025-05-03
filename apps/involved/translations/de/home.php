@@ -16,12 +16,16 @@ return [
     'create_event_button' => 'Neues Event erstellen',
     
     // Password prompt page
+    'password_prompt_title' => 'Event-Passwort',
+    'password_prompt_text' => 'Dieses Event erfordert ein Passwort:',
+    'password_submit' => 'Zugang zum Event',
+    'invalid_password' => 'Ungültiges Passwort, bitte versuchen Sie es erneut.',
     'protected_event_title' => 'Geschütztes Event',
-    'password_prompt_description' => 'Dieses Event benötigt ein Passwort. Bitte geben Sie es unten ein, um fortzufahren.',
+    'error_heading' => 'Fehler:',
+    'password_prompt_description' => 'Bitte geben Sie das Passwort ein, um auf dieses Event zuzugreifen:',
     'password_label' => 'Passwort',
     'password_prompt_placeholder' => 'Event-Passwort eingeben',
-    'continue_button' => 'Weiter',
-    'error_heading' => 'Fehler:',
+    'continue_button' => 'Fortfahren',
     
     // Add word form
     'back_to_wordcloud' => '← Zurück zur Wortwolke',

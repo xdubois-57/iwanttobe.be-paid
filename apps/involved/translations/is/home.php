@@ -44,12 +44,12 @@ return [
     // Wordcloud page
     'add_your_word' => 'Bættu við Orði',
     'scan_qr_access' => 'Skannaðu þennan QR-kóða til að fá aðgang að viðburðinum',
-    'event_password' => 'Lykilorð viðburðar:',
+    'event_password' => 'PIN:',
     'wordcloud_failed_delete' => 'Eyðing orðs mistókst',
     'wordcloud_error_delete' => 'Villa kom upp við eyðingu orðs',
     
     // EventQrBlock component
-    'event_code' => 'Viðburðarkóði:',
+    'event_code' => 'Kóði:',
     'share_button' => 'Deila',
     'share_title' => 'Taktu þátt í viðburðinum mínum',
     'share_text' => 'Taktu þátt í viðburðinum mínum með kóðanum:',
