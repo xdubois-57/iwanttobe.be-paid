@@ -288,7 +288,8 @@ class WordCloudManager {
 
     updateWordCloud(data) {
         if (!data || !data.length) {
-            console.error('No word cloud data provided');
+            // Handle empty data gracefully - clear the canvas and show placeholder text
+            this.clearCanvas();
             return;
         }
 
@@ -334,6 +335,21 @@ class WordCloudManager {
                 WordCloud(fullScreenCanvas, fullScreenOptions);
             }
         }
+    }
+
+    clearCanvas() {
+        if (!this.canvas) return;
+        
+        const ctx = this.canvas.getContext('2d');
+        // Clear the canvas
+        ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        
+        // Add placeholder text if desired
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillStyle = this.detectDarkMode() ? '#666666' : '#cccccc';
+        ctx.font = '16px sans-serif';
+        ctx.fillText('No data available', this.canvas.width / 2, this.canvas.height / 2);
     }
 
     loadStaticData(data) {
