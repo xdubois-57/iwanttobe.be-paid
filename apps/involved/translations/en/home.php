@@ -36,7 +36,9 @@ return [
     'add_word_button' => 'Add Word',
     
     // Event page
-    'event_title_prefix' => 'Event',
+    'event_heading' => 'Event',
+    'word_cloud' => 'Word Cloud',
+    'event_code_label' => 'Event code:',
     'created_at' => 'Created at:',
     'word_clouds_title' => 'Word Clouds',
     'no_word_clouds' => 'No word clouds yet.',

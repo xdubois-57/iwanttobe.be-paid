@@ -35,7 +35,9 @@ return [
     'add_word_button' => 'Ajouter un Mot',
     
     // Event page
-    'event_title_prefix' => 'Événement',
+    'event_heading' => 'Événement',
+    'word_cloud' => 'Nuage de Mots',
+    'event_code_label' => 'Code de l\'événement:',
     'created_at' => 'Créé le:',
     'word_clouds_title' => 'Nuages de Mots',
     'no_word_clouds' => 'Pas encore de nuages de mots.',

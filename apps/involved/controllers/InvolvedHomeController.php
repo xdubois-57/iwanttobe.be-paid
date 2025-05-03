@@ -165,15 +165,29 @@ class InvolvedHomeController {
             return;
         }
         
-        // User is authorized or event doesn't need password
+        // User is authorized or no password needed
+        $currentApp = 'involved';
         $eventData = $event;
         
-        // Fetch word clouds for this event
+        // Get word clouds for this event
         $wcModel = new WordCloudModel();
         $wordClouds = $wcModel->getByEvent((int)$event['id']);
         
-        // Set current app for header navigation
-        $currentApp = 'involved';
+        // Load translations from the home.php file in the app-specific translation path
+        $lang = LanguageController::getInstance();
+        
+        // Just load the app-specific translations - they're already organized by language
+        // The LanguageController will handle fallbacks automatically
+        $lang->loadAppTranslationsForPath(__DIR__ . '/../translations/en/home.php');
+        
+        // If current language is not English, load that translation too
+        if ($lang->getCurrentLanguage() !== 'en') {
+            $langFile = __DIR__ . '/../translations/' . $lang->getCurrentLanguage() . '/home.php';
+            if (file_exists($langFile)) {
+                $lang->loadAppTranslationsForPath($langFile);
+            }
+        }
+        
         require_once __DIR__ . '/../views/event.php';
     }
     

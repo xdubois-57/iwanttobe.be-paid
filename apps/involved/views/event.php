@@ -11,8 +11,8 @@ use chillerlan\QRCode\QROptions;
 ?>
 <main class="container">
     <article>
-        <h1>Event <?php echo htmlspecialchars($eventData['key']); ?></h1>
-        <p>Created at: <?php echo htmlspecialchars($eventData['created_at']); ?></p>
+        <h1><?php echo htmlspecialchars($lang->translate('event_heading')); ?> <?php echo htmlspecialchars($eventData['key']); ?></h1>
+        <p><?php echo htmlspecialchars($lang->translate('created_at')); ?> <?php echo htmlspecialchars($eventData['created_at']); ?></p>
     </article>
     <style>
         .word-cloud-item {
@@ -72,7 +72,7 @@ use chillerlan\QRCode\QROptions;
     </style>
     <script>
     function deleteWordCloud(lang, eventCode, wordCloudId) {
-        if (confirm('Are you sure you want to delete this word cloud?')) {
+        if (confirm('<?php echo htmlspecialchars($lang->translate('confirm_delete_wordcloud')); ?>')) {
             const url = '/' + encodeURIComponent(lang) + '/involved/' + encodeURIComponent(eventCode) + '/wordcloud/' + encodeURIComponent(wordCloudId) + '/delete';
             console.log('Deleting word cloud, URL:', url);
             fetch(url, {
@@ -91,12 +91,12 @@ use chillerlan\QRCode\QROptions;
                 if (data.success) {
                     window.location.reload();
                 } else {
-                    alert('Failed to delete word cloud');
+                    alert('<?php echo htmlspecialchars($lang->translate('delete_failed')); ?>');
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert('An error occurred while deleting the word cloud');
+                alert('<?php echo htmlspecialchars($lang->translate('an_error_occurred')); ?>');
             });
         }
     }
@@ -107,12 +107,10 @@ use chillerlan\QRCode\QROptions;
     <div class="grid" style="margin-top: 2rem; gap: 2rem;">
         <!-- Left column (3/4 width) -->
         <article style="grid-column: span 3;">
-            <h2>Event Details</h2>
-            <p>Event code: <?php echo htmlspecialchars($eventData['key']); ?></p>
-            <p>Created at: <?php echo htmlspecialchars($eventData['created_at']); ?></p>
+            <h2><?php echo htmlspecialchars($lang->translate('word_cloud')); ?></h2>
             
             <?php if (!empty($wordClouds)): ?>
-            <h3 style="margin-top:1.5rem;">Word Clouds</h3>
+            <h3 style="margin-top:1.5rem;"><?php echo htmlspecialchars($lang->translate('word_clouds_title')); ?></h3>
             <div style="margin-top:1rem;">
                 <ul id="word-list" style="list-style:none; padding:0;">
                 <?php foreach ($wordClouds as $wc): ?>
@@ -131,12 +129,12 @@ use chillerlan\QRCode\QROptions;
                 </ul>
             </div>
             <?php else: ?>
-            <p style="margin-top:1.5rem;">No word clouds yet.</p>
+            <p style="margin-top:1.5rem;"><?php echo htmlspecialchars($lang->translate('no_word_clouds')); ?></p>
             <?php endif; ?>
             
             <form method="post" action="/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/<?php echo urlencode($eventData['key']); ?>/wordcloud/create" style="margin-top:1.5rem;">
-                <input type="text" name="question" placeholder="Enter question" required style="width:100%;margin-bottom:0.5rem;">
-                <button class="primary" type="submit" style="width:100%;">Create Word Cloud</button>
+                <input type="text" name="question" placeholder="<?php echo htmlspecialchars($lang->translate('enter_question_placeholder')); ?>" required style="width:100%;margin-bottom:0.5rem;">
+                <button class="primary" type="submit" style="width:100%;"><?php echo htmlspecialchars($lang->translate('create_word_cloud_button')); ?></button>
             </form>
         </article>
 
@@ -175,7 +173,7 @@ use chillerlan\QRCode\QROptions;
 document.querySelectorAll('.delete-wordcloud-form').forEach(form => {
     form.addEventListener('submit', function(event) {
         event.stopPropagation();
-        if (!confirm('Are you sure you want to delete this word cloud?')) {
+        if (!confirm('<?php echo htmlspecialchars($lang->translate('confirm_delete_wordcloud')); ?>')) {
             event.preventDefault();
         }
     });
