@@ -169,6 +169,35 @@ html[data-theme="dark"] .app-card:hover {
     margin-bottom: 1rem;
 }
 
+/* Beta badge for apps in beta status */
+.beta-badge {
+    position: absolute;
+    top: 20px;
+    right: -30px;
+    background-color: var(--primary);
+    color: var(--primary-inverse);
+    padding: 0.25rem 2rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    transform: rotate(45deg);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+html[data-theme="dark"] .beta-badge {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+@media (max-width: 768px) {
+    .beta-badge {
+        font-size: 0.7rem;
+        padding: 0.2rem 1.5rem;
+        right: -25px;
+        top: 15px;
+    }
+}
+
 @media (max-width: 768px) {
     .grid {
         grid-template-columns: 1fr;

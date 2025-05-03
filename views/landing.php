@@ -85,20 +85,21 @@ $wordCloudData = json_encode($wordCloudWords);
         });
         foreach ($apps as $app): ?>
         <a href="/<?php echo $lang->getCurrentLanguage(); ?>/<?php echo htmlspecialchars($app->getSlug()); ?>" class="app-card">
-            <?php if ($app->getSlug() === 'drive'): ?>
-                <svg class="app-logo" style="margin-bottom:10px;" viewBox="8 14 8 5" width="50" height="50" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="8" y="16" width="8" height="2"/>
-                    <polygon points="9,16 11,14 13,14 15,16"/>
-                    <circle cx="10" cy="18" r="1"/>
-                    <circle cx="14" cy="18" r="1"/>
-                </svg>
-            <?php elseif ($app->getSlug() === 'involved'): ?>
+            <?php if ($app->getSlug() === 'involved'): ?>
+                <span class="beta-badge">beta version</span>
                 <svg class="app-logo" style="margin-bottom:10px;" viewBox="4 5 13 12" width="50" height="50" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="6" cy="8" r="2"/>
                     <circle cx="10" cy="6" r="1.5"/>
                     <circle cx="14" cy="9" r="2.5"/>
                     <circle cx="8" cy="13" r="1"/>
                     <circle cx="15" cy="15" r="1.8"/>
+                </svg>
+            <?php elseif ($app->getSlug() === 'drive'): ?>
+                <svg class="app-logo" style="margin-bottom:10px;" viewBox="8 14 8 5" width="50" height="50" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="8" y="16" width="8" height="2"/>
+                    <polygon points="9,16 11,14 13,14 15,16"/>
+                    <circle cx="10" cy="18" r="1"/>
+                    <circle cx="14" cy="18" r="1"/>
                 </svg>
             <?php elseif ($app->getSlug() === 'paid'): ?>
                 <svg class="app-logo" style="margin-bottom:10px;" viewBox="2 2 20 20" width="50" height="50" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
