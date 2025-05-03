@@ -66,6 +66,7 @@ $router->get('/{lang}/support', 'SupportController@index');
 // AJAX endpoints for global features
 $router->post('/ajax/like', 'AjaxController@incrementLikes');
 $router->get('/ajax/likes', 'AjaxController@getLikes');
+$router->post('/ajax/presence', 'AjaxController@updatePresence');
 
 // Global QR code SVG endpoint (AJAX)
 $router->get('/qr/svg', 'GenericQrController@svg');

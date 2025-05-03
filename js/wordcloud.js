@@ -99,29 +99,27 @@ class WordCloudManager {
             position: 'fixed',
             top: '0',
             left: '0',
-            width: '100%',
-            height: '100%',
+            width: '100vw',
+            height: '100vh',
             zIndex: '10000',
+            background: pageBackgroundColor || 'white',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            backgroundColor: pageBackgroundColor,
-            padding: '20px',
-            boxSizing: 'border-box'
+            padding: '2rem',
+            boxSizing: 'border-box',
+            overflow: 'hidden'
         });
         
         // Create new canvas for fullscreen
         const fullScreenCanvas = document.createElement('canvas');
         fullScreenCanvas.className = 'word-cloud-fullscreen-canvas';
         
-        // Calculate dimensions with 5% margin on desktop (0% on mobile)
-        const isDesktop = window.innerWidth >= 768;
-        const marginPercentage = isDesktop ? 5 : 0;
-        const margin = Math.floor(window.innerWidth * (marginPercentage / 100));
+        // Get window dimensions for the canvas
+        const width = window.innerWidth - 40; // 20px padding on each side
+        const height = window.innerHeight - 40;
         
-        const width = window.innerWidth - (2 * margin); // 2 margins (left and right)
-        const height = window.innerHeight - (2 * margin); // 2 margins (top and bottom)
-        
+        // Set canvas dimensions
         fullScreenCanvas.width = width;
         fullScreenCanvas.height = height;
         
@@ -139,15 +137,23 @@ class WordCloudManager {
         // Set fullscreen state
         this.isFullScreen = true;
         
-        // Activate the OverlayObjectHelper if available
+        // Use OverlayObjectHelper if available
         if (window.OverlayObjectHelper) {
-            // Get question text if available from meta, otherwise use document title
-            const questionEl = document.querySelector('h1[data-likes]');
-            const questionText = questionEl?.textContent?.trim() || document.title;
-            const likeCount = parseInt(questionEl?.getAttribute('data-likes') || '0', 10);
+            // Extract question text from header if available
+            let questionText = '';
+            let likeCount = 0;
             
-            console.log('[WordCloudManager] OverlayObjectHelper found, setting title and heart:', {
-                questionElement: questionEl ? 'found' : 'not found',
+            // Try to find the question text from the h1 in the main article
+            const h1 = document.querySelector('main article h1');
+            if (h1) {
+                questionText = h1.textContent.trim();
+                // Check if h1 has a data-likes attribute
+                if (h1.hasAttribute('data-likes')) {
+                    likeCount = parseInt(h1.getAttribute('data-likes'), 10) || 0;
+                }
+            }
+            
+            console.log('[WordCloudManager] Activating OverlayObjectHelper with:', {
                 questionText: questionText,
                 likeCount: likeCount
             });

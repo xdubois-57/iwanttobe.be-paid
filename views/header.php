@@ -81,6 +81,27 @@ if (method_exists($lang, 'loadTranslations')) {
     <?php if (in_array($lang->getCurrentLanguage(), ['ar', 'he', 'fa', 'ur'])): ?>
         <script>document.documentElement.setAttribute('dir', 'rtl');</script>
     <?php endif; ?>
+    
+    <?php
+    // Load app-specific JavaScript files
+    $appRegistry = AppRegistry::getInstance();
+    $currentApp = $appRegistry->getCurrent();
+    if ($currentApp !== null && $currentApp !== 'landing') {
+        // If we have a current app and it's not the landing page
+        if (method_exists($currentApp, 'getJavaScriptFiles')) {
+            $jsFiles = $currentApp->getJavaScriptFiles();
+            foreach ($jsFiles as $jsFile) {
+                // Check if it's a full path (starting with /) or app-specific path
+                if (strpos($jsFile, '/') === 0) {
+                    echo '<script src="' . $jsFile . '"></script>' . PHP_EOL;
+                } else {
+                    echo '<script src="/apps/' . $currentApp->getSlug() . '/' . $jsFile . '"></script>' . PHP_EOL;
+                }
+            }
+        }
+    }
+    ?>
+    
     <script>
     // Expose PHP translations to JavaScript
     window.t = function(key) {

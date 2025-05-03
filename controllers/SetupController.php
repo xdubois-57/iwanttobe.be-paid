@@ -46,6 +46,8 @@ class SetupController {
         $databaseExists = false;
         $databaseValid = false;
         $connectivityError = '';
+        $tableSummaryHtml = '';
+        $tableDataHtml = ''; // Initialize tableDataHtml variable
         
         // Initialize with default values
         $dbConfig = [
@@ -184,6 +186,12 @@ class SetupController {
                 }
                 $tableSummaryHtml .= '</ul>';
                 
+                // Generate table data preview for all tables
+                $tableDataHtml = '';
+                foreach ($tableNames as $table) {
+                    $tableDataHtml .= $this->generateTableDataPreview($pdo, [$table]);
+                }
+                
                 $pdo = null;
             }
         } catch (PDOException $e) {
@@ -263,10 +271,20 @@ class SetupController {
                         $stmt->execute([$table]);
                         $exists = $stmt->fetch() !== false;
                         $tableSummaryHtml .= '<li>' . htmlspecialchars($table) . ': <strong style="color:' . 
-                            ($exists ? 'green' : 'red') . ';">' . 
+                            ($exists ? 'green' : 'red') . '">' . 
                             ($exists ? 'Exists' : 'Missing') . '</strong></li>';
                     }
                     $tableSummaryHtml .= '</ul>';
+                    
+                    // Generate table data preview for existing tables only
+                    $tableDataHtml = '';
+                    foreach ($tableNames as $table) {
+                        $stmt = $pdo->prepare("SHOW TABLES LIKE ?");
+                        $stmt->execute([$table]);
+                        if ($stmt->fetch() !== false) {
+                            $tableDataHtml .= $this->generateTableDataPreview($pdo, [$table]);
+                        }
+                    }
                     
                     $pdo = null;
                 }
@@ -274,7 +292,7 @@ class SetupController {
                 $connectivityError = $e->getMessage();
             }
         }
-
+        
         // Process the request based on the wizard step and method
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Handle POST request (form submission)
@@ -342,6 +360,9 @@ class SetupController {
                                 ($exists ? 'Exists' : 'Missing') . '</strong></li>';
                         }
                         $tableSummaryHtml .= '</ul>';
+                        
+                        // Add table data preview
+                        $tableDataHtml = $this->generateTableDataPreview($pdo, $tableNames);
                     }
                 }
                 $pdo = null;
@@ -356,17 +377,28 @@ class SetupController {
         if (!isset($connectivityError)) $connectivityError = '';
 
         // Pass variables to view
-        require_once __DIR__ . '/../views/setup.php';
+        defined('QR_TRANSFER') or define('QR_TRANSFER', true);
+        
+        // Add debugging info
+        error_log("Setup Controller: Step $step, DB Exists: " . ($databaseExists ? 'Yes' : 'No') . 
+                 ", DB Valid: " . ($databaseValid ? 'Yes' : 'No') .
+                 ", Table Summary HTML Length: " . strlen($tableSummaryHtml) .
+                 ", Table Data HTML Length: " . strlen($tableDataHtml));
+                 
+        include __DIR__ . '/../views/setup.php';
     }
     
     // Main method for the setup process
     public function initializeDatabase() {
         $credentialsFile = __DIR__ . '/../config/credentials.php';
-        $step = 1;
         $message = '';
         $success = false;
         $skipped = false;
+        $databaseExists = false;
+        $databaseValid = false;
         $connectivityError = '';
+        $tableSummaryHtml = '';
+        $tableDataHtml = '';
         
         // Initialize with default values
         $dbConfig = [
@@ -503,11 +535,8 @@ class SetupController {
                     // Switch to the database
                     $pdo->exec('USE `' . $dbConfig['name'] . '`');
                     
-                    // Read SQL file
-                    $sql = file_get_contents(__DIR__ . '/../sql/init_db.sql');
-                    
-                    // Execute SQL
-                    $pdo->exec($sql);
+                    // Initialize database with data from SQL file
+                    $this->initializeDatabaseFromFile($dbConfig, __DIR__ . '/../sql/init_db.sql');
                     
                     $success = true;
                     $message = "Database '{$dbConfig['name']}' initialized successfully with all required tables!";
@@ -611,6 +640,9 @@ class SetupController {
                     }
                     $tableSummaryHtml .= '</ul>';
                     
+                    // Add table data preview
+                    $tableDataHtml = $this->generateTableDataPreview($pdo, $tableNames);
+                    
                     $pdo = null;
                 }
             } catch (PDOException $e) {
@@ -623,6 +655,114 @@ class SetupController {
         $actionUrl = '/setup/db';
         
         // Render view with all the data
-        require_once __DIR__ . '/../views/setup.php';
+        defined('QR_TRANSFER') or define('QR_TRANSFER', true);
+        
+        // Add debugging info
+        error_log("Setup Controller: Step $step, DB Exists: " . ($databaseExists ? 'Yes' : 'No') . 
+                 ", DB Valid: " . ($databaseValid ? 'Yes' : 'No') .
+                 ", Table Summary HTML Length: " . strlen($tableSummaryHtml) .
+                 ", Table Data HTML Length: " . strlen($tableDataHtml));
+                 
+        include __DIR__ . '/../views/setup.php';
+    }
+    
+    /**
+     * Initialize database with data from SQL file
+     */
+    private function initializeDatabaseFromFile($dbConfig, $sqlFile) {
+        try {
+            $dsn = "mysql:host={$dbConfig['host']};port={$dbConfig['port']};dbname={$dbConfig['name']};charset=utf8mb4";
+            $pdo = new PDO(
+                $dsn,
+                $dbConfig['username'],
+                $dbConfig['password'],
+                [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
+            );
+            
+            // Read and execute SQL file
+            $sql = file_get_contents($sqlFile);
+            
+            // Split SQL by semicolons
+            $statements = array_filter(array_map('trim', explode(';', $sql)));
+            
+            // Execute each statement
+            foreach ($statements as $statement) {
+                if (!empty($statement)) {
+                    $pdo->exec($statement);
+                    error_log("Executed SQL: " . substr($statement, 0, 50) . "...");
+                }
+            }
+            
+            return true;
+        } catch (PDOException $e) {
+            error_log("Error initializing database from file: " . $e->getMessage());
+            return false;
+        }
+    }
+    
+    /**
+     * Generate HTML for table data preview
+     * 
+     * @param PDO $pdo Database connection
+     * @param array $tableNames Array of table names to preview
+     * @return string HTML content for table preview
+     */
+    private function generateTableDataPreview($pdo, $tableNames) {
+        $html = '<h3>Table Data Preview (First 5 Records)</h3>';
+        
+        foreach ($tableNames as $table) {
+            try {
+                // Get column names
+                $stmt = $pdo->prepare("SHOW COLUMNS FROM `$table`");
+                $stmt->execute();
+                $columns = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
+                
+                // Get first 5 records
+                $stmt = $pdo->prepare("SELECT * FROM `$table` LIMIT 5");
+                $stmt->execute();
+                $records = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                
+                $html .= '<details style="margin-bottom: 1.5rem;">';
+                $html .= '<summary style="cursor: pointer; font-weight: bold; margin-bottom: 0.5rem;">' . 
+                    htmlspecialchars($table) . ' (' . count($records) . ' records shown)</summary>';
+                
+                if (count($records) > 0) {
+                    $html .= '<div style="overflow-x: auto;"><table>';
+                    
+                    // Table header
+                    $html .= '<thead><tr>';
+                    foreach ($columns as $column) {
+                        $html .= '<th>' . htmlspecialchars($column) . '</th>';
+                    }
+                    $html .= '</tr></thead>';
+                    
+                    // Table body
+                    $html .= '<tbody>';
+                    foreach ($records as $record) {
+                        $html .= '<tr>';
+                        foreach ($columns as $column) {
+                            $value = isset($record[$column]) ? $record[$column] : '';
+                            // Truncate long values
+                            if (is_string($value) && strlen($value) > 100) {
+                                $value = substr($value, 0, 100) . '...';
+                            }
+                            $html .= '<td>' . htmlspecialchars($value) . '</td>';
+                        }
+                        $html .= '</tr>';
+                    }
+                    $html .= '</tbody>';
+                    $html .= '</table></div>';
+                } else {
+                    $html .= '<p>No records found in this table.</p>';
+                }
+                
+                $html .= '</details>';
+            } catch (PDOException $e) {
+                $html .= '<p>Error retrieving data from ' . htmlspecialchars($table) . ': ' . 
+                    htmlspecialchars($e->getMessage()) . '</p>';
+            }
+        }
+        
+        return $html;
     }
 }

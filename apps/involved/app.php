@@ -82,6 +82,9 @@ class InvolvedApp implements AppInterface {
         $router->post('/{lang}/involved/{code}/wordcloud/{wcid}/word/delete', 'InvolvedHomeController@deleteWord');
         $router->get('/{lang}/involved/{code}', 'InvolvedHomeController@show');
         $router->post('/{lang}/involved/verify-password', 'InvolvedHomeController@verifyPassword');
+        
+        // Add presence check route
+        $router->get('/ajax/presence', 'InvolvedHomeController@checkPresence');
     }
     
     /**
@@ -118,6 +121,22 @@ class InvolvedApp implements AppInterface {
     public function getOrder(): int
     {
         return 2;
+    }
+    
+    /**
+     * @inheritDoc
+     */
+    public function getJavaScriptFiles(): array
+    {
+        return [
+            'js/OverlayObjectHelper.js',
+            'js/OverlayClientHelper.js',
+            'js/eventQrBlock.js',
+            '/vendor/timdream/wordcloud2.js',
+            '/js/wordcloud-wrapper.js', // Add wrapper to fix wordcloud2.js errors
+            '/js/error-catcher.js',     // Error catcher for debugging
+            '/js/wordcloud.js'
+        ];
     }
 }
 

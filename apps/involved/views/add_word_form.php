@@ -46,52 +46,98 @@ require_once __DIR__ . '/../../../views/header.php';
             const likeCount = document.getElementById('like-count');
             const heart = document.getElementById('like-heart');
             
-            // Create the full wordcloud URL
-            const scheme = window.location.protocol.replace(':', '');
-            const host = window.location.host;
-            const lang = '<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>';
-            const eventKey = '<?php echo htmlspecialchars($eventData['key']); ?>';
-            const wordCloudId = '<?php echo $wordCloudData['id']; ?>';
-            
-            const wordCloudUrl = `${scheme}://${host}/${lang}/involved/${eventKey}/wordcloud/${wordCloudId}`;
-            
-            function fetchLikes() {
-                fetch('/ajax/likes?url=' + encodeURIComponent(wordCloudUrl))
+            // Ensure window.OverlayClientHelper exists
+            if (typeof window.OverlayClientHelper !== 'undefined') {
+                // Get current URL
+                if (!window.OverlayClientHelper.currentUrl) {
+                    // Set URL manually if calculateCurrentUrl isn't available
+                    const urlObj = new URL(window.location.href);
+                    urlObj.hash = '';
+                    urlObj.search = '';
+                    window.OverlayClientHelper.currentUrl = urlObj.toString();
+                    console.log('[Page] Set URL manually:', window.OverlayClientHelper.currentUrl);
+                }
+                
+                // Start presence tracking
+                if (typeof window.OverlayClientHelper.startPresenceTracking === 'function') {
+                    window.OverlayClientHelper.startPresenceTracking();
+                }
+                
+                function fetchLikes() {
+                    fetch('/ajax/likes?url=' + encodeURIComponent(window.OverlayClientHelper.currentUrl))
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.success) {
+                                likeCount.textContent = data.likes;
+                            }
+                        })
+                        .catch(error => console.error('Error fetching likes:', error));
+                }
+
+                function incrementLike() {
+                    // Show animation regardless of server response
+                    heart.style.transform = 'scale(1.3)';
+                    setTimeout(() => heart.style.transform = '', 200);
+                    
+                    // Send like using the OverlayClientHelper
+                    if (typeof window.OverlayClientHelper.like === 'function') {
+                        window.OverlayClientHelper.like()
+                            .then(likes => {
+                                likeCount.textContent = likes;
+                            })
+                            .catch(error => console.error('Error incrementing like:', error));
+                    } else {
+                        // Fallback if like method doesn't exist
+                        const formData = new FormData();
+                        formData.append('url', window.OverlayClientHelper.currentUrl);
+                        
+                        fetch('/ajax/like', {
+                            method: 'POST',
+                            body: formData
+                        })
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.success) {
+                                likeCount.textContent = data.likes;
+                            }
+                        })
+                        .catch(error => console.error('Error incrementing like:', error));
+                    }
+                }
+
+                likeBtn.addEventListener('click', incrementLike);
+                
+                // Load initial likes count
+                fetchLikes();
+            } else {
+                console.error("OverlayClientHelper not available");
+                // Basic like functionality without the helper
+                likeBtn.addEventListener('click', function() {
+                    const formData = new FormData();
+                    const currentUrl = window.location.href.split('?')[0].split('#')[0];
+                    formData.append('url', currentUrl);
+                    
+                    fetch('/ajax/like', {
+                        method: 'POST',
+                        body: formData
+                    })
                     .then(res => res.json())
                     .then(data => {
                         if (data.success) {
                             likeCount.textContent = data.likes;
                         }
-                    })
-                    .catch(error => console.error('Error fetching likes:', error));
-            }
-
-            function incrementLike() {
-                // Show animation regardless of server response
-                heart.style.transform = 'scale(1.3)';
-                setTimeout(() => heart.style.transform = '', 200);
+                    });
+                });
                 
-                // Send like to server
-                fetch('/ajax/like', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    },
-                    body: 'url=' + encodeURIComponent(wordCloudUrl)
-                })
-                .then(res => res.json())
-                .then(data => {
-                    if (data.success) {
-                        likeCount.textContent = data.likes;
-                    }
-                })
-                .catch(error => console.error('Error incrementing like:', error));
+                // Initial load
+                fetch('/ajax/likes?url=' + encodeURIComponent(window.location.href.split('?')[0].split('#')[0]))
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success) {
+                            likeCount.textContent = data.likes;
+                        }
+                    });
             }
-
-            likeBtn.addEventListener('click', incrementLike);
-            
-            // Load initial likes count
-            fetchLikes();
         });
         </script>
     </article>
