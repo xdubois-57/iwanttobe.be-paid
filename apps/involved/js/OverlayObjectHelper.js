@@ -160,6 +160,32 @@ class OverlayObjectHelper {
         this.render();
     }
 
+    /**
+     * Set the heart count and trigger animations if needed
+     * @param {number} count - The new heart count
+     */
+    setHeartCount(count) {
+        if (typeof count !== 'number' || isNaN(count)) {
+            console.warn('[OverlayObjectHelper] Invalid heart count provided:', count);
+            return;
+        }
+        
+        // Store previous count for animation
+        this.previousHeartCount = this.heartCount;
+        this.heartCount = count;
+        
+        // Check for increase in hearts to trigger animation
+        const difference = this.heartCount - this.previousHeartCount;
+        if (difference > 0) {
+            for (let i = 0; i < difference; i++) {
+                this.queueHeartAnimation();
+            }
+        }
+        
+        this.render();
+        console.log(`[OverlayObjectHelper] Heart count updated to: ${count}`);
+    }
+
     isDarkMode() {
         // Check if the browser/OS prefers dark mode
         const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -258,7 +284,7 @@ class OverlayObjectHelper {
             .then(res => res.json())
             .then(data => {
                 if (data.success) {
-                    console.log('[OverlayObjectHelper] Presence update:', data);
+                    console.log('[OverlayObjectHelper] Presence update raw data:', JSON.stringify(data));
                     const presenceElement = document.getElementById('presence-count-display');
                     if (presenceElement) {
                         presenceElement.innerHTML = `👤 ${data.count}`;
