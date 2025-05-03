@@ -17,6 +17,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+require_once __DIR__ . '/../core/ConfigManager.php';
+
 /**
  * Setup Controller
  *
@@ -27,6 +29,14 @@ class SetupController {
      * Show the main setup page
      */
     public function index() {
+        // Check if website is already initialized
+        $configManager = ConfigManager::getInstance();
+        if ($configManager->isInitialised()) {
+            // Redirect to homepage if setup is already completed
+            header('Location: /');
+            exit;
+        }
+        
         $credentialsFile = __DIR__ . '/../config/credentials.php';
         $actionUrl = '/setup/db';
         $step = 1;
@@ -467,6 +477,10 @@ class SetupController {
                     $success = true;
                     $message = "Database '{$dbConfig['name']}' initialized successfully with all required tables!";
                     $step = 4; // Move to completion step
+                    
+                    // Mark website as initialized
+                    $configManager = ConfigManager::getInstance();
+                    $configManager->markAsInitialised();
                 } catch (PDOException $e) {
                     $connectivityError = $e->getMessage();
                     $success = false;
