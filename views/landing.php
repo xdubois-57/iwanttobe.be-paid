@@ -78,7 +78,12 @@ $wordCloudData = json_encode($wordCloudWords);
     <div id="word-cloud-container" data-words='<?php echo $wordCloudData; ?>' data-canvas-height="280" data-clickable="false" class="word-cloud-wrapper"></div>
 
     <div class="grid">
-        <?php foreach ($apps as $app): ?>
+        <?php 
+        // Sort apps by order
+        usort($apps, function($a, $b) {
+            return $a->getOrder() <=> $b->getOrder();
+        });
+        foreach ($apps as $app): ?>
         <a href="/<?php echo $lang->getCurrentLanguage(); ?>/<?php echo htmlspecialchars($app->getSlug()); ?>" class="app-card">
             <?php if ($app->getSlug() === 'drive'): ?>
                 <svg class="app-logo" style="margin-bottom:10px;" viewBox="8 14 8 5" width="50" height="50" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
