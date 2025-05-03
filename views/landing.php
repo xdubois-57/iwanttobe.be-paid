@@ -75,7 +75,7 @@ $wordCloudData = json_encode($wordCloudWords);
             <?php echo $lang->translate('welcome_text'); ?>
         </p>
     </article>
-    <div id="word-cloud-container" data-words='<?php echo $wordCloudData; ?>' data-canvas-height="280" class="word-cloud-wrapper"></div>
+    <div id="word-cloud-container" data-words='<?php echo $wordCloudData; ?>' data-canvas-height="280" data-clickable="false" class="word-cloud-wrapper"></div>
 
     <div class="grid">
         <?php foreach ($apps as $app): ?>

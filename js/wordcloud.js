@@ -17,7 +17,7 @@
  */
 
 class WordCloudManager {
-    constructor(containerId, options = {}, canvasHeight = null) {
+    constructor(containerId, options = {}, canvasHeight = null, clickable = true) {
         this.container = document.getElementById(containerId);
         if (!this.container) {
             throw new Error(`Container with id '${containerId}' not found`);
@@ -29,10 +29,14 @@ class WordCloudManager {
         this.currentMaxWeight = 1;
         this.options = this.getDefaultOptions(options);
         this.userCanvasHeight = canvasHeight;
+        this.isClickable = clickable;
         this.initializeCanvas();
         this.isFullScreen = false;
         this.fullScreenOverlay = null;
-        this.setupFullScreenToggle();
+        
+        if (this.isClickable) {
+            this.setupFullScreenToggle();
+        }
         
         // Setup theme change observer
         this.setupThemeObserver();
@@ -195,8 +199,10 @@ class WordCloudManager {
         // Set height to user-provided value or fill available space
         this.canvas.height = this.userCanvasHeight !== null ? this.userCanvasHeight : this.calculateAvailableHeight();
         
-        // Add cursor style to indicate it's clickable
-        this.canvas.style.cursor = 'pointer';
+        // Add cursor style to indicate it's clickable only if it's clickable
+        if (this.isClickable) {
+            this.canvas.style.cursor = 'pointer';
+        }
         
         this.container.appendChild(this.canvas);
     }
@@ -483,17 +489,22 @@ class WordCloudManager {
         const canvasHeight = container.hasAttribute('data-canvas-height') 
             ? parseInt(container.getAttribute('data-canvas-height'), 10) 
             : 400;
+            
+        // Check if the word cloud should be clickable
+        const clickable = container.hasAttribute('data-clickable') 
+            ? container.getAttribute('data-clickable') === 'true' 
+            : true;
         
         // Prioritize dynamic word cloud if data-wordcloud-url is present
         if (container.hasAttribute('data-wordcloud-url')) {
             const apiUrl = container.getAttribute('data-wordcloud-url');
-            const wordCloud = new WordCloudManager('word-cloud-container', {}, canvasHeight);
+            const wordCloud = new WordCloudManager('word-cloud-container', {}, canvasHeight, clickable);
             wordCloud.startPolling(apiUrl);
             wordCloud.makeResponsive();
             wordCloud.addMobileScrollBehavior();
         } else if (container.hasAttribute('data-words')) {
             const wordCloudData = JSON.parse(container.getAttribute('data-words'));
-            const wordCloud = new WordCloudManager('word-cloud-container', {}, canvasHeight);
+            const wordCloud = new WordCloudManager('word-cloud-container', {}, canvasHeight, clickable);
             wordCloud.loadStaticData(wordCloudData);
             wordCloud.makeResponsive();
             wordCloud.addMobileScrollBehavior();
