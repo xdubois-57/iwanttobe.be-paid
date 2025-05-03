@@ -57,6 +57,9 @@ return [
     'share_error' => 'Não foi possível compartilhar. Link copiado para a área de transferência como alternativa.',
     'share_link_prompt' => 'Copie este link:',
     
+    // Short description for landing page
+    'short_description' => 'Nuvens de palavras, enquetes e retrospectivas – torne suas reuniões interativas e inesquecíveis.',
+    
     // Controller messages
     'event_create_failed' => 'Falha ao criar o evento. Erro:',
     'event_not_found' => 'Evento não encontrado',

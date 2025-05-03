@@ -57,6 +57,9 @@ return [
     'share_error' => 'Nie udało się udostępnić. Link skopiowany do schowka zamiast tego.',
     'share_link_prompt' => 'Skopiuj ten link:',
     
+    // Short description for landing page
+    'short_description' => 'Chmury słów, ankiety i retrospektywy – spraw, aby Twoje spotkania były interaktywne i niezapomniane.',
+    
     // Controller messages
     'event_create_failed' => 'Nie udało się utworzyć wydarzenia. Błąd:',
     'event_not_found' => 'Nie znaleziono wydarzenia',

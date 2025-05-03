@@ -67,5 +67,8 @@ return [
     'word_add_failed' => 'Kunne ikke legge til ord',
     'unauthorized_access' => 'Uautorisert tilgangsforsøk',
     'word_parameter_is_required' => 'Ordparameter er påkrevd',
-    'unauthorized' => 'Uautorisert'
+    'unauthorized' => 'Uautorisert',
+    
+    // Short description for landing page
+    'short_description' => 'Ordskyer, avstemninger og retrospektiver – gjør møtene dine interaktive og minneverdige.',
 ];

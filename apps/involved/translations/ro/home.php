@@ -57,6 +57,9 @@ return [
     'share_error' => 'Nu s-a putut distribui. Link copiat în clipboard în schimb.',
     'share_link_prompt' => 'Copiază acest link:',
     
+    // Short description for landing page
+    'short_description' => 'Nori de cuvinte, sondaje și retrospective – fă-ți întâlnirile interactive și de neuitat.',
+    
     // Controller messages
     'event_create_failed' => 'Crearea evenimentului a eșuat. Eroare:',
     'event_not_found' => 'Eveniment negăsit',

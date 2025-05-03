@@ -67,5 +67,8 @@ return [
     'word_add_failed' => 'Η προσθήκη λέξης απέτυχε',
     'unauthorized_access' => 'Μη εξουσιοδοτημένη προσπάθεια πρόσβασης',
     'word_parameter_is_required' => 'Η παράμετρος λέξης είναι υποχρεωτική',
-    'unauthorized' => 'Μη εξουσιοδοτημένο'
+    'unauthorized' => 'Μη εξουσιοδοτημένο',
+    
+    // Short description for landing page
+    'short_description' => 'Σύννεφα λέξεων, δημοσκοπήσεις και αναδρομές – κάντε τις συναντήσεις σας διαδραστικές και αξέχαστες.',
 ];

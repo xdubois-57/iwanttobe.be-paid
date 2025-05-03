@@ -67,5 +67,8 @@ return [
     'word_add_failed' => 'Impossibile aggiungere la parola',
     'unauthorized_access' => 'Tentativo di accesso non autorizzato',
     'word_parameter_is_required' => 'Il parametro parola è richiesto',
-    'unauthorized' => 'Non autorizzato'
+    'unauthorized' => 'Non autorizzato',
+    
+    // Short description for landing page
+    'short_description' => 'Nuvole di parole, sondaggi e retrospettive: rendi i tuoi incontri interattivi e memorabili.',
 ];

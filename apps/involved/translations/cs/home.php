@@ -57,6 +57,9 @@ return [
     'share_error' => 'Nelze sdílet. Odkaz byl místo toho zkopírován do schránky.',
     'share_link_prompt' => 'Zkopírujte tento odkaz:',
     
+    // Short description for landing page
+    'short_description' => 'Word cloudy, ankety a retrospektivy – udělejte své schůzky interaktivními a nezapomenutelnými.',
+    
     // Controller messages
     'event_create_failed' => 'Nepodařilo se vytvořit událost. Chyba:',
     'event_not_found' => 'Událost nenalezena',

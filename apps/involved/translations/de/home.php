@@ -62,6 +62,9 @@ return [
     'share_error' => 'Konnte nicht teilen. Link stattdessen in die Zwischenablage kopiert.',
     'share_link_prompt' => 'Diesen Link kopieren:',
     
+    // Short description for landing page
+    'short_description' => 'Wortwolken, Umfragen und Retrospektiven – machen Sie Ihre Treffen interaktiv und unvergesslich.',
+    
     // Controller messages
     'event_create_failed' => 'Event konnte nicht erstellt werden. Fehler:',
     'event_not_found' => 'Event nicht gefunden',

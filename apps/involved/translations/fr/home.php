@@ -63,6 +63,9 @@ return [
     'share_error' => 'Impossible de partager. Lien copié dans le presse-papiers à la place.',
     'share_link_prompt' => 'Copiez ce lien:',
     
+    // Short description for landing page
+    'short_description' => 'Nuages de mots, sondages et rétrospectives – rendez vos réunions interactives et inoubliables.',
+    
     // Controller messages
     'event_create_failed' => 'Échec de la création de l\'événement. Erreur:',
     'event_not_found' => 'Événement non trouvé',

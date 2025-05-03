@@ -57,6 +57,9 @@ return [
     'share_error' => 'Nem sikerült megosztani. A link helyette a vágólapra másolva.',
     'share_link_prompt' => 'Másolja ezt a linket:',
     
+    // Short description for landing page
+    'short_description' => 'Szófelhők, szavazások és retrospektívek – tedd az értekezleteidet interaktívvá és emlékezetessé.',
+    
     // Controller messages
     'event_create_failed' => 'Az esemény létrehozása sikertelen. Hiba:',
     'event_not_found' => 'Esemény nem található',

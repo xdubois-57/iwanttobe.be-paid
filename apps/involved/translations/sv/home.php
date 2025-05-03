@@ -67,5 +67,8 @@ return [
     'word_add_failed' => 'Kunde inte lägga till ord',
     'unauthorized_access' => 'Obehörigt åtkomstförsök',
     'word_parameter_is_required' => 'Ordparameter krävs',
-    'unauthorized' => 'Obehörig'
+    'unauthorized' => 'Obehörig',
+    
+    // Short description for landing page
+    'short_description' => 'Ordmoln, omröstningar och retrospektiv – gör dina möten interaktiva och minnesvärda.',
 ];

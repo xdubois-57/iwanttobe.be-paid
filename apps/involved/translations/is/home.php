@@ -67,5 +67,8 @@ return [
     'word_add_failed' => 'Ekki tókst að bæta við orði',
     'unauthorized_access' => 'Óheimil aðgangstilraun',
     'word_parameter_is_required' => 'Orðfæribreyta er nauðsynleg',
-    'unauthorized' => 'Óheimilt'
+    'unauthorized' => 'Óheimilt',
+    
+    // Short description for landing page
+    'short_description' => 'Orðaský, kannanir og endurmat – gerðu fundina þína gagnvirka og eftirminnilega.',
 ];

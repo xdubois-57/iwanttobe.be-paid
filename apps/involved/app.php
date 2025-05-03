@@ -101,6 +101,16 @@ class InvolvedApp implements AppInterface {
         $lang->loadAppTranslationsForPath($this->getTranslationsPath());
         return $lang->translate('description');
     }
+    
+    /**
+     * Get a shorter description for landing page
+     */
+    public function getShortDescription(): string
+    {
+        $lang = \LanguageController::getInstance();
+        $lang->loadAppTranslationsForPath($this->getTranslationsPath());
+        return $lang->translate('short_description');
+    }
 }
 
 // Auto-register this app when the file is included

@@ -64,6 +64,9 @@ return [
     'share_error' => 'Could not share. Link copied to clipboard instead.',
     'share_link_prompt' => 'Copy this link:',
     
+    // Short description for landing page
+    'short_description' => 'Word clouds, polls, and retrospectives – make your meetings interactive and memorable.',
+    
     // Controller messages
     'event_create_failed' => 'Failed to create event. Error:',
     'event_not_found' => 'Event not found',

@@ -57,6 +57,9 @@ return [
     'share_error' => 'Jakaminen epäonnistui. Linkki kopioitu leikepöydälle vaihtoehtoisesti.',
     'share_link_prompt' => 'Kopioi tämä linkki:',
     
+    // Short description for landing page
+    'short_description' => 'Sanapilvet, kyselyt ja retrospektiivit – tee kokouksistasi interaktiivisia ja unohtumattomia.',
+    
     // Controller messages
     'event_create_failed' => 'Tapahtuman luominen epäonnistui. Virhe:',
     'event_not_found' => 'Tapahtumaa ei löydy',

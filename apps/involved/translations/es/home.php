@@ -60,6 +60,9 @@ return [
     'share_error' => 'No se pudo compartir. Enlace copiado al portapapeles en su lugar.',
     'share_link_prompt' => 'Copiar este enlace:',
     
+    // Short description for landing page
+    'short_description' => 'Nubes de palabras, encuestas y retrospectivas: haz tus reuniones interactivas e inolvidables.',
+    
     // Controller messages
     'event_create_failed' => 'Error al crear el evento. Error:',
     'event_not_found' => 'Evento no encontrado',

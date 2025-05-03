@@ -57,6 +57,9 @@ return [
     'share_error' => 'Kunne ikke dele. Link kopieret til udklipsholder i stedet.',
     'share_link_prompt' => 'Kopier dette link:',
     
+    // Short description for landing page
+    'short_description' => 'Ordskyer, afstemninger og retrospektiver – gør dine møder interaktive og mindeværdige.',
+    
     // Controller messages
     'event_create_failed' => 'Kunne ikke oprette begivenhed. Fejl:',
     'event_not_found' => 'Begivenhed ikke fundet',

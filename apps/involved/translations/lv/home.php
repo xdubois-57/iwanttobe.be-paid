@@ -49,6 +49,9 @@ return [
     'share_error' => 'Nevarēja dalīties. Saite nokopēta starpliktuvē.',
     'share_link_prompt' => 'Kopējiet šo saiti:',
     
+    // Short description for landing page
+    'short_description' => 'Vārdu mākoņi, aptaujas un retrospektīvas – padariet savas sanāksmes interaktīvas un neaizmirstamas.',
+    
     // Controller messages
     'event_create_failed' => 'Neizdevās izveidot pasākumu. Kļūda:',
     'event_not_found' => 'Pasākums nav atrasts.',

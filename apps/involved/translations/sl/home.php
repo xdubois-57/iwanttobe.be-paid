@@ -57,6 +57,9 @@ return [
     'share_error' => 'Deljenje ni uspelo. Povezava je bila namesto tega kopirana v odložišče.',
     'share_link_prompt' => 'Kopirajte to povezavo:',
     
+    // Short description for landing page
+    'short_description' => 'Oblaki besed, ankete in retrospektive – naredite svoja srečanja interaktivna in nepozabna.',
+    
     // Controller messages
     'event_create_failed' => 'Ustvarjanje dogodka ni uspelo. Napaka:',
     'event_not_found' => 'Dogodek ni bil najden',

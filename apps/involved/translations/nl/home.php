@@ -57,6 +57,9 @@ return [
     'share_error' => 'Kon niet delen. Link in plaats daarvan naar klembord gekopieerd.',
     'share_link_prompt' => 'Kopieer deze link:',
     
+    // Short description for landing page
+    'short_description' => 'Woordwolken, peilingen en retrospectives – maak je bijeenkomsten interactief en onvergetelijk.',
+    
     // Controller messages
     'event_create_failed' => 'Kon evenement niet aanmaken. Fout:',
     'event_not_found' => 'Evenement niet gevonden',
