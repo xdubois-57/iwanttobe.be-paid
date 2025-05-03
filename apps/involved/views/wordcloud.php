@@ -10,6 +10,32 @@ $lang = LanguageController::getInstance();
         margin-bottom: 2rem;
     }
     
+    .fullscreen-qr-container {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 10001;
+        background-color: rgba(255, 255, 255, 0.9);
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        max-width: 300px;
+        text-align: center;
+        display: none;
+    }
+    
+    .fullscreen-qr-container img, 
+    .fullscreen-qr-container svg {
+        max-width: 100%;
+        height: auto;
+    }
+    
+    .fullscreen-password {
+        margin-top: 10px;
+        font-size: 0.9rem;
+        word-break: break-all;
+    }
+    
     @media (max-width: 768px) {
         .word-cloud-wrapper {
             margin-bottom: 1.5rem;
@@ -18,6 +44,10 @@ $lang = LanguageController::getInstance();
         .word-cloud-wrapper canvas {
             max-width: 100%;
             height: auto;
+        }
+        
+        .fullscreen-qr-container {
+            max-width: 180px;
         }
     }
 </style>
@@ -50,7 +80,7 @@ require_once __DIR__ . '/../../../views/header.php';
                 $qrSvg = QrHelper::renderSvg($addWordUrl);
                 ?>
                 <div style="max-width: 200px; margin: 0 auto;">
-                    <a href="<?php echo $addWordUrl; ?>">
+                    <a href="<?php echo $addWordUrl; ?>" id="qr-code-link">
                         <?php echo $qrSvg; ?>
                     </a>
                 </div>
@@ -61,8 +91,8 @@ require_once __DIR__ . '/../../../views/header.php';
                 </div>
                 <?php if (!empty($eventData['password'])): ?>
                 <div style="margin-top: 1rem; text-align: center;">
-                    <h3>Event Password</h3>
-                    <p style="word-break: break-all;">
+                    <p><strong>Event Password</strong></p>
+                    <p style="word-break: break-all;" id="event-password">
                         <?php echo htmlspecialchars($eventData['password']); ?>
                     </p>
                 </div>
@@ -147,7 +177,37 @@ require_once __DIR__ . '/../../../views/header.php';
         <?php endif; ?>
     </article>
 </main>
+
+<!-- Fullscreen QR container -->
+<div class="fullscreen-qr-container" id="fullscreen-qr">
+    <a href="<?php echo $addWordUrl; ?>" target="_blank">
+        <?php echo $qrSvg; ?>
+    </a>
+    <?php if (!empty($eventData['password'])): ?>
+    <div class="fullscreen-password">
+        <strong>Event Password:</strong><br>
+        <?php echo htmlspecialchars($eventData['password']); ?>
+    </div>
+    <?php endif; ?>
+</div>
+
 <!-- Include WordCloud library -->
 <script src="/vendor/timdream/wordcloud2.js"></script>
 <script src="/js/wordcloud.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Setup fullscreen QR code toggle
+    const fullscreenQR = document.getElementById('fullscreen-qr');
+    
+    // Custom handler for WordCloud fullscreen events
+    window.addEventListener('wordcloud-fullscreen-change', function(e) {
+        if (e.detail.isFullScreen) {
+            fullscreenQR.style.display = 'block';
+        } else {
+            fullscreenQR.style.display = 'none';
+        }
+    });
+});
+</script>
 <?php require_once __DIR__ . '/../../../views/footer.php'; ?>

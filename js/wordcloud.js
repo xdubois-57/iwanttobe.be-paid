@@ -97,6 +97,11 @@ class WordCloudManager {
         // Set fullscreen state
         this.isFullScreen = true;
         
+        // Dispatch custom event for fullscreen change
+        window.dispatchEvent(new CustomEvent('wordcloud-fullscreen-change', {
+            detail: { isFullScreen: true }
+        }));
+        
         // Add escape key listener
         this.escKeyHandler = (e) => {
             if (e.key === 'Escape') {
@@ -139,6 +144,11 @@ class WordCloudManager {
             document.removeEventListener('keydown', this.escKeyHandler);
             this.fullScreenOverlay = null;
             this.isFullScreen = false;
+            
+            // Dispatch custom event for fullscreen change
+            window.dispatchEvent(new CustomEvent('wordcloud-fullscreen-change', {
+                detail: { isFullScreen: false }
+            }));
         }
     }
     

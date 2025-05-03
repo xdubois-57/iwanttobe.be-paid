@@ -6,6 +6,11 @@ require_once __DIR__ . '/../../../views/header.php';
 <main class="container">
     <article>
         <h1><?php echo htmlspecialchars($wordCloudData['question']); ?></h1>
+        <p style="margin-top: 0.5rem;">
+            <a href="/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/<?php echo urlencode($eventData['key']); ?>/<?php echo $wordCloudData['id']; ?>">
+                &larr; Back to word cloud
+            </a>
+        </p>
         
         <?php if (isset($_GET['success']) && $_GET['success'] === 'true'): ?>
         <div style="background:#d4edda; color:#155724; padding:1rem; margin:1rem 0; border-radius:0.3rem;">
@@ -32,14 +37,6 @@ require_once __DIR__ . '/../../../views/header.php';
             >
             <button type="submit" style="width:100%;">Add Word</button>
         </form>
-        
-
-        
-        <p style="margin-top:2rem;">
-            <a href="/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/<?php echo urlencode($eventData['key']); ?>/<?php echo $wordCloudData['id']; ?>">
-                &larr; Back to word cloud
-            </a>
-        </p>
     </article>
 </main>
 <?php require_once __DIR__ . '/../../../views/footer.php'; ?>
