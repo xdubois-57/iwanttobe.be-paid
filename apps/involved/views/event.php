@@ -73,10 +73,20 @@ use chillerlan\QRCode\QROptions;
     <script>
     function deleteWordCloud(lang, eventCode, wordCloudId) {
         if (confirm('Are you sure you want to delete this word cloud?')) {
-            fetch('/' + lang + '/involved/' + eventCode + '/wordcloud/' + wordCloudId + '/delete', {
+            const url = '/' + encodeURIComponent(lang) + '/involved/' + encodeURIComponent(eventCode) + '/wordcloud/' + encodeURIComponent(wordCloudId) + '/delete';
+            console.log('Deleting word cloud, URL:', url);
+            fetch(url, {
                 method: 'POST'
             })
-            .then(response => response.json())
+            .then(response => {
+                const contentType = response.headers.get('content-type');
+                if (contentType && contentType.indexOf('application/json') !== -1) {
+                    return response.json();
+                } else {
+                    // Not JSON, treat as success
+                    return { success: true };
+                }
+            })
             .then(data => {
                 if (data.success) {
                     window.location.reload();
