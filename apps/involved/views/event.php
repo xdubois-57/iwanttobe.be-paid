@@ -37,24 +37,30 @@ use chillerlan\QRCode\QROptions;
             display: flex;
             align-items: center;
             padding: 0.5rem 1rem;
-            background: #f4f4f4;
+            background: var(--background-secondary, #f4f4f4);
+            color: var(--text-primary, #121212);
             border-radius: 1rem;
             transition: background 0.2s;
             cursor: pointer;
+            /* Dark mode improvements */
+            background: var(--background-secondary, #2d2d2d);
+            color: var(--text-primary, #ffffff);
+            border: 1px solid var(--border-color, #404040);
         }
         .wordcloud-list-content:hover {
-            background: #e0e0e0;
+            background: var(--background-secondary-hover, #353535);
         }
         .wordcloud-list-question {
             cursor: pointer;
             border-radius: 0.7rem;
             padding: 0.1rem 0.4rem;
             transition: none;
-            background: none;
+            background: var(--background-secondary, #2d2d2d);
             font-size: 1rem;
             line-height: 1.2;
             display: flex;
             align-items: center;
+            color: var(--text-primary, #ffffff);
         }
         .word-cloud-delete {
             margin-left: 0.5rem;
@@ -62,7 +68,7 @@ use chillerlan\QRCode\QROptions;
             background: none;
             border: none;
             cursor: pointer;
-            color: #666;
+            color: var(--text-secondary, #ffffff);
             font-size: 1.2rem;
             line-height: 1;
             vertical-align: middle;

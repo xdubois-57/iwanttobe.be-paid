@@ -115,10 +115,13 @@ class WordCloudModel
 
     /**
      * Get a word cloud by ID
+     * @param int $id
+     * @return array|null
      */
-    public function getById(int $id): array|null
+    public function getById(int $id): ?array
     {
-        return $this->db->fetchOne('SELECT * FROM WORDCLOUD WHERE id = ?', [$id]);
+        $result = $this->db->fetchOne('SELECT * FROM WORDCLOUD WHERE id = ?', [$id]);
+        return $result === false ? null : $result;
     }
 
     /**

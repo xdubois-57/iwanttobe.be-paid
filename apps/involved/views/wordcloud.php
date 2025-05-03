@@ -15,7 +15,8 @@ $lang = LanguageController::getInstance();
         bottom: 20px;
         right: 20px;
         z-index: 10001;
-        background-color: rgba(255, 255, 255, 0.9);
+        background-color: var(--background-primary-translucent, rgba(255, 255, 255, 0.9));
+        color: var(--text-primary, #121212);
         padding: 15px;
         border-radius: 8px;
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
@@ -34,6 +35,7 @@ $lang = LanguageController::getInstance();
         margin-top: 10px;
         font-size: 0.9rem;
         word-break: break-all;
+        color: var(--text-secondary, #333);
     }
     
     @media (max-width: 768px) {
@@ -49,6 +51,45 @@ $lang = LanguageController::getInstance();
         .fullscreen-qr-container {
             max-width: 180px;
         }
+    }
+    
+    .wordcloud-list-item {
+        display: inline-block;
+        margin: 0.3rem;
+        position: relative;
+    }
+    
+    .wordcloud-list-content {
+        display: flex;
+        align-items: center;
+        padding: 0.5rem 1rem;
+        background: var(--background-secondary, #f4f4f4);
+        color: var(--text-primary, #121212);
+        border-radius: 1rem;
+        transition: background 0.2s;
+        cursor: pointer;
+    }
+    
+    .wordcloud-list-content:hover {
+        background: var(--background-secondary-hover, #e0e0e0);
+    }
+    
+    .wordcloud-list-question {
+        font-size: 1rem;
+    }
+    
+    .word-cloud-delete {
+        margin-left: 0.5rem;
+        padding: 0px;
+        background: none;
+        border: medium;
+        cursor: pointer;
+        color: var(--text-secondary, #666);
+        font-size: 1.2rem;
+    }
+    
+    .word-cloud-delete:hover {
+        color: #dc3545;
     }
 </style>
 <?php
@@ -121,10 +162,12 @@ require_once __DIR__ . '/../../../views/header.php';
                     }
                     if ($wordText === '') continue;
                 ?>
-                <li style="display: inline-block; margin: 0.3rem; position: relative;">
-                    <div style="display: flex; align-items: center; padding: 0.5rem 1rem; background: rgb(244, 244, 244); border-radius: 1rem;">
-                        <?php echo htmlspecialchars($wordText, ENT_QUOTES, 'UTF-8'); ?>
-                        <button onclick="deleteWord(<?php echo $wordCloudData['id']; ?>, '<?php echo addslashes($wordText); ?>')" style="margin-left: 0.5rem; padding: 0px; background: none; border: medium; cursor: pointer; color: rgb(102, 102, 102); font-size: 1.2rem;">×</button>
+                <li class="wordcloud-list-item">
+                    <div class="wordcloud-list-content">
+                        <span class="wordcloud-list-question">
+                            <?php echo htmlspecialchars($wordText, ENT_QUOTES, 'UTF-8'); ?>
+                        </span>
+                        <button onclick="deleteWord(<?php echo $wordCloudData['id']; ?>, '<?php echo addslashes($wordText); ?>')" class="word-cloud-delete">×</button>
                     </div>
                 </li>
             <?php endforeach; ?>
@@ -132,7 +175,7 @@ require_once __DIR__ . '/../../../views/header.php';
 
             <script>
             function deleteWord(wordCloudId, word) {
-                fetch('/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/<?php echo urlencode($eventData['key']); ?>/wordcloud/<?php echo $wordCloudData['id']; ?>/delete', {
+                fetch('/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/<?php echo urlencode($eventData['key']); ?>/wordcloud/<?php echo $wordCloudData['id']; ?>/word/delete', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
@@ -142,7 +185,8 @@ require_once __DIR__ . '/../../../views/header.php';
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        refreshWordList();
+                        // Add a small delay before refreshing to ensure server has updated the data
+                        setTimeout(refreshWordList, 300);
                     } else {
                         alert('<?php echo htmlspecialchars($lang->translate('wordcloud_failed_delete')); ?>');
                     }
@@ -161,11 +205,28 @@ require_once __DIR__ . '/../../../views/header.php';
                     .then(words => {
                         wordListUl.innerHTML = '';
                         words.forEach(word => {
+                            const wordText = Array.isArray(word) ? word[0] : word;
+                            if (!wordText) return;
+                            
                             const li = document.createElement('li');
-                            li.setAttribute('style', 'display: inline-block; margin: 0.3rem; position: relative;');
+                            li.className = 'wordcloud-list-item';
+                            
                             const div = document.createElement('div');
-                            div.setAttribute('style', 'display: flex; align-items: center; padding: 0.5rem 1rem; background: rgb(244, 244, 244); border-radius: 1rem;');
-                            div.innerHTML = `${Array.isArray(word) ? word[0] : word}<button onclick=\"deleteWord(${<?php echo $wordCloudData['id']; ?>}, '${(Array.isArray(word) ? word[0] : word).replace(/'/g, "\\'")}')\" style=\"margin-left: 0.5rem; padding: 0px; background: none; border: medium; cursor: pointer; color: rgb(102, 102, 102); font-size: 1.2rem;\">×</button>`;
+                            div.className = 'wordcloud-list-content';
+                            
+                            const span = document.createElement('span');
+                            span.className = 'wordcloud-list-question';
+                            span.textContent = wordText;
+                            
+                            const button = document.createElement('button');
+                            button.className = 'word-cloud-delete';
+                            button.textContent = '×';
+                            button.onclick = function() {
+                                deleteWord(<?php echo $wordCloudData['id']; ?>, wordText.replace(/'/g, "\\'"));
+                            };
+                            
+                            div.appendChild(span);
+                            div.appendChild(button);
                             li.appendChild(div);
                             wordListUl.appendChild(li);
                         });

@@ -33,6 +33,40 @@ class WordCloudManager {
         this.isFullScreen = false;
         this.fullScreenOverlay = null;
         this.setupFullScreenToggle();
+        
+        // Setup theme change observer
+        this.setupThemeObserver();
+    }
+    
+    setupThemeObserver() {
+        // Watch for changes to the data-theme attribute
+        const htmlElement = document.documentElement;
+        const observer = new MutationObserver((mutations) => {
+            for (const mutation of mutations) {
+                if (mutation.type === 'attributes' && mutation.attributeName === 'data-theme') {
+                    console.log('Theme changed to:', htmlElement.getAttribute('data-theme'));
+                    // Update options with new color scheme
+                    const isDarkMode = this.detectDarkMode();
+                    const currentColor = this.options.color;
+                    const newColor = isDarkMode ? 'random-light' : 'random-dark';
+                    
+                    // Only update if color scheme changed
+                    if ((isDarkMode && currentColor !== 'random-light') || 
+                        (!isDarkMode && currentColor !== 'random-dark')) {
+                        console.log('Updating word cloud colors to:', newColor);
+                        this.options.color = newColor;
+                        
+                        // Redraw if we have data
+                        if (this.options.list && this.options.list.length > 0) {
+                            WordCloud(this.canvas, this.options);
+                        }
+                    }
+                }
+            }
+        });
+        
+        // Start observing the html element for data-theme changes
+        observer.observe(htmlElement, { attributes: true, attributeFilter: ['data-theme'] });
     }
 
     setupFullScreenToggle() {
@@ -181,6 +215,23 @@ class WordCloudManager {
     }
 
     getDefaultOptions(customOptions = {}) {
+        // Get override setting for dark mode colors
+        const forceColorScheme = localStorage.getItem('wordCloudColorScheme');
+        
+        // Check if dark mode is active 
+        let isDarkMode = this.detectDarkMode();
+        
+        // Allow manual override if set
+        if (forceColorScheme === 'light') {
+            console.log('Using light color scheme (forced by user setting)');
+            isDarkMode = true;
+        } else if (forceColorScheme === 'dark') {
+            console.log('Using dark color scheme (forced by user setting)');
+            isDarkMode = false;
+        } else {
+            console.log('Word cloud using color scheme:', isDarkMode ? 'random-light (dark mode)' : 'random-dark (light mode)');
+        }
+        
         const defaultOptions = {
             gridSize: 2, // Smaller grid for maximum word density
             // Dynamically scale words so the largest one takes ~20% of the
@@ -192,7 +243,7 @@ class WordCloudManager {
             },
             fontFamily: 'Arial, sans-serif',
             fontWeight: 'bold', // Make all words bold
-            color: 'random-dark', // Colors words in a dark palette
+            color: isDarkMode ? 'random-light' : 'random-dark', // Use light colors in dark mode
             rotateRatio: 0.3, // Minimal rotation for better space usage
             rotationSteps: 2, // Number of different rotation steps
             backgroundColor: 'transparent',
@@ -207,6 +258,26 @@ class WordCloudManager {
         };
         
         return Object.assign({}, defaultOptions, customOptions);
+    }
+
+    detectDarkMode() {
+        // Check if dark mode is enabled by looking at the data-theme attribute
+        const theme = document.documentElement.getAttribute('data-theme');
+        // If theme is null, check localStorage for saved setting
+        if (theme === null) {
+            const savedTheme = localStorage.getItem('theme');
+            console.log('Theme attribute not found, checking localStorage:', savedTheme);
+            if (savedTheme === 'dark') {
+                return true;
+            } else if (savedTheme === 'auto') {
+                // Use system preference when set to auto
+                return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            }
+            return false;
+        }
+        
+        console.log('HTML data-theme:', theme, '(dark mode:', theme === 'dark', ')');
+        return theme === 'dark';
     }
 
     updateWordCloud(data) {
@@ -328,9 +399,89 @@ class WordCloudManager {
         });
     }
 
+    static toggleColorScheme() {
+        const current = localStorage.getItem('wordCloudColorScheme');
+        if (current === 'light') {
+            localStorage.setItem('wordCloudColorScheme', 'dark');
+            console.log('Word cloud will use dark colors on next render');
+        } else {
+            localStorage.setItem('wordCloudColorScheme', 'light');
+            console.log('Word cloud will use light colors on next render');
+        }
+        
+        // Add a small notification to show the setting was changed
+        const notification = document.createElement('div');
+        notification.textContent = current === 'light' ? 
+            'Word cloud: using dark colors (reload to see change)' : 
+            'Word cloud: using light colors (reload to see change)';
+        notification.style.position = 'fixed';
+        notification.style.bottom = '20px';
+        notification.style.left = '20px';
+        notification.style.padding = '10px';
+        notification.style.background = 'rgba(0,0,0,0.7)';
+        notification.style.color = 'white';
+        notification.style.borderRadius = '5px';
+        notification.style.zIndex = '10000';
+        
+        document.body.appendChild(notification);
+        
+        // Remove after 3 seconds
+        setTimeout(() => {
+            if (document.body.contains(notification)) {
+                document.body.removeChild(notification);
+            }
+        }, 3000);
+        
+        return false; // prevent default link behavior
+    }
+
+    static addColorToggle(container) {
+        // Create toggle container
+        const toggleContainer = document.createElement('div');
+        toggleContainer.className = 'wordcloud-controls';
+        toggleContainer.style.textAlign = 'right';
+        toggleContainer.style.marginTop = '10px';
+        toggleContainer.style.fontSize = '0.8rem';
+        
+        // Create toggle link
+        const toggle = document.createElement('a');
+        toggle.href = '#';
+        toggle.style.textDecoration = 'none';
+        toggle.style.padding = '4px 8px';
+        toggle.style.borderRadius = '4px';
+        toggle.style.background = 'rgba(0,0,0,0.1)';
+        
+        // Set text based on current setting
+        const currentScheme = localStorage.getItem('wordCloudColorScheme');
+        toggle.textContent = currentScheme === 'light' ? 
+            '💡 Using bright colors (click for dark)' : 
+            '🔆 Using dark colors (click for bright)';
+            
+        // Add click handler
+        toggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            WordCloudManager.toggleColorScheme();
+            // Reload the page to apply changes
+            window.location.reload();
+            return false;
+        });
+        
+        // Add to container
+        toggleContainer.appendChild(toggle);
+        
+        // Insert after the word cloud container
+        if (container.parentNode) {
+            container.parentNode.insertBefore(toggleContainer, container.nextSibling);
+        }
+    }
+
     static initialize() {
         const container = document.getElementById('word-cloud-container');
         if (!container) return;
+        
+        // Add color toggle control
+        WordCloudManager.addColorToggle(container);
+        
         // Prioritize dynamic word cloud if data-wordcloud-url is present
         if (container.hasAttribute('data-wordcloud-url')) {
             const apiUrl = container.getAttribute('data-wordcloud-url');

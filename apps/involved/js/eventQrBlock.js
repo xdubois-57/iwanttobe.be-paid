@@ -25,12 +25,12 @@ class EventQrBlock {
         const infoDiv = document.createElement('div');
         infoDiv.style.marginTop = '0.5em';
         infoDiv.style.fontSize = '0.95em';
-        infoDiv.style.color = '#333';
+        infoDiv.style.color = 'var(--text-primary, #333)';
         infoDiv.innerHTML = `<div><strong>${this.getTranslation('event_code')}</strong> ${this.escape(this.eventCode)}</div>`;
         if (this.eventPassword) {
             const pwdDiv = document.createElement('div');
             pwdDiv.style.marginTop = '0.4em';
-            pwdDiv.style.color = '#666';
+            pwdDiv.style.color = 'var(--text-secondary, #666)';
             pwdDiv.innerHTML = `<strong>${this.getTranslation('event_password')}</strong> ${this.escape(this.eventPassword)}`;
             infoDiv.appendChild(pwdDiv);
         }
@@ -52,7 +52,7 @@ class EventQrBlock {
             const textDiv = document.createElement('div');
             textDiv.style.marginTop = '0.8em';
             textDiv.style.fontSize = '0.9em';
-            textDiv.style.color = '#555';
+            textDiv.style.color = 'var(--text-secondary, #555)';
             textDiv.innerHTML = this.escape(this.additionalText);
             this.container.appendChild(textDiv);
         }

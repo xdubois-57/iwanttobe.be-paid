@@ -41,6 +41,9 @@ html {
     --table-header-bg: #f8f9fa;
     --table-cell-bg: #ffffff;
     --table-highlight-bg: rgba(26, 115, 232, 0.1);
+    --background-secondary: #f4f4f4;
+    --background-secondary-hover: #e0e0e0;
+    --background-primary-translucent: rgba(255, 255, 255, 0.9);
 }
 
 /* Dark theme */
@@ -77,6 +80,9 @@ html[data-theme="dark"] {
     --table-header-bg: #2a2a2a;
     --table-cell-bg: #1e1e1e;
     --table-highlight-bg: rgba(144, 202, 249, 0.15);
+    --background-secondary: #2a2a2a;
+    --background-secondary-hover: #333333;
+    --background-primary-translucent: rgba(18, 18, 18, 0.9);
 }
 
 body {
