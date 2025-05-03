@@ -342,7 +342,7 @@ class InvolvedHomeController {
         $langSlug = $params['lang'] ?? LanguageController::getInstance()->getCurrentLanguage();
 
         if (empty($word)) {
-            header('Location: /' . $langSlug . '/involved/' . urlencode($code) . '/' . $wcid . '/add?error=missing_word');
+            header('Location: /' . $langSlug . '/involved/' . urlencode($code) . '/wordcloud/' . $wcid . '/add?error=missing_word');
             exit;
         }
 
@@ -372,7 +372,7 @@ class InvolvedHomeController {
         $wcModel->addWord($wcid, $word);
         
         // Redirect back to the add word form instead of wordcloud
-        header('Location: /' . $langSlug . '/involved/' . urlencode($code) . '/' . $wcid . '/add?success=true');
+        header('Location: /' . $langSlug . '/involved/' . urlencode($code) . '/wordcloud/' . $wcid . '/add?success=true');
         exit;
     }
 

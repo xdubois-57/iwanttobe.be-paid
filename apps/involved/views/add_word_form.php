@@ -7,7 +7,7 @@ require_once __DIR__ . '/../../../views/header.php';
     <article>
         <h1><?php echo htmlspecialchars($wordCloudData['question']); ?></h1>
         <p style="margin-top: 0.5rem;">
-            <a href="/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/<?php echo urlencode($eventData['key']); ?>/<?php echo $wordCloudData['id']; ?>">
+            <a href="/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/<?php echo urlencode($eventData['key']); ?>/wordcloud/<?php echo $wordCloudData['id']; ?>">
                 &larr; Back to word cloud
             </a>
         </p>
@@ -24,7 +24,7 @@ require_once __DIR__ . '/../../../views/header.php';
         </div>
         <?php endif; ?>
         
-        <form method="post" action="/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/<?php echo urlencode($eventData['key']); ?>/<?php echo $wordCloudData['id']; ?>/add">
+        <form method="post" action="/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/<?php echo urlencode($eventData['key']); ?>/wordcloud/<?php echo $wordCloudData['id']; ?>/add">
             <input 
                 type="text" 
                 id="word" 

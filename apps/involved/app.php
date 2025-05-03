@@ -73,13 +73,13 @@ class InvolvedApp implements AppInterface {
         $router->get('/{lang}/involved', 'InvolvedHomeController@index');
         $router->post('/{lang}/involved/create', 'InvolvedHomeController@create');
         $router->post('/{lang}/involved/join', 'InvolvedHomeController@join');
-        $router->get('/{lang}/involved/{code}/{wcid}', 'InvolvedHomeController@showWordCloud');
-        $router->get('/{lang}/involved/{code}/{wcid}/words', 'InvolvedHomeController@getWordCloudWords');
+        $router->get('/{lang}/involved/{code}/wordcloud/{wcid}', 'InvolvedHomeController@showWordCloud');
+        $router->get('/{lang}/involved/{code}/wordcloud/{wcid}/words', 'InvolvedHomeController@getWordCloudWords');
         $router->post('/{lang}/involved/{code}/wordcloud/create', 'InvolvedHomeController@createWordCloud');
         $router->post('/{lang}/involved/{code}/wordcloud/{wcid}/delete', 'InvolvedHomeController@deleteWordCloud');
-        $router->get('/{lang}/involved/{code}/{wcid}/add', 'InvolvedHomeController@showAddWordForm');
-        $router->post('/{lang}/involved/{code}/{wcid}/add', 'InvolvedHomeController@addWord');
-        $router->post('/{lang}/involved/{code}/{wcid}/delete', 'InvolvedHomeController@deleteWord');
+        $router->get('/{lang}/involved/{code}/wordcloud/{wcid}/add', 'InvolvedHomeController@showAddWordForm');
+        $router->post('/{lang}/involved/{code}/wordcloud/{wcid}/add', 'InvolvedHomeController@addWord');
+        $router->post('/{lang}/involved/{code}/wordcloud/{wcid}/delete', 'InvolvedHomeController@deleteWord');
         $router->get('/{lang}/involved/{code}', 'InvolvedHomeController@show');
         $router->post('/{lang}/involved/verify-password', 'InvolvedHomeController@verifyPassword');
     }

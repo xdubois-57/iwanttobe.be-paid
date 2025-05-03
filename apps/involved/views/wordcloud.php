@@ -65,7 +65,12 @@ require_once __DIR__ . '/../../../views/header.php';
     </article>
     <div class="grid" style="margin-top: 2rem; gap: 2rem;">
         <article style="grid-column: span 3;">
-            <div id="word-cloud-container" class="word-cloud-wrapper" data-wordcloud-url="/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/<?php echo urlencode($eventData['key']); ?>/<?php echo $wordCloudData['id']; ?>/words"></div>
+            <div id="word-cloud-container" class="word-cloud-wrapper" data-wordcloud-url="/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/<?php echo urlencode($eventData['key']); ?>/wordcloud/<?php echo $wordCloudData['id']; ?>/words"></div>
+            <div style="text-align: center; margin-top: 1rem;">
+                <a href="/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/<?php echo urlencode($eventData['key']); ?>/wordcloud/<?php echo $wordCloudData['id']; ?>/add" class="primary" role="button" target="_blank" style="padding: 0.8rem 2rem; font-size: 1.1rem;">
+                    Add Your Word
+                </a>
+            </div>
         </article>
         <article style="grid-column: span 1; text-align: center;">
             <div id="wordcloud-qr-block" style="margin: 1rem 0;"></div>
@@ -80,7 +85,7 @@ require_once __DIR__ . '/../../../views/header.php';
                 const eventPassword = <?php echo json_encode($eventData['password'] ?? null); ?>;
                 
                 // Construct the add word URL
-                const addWordUrl = `${scheme}://${host}/${lang}/involved/${eventKey}/${wordCloudId}/add`;
+                const addWordUrl = `${scheme}://${host}/${lang}/involved/${eventKey}/wordcloud/${wordCloudId}/add`;
                 
                 // Render the QR/event info block with the question as additional text and show share button
                 new EventQrBlock(
@@ -127,7 +132,7 @@ require_once __DIR__ . '/../../../views/header.php';
 
             <script>
             function deleteWord(wordCloudId, word) {
-                fetch('/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/<?php echo urlencode($eventData['key']); ?>/<?php echo $wordCloudData['id']; ?>/delete', {
+                fetch('/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/<?php echo urlencode($eventData['key']); ?>/wordcloud/<?php echo $wordCloudData['id']; ?>/delete', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
@@ -151,7 +156,7 @@ require_once __DIR__ . '/../../../views/header.php';
             // Dynamic refresh for the word list
             const wordListUl = document.getElementById('word-list');
             function refreshWordList() {
-                fetch('/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/<?php echo urlencode($eventData['key']); ?>/<?php echo $wordCloudData['id']; ?>/words')
+                fetch('/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/<?php echo urlencode($eventData['key']); ?>/wordcloud/<?php echo $wordCloudData['id']; ?>/words')
                     .then(response => response.json())
                     .then(words => {
                         wordListUl.innerHTML = '';
@@ -193,7 +198,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const wordCloudId = '<?php echo $wordCloudData["id"]; ?>';
                 const eventPassword = <?php echo json_encode($eventData['password'] ?? null); ?>;
                 
-                const addWordUrl = `${scheme}://${host}/${lang}/involved/${eventKey}/${wordCloudId}/add`;
+                const addWordUrl = `${scheme}://${host}/${lang}/involved/${eventKey}/wordcloud/${wordCloudId}/add`;
                 
                 new EventQrBlock('#fullscreen-qr-block', addWordUrl, eventKey, eventPassword, '', false);
                 document.getElementById('fullscreen-qr-block').setAttribute('data-initialized', 'true');
