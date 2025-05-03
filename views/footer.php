@@ -32,6 +32,5 @@
     </div>
 </footer>
 
-<?php require_once __DIR__ . '/cookie-banner.php'; ?>
 </body>
 </html>

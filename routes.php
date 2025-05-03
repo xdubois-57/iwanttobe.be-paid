@@ -26,48 +26,57 @@
  * - API routes (POST requests for AJAX operations)
  */
 
-// Include necessary controller classes
-require_once 'controllers/HomeController.php';
-require_once 'controllers/GDPRController.php';
-require_once 'controllers/WhyUsController.php';
+// Include necessary controller classes and core framework
 require_once 'controllers/Router.php';
 require_once 'controllers/LanguageController.php';
-require_once 'controllers/QRController.php';
+require_once 'controllers/SetupController.php';
+require_once 'controllers/QrController.php';
+require_once 'core/AppRegistry.php';
+
+// Core global controllers remain at root-level controllers
+require_once 'controllers/GDPRController.php';
 require_once 'controllers/SupportController.php';
+require_once 'controllers/LandingController.php';
 
 // Initialize the router
 $router = new Router();
 
-// Localized page routes
-$router->get('/{lang}', 'HomeController@index');
+// Setup pages (not visible in navigation)
+$router->get('/setup', 'SetupController@index');
+$router->post('/setup/db', 'SetupController@initializeDatabase');
+
+// Initialize app registry with the router
+$registry = AppRegistry::getInstance();
+$registry->setRouter($router);
+
+// Register all apps by scanning apps directory
+require_once 'apps/register_apps.php';
+
+// Register all app routes through the registry
+$registry->registerAllRoutes();
+
+// Landing page (select app)
+$router->get('/{lang}', 'LandingController@index');
+
+// Global pages accessible from any app
 $router->get('/{lang}/gdpr', 'GDPRController@index');
-$router->get('/{lang}/why-us', 'WhyUsController@index');
 $router->get('/{lang}/support', 'SupportController@index');
 
-// Page routes
-// These routes handle the main navigation of the site
-$router->get('/gdpr', 'GDPRController@index');     // GDPR/Privacy policy page
-$router->get('/why-us', 'WhyUsController@index');     // Why Us page
-$router->get('/support', 'SupportController@index');     // Support/Buy me a coffee page
+// Global QR code SVG endpoint (AJAX)
+$router->get('/qr/svg', 'GenericQrController@svg');
 
-// Redirect root to browser language if supported, else to English
+// Redirect root to detected language based on browser preferences
 $router->get('/', function() {
+    // Get available languages from config
     $config = require __DIR__ . '/config/languages.php';
+    $availableLanguages = array_keys($config['available_languages']);
+    
+    // Get browser language preference
     $browserLang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'] ?? '', 0, 2);
-    if (isset($config['available_languages'][$browserLang])) {
-        header('Location: /' . $browserLang);
-    } else {
-        header('Location: /en');
-    }
+    
+    // Use browser language if supported, otherwise default to English
+    $lang = in_array($browserLang, $availableLanguages) ? $browserLang : 'en';
+    
+    header('Location: /' . $lang);
     exit;
 });
-
-// Language routes
-// These routes handle language changes via both GET and POST requests
-$router->post('/language/{lang}', 'LanguageController@change');  // For direct language links
-$router->post('/language', 'LanguageController@change');        // For form submissions
-
-// API routes
-// These routes handle AJAX requests and return JSON responses
-$router->post('/{lang}/generate-qr', 'QRController@generate');     // Handles QR code generation requests
-$router->post('/generate-qr', 'QRController@generate');     // Fallback for legacy/non-localized requests

@@ -9,7 +9,7 @@ return [
     'gdpr_last_updated' => 'Viimeksi päivitetty: %s',
     
     // Introduction section
-    'gdpr_intro' => 'Tämä tietosuojakäytäntö kuvaa, miten keräämme, käsittelemme ja suojamme tietoja <strong>Paid!</strong> ("me", "me") käytössä.',
+    'gdpr_intro' => 'Tämä tietosuojakäytäntö kuvaa, miten <strong>iwantto.be</strong> ("me", "meidän" tai "meidän") kerää, käyttää ja suojaa tietojasi, kun käytät verkkosovellustemme sarjaa, mukaan lukien Paid!, Involved! ja Driven!.',
     
     // Information collection section
     'gdpr_info_collect_title' => 'Kerätty tieto',
@@ -66,7 +66,7 @@ return [
     
     // Third-party services section
     'gdpr_third_party_title' => 'Kolmannen osapuolen palvelut',
-    'gdpr_third_party_desc' => 'Käytämme OpenIBAN-palvelua (katso <a href="https://openiban.com/">OpenIBAN</a>) vain BIC-koodin hakemiseen annetulle IBANille. Vain IBAN lähetetään OpenIBANille; muita maksu- tai henkilötietoja ei jaeta kolmansien osapuolien kanssa.',
+    'gdpr_third_party_desc' => 'Emme käytä ulkoisia analyysi- tai mainospalveluja. Ainoa kolmannen osapuolen integraatio on OpenIBAN-palvelu, jota käytetään yksinomaan IBAN:in validointiin, jonka syötät maksu-QR-koodin luomisen yhteydessä. Vain IBAN lähetetään, eikä muita henkilötietoja jaeta.',
     
     // Policy updates section
     'gdpr_updates_title' => 'Käytännön päivitykset',

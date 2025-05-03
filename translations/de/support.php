@@ -1,8 +1,8 @@
 <?php
-// German support translations for <strong>Paid!</strong> application
+// German support translations for <em>iwantto.be</em> application
 
 return [
-    'support_title' => 'Unterstütze <strong>Paid!</strong>',
+    'support_title' => 'Unterstütze <em>iwantto.be</em>',
     'support_hosting_title' => 'Hosting-Kosten',
     'support_hosting_text' => 'QR Transfer wird auf sicheren Servern gehostet, um Ihre Daten privat zu halten und den Service schnell zu gestalten. Ihre Unterstützung hilft uns, diese Hosting-Kosten zu decken.',
     'support_development_title' => 'Fortlaufende Entwicklung',
@@ -14,7 +14,7 @@ return [
     'support_coffee_message' => 'Kaffee-Support',
     'support_qr_alt' => 'QR-Code für Spende',
     'support_qr_error' => 'Entschuldigung, wir konnten den QR-Code nicht generieren. Bitte versuchen Sie es später erneut.',
-    'support_thanks' => 'Danke für deine Unterstützung von <strong>Paid!</strong>!',
+    'support_thanks' => 'Danke für deine Unterstützung von <em>iwantto.be</em>!',
     'support_button' => 'Kaufe mir einen Kaffee',
     'support_note' => 'Deine Unterstützung hilft mir dabei, die Serverkosten zu decken und neue Funktionen zu entwickeln.',
     'support_qr_text' => 'Scanne diesen QR-Code, um mir zu helfen',
@@ -33,5 +33,5 @@ return [
     'support_back_to_home_note' => 'Lädt die Startseite neu und setzt alles zurück.',
     'support_back_to_support' => 'Zurück zum Support',
     'support_back_to_support_note' => 'Lädt die Support-Seite neu und setzt alles zurück.',
-    'menu_support' => 'Kaufe mir einen Kaffee'
+    'menu_support' => 'Unterstütze uns!'
 ];

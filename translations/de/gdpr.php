@@ -6,7 +6,7 @@ return [
     'gdpr_last_updated' => 'Letzte Aktualisierung: %s',
     
     // Introduction section
-    'gdpr_intro' => 'Diese Datenschutzrichtlinie beschreibt, wie <strong>Paid!</strong> ("wir", "uns" oder "wir") Ihre persönlichen Daten sammelt, verwendet und schützt, wenn Sie unseren QR-Code-Erstellungs-Service nutzen.',
+    'gdpr_intro' => 'Diese Datenschutzrichtlinie beschreibt, wie <strong>iwantto.be</strong> ("wir", "uns" oder "unsere") Ihre Informationen sammelt, verwendet und schützt, wenn Sie unsere Suite von Webanwendungen einschließlich Paid!, Involved! und Driven! nutzen.',
     
     // Information collection section
     'gdpr_info_collect_title' => 'Informationen, die wir sammeln',
@@ -63,7 +63,7 @@ return [
     
     // Third-party services section
     'gdpr_third_party_title' => 'Drittanbieterdienste',
-    'gdpr_third_party_desc' => 'Wir verwenden den OpenIBAN-Dienst (siehe <a href="https://openiban.com/">OpenIBAN</a>) ausschließlich zur Abfrage des BIC-Codes für eine angegebene IBAN. Es wird nur die IBAN an OpenIBAN übermittelt; keine weiteren Zahlungs- oder Personendaten werden an Dritte weitergegeben.',
+    'gdpr_third_party_desc' => 'Wir verwenden keine externen Analyse- oder Werbedienste. Die einzige Drittanbieterintegration ist der OpenIBAN-Dienst, der ausschließlich zur Validierung der IBAN verwendet wird, die Sie bei der Generierung eines Zahlungs-QR-Codes eingeben. Nur die IBAN wird übertragen, und keine anderen persönlichen Daten werden geteilt.',
     
     // Policy updates section
     'gdpr_updates_title' => 'Änderungen an dieser Richtlinie',

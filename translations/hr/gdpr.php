@@ -9,7 +9,7 @@ return [
     'gdpr_last_updated' => 'Zadnja ažuriranja: %s',
     
     // Introduction section
-    'gdpr_intro' => 'Ova Pravila privatnosti opisuju kako <strong>Paid!</strong> ("mi", "nas" ili "naše") prikuplja, koristi i štiti vaše osobne podatke kada koristite našu uslugu generiranja QR kodova.',
+    'gdpr_intro' => 'Ova Pravila privatnosti opisuju kako <strong>iwantto.be</strong> ("mi", "nas" ili "naše") prikuplja, koristi i štiti vaše informacije kada koristite našu zbirku web aplikacija, uključujući Paid!, Involved! i Driven!.',
     
     // Information collection section
     'gdpr_info_collect_title' => 'Informacije koje prikupljamo',
@@ -35,7 +35,7 @@ return [
     
     // Security section
     'gdpr_security_title' => 'Čuvanje i sigurnost podataka',
-    'gdpr_security_intro' => '<strong>Paid!</strong> je dizajniran s privatnošću na umu:',
+    'gdpr_security_intro' => '<strong>iwantto.be</strong> je dizajniran s privatnošću na umu:',
     'gdpr_security_processing' => 'Informacije o plaćanju se sigurno obrađuju na našim poslužiteljima kako bi se generirali QR kodovi',
     'gdpr_security_no_storage' => 'Nikada ne čuvamo informacije o plaćanju trajno na našim poslužiteljima',
     'gdpr_security_local_storage' => 'Vaši spremljeni podaci o plaćanju čuvaju se samo u lokalnoj pohrani vašeg preglednika ako odaberete spremanje',
@@ -66,7 +66,7 @@ return [
     
     // Third-party services section
     'gdpr_third_party_title' => 'Usluge trećih strana',
-    'gdpr_third_party_desc' => 'Koristimo uslugu OpenIBAN (vidi <a href="https://openiban.com/">OpenIBAN</a>) isključivo za pronalaženje BIC koda na temelju IBAN-a. Samo IBAN se šalje OpenIBAN-u; nijedni drugi podaci o plaćanju ili osobni podaci se ne dijele s trećim stranama.',
+    'gdpr_third_party_desc' => 'Ne koristimo vanjske analitičke ili oglašavačke usluge. Jedina integracija treće strane je usluga OpenIBAN, koja se koristi isključivo za validaciju IBAN-a koji unesete pri generiranju QR koda za plaćanje. Prenosi se samo IBAN i ne dijele se drugi osobni podaci.',
     
     // Policy updates section
     'gdpr_updates_title' => 'Promjene u ovoj politici',

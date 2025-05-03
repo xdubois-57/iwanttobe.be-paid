@@ -1,4 +1,4 @@
-# **Paid!** - Software Design Document
+# **iwantto.be Paid** - Software Design Document
 
 ## Table of Contents
 1. [Architecture Overview](#1-architecture-overview)
@@ -43,7 +43,39 @@ graph TD
 
 ## 2. Key Design Principles
 
-### 2.1 Routing System
+### 2.1 Multi-App Support
+
+The platform supports multiple applications under the iwantto.be umbrella, including Paid!, Involved!, and Driven! Each app is structured to share common components while maintaining unique functionalities.
+
+- **AppRegistry**: Central registry for managing app instances and their lifecycle.
+- **Shared Components**: Common utilities and components are stored in the `/shared` directory.
+- **App-Specific Logic**: Each app contains its own controllers, views, and models, organized under `/apps/{app_name}`.
+
+### 2.2 Code Organization
+
+- **Directory Structure**:
+  - `/controllers`: Handles incoming requests and application logic.
+  - `/models`: Manages data and business rules.
+  - `/views`: Contains UI templates and presentation logic.
+  - `/translations`: Stores language files for internationalization.
+  - `/shared`: Contains shared components and utilities.
+  - `/apps`: Houses app-specific code for each application.
+
+- **Naming Conventions**:
+  - Use PascalCase for class names.
+  - Use camelCase for function and variable names.
+  - Use snake_case for file and directory names.
+
+### 2.3 Involved! App Functionality
+
+The Involved! app offers interactive event features, such as polls, word clouds, and retrospectives.
+
+- **Polls**: Users can create and participate in polls, with results displayed in real-time.
+- **Word Clouds**: Participants can submit words or phrases, which are visualized in a dynamic word cloud.
+- **Retrospectives**: Facilitates feedback collection and discussion through structured retrospective sessions.
+- **Data Handling**: Ensures compliance with GDPR by automatically deleting event data after one month of inactivity.
+
+### 2.4 Routing System
 
 ```mermaid
 graph LR
@@ -60,7 +92,7 @@ graph LR
   1. Add route definition to `routes.php`
   2. Update routing logic in `Router.php`
 
-### 2.2 User Interface
+### 2.5 User Interface
 
 #### Desktop Layout
 ```
@@ -100,7 +132,7 @@ graph LR
 - PicoCSS for consistent styling
 - Light background menu
 
-### 2.3 Internationalization
+### 2.6 Internationalization
 
 ```mermaid
 graph TD
@@ -159,9 +191,9 @@ graph TD
 19. hr (Hrvatski)
 20. de (Deutsch)
 
-> The application name is consistently presented as **Paid!** in all translations and user-facing content. Any previous references to "QR Transfer" or "iwantto.be" have been replaced. Unsupported languages (bg, et, ga, lt, mt, sk) are not included.
+> The application name is consistently presented as **iwantto.be Paid** in all translations and user-facing content. Any previous references to "QR Transfer" or "Paid!" have been replaced. Unsupported languages (bg, et, ga, lt, mt, sk) are not included.
 
-### 2.4 Form Handling
+### 2.7 Form Handling
 
 ```mermaid
 graph TD
@@ -176,7 +208,7 @@ graph TD
   - Favorites: Local Storage
   - Form data: Session Storage
 
-### 2.5 QR Code Features
+### 2.8 QR Code Features
 
 - Generation: Payment information to QR
 - Actions:
@@ -234,189 +266,47 @@ graph TD
 
 ## 5. Security Considerations
 
-- 🔒 Data Protection
-  - No sensitive data in QR codes
-  - Essential cookies only
-  - GDPR compliance
-
-- 🛡️ Best Practices
-  - Input validation
-  - XSS prevention
-  - CSRF protection
+- Data is processed securely
+- No PII is stored
+- Payment info is never stored
+- Event data is deleted after one month
+- Use HTTPS encryption
 
 ## 6. Translation System
 
-The **Paid!** application supports the following languages:
-- cs (Czech)
-- da (Danish)
-- de (German)
-- el (Greek)
-- en (English)
-- es (Spanish)
-- et (Estonian)
-- fi (Finnish)
-- fr (French)
-- ga (Irish)
-- hr (Croatian)
-- hu (Hungarian)
-- is (Icelandic)
-- it (Italian)
-- lt (Lithuanian)
-- lv (Latvian)
-- mt (Maltese)
-- nl (Dutch)
-- no (Norwegian)
-- pl (Polish)
-- pt (Portuguese)
-- ro (Romanian)
-- sl (Slovenian)
-- sv (Swedish)
-
-### Translation Consistency
-- All supported languages must have up-to-date translation files for every user-facing section, including the "Why Us" page.
-- All translation files must refer to the application name as **Paid!** in all languages and contexts, including new and existing translations (see list of supported languages).
-- Update the Why Us and GDPR translation files for every supported language when making changes to branding or core features.
-- Translation files are organized under `/translations/<lang>/why_us.php`.
-
-### Branding Update
-
-- As of April 18, 2025, the application is branded as **Paid!** throughout all user interfaces, documentation, and translations.
-- All references to "QR Transfer" or "iwantto.be" have been replaced with **Paid!**.
-- Only supported languages are included in the translation system.
-
-### Branding and Repository Update
-
-- As of April 18, 2025, the application is branded as **Paid!** throughout all user interfaces, documentation, and translations.
-- All references to "QR Transfer" or "iwantto.be" have been replaced with **Paid!**.
-- Only supported languages are included in the translation system.
-
-### Last updated
-- 2025-04-18: Updated translation requirements and branding for "Why Us" page. All supported languages now use the standardized title and branding.
+- Managed by `LanguageController`
+- Translations stored in `/translations`
+- Supports multiple languages
+- Dynamic language switching
 
 ## 7. Architecture Changes
 
-### QR Generation Service (Added 2025-04-08)
+- Updated to support new apps
+- Improved translation management
+- Enhanced GDPR compliance
 
-The QR generation functionality has been extracted from HomeController into a dedicated QRController service.
+## 8. Dependencies
 
-### Key Changes:
-- New QRController handles all QR-related operations
-- HomeController now focuses only on homepage rendering
-- All existing QR generation endpoints maintained
-- Improved separation of concerns
+- PHP 8
+- PicoCSS
+- QR Code library
 
-### Methods:
-- `generate()` - Main entry point for QR generation
-- `lookupBIC()` - Gets BIC code for an IBAN
-- `generateEPCData()` - Creates QR code payload
-- `generateQRCode()` - Generates visual QR image
+## 9. Supported Languages Requirement
 
-### UI and UX Improvements (Added 2025-04-08)
+- All text must be translated
+- Maintain consistency across languages
 
-Several enhancements have been made to improve the user interface and experience:
+## 10. Internationalization, SEO & Sitemap Maintenance
 
-#### Menu and Navigation:
-- Consistent text color for menu items
-- Hamburger menu icon color matches text color in both light and dark modes
-- Mobile menu background properly adapts to theme (light/dark)
-- Improved dropdown sizing with dynamic width adaptation
-- Enhanced language and theme selectors with consistent styling
-- Added hover and focus states for better accessibility
-- Added functionality to close the mobile menu when clicking anywhere else on the page
+- Ensure all pages are indexed
+- Maintain sitemap
+- Optimize for search engines
 
-#### Form Interactions:
-- IBAN auto-formatting with spaces only on blur (not while typing)
-- Removed JavaScript alerts in favor of console logging
-- Enhanced favorites management with automatic validation
-- Automatic QR code generation when loading favorites
-- Improved form validation feedback
-
-#### Visual Consistency:
-- Standardized dropdown styling across the application
-- Consistent interactive states for form elements
-- Improved mobile responsiveness
 - Consistent styling in dark mode across all UI elements
 
 #### SEO and Marketing:
 - Added comparison table on the "Why Us" page highlighting advantages over other payment solutions
 - Added meta tags with descriptions and keywords focusing on concrete use cases
-- Implemented structured data markup using JSON-LD for better search engine understanding
-- Added Google site verification meta tag
-
-#### Legal Protection:
-- Added a disclaimer footer to all pages in all supported languages
-- Clarified that **Paid!** is not liable for any financial losses
-- Explained that all payments are processed by banks, not **Paid!**
-
-### Recent Changes (2025-04-14)
-
-1. **Translation Updates**
-   - Added missing Romanian form translations
-   - Updated GDPR third-party description to include GoQR information
-   - Added link to GoQR privacy policy in GDPR documentation
-
-2. **Security Updates**
-   - Updated third-party service description in GDPR policy
-   - Added specific details about GoQR's data handling practices
-
-### Recent Changes (2025-04-19)
-- QR code generation endpoint is now localized: AJAX requests for QR generation are sent to `/{lang}/generate-qr` (e.g., `/en/generate-qr`, `/fr/generate-qr`).
-- The backend now supports both `/{lang}/generate-qr` and `/generate-qr` routes for backward compatibility.
-- The language for QR code captions (e.g., "Paiement à") is always determined from the URL, ensuring the generated image matches the user's selected language.
-- The frontend JavaScript dynamically constructs the AJAX URL to include the current language code, making the system robust and generic for all supported languages.
-
-### Removal of Unsupported Languages (2025-04-15)
-
-- The list of supported languages has been updated. Bulgarian (bg), British English (gb), and Slovak (sk) are no longer supported. Their translation directories and references have been removed from the codebase.
-- The translation system continues to use a main language file referencing modular translation files for each language.
-- When removing a language, both its directory and any references in configuration files must be deleted to maintain consistency.
-
-## 8. Dependencies
-
-- The application now depends on [chillerlan/php-qrcode](https://github.com/chillerlan/php-qrcode) for local QR code generation in PHP.
-    - This library is managed via Composer and installed in the `vendor/` directory.
-    - See `composer.json` for version details.
-    - The QR code generation logic was moved from a utility class to the `QRController` for direct integration.
-
-- All previous reliance on remote QR code APIs (such as GoQR) has been removed. QR codes are now generated entirely locally for improved privacy, reliability, and performance.
-
-- Ensure Composer autoloading is included (see `index.php`).
-
-## 9. Supported Languages Requirement
-
-**Requirement:**
-Only the languages explicitly listed in `config/languages.php` under `'available_languages'` are supported by the application. No other languages should be referenced, included, or checked for translations. Any translation audit, addition, or update must strictly adhere to this list.
-
-**Current Supported Languages:**
-- en (English)
-- fr (Français)
-- nl (Nederlands)
-- pl (Polski)
-- it (Italiano)
-- es (Español)
-- pt (Português)
-- sv (Svenska)
-- el (Ελληνικά)
-- ro (Română)
-- cs (Čeština)
-- hu (Magyar)
-- sl (Slovenščina)
-- fi (Suomi)
-- da (Dansk)
-- no (Norsk)
-- is (Íslenska)
-- lv (Latviešu)
-- hr (Hrvatski)
-- de (Deutsch)
-
-To update supported languages, modify the `'available_languages'` array in `config/languages.php` and ensure all translation files reflect this list.
-
-## 10. Internationalization, SEO & Sitemap Maintenance
-
-- **Supported Languages:** Defined in `config/languages.php` under `available_languages`.
-- **Sitemap Updates:** Whenever a new language is added or a new page/route is introduced, update `sitemap.xml` to include all new routes for every language.
-- **Alternate URLs:** Always update `<link rel="alternate" hreflang=...>` tags in `header.php` for every supported language whenever a new language is added.
-- **Process:** These updates are mandatory for every release that changes language support or adds/removes pages. Failure to do so may impact SEO and discoverability.
 
 ## Removed Components
 - About page (controller, view and route)

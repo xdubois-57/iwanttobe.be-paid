@@ -17,6 +17,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+require_once __DIR__ . '/../core/AppRegistry.php';
+
 class LanguageController {
     private static $instance = null;
     private $translations = [];
@@ -35,15 +37,21 @@ class LanguageController {
     }
 
     public function change($params) {
-        // Get language code from either POST data or URL parameter
-        $lang = $_POST['lang'] ?? ($params['lang'] ?? null);
-        
+        // Get language code from URL parameter only
+        $lang = $params['lang'] ?? null;
         // Attempt to change the language if a valid language code is provided
         if ($lang && $this->setLanguage($lang)) {
-            // On success, redirect back to the previous page or home
-            header('Location: ' . ($_SERVER['HTTP_REFERER'] ?? '/'));
+            // Redirect to the same path but with new language code
+            $uri = $_SERVER['REQUEST_URI'] ?? '/';
+            $segments = explode('/', trim($uri, '/'));
+            if (!empty($segments) && isset($params['lang'])) {
+                $segments[0] = $params['lang'];
+                $newUri = '/' . implode('/', $segments);
+                header('Location: ' . $newUri);
+            } else {
+                header('Location: /' . $params['lang']);
+            }
         } else {
-            // On failure (invalid language code), redirect to homepage
             header('Location: /');
         }
         exit;
@@ -58,12 +66,7 @@ class LanguageController {
         if ($langFromUrl && isset($config['available_languages'][$langFromUrl])) {
             return $langFromUrl;
         }
-        // Then check browser language
-        $browserLang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'] ?? 'en', 0, 2);
-        if (isset($config['available_languages'][$browserLang])) {
-            return $browserLang;
-        }
-        // Default to English if browser language not supported
+        // Default to English if not present in URL
         return 'en';
     }
     
@@ -71,10 +74,68 @@ class LanguageController {
         return $this->currentLang;
     }
     
-    private function loadTranslations() {
+    // Changed from private to public so it can be called from header.php
+    public function loadTranslations() {
+        // Load global translations first (common + fallbacks)
+        $this->loadGlobalTranslations();
+        
+        // Then overlay app-specific translations if available
+        $this->loadAppSpecificTranslations();
+    }
+    
+    private function loadGlobalTranslations() {
+        // Load English base first for fallback
+        $enFile = __DIR__ . '/../translations/en.php';
+        $base = file_exists($enFile) ? require $enFile : [];
+
+        // Load current language global translations
         $langFile = __DIR__ . '/../translations/' . $this->currentLang . '.php';
-        if (file_exists($langFile)) {
-            $this->translations = require $langFile;
+        $current = file_exists($langFile) ? require $langFile : [];
+
+        // Overlay current language on top of English
+        $this->translations = array_merge($base, $current);
+    }
+    
+    public function loadAppSpecificTranslations() {
+        // Get current app from registry
+        $registry = AppRegistry::getInstance();
+        $currentApp = $registry->getCurrent();
+        
+        if (!$currentApp) {
+            return;
+        }
+        
+        // Get translations path for current app
+        $appTranslationsPath = $currentApp->getTranslationsPath();
+        
+        // Load English fallback app-specific translations
+        $appEnFile = $appTranslationsPath . '/en.php';
+        if (file_exists($appEnFile)) {
+            $appBaseTranslations = require $appEnFile;
+            $this->translations = array_merge($this->translations, $appBaseTranslations);
+        }
+        
+        // Load current language app-specific translations
+        $appLangFile = $appTranslationsPath . '/' . $this->currentLang . '.php';
+        if (file_exists($appLangFile)) {
+            $appCurrentTranslations = require $appLangFile;
+            $this->translations = array_merge($this->translations, $appCurrentTranslations);
+        }
+    }
+    
+    // Load app-specific translations for any given app path (not relying on registry)
+    public function loadAppTranslationsForPath($path) {
+        // Load English fallback
+        $appEnFile = $path . '/en.php';
+        if (file_exists($appEnFile)) {
+            $appBaseTranslations = require $appEnFile;
+            $this->translations = array_merge($this->translations, $appBaseTranslations);
+        }
+        // Load current language
+        $appLangFile = $path . '/' . $this->currentLang . '.php';
+        if (file_exists($appLangFile)) {
+            $appCurrentTranslations = require $appLangFile;
+            $this->translations = array_merge($this->translations, $appCurrentTranslations);
         }
     }
     

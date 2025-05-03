@@ -23,7 +23,27 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 require_once __DIR__ . '/../controllers/LanguageController.php';
+require_once __DIR__ . '/../core/AppRegistry.php';
+
+// Initialize the language controller
 $lang = LanguageController::getInstance();
+
+// Determine current app
+$uriSegments = explode('/', trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/'));
+$possibleApp = $uriSegments[1] ?? null; // after lang code
+$validApps = ['paid','involved','drive'];
+$cur = $currentApp ?? ($_SESSION['current_app'] ?? (in_array($possibleApp, $validApps) ? $possibleApp : 'landing'));
+$_SESSION['current_app'] = $cur;
+
+// Set current app in registry
+$registry = AppRegistry::getInstance();
+$registry->setCurrent($cur);
+
+// Reload translations to include app-specific translations
+// This ensures we get both global and app-specific translations
+if (method_exists($lang, 'loadTranslations')) {
+    $lang->loadTranslations();
+}
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo $lang->getCurrentLanguage(); ?>">
@@ -44,6 +64,7 @@ $lang = LanguageController::getInstance();
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
     <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/wordcloud.css">
     <?php
     $config = require __DIR__ . '/../config/languages.php';
     $languages = $config['available_languages'];
@@ -64,12 +85,24 @@ $lang = LanguageController::getInstance();
     // Expose PHP translations to JavaScript
     window.t = function(key) {
         const translations = {
-            'save_favorite': '<?php echo $lang->translate('save_favorite'); ?>',
-            'update_favorite': '<?php echo $lang->translate('update_favorite'); ?>',
+            'save_favorite': <?php echo json_encode($lang->translate('save_favorite')); ?>,
+            'update_favorite': <?php echo json_encode($lang->translate('update_favorite')); ?>,
             // Add other frequently used translations
             'app_name': 'iwantto.be Paid',
-            'generating': '<?php echo $lang->translate('generating'); ?>',
-            'share_text': '<?php echo $lang->translate('share_text'); ?>'
+            'generating': <?php echo json_encode($lang->translate('generating')); ?>,
+            'share_text': <?php echo json_encode($lang->translate('share_text')); ?>,
+            'cookie_notice': <?php echo json_encode($lang->translate('cookie_notice')); ?>,
+            'cookie_accept': <?php echo json_encode($lang->translate('cookie_accept')); ?>,
+            // Involved app EventQrBlock translations
+            'event_code': <?php echo json_encode($lang->translate('event_code')); ?>,
+            'event_password': <?php echo json_encode($lang->translate('event_password')); ?>,
+            'share_button': <?php echo json_encode($lang->translate('share_button')); ?>,
+            'share_title': <?php echo json_encode($lang->translate('share_title')); ?>,
+            'copy_success': <?php echo json_encode($lang->translate('copy_success')); ?>,
+            'share_error': <?php echo json_encode($lang->translate('share_error')); ?>,
+            'share_link_prompt': <?php echo json_encode($lang->translate('share_link_prompt')); ?>,
+            // Password prompt translations
+            'invalid_password': <?php echo json_encode($lang->translate('invalid_password')); ?>
         };
         return translations[key] || key;
     };
@@ -86,15 +119,55 @@ $lang = LanguageController::getInstance();
                         <rect y="60" width="100" height="10"></rect>
                     </svg>
                 </button>
-                <a href="/<?php echo $lang->getCurrentLanguage(); ?>" class="app-name"><em style="font-size: 0.6em;">iwantto.be</em> <span style="font-size: 1.1em; font-weight: bold;">Paid!</span></a>
+                <?php
+                // Get app display name from registry
+                $currentApp = $registry->getCurrent();
+                $appDisplayName = $currentApp ? $currentApp->getDisplayName() : 'Good';
+                ?>
+                <a href="/<?php echo $lang->getCurrentLanguage(); ?>" class="app-name"><em style="font-size: 0.6em;">iwantto.be</em> <span style="font-size: 1.1em; font-weight: bold;"><?php echo $appDisplayName; ?></span></a>
             </div>
 
             <div class="nav-links">
                 <ul>
-                    <li><a href="/<?php echo $lang->getCurrentLanguage(); ?>"><?php echo $lang->translate('menu_home'); ?></a></li>
-                    <li><a href="/<?php echo $lang->getCurrentLanguage(); ?>/why-us"><?php echo $lang->translate('menu_why_us'); ?></a></li>
-                    <li><a href="/<?php echo $lang->getCurrentLanguage(); ?>/support"><?php echo $lang->translate('menu_support'); ?></a></li>
-                    <li><a href="/<?php echo $lang->getCurrentLanguage(); ?>/gdpr"><?php echo $lang->translate('menu_gdpr'); ?></a></li>
+<?php
+$langCode = $lang->getCurrentLanguage();
+$currentApp = $registry->getCurrent();
+
+// Always show Home link first (landing page)
+echo '<li><a href="/' . $langCode . '">' . $lang->translate('menu_home') . '</a></li>';
+
+// On non-app pages, show links to all apps after Home
+if ($cur === 'landing' || $cur === 'support' || $cur === 'gdpr') {
+    $apps = $registry->getAppInterfaces();
+    usort($apps, function($a, $b) {
+        return $a->getOrder() <=> $b->getOrder();
+    });
+    foreach ($apps as $app) {
+        $slug = htmlspecialchars($app->getSlug());
+        $name = htmlspecialchars($app->getDisplayName());
+        echo '<li><a href="/' . $langCode . '/' . $slug . '">' . $name . '</a></li>';
+    }
+}
+
+if ($currentApp && $cur !== 'landing' && $cur !== 'support' && $cur !== 'gdpr') {
+    // Get menu items from the current app
+    $menuItems = $currentApp->getMenuItems();
+    foreach ($menuItems as $item) {
+        $url = str_replace('{lang}', $langCode, $item['url']);
+        $text = $lang->translate($item['text']);
+        echo '<li><a href="' . $url . '">' . $text . '</a></li>';
+    }
+}
+
+// Common pages for all apps
+echo '<li><a href="/' . $langCode . '/support">' . $lang->translate('menu_support') . '</a></li>';
+if ($cur === 'landing' || $cur === 'support' || $cur === 'gdpr') {
+    echo '<li><a href="/' . $langCode . '/gdpr">' . $lang->translate('menu_gdpr') . '</a></li>';
+}
+
+// Only show language and theme switchers on landing, support, and gdpr pages
+if ($cur === 'landing' || $cur === 'support' || $cur === 'gdpr') {
+?>
                     <li class="language-selector">
                         <select onchange="changeLanguage(this.value)" aria-label="<?php echo $lang->translate('language'); ?>">
                             <?php
@@ -113,6 +186,9 @@ $lang = LanguageController::getInstance();
                             <option value="auto"><?php echo $lang->translate('theme_auto'); ?></option>
                         </select>
                     </li>
+<?php
+}
+?>
                 </ul>
             </div>
         </div>

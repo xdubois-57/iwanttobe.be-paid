@@ -19,8 +19,9 @@
 ?>
 
 <?php
-require_once __DIR__ . '/header.php';
-require_once __DIR__ . '/../controllers/QRController.php';
+require_once __DIR__ . '/../controllers/LanguageController.php';
+require_once __DIR__ . '/../apps/paid/controllers/QRController.php';
+require_once __DIR__ . '/../views/header.php';
 $lang = LanguageController::getInstance();
 $qrController = new QRController();
 ?>
@@ -90,7 +91,7 @@ $qrController = new QRController();
 document.addEventListener('DOMContentLoaded', function() {
     // Create form data for QR code generation
     const formData = new FormData();
-    formData.append('beneficiary_name', 'QR Transfer');
+    formData.append('beneficiary_name', 'iwantto.be');
     formData.append('beneficiary_iban', 'LT103250087680814808');
     formData.append('amount', '5.00');
     formData.append('communication', 'Get a coffee');
@@ -99,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const errorMessage = "<?php echo $lang->translate('support_qr_error'); ?>";
 
     // Make AJAX request to generate QR code
-    fetch('/generate-qr', {
+    fetch('/<?php echo $lang->getCurrentLanguage(); ?>/paid/api/generate-qr', {
         method: 'POST',
         headers: {
             'X-Requested-With': 'XMLHttpRequest'
@@ -126,4 +127,4 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
-<?php require_once __DIR__ . '/footer.php'; ?>
+<?php require_once __DIR__ . '/../views/footer.php'; ?>

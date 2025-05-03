@@ -9,7 +9,7 @@ return [
     'gdpr_last_updated' => 'Sidst opdateret: %s',
     
     // Introduction section
-    'gdpr_intro' => 'Denne privatlivspolitik beskriver, hvordan <strong>Paid!</strong> ("vi", "os" eller "vores") indsamler, bruger og beskytter dine personlige oplysninger, når du bruger vores QR-kodegenereringstjeneste.',
+    'gdpr_intro' => 'Denne privatlivspolitik beskriver, hvordan <strong>iwantto.be</strong> ("vi", "os" eller "vores") indsamler, bruger og beskytter dine oplysninger, når du bruger vores suite af webapplikationer, herunder Paid!, Involved! og Driven!.',
     
     // Information collection section
     'gdpr_info_collect_title' => 'Indsamlede data',
@@ -66,7 +66,7 @@ return [
     
     // Third-party services section
     'gdpr_third_party_title' => 'Tredjepartstjenester',
-    'gdpr_third_party_desc' => 'Vi bruger OpenIBAN-tjenesten (se <a href="https://openiban.com/">OpenIBAN</a>) udelukkende til at slå BIC-koden op for et givet IBAN. Kun IBAN sendes til OpenIBAN; ingen andre betalings- eller personoplysninger deles med tredjepartstjenester.',
+    'gdpr_third_party_desc' => 'Vi bruger ikke eksterne analyse- eller reklameservices. Den eneste tredjepartsintegration er OpenIBAN-tjenesten, der udelukkende bruges til at validere den IBAN, du indtaster, når du genererer en betalings-QR-kode. Kun IBAN overføres, og ingen andre personlige data deles.',
     
     // Policy updates section
     'gdpr_updates_title' => 'Opdateringer af politikken',

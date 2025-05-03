@@ -1,17 +1,9 @@
 <?php
-// Greek menu translations for <strong>Paid!</strong> application
-// Contains navigation and header-related text
-// Last updated: 2025-04-18
+// Global Greek menu translations
+// Contains shared menu items across all apps
+// Last updated: 2025-05-01
 
 return [
-    // Application name and main menu items
-    'app_name' => '<strong>Paid!</strong>',
-    'menu_home' => 'Αρχική',
-    'menu_about' => 'Σχετικά',
-    'menu_gdpr' => 'Πολιτική Απορρήτου',
-    'menu_why_us' => 'Γιατί Εμείς;',
-    'menu_support' => 'Κάντε μου μια καφέ',
-    
     // Language and theme settings
     'language' => 'Γλώσσα',
     'theme' => 'Θέμα',
@@ -19,17 +11,17 @@ return [
     'theme_dark' => 'Σκούρο',
     'theme_auto' => 'Αυτόματο',
     
-    // Page titles
-    'welcome_message' => 'Καλώς ήρθατε στο <strong>Paid!</strong>',
-    'about_title' => 'Σχετικά με το <strong>Paid!</strong>',
-    'gdpr_title' => 'Πολιτική Απορρήτου και GDPR',
-    'why_us_title' => 'Γιατί να επιλέξετε το <strong>Paid!</strong>;',
+    // Apps and landing
+    'landing_choose_app' => 'Επιλέξτε μια εφαρμογή',
+    'app_paid' => 'Paid!',
+    'app_involved' => 'Involved!',
+    'app_drive' => 'Drive',
     
-    // SEO metadata
-    'meta_title' => 'Paid! Δωρεάν QR πληρωμής για συλλόγους',
-    'meta_description' => 'Δημιουργήστε QR codes για προσκοπικές εκδηλώσεις, συλλόγους γονέων, ποδοσφαιρικούς συλλόγους και μικρές επιχειρήσεις. Δωρεάν, ασφαλής και ιδιωτική γεννήτρια πληρωμών SEPA που λειτουργεί άμεσα σε όλες τις συσκευές.',
-    'meta_keywords' => 'προσκοπικές εκδηλώσεις, σύλλογοι γονέων, ποδοσφαιρικοί σύλλογοι, συγκέντρωση χρημάτων, κοινοτικές εκδηλώσεις, QR code, πληρωμή SEPA, τραπεζική μεταφορά, QR πληρωμής, ευρωπαϊκή πληρωμή, ασφαλής πληρωμή, δωρεά, υποστήριξη, buy me a coffee, δωρεάν γεννήτρια QR code',
+    // Core settings
+    'language_code' => 'el',
+    'language_direction' => 'ltr',
+    'language_flag' => 'gr',
     
     // Legal disclaimer
-    'disclaimer_text' => 'Το <strong>Paid!</strong> δεν φέρει ευθύνη για τυχόν οικονομικά προβλήματα ή απώλειες που σχετίζονται με τη χρήση αυτής της υπηρεσίας. Η χρήση αυτού του εργαλείου γίνεται με δική σας ευθύνη. Όλες οι πληρωμές επεξεργάζονται από τις αντίστοιχες τράπεζες και το <strong>Paid!</strong> δεν διαχειρίζεται χρηματικές συναλλαγές. Αυτή η ιστοσελίδα έχει άδεια χρήσης υπό τους όρους της <a href="https://www.gnu.org/licenses/gpl-3.0.html">GNU General Public License v3.0 (GPLv3)</a>.',
+    'disclaimer_text' => 'Το iwantto.be δεν φέρει ευθύνη για τυχόν προβλήματα που σχετίζονται με τη χρήση αυτής της υπηρεσίας. Η χρήση αυτού του εργαλείου γίνεται με δική σας ευθύνη. Αυτή η ιστοσελίδα έχει άδεια χρήσης υπό τους όρους της <a href="https://www.gnu.org/licenses/gpl-3.0.html">GNU General Public License v3.0 (GPLv3)</a>.',
 ];

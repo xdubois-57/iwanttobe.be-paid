@@ -9,7 +9,7 @@ return [
     'gdpr_last_updated' => 'Pēdējā atjaunināšana: %s',
     
     // Introduction section
-    'gdpr_intro' => 'Šī privātuma politika apraksta, kā <strong>Paid!</strong> ("mēs", "mūsu" vai "mūs") vāc, izmanto un aizsargā jūsu personas datus, kad izmantojat mūsu QR kodu ģenerēšanas pakalpojumu.',
+    'gdpr_intro' => 'Šī privātuma politika apraksta, kā <strong>iwantto.be</strong> ("mēs", "mūsu" vai "mūs") vāc, izmanto un aizsargā jūsu informāciju, kad izmantojat mūsu tīmekļa lietojumprogrammu komplektu, ieskaitot Paid!, Involved! un Driven!.',
     
     // Information collection section
     'gdpr_info_collect_title' => 'Informācija, ko mēs iegūstam',
@@ -35,7 +35,7 @@ return [
     
     // Security section
     'gdpr_security_title' => 'Datu glabāšana un drošība',
-    'gdpr_security_intro' => '<strong>Paid!</strong> ir izstrādāta ar privātumu prātā:',
+    'gdpr_security_intro' => '<strong>iwantto.be</strong> ir izstrādāta ar privātumu prātā:',
     'gdpr_security_processing' => 'Maksājuma informācija tiek droši apstrādāta mūsu serveros, lai ģenerētu QR kodus',
     'gdpr_security_no_storage' => 'Mēs neuzglabājam maksājuma informāciju mūsu serveros',
     'gdpr_security_local_storage' => 'Jūs saglabātā maksājuma informācija tiek glabāta tikai jūsu pārlūkprogrammas vietējā atmiņā, ja izvēlēsieties to saglabāt',
@@ -66,7 +66,7 @@ return [
     
     // Third-party services section
     'gdpr_third_party_title' => 'Trešo pušu pakalpojumi',
-    'gdpr_third_party_desc' => 'Mēs izmantojam OpenIBAN pakalpojumu (skatīt <a href="https://openiban.com/">OpenIBAN</a>) tikai BIC koda meklēšanai pēc IBAN. Tikai IBAN tiek nosūtīts uz OpenIBAN; nekādi citi maksājumu vai personīgie dati netiek kopīgoti ar trešajām pusēm.',
+    'gdpr_third_party_desc' => 'Mēs neizmantojam ārējos analītikas vai reklāmas pakalpojumus. Vienīgā trešās puses integrācija ir OpenIBAN pakalpojums, kas tiek izmantots tikai, lai validētu IBAN, kuru ievadāt, veidojot maksājuma QR kodu. Tiek pārsūtīts tikai IBAN, un netiek kopīgoti citi personiskie dati.',
     
     // Policy updates section
     'gdpr_updates_title' => 'Izmaiņas šajā politikā',

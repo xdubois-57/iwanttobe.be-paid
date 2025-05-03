@@ -12,6 +12,6 @@ return [
     'support_coffee_message' => 'Υποστήριξη με καφέ',
     'support_qr_alt' => 'QR code δωρεάς',
     'support_qr_error' => 'Λυπάμαι, δεν μπόρεσα να δημιουργήσω το QR code. Παρακαλώ, δοκιμάστε ξανά αργότερα.',
-    'support_thanks' => 'Ευχαριστούμε για την υποστήριξή σας στο <strong>Paid!</strong>!',
+    'support_thanks' => 'Ευχαριστούμε για την υποστήριξή σας στο <em>iwantto.be</em>!',
     'menu_support' => 'Κάντε μου μια καφέ',
 ];
