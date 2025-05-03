@@ -9,7 +9,7 @@ return [
     'gdpr_last_updated' => 'Viimane uuendus: %s',
     
     // Introduction section
-    'gdpr_intro' => 'Käesolev privaatsuspoliitika kirjeldab, kuidas <strong>Paid!</strong> ("meie", "meid" või "meie") kogub, kasutab ja kaitseb teie isikuandmeid, kui kasutate meie QR-koodi genereerimise teenust.',
+    'gdpr_intro' => 'Käesolev privaatsuspoliitika kirjeldab, kuidas <strong>iwantto.be</strong> ("meie", "meid" või "meie") kogub, kasutab ja kaitseb teie teavet, kui kasutate meie veebirakenduste komplekti, sealhulgas Paid!, Involved! ja Driven!.',
     
     // Information collection section
     'gdpr_info_collect_title' => 'Kogutud info',
@@ -66,7 +66,7 @@ return [
     
     // Third-party services section
     'gdpr_third_party_title' => 'Kolmandate osapoolte teenused',
-    'gdpr_third_party_desc' => 'Kasutame OpenIBAN teenust (vt <a href="https://openiban.com/">OpenIBAN</a>) ainult BIC-koodi leidmiseks antud IBAN-i jaoks. OpenIBANile saadetakse ainult IBAN; muid makse- ega isikuandmeid kolmandatele osapooltele ei jagata.',
+    'gdpr_third_party_desc' => 'Me ei kasuta väliseid analüüsi- ega reklaamiteenuseid. Ainus kolmanda osapoole integreerimine on OpenIBAN-teenus, mida kasutatakse ainult teie sisestatud IBAN-i valideerimiseks makse QR-koodi genereerimisel. Edastatakse ainult IBAN ja muid isikuandmeid ei jagata.',
     
     // Policy updates section
     'gdpr_updates_title' => 'Poliitika uuendused',

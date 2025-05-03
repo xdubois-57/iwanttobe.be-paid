@@ -9,7 +9,7 @@ return [
     'gdpr_last_updated' => 'Utolsó frissítés: %s',
     
     // Introduction section
-    'gdpr_intro' => 'Ez az Adatvédelmi szabályzat leírja, hogyan gyűjti, használja és védi az Ön személyes adatait a <strong>Paid!</strong> ("mi", "minket" vagy "miénk") QR-kód generáló szolgáltatás használata során.',
+    'gdpr_intro' => 'Ez az Adatvédelmi szabályzat leírja, hogyan gyűjti, használja és védi az Ön adatait a <strong>iwantto.be</strong> ("mi", "minket" vagy "miénk") webalkalmazásaink használata során, beleértve a Paid!, Involved! és Driven! alkalmazásokat.',
     
     // Information collection section
     'gdpr_info_collect_title' => 'Gyűjtött információk',
@@ -66,7 +66,7 @@ return [
     
     // Harmadik fél szolgáltatások
     'gdpr_third_party_title' => 'Harmadik fél szolgáltatások',
-    'gdpr_third_party_desc' => 'Csak az OpenIBAN szolgáltatást használjuk (lásd: <a href="https://openiban.com/">OpenIBAN</a>) kizárólag az IBAN-hoz tartozó BIC kód lekérdezésére. Csak az IBAN kerül elküldésre az OpenIBAN-nak; más fizetési vagy személyes adatot nem osztunk meg harmadik féllel.',
+    'gdpr_third_party_desc' => 'Nem használunk külső elemző vagy reklámszolgáltatásokat. Az egyetlen harmadik fél integráció az OpenIBAN szolgáltatás, amelyet kizárólag az IBAN érvényesítésére használunk, amelyet a fizetési QR-kód generálásakor ad meg. Csak az IBAN kerül továbbításra, és más személyes adatokat nem osztunk meg.',
     
     // Policy updates section
     'gdpr_updates_title' => 'Szabályzat módosításai',

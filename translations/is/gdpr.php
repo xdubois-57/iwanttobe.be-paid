@@ -9,7 +9,7 @@ return [
     'gdpr_last_updated' => 'Síðast uppfært: %s',
     
     // Introduction section
-    'gdpr_intro' => 'Þessi persónuverndarstefna lýsir hvernig <strong>Paid!</strong> ("við", "okkur" eða "okkar") safnar, notar og verndar persónuupplýsingar þínar þegar þú notar QR kóða þjónustuna okkar.',
+    'gdpr_intro' => 'Þessi persónuverndarstefna lýsir hvernig <strong>iwantto.be</strong> ("við", "okkur" eða "okkar") safnar, notar og verndar upplýsingar þínar þegar þú notar vefumsóknir okkar, þar á meðal Paid!, Involved! og Driven!.',
     
     // Information collection section
     'gdpr_info_collect_title' => 'Samþæt upplýsingar',
@@ -66,7 +66,7 @@ return [
     
     // Third-party services section
     'gdpr_third_party_title' => 'Þriðja aðila þjónustur',
-    'gdpr_third_party_desc' => 'Við notum GoQR (<a href="https://goqr.me/privacy-safety-security/">skoða GoQR persónuverndarstefnu</a>) til að búa til QR kóða. Þegar þú skrifar inn greiðsluupplýsingar til að búa til QR kóða, verða þessar upplýsingar sendar til GoQR API einungis til að búa til QR kóða mynd. Eftir persónuverndarstefnu þeirra eru GoQR vafra vafra í Evrópska fylki og þeir geyma ekki QR kóða efnið.',
+    'gdpr_third_party_desc' => 'Við notum ekki utanaðkomandi greiningar- eða auglýsingarþjónustu. Einu samþættingar þriðja aðila eru OpenIBAN þjónustan, sem er eingöngu notuð til að staðfesta IBAN sem þú slærð inn við gerð greiðslukóða. Aðeins IBAN er sent og engar aðrar persónuupplýsingar eru deilt.',
     
     // Policy updates section
     'gdpr_updates_title' => 'Uppfærslur á stefnu',

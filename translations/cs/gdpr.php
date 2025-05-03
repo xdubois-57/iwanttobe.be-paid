@@ -9,7 +9,7 @@ return [
     'gdpr_last_updated' => 'Poslední aktualizace: %s',
     
     // Introduction section
-    'gdpr_intro' => 'Tato politika ochrany osobních údajů popisuje, jak <strong>Paid!</strong> ("my", "my") sbírá, zpracovává a chrání osobní údaje při používání našeho služby pro generování QR kódů.',
+    'gdpr_intro' => 'Tato politika ochrany osobních údajů popisuje, jak <strong>iwantto.be</strong> ("my", "nás" nebo "naše") shromažďuje, používá a chrání vaše informace, když používáte naši sadu webových aplikací včetně Paid!, Involved! a Driven!.',
     
     // Information collection section
     'gdpr_info_collect_title' => 'Sbírané informace',
@@ -66,7 +66,7 @@ return [
     
     // Third-party services section
     'gdpr_third_party_title' => 'Služby třetích stran',
-    'gdpr_third_party_desc' => 'Používáme službu OpenIBAN (viz <a href="https://openiban.com/">OpenIBAN</a>) pouze pro vyhledání kódu BIC podle zadaného IBAN. OpenIBAN je zasílán pouze IBAN; žádné další platební nebo osobní údaje nejsou sdíleny se žádnou třetí stranou.',
+    'gdpr_third_party_desc' => 'Nepoužíváme externí analytické ani reklamní služby. Jediná integrace třetích stran je služba OpenIBAN, která se používá výhradně k ověření IBAN, který zadáte při generování QR kódu platby. Přenáší se pouze IBAN a žádné další osobní údaje nejsou sdíleny.',
     
     // Policy updates section
     'gdpr_updates_title' => 'Změny politiky',

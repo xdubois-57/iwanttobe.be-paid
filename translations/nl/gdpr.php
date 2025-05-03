@@ -12,7 +12,7 @@ return [
     'gdpr_last_updated' => 'Laatste update: %s',
     
     // Introduction section
-    'gdpr_intro' => 'Dit Privacybeleid beschrijft hoe <strong>Paid!</strong> ("wij", "ons" of "onze") je persoonlijke gegevens verzamelt, gebruikt en beschermt wanneer je onze QR code generatieservice gebruikt.',
+    'gdpr_intro' => 'Dit Privacybeleid beschrijft hoe <strong>iwantto.be</strong> ("wij", "ons" of "onze") je persoonlijke gegevens verzamelt, gebruikt en beschermt wanneer je onze suite van webapplicaties gebruikt, inclusief Paid!, Involved! en Driven!.',
     
     // Information collection section
     'gdpr_info_collect_title' => 'Gegevens die we verzamelen',
@@ -38,7 +38,7 @@ return [
     
     // Security section
     'gdpr_security_title' => 'Gegevensopslag en -beveiliging',
-    'gdpr_security_intro' => '<strong>Paid!</strong> is ontworpen met privacy in gedachten:',
+    'gdpr_security_intro' => '<strong>iwantto.be</strong> is ontworpen met privacy in gedachten:',
     'gdpr_security_processing' => 'Betalingsgegevens worden veilig verwerkt op onze servers voor het genereren van QR codes',
     'gdpr_security_no_storage' => 'We bewaren geen betalingsgegevens permanent op onze servers',
     'gdpr_security_local_storage' => 'Je opgeslagen betalingsgegevens worden alleen opgeslagen in de lokale opslag van je browser als je ervoor kiest om ze op te slaan',
@@ -69,7 +69,7 @@ return [
     
     // Third-party services section
     'gdpr_third_party_title' => 'Diensten van derden',
-    'gdpr_third_party_desc' => 'We gebruiken de dienst OpenIBAN (zie <a href="https://openiban.com/">OpenIBAN</a>) uitsluitend om de BIC-code op te zoeken voor een opgegeven IBAN. Alleen het IBAN wordt naar OpenIBAN verzonden; geen andere betaal- of persoonsgegevens worden gedeeld met een externe dienst.',
+    'gdpr_third_party_desc' => 'We gebruiken geen externe analyse- of advertentiediensten. De enige derde partij integratie is de OpenIBAN-service, die uitsluitend wordt gebruikt om de IBAN te valideren die je invoert bij het genereren van een betalings-QR-code. Alleen de IBAN wordt verzonden, en geen andere persoonlijke gegevens worden gedeeld.',
     
     // Policy updates section
     'gdpr_updates_title' => 'Wijzigingen in dit beleid',

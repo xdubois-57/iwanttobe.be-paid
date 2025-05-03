@@ -9,7 +9,7 @@ return [
     'gdpr_last_updated' => 'Última actualización: %s',
     
     // Introduction section
-    'gdpr_intro' => 'Esta Política de Privacidad describe cómo <strong>Paid!</strong> ("nosotros", "nos" o "nuestro") recopila, usa y protege su información personal cuando utiliza nuestro servicio de generación de códigos QR.',
+    'gdpr_intro' => 'Esta Política de Privacidad describe cómo <strong>iwantto.be</strong> ("nosotros", "nos" o "nuestro") recopila, usa y protege su información cuando utiliza nuestra suite de aplicaciones web, incluyendo Paid!, Involved! y Driven!.',
     
     // Information collection section
     'gdpr_info_collect_title' => 'Información que recopilamos',
@@ -66,7 +66,7 @@ return [
     
     // Third-party services section
     'gdpr_third_party_title' => 'Servicios de terceros',
-    'gdpr_third_party_desc' => 'Utilizamos el servicio OpenIBAN (ver <a href="https://openiban.com/">OpenIBAN</a>) únicamente para buscar el código BIC a partir de un IBAN. Solo el IBAN se envía a OpenIBAN; no se comparte ningún otro dato de pago o personal con servicios de terceros.',
+    'gdpr_third_party_desc' => 'No utilizamos servicios de análisis o publicidad externos. La única integración de terceros es el servicio OpenIBAN, que se utiliza únicamente para validar el IBAN que ingresas al generar un código QR de pago. Solo se transmite el IBAN, y no se comparten otros datos personales.',
     
     // Policy updates section
     'gdpr_updates_title' => 'Cambios en esta política',
