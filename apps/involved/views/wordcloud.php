@@ -171,6 +171,11 @@ require_once __DIR__ . '/../../../views/header.php';
                         });
                     });
             }
+            
+            // Call refreshWordList immediately when page loads
+            refreshWordList();
+            
+            // Then refresh periodically
             setInterval(refreshWordList, 5000);
             </script>
         </div>
