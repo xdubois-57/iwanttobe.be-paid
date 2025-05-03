@@ -107,9 +107,9 @@ main {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 2rem;
-    margin: 2rem 0;
-    max-width: 1200px;
-    margin: 0 auto;
+    margin: 2rem 0; /* Maintain vertical spacing while relying on container's horizontal padding */
+    width: 100%; /* Ensure full container width */
+    /* Removed max-width to align articles with surrounding sections */
 }
 
 .grid-container {
