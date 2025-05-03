@@ -479,9 +479,6 @@ class WordCloudManager {
         const container = document.getElementById('word-cloud-container');
         if (!container) return;
         
-        // Add color toggle control
-        WordCloudManager.addColorToggle(container);
-        
         // Prioritize dynamic word cloud if data-wordcloud-url is present
         if (container.hasAttribute('data-wordcloud-url')) {
             const apiUrl = container.getAttribute('data-wordcloud-url');
