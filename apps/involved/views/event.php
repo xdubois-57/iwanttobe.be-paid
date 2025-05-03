@@ -117,7 +117,7 @@ use chillerlan\QRCode\QROptions;
                 <ul id="word-list" style="list-style:none; padding:0;">
                 <?php foreach ($wordClouds as $wc): ?>
                     <li class="wordcloud-list-item">
-                        <div class="wordcloud-list-content" onclick="window.open('/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/<?php echo urlencode($eventData['key']); ?>/<?php echo $wc['id']; ?>', '_blank');">
+                        <div class="wordcloud-list-content" onclick="window.open('/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/<?php echo urlencode($eventData['key']); ?>/wordcloud/<?php echo $wc['id']; ?>', '_blank');">
                             <span class="wordcloud-list-question">
                                 <?php echo htmlspecialchars($wc['question']); ?>
                             </span>
