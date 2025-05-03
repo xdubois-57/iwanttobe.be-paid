@@ -161,9 +161,13 @@ class InvolvedHomeController {
                 }
             }
             
-            // If there's a redirect parameter in the URL, we'll use that
-            // Otherwise we'll use the current request URI
+            // Simply store the complete original URL,
+            // preferring the redirect parameter if it exists
             $originalUrl = isset($_GET['redirect']) ? $_GET['redirect'] : $_SERVER['REQUEST_URI'];
+            
+            // Log the original URL for debugging
+            $logFile = __DIR__ . '/../../../logs/redirect_debug.log';
+            file_put_contents($logFile, date('Y-m-d H:i:s') . " - Original URL in show method: $originalUrl\n", FILE_APPEND);
             
             require_once __DIR__ . '/../views/password_prompt.php';
             return;
@@ -203,6 +207,12 @@ class InvolvedHomeController {
         $password = isset($_POST['password']) ? trim($_POST['password']) : '';
         $langSlug = $params['lang'] ?? LanguageController::getInstance()->getCurrentLanguage();
         
+        // Debug: Write info to log file
+        $logFile = __DIR__ . '/../../../logs/redirect_debug.log';
+        file_put_contents($logFile, date('Y-m-d H:i:s') . " - Event code: $code\n", FILE_APPEND);
+        file_put_contents($logFile, date('Y-m-d H:i:s') . " - Redirect URL from POST: " . ($_POST['redirect_url'] ?? 'none') . "\n", FILE_APPEND);
+        file_put_contents($logFile, date('Y-m-d H:i:s') . " - POST data: " . print_r($_POST, true) . "\n", FILE_APPEND);
+        
         if (empty($code)) {
             header('Location: /' . $langSlug . '/involved');
             exit;
@@ -225,15 +235,35 @@ class InvolvedHomeController {
         // Password verified, mark event as authorized
         $this->authorizeEvent($code);
         
-        // Check if we have a redirect URL from the form
+        // Get the redirect URL from POST
         $redirectUrl = isset($_POST['redirect_url']) ? $_POST['redirect_url'] : '';
         
-        // Make sure the redirect URL is for this event
-        if (!empty($redirectUrl) && strpos($redirectUrl, '/involved/' . $code) !== false) {
-            // It's a valid redirect URL for this event, use it
+        // Log for debugging
+        file_put_contents($logFile, date('Y-m-d H:i:s') . " - Original redirect URL: $redirectUrl\n", FILE_APPEND);
+        
+        // Check if the redirect URL itself contains a redirect parameter
+        if (strpos($redirectUrl, 'redirect=') !== false) {
+            // Parse the URL to extract the redirect parameter
+            $parsedUrl = parse_url($redirectUrl);
+            if (isset($parsedUrl['query'])) {
+                parse_str($parsedUrl['query'], $queryParams);
+                if (isset($queryParams['redirect'])) {
+                    // Use the redirect parameter as our actual redirect URL
+                    $redirectUrl = urldecode($queryParams['redirect']);
+                    file_put_contents($logFile, date('Y-m-d H:i:s') . " - Extracted nested redirect URL: $redirectUrl\n", FILE_APPEND);
+                }
+            }
+        }
+        
+        // Simple redirect - if we have a URL and it contains this event code, use it
+        if (!empty($redirectUrl) && (strpos($redirectUrl, '/involved/' . strtolower($code)) !== false || 
+                                    strpos($redirectUrl, '/involved/' . $code) !== false)) {
+            // Redirect to the original URL
+            file_put_contents($logFile, date('Y-m-d H:i:s') . " - Redirecting to final URL: $redirectUrl\n", FILE_APPEND);
             header('Location: ' . $redirectUrl);
         } else {
-            // Fallback to standard event page
+            // Default fallback
+            file_put_contents($logFile, date('Y-m-d H:i:s') . " - Falling back to default URL: /$langSlug/involved/" . urlencode($code) . "\n", FILE_APPEND);
             header('Location: /' . $langSlug . '/involved/' . urlencode($code));
         }
         exit;
@@ -372,7 +402,9 @@ class InvolvedHomeController {
 
         // Authorization check
         if (!empty($event['password']) && !$this->isAuthorized($code)) {
-            header('Location: /' . $langSlug . '/involved/' . urlencode($code));
+            // Redirect to the event page with the complete URL for later redirection
+            $originalUrl = $_SERVER['REQUEST_URI'];
+            header('Location: /' . $langSlug . '/involved/' . urlencode($code) . '?redirect=' . urlencode($originalUrl));
             exit;
         }
 
