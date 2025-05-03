@@ -5,6 +5,7 @@
 DROP TABLE IF EXISTS `WORD`;
 DROP TABLE IF EXISTS `WORDCLOUD`;
 DROP TABLE IF EXISTS `EVENT`;
+DROP TABLE IF EXISTS `OVERLAY_OBJECT`;
 
 -- Create EVENT table
 CREATE TABLE IF NOT EXISTS `EVENT` (
@@ -36,10 +37,17 @@ CREATE TABLE IF NOT EXISTS `WORD` (
     FOREIGN KEY (`wordcloud_id`) REFERENCES `WORDCLOUD`(`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- Create OVERLAY_OBJECT table for tracking likes
+CREATE TABLE IF NOT EXISTS `OVERLAY_OBJECT` (
+    `id` BIGINT AUTO_INCREMENT PRIMARY KEY,
+    `url` VARCHAR(256) NOT NULL UNIQUE,
+    `likes` INT DEFAULT 0,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 -- Add indexes for better performance
 CREATE INDEX idx_e_key ON EVENT(`key`);
-CREATE INDEX idx_e_created_at ON EVENT(`created_at`);
-CREATE INDEX idx_w_event ON WORDCLOUD(`event_id`);
-CREATE INDEX idx_w_created_at ON WORDCLOUD(`created_at`);
-CREATE INDEX idx_word_wordcloud ON WORD(`wordcloud_id`);
-CREATE INDEX idx_word_text ON WORD(`word`);
+CREATE INDEX idx_wc_event_id ON WORDCLOUD(`event_id`);
+CREATE INDEX idx_w_wordcloud_id ON WORD(`wordcloud_id`);
+CREATE INDEX idx_oo_url ON OVERLAY_OBJECT(`url`);

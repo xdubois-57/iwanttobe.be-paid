@@ -247,7 +247,7 @@ require_once __DIR__ . '/../../../views/header.php';
 </main>
 
 <!-- Fullscreen QR container -->
-<div class="fullscreen-qr-container" id="fullscreen-qr">
+<div class="fullscreen-qr-container" id="fullscreen-qr" style="display: none;">
     <div id="fullscreen-qr-block"></div>
 </div>
 
@@ -257,19 +257,35 @@ document.addEventListener('DOMContentLoaded', function() {
     // Custom handler for WordCloud fullscreen events
     window.addEventListener('wordcloud-fullscreen-change', function(e) {
         if (e.detail.isFullScreen) {
-            // Initialize the fullscreen QR block only when needed
-            if (!document.getElementById('fullscreen-qr-block').hasAttribute('data-initialized')) {
-                const scheme = window.location.protocol.replace(':', '');
-                const host = window.location.host;
-                const lang = '<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>';
-                const eventKey = '<?php echo htmlspecialchars($eventData["key"]); ?>';
-                const wordCloudId = '<?php echo $wordCloudData["id"]; ?>';
-                const eventPassword = <?php echo json_encode($eventData['password'] ?? null); ?>;
+            const scheme = window.location.protocol.replace(':', '');
+            const host = window.location.host;
+            const lang = '<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>';
+            const eventKey = '<?php echo htmlspecialchars($eventData["key"]); ?>';
+            const wordCloudId = '<?php echo $wordCloudData["id"]; ?>';
+            const eventPassword = <?php echo json_encode($eventData['password'] ?? null); ?>;
+            
+            const addWordUrl = `${scheme}://${host}/${lang}/involved/${eventKey}/wordcloud/${wordCloudId}/add`;
+            
+            // Use OverlayObjectHelper to display QR code
+            if (window.OverlayObjectHelper) {
+                // Set QR data
+                window.OverlayObjectHelper.setQrData(
+                    addWordUrl,
+                    eventKey,
+                    eventPassword,
+                    '',  // No additional text
+                    false // No share button
+                );
                 
-                const addWordUrl = `${scheme}://${host}/${lang}/involved/${eventKey}/wordcloud/${wordCloudId}/add`;
-                
-                new EventQrBlock('#fullscreen-qr-block', addWordUrl, eventKey, eventPassword, '', false);
-                document.getElementById('fullscreen-qr-block').setAttribute('data-initialized', 'true');
+                // Show QR container
+                window.OverlayObjectHelper.showQrBlock();
+            } else {
+                console.error('OverlayObjectHelper not available for QR display');
+            }
+        } else {
+            // Hide QR when exiting fullscreen
+            if (window.OverlayObjectHelper) {
+                window.OverlayObjectHelper.hideQrBlock();
             }
         }
     });
@@ -282,6 +298,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <script src="/vendor/timdream/wordcloud2.js"></script>
 <script src="/js/wordcloud.js"></script>
 
+<!-- Fullscreen QR toggle script -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // Setup fullscreen QR code toggle
@@ -290,7 +307,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Custom handler for WordCloud fullscreen events
     window.addEventListener('wordcloud-fullscreen-change', function(e) {
         if (e.detail.isFullScreen) {
-            fullscreenQR.style.display = 'block';
+            fullscreenQR.style.display = 'none'; // Hide old QR, we now use OverlayObjectHelper
         } else {
             fullscreenQR.style.display = 'none';
         }

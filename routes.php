@@ -31,6 +31,7 @@ require_once 'controllers/Router.php';
 require_once 'controllers/LanguageController.php';
 require_once 'controllers/SetupController.php';
 require_once 'controllers/QrController.php';
+require_once 'controllers/AjaxController.php';
 require_once 'core/AppRegistry.php';
 
 // Core global controllers remain at root-level controllers
@@ -61,6 +62,10 @@ $router->get('/{lang}', 'LandingController@index');
 // Global pages accessible from any app
 $router->get('/{lang}/gdpr', 'GDPRController@index');
 $router->get('/{lang}/support', 'SupportController@index');
+
+// AJAX endpoints for global features
+$router->post('/ajax/like', 'AjaxController@incrementLikes');
+$router->get('/ajax/likes', 'AjaxController@getLikes');
 
 // Global QR code SVG endpoint (AJAX)
 $router->get('/qr/svg', 'GenericQrController@svg');
