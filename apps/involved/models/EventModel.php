@@ -85,4 +85,69 @@ class EventModel
         } while ($exists);
         return $code;
     }
+
+    /**
+     * Delete events that have not been updated for more than one month
+     * This is important for GDPR compliance to ensure data isn't stored longer than necessary
+     * 
+     * @param int $months Number of months of inactivity before deletion (default: 1)
+     * @return array Results containing count of deleted events and any errors
+     */
+    public function deleteOldEvents(int $months = 1): array
+    {
+        // Check connection
+        if (!$this->db->isConnected()) {
+            error_log('Database connection failed: ' . $this->db->getErrorMessage());
+            return [
+                'success' => false,
+                'error' => 'Database connection failed: ' . $this->db->getErrorMessage(),
+                'deleted_count' => 0
+            ];
+        }
+        
+        try {
+            // Find events older than specified months
+            $cutoffDate = date('Y-m-d H:i:s', strtotime("-{$months} month"));
+            
+            // First, get count of events to be deleted (for logging)
+            $countToDelete = $this->db->fetchValue(
+                'SELECT COUNT(*) FROM EVENT WHERE updated_at < ?', 
+                [$cutoffDate]
+            );
+            
+            // Log the deletion operation for audit purposes
+            error_log("GDPR Deletion: Preparing to delete {$countToDelete} events older than {$cutoffDate}");
+            
+            // Delete the events - cascading will handle related wordclouds and words
+            $result = $this->db->delete('EVENT', 'updated_at < ?', [$cutoffDate]);
+            
+            if ($result === false) {
+                error_log('GDPR Deletion Error: ' . $this->db->getErrorMessage());
+                return [
+                    'success' => false,
+                    'error' => $this->db->getErrorMessage(),
+                    'deleted_count' => 0
+                ];
+            }
+            
+            // Get number of affected rows (from result directly)
+            $deletedCount = $result;
+            
+            // Log successful deletion
+            error_log("GDPR Deletion: Successfully deleted {$deletedCount} events older than {$cutoffDate}");
+            
+            return [
+                'success' => true,
+                'deleted_count' => $deletedCount,
+                'cutoff_date' => $cutoffDate
+            ];
+        } catch (Exception $e) {
+            error_log('GDPR Deletion Exception: ' . $e->getMessage());
+            return [
+                'success' => false,
+                'error' => $e->getMessage(),
+                'deleted_count' => 0
+            ];
+        }
+    }
 }
