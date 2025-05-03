@@ -111,6 +111,14 @@ class InvolvedApp implements AppInterface {
         $lang->loadAppTranslationsForPath($this->getTranslationsPath());
         return $lang->translate('short_description');
     }
+    
+    /**
+     * Order index for menu and landing page
+     */
+    public function getOrder(): int
+    {
+        return 2;
+    }
 }
 
 // Auto-register this app when the file is included

@@ -139,6 +139,9 @@ echo '<li><a href="/' . $langCode . '">' . $lang->translate('menu_home') . '</a>
 // On non-app pages, show links to all apps after Home
 if ($cur === 'landing' || $cur === 'support' || $cur === 'gdpr') {
     $apps = $registry->getAppInterfaces();
+    usort($apps, function($a, $b) {
+        return $a->getOrder() <=> $b->getOrder();
+    });
     foreach ($apps as $app) {
         $slug = htmlspecialchars($app->getSlug());
         $name = htmlspecialchars($app->getDisplayName());

@@ -80,6 +80,14 @@ class DriveApp implements AppInterface
         $lang->loadAppTranslationsForPath($this->getTranslationsPath());
         return $lang->translate('description');
     }
+    
+    /**
+     * Order index for menu and landing page
+     */
+    public function getOrder(): int
+    {
+        return 3;
+    }
 }
 
 // Auto-register this app when the file is included
