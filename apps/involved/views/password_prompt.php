@@ -19,7 +19,11 @@ require_once __DIR__ . '/../../../views/header.php';
             <input type="hidden" name="event_code" value="<?php echo htmlspecialchars($eventCode); ?>">
             
             <label for="password"><?php echo htmlspecialchars($lang->translate('password_label')); ?></label>
-            <input id="password" name="password" type="password" placeholder="<?php echo htmlspecialchars($lang->translate('password_prompt_placeholder')); ?>" required style="width: 100%;">
+            <input id="password" name="password" type="password" 
+                   placeholder="<?php echo htmlspecialchars($lang->translate('password_prompt_placeholder')); ?>" 
+                   required 
+                   style="width: 100%;"
+                   autocomplete="new-password">
             
             <button class="primary" type="submit" style="margin-top: 1rem; width: 100%;"><?php echo htmlspecialchars($lang->translate('continue_button')); ?></button>
         </form>
