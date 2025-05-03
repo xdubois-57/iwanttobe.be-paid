@@ -68,7 +68,7 @@ require_once __DIR__ . '/../../../views/header.php';
             <div id="word-cloud-container" class="word-cloud-wrapper" data-wordcloud-url="/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/<?php echo urlencode($eventData['key']); ?>/wordcloud/<?php echo $wordCloudData['id']; ?>/words"></div>
             <div style="text-align: center; margin-top: 1rem;">
                 <a href="/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/<?php echo urlencode($eventData['key']); ?>/wordcloud/<?php echo $wordCloudData['id']; ?>/add" class="primary" role="button" target="_blank" style="padding: 0.8rem 2rem; font-size: 1.1rem;">
-                    Add Your Word
+                    <?php echo htmlspecialchars($lang->translate('add_your_word')); ?>
                 </a>
             </div>
         </article>
@@ -144,12 +144,12 @@ require_once __DIR__ . '/../../../views/header.php';
                     if (data.success) {
                         refreshWordList();
                     } else {
-                        alert('Failed to delete word');
+                        alert('<?php echo htmlspecialchars($lang->translate('wordcloud_failed_delete')); ?>');
                     }
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    alert('An error occurred while deleting the word');
+                    alert('<?php echo htmlspecialchars($lang->translate('wordcloud_error_delete')); ?>');
                 });
             }
 

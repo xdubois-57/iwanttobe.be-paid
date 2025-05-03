@@ -26,12 +26,12 @@ class EventQrBlock {
         infoDiv.style.marginTop = '0.5em';
         infoDiv.style.fontSize = '0.95em';
         infoDiv.style.color = '#333';
-        infoDiv.innerHTML = `<div><strong>Event code:</strong> ${this.escape(this.eventCode)}</div>`;
+        infoDiv.innerHTML = `<div><strong>${this.getTranslation('event_code')}</strong> ${this.escape(this.eventCode)}</div>`;
         if (this.eventPassword) {
             const pwdDiv = document.createElement('div');
             pwdDiv.style.marginTop = '0.4em';
             pwdDiv.style.color = '#666';
-            pwdDiv.innerHTML = `<strong>Event password:</strong> ${this.escape(this.eventPassword)}`;
+            pwdDiv.innerHTML = `<strong>${this.getTranslation('event_password')}</strong> ${this.escape(this.eventPassword)}`;
             infoDiv.appendChild(pwdDiv);
         }
         this.container.appendChild(infoDiv);
@@ -39,7 +39,7 @@ class EventQrBlock {
         if (this.showShareButton) {
             const shareBtn = document.createElement('button');
             shareBtn.type = 'button';
-            shareBtn.textContent = 'Share';
+            shareBtn.textContent = this.getTranslation('share_button');
             shareBtn.style.marginTop = '1em';
             shareBtn.style.fontSize = '0.95em';
             shareBtn.style.padding = '0.5em 1.2em';
@@ -47,47 +47,85 @@ class EventQrBlock {
             shareBtn.onclick = () => this.share();
             this.container.appendChild(shareBtn);
         }
-    }
-
-    async fetchQrSvg(url) {
-        const resp = await fetch(`/qr/svg?data=${encodeURIComponent(url)}`);
-        if (!resp.ok) return '<svg width="200" height="200"><text x="10" y="100" font-size="14">QR error</text></svg>';
-        return await resp.text();
-    }
-
-    escape(str) {
-        const div = document.createElement('div');
-        div.textContent = str;
-        return div.innerHTML;
-    }
-
-    async share() {
-        const shareText = [
-            this.additionalText ? `${this.additionalText}\n\n` : '',
-            `Event code: ${this.eventCode}`,
-            this.eventPassword ? `\nPassword: ${this.eventPassword}` : '',
-            '\n\nClick the link to join me on iwantto.be Involved!'
-        ].join('');
-
-        if (navigator.share) {
-            try {
-                await navigator.share({
-                    title: 'Join me on iwantto.be Involved!',
-                    url: this.url,
-                    text: shareText
-                });
-            } catch (err) {
-                console.error('Sharing failed:', err);
-            }
-        } else if (navigator.clipboard) {
-            try {
-                await navigator.clipboard.writeText(`${shareText}\n\n${this.url}`);
-                alert('Event information copied to clipboard!');
-            } catch (err) {
-                prompt('Copy this link:', `${shareText}\n\n${this.url}`);
-            }
-        } else {
-            prompt('Copy this link:', `${shareText}\n\n${this.url}`);
+        // Additional text - if provided
+        if (this.additionalText) {
+            const textDiv = document.createElement('div');
+            textDiv.style.marginTop = '0.8em';
+            textDiv.style.fontSize = '0.9em';
+            textDiv.style.color = '#555';
+            textDiv.innerHTML = this.escape(this.additionalText);
+            this.container.appendChild(textDiv);
         }
+    }
+
+    // Get translation from window.t function if available
+    getTranslation(key) {
+        // If window.t is available (from the main app), use it
+        if (typeof window.t === 'function') {
+            return window.t(key);
+        }
+        
+        // Default translations if window.t is not available
+        const translations = {
+            'event_code': 'Event code:',
+            'event_password': 'Event password:',
+            'share_button': 'Share',
+            'share_title': 'Join my event',
+            'share_text': 'Join my event using code:',
+            'copy_success': 'Link copied to clipboard!',
+            'share_error': 'Could not share. Link copied to clipboard instead.'
+        };
+        
+        // Return translation or key as fallback
+        return translations[key] || key;
+    }
+
+    // Fetch QR SVG from server
+    async fetchQrSvg(url) {
+        try {
+            const params = new URLSearchParams();
+            params.append('data', url);
+            const response = await fetch('/qr/svg?' + params.toString());
+            if (response.ok) {
+                return await response.text();
+            }
+        } catch (e) {
+            console.error('QR fetch error:', e);
+        }
+        // Fallback if fetch fails - simple placeholder
+        return '<div style="width:200px;height:200px;background:#eee;display:flex;align-items:center;justify-content:center;border-radius:5px;">QR Code</div>';
+    }
+
+    // Share functionality
+    async share() {
+        const { url, eventCode, additionalText } = this;
+        const shareText = `${this.getTranslation('share_text')} ${eventCode}${additionalText ? '\n' + additionalText : ''}`;
+        try {
+            if (navigator.share) {
+                await navigator.share({
+                    title: this.getTranslation('share_title'),
+                    text: shareText,
+                    url
+                });
+            } else {
+                throw new Error('Web Share API not supported');
+            }
+        } catch (e) {
+            // Fallback - copy to clipboard
+            const textarea = document.createElement('textarea');
+            textarea.value = `${shareText}\n${url}`;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+            alert(this.getTranslation('copy_success'));
+        }
+    }
+
+    // Safely escape HTML
+    escape(html) {
+        const div = document.createElement('div');
+        div.appendChild(document.createTextNode(html));
+        return div.innerHTML;
     }
 }

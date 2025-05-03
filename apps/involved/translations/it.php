@@ -7,6 +7,6 @@ return array_merge(
     require __DIR__.'/it/home.php',
     require __DIR__.'/it/menu.php',
     [
-        'description' => 'Crea sondaggi, word cloud e rendi ogni evento interattivo e divertente.'
+        'description' => 'Involved! rende facile per team, organizzazioni no-profit e gruppi comunitari organizzare eventi vivaci, condurre retrospettive coinvolgenti e lanciare sondaggi interattivi, trasformando ogni riunione in un\'esperienza memorabile.'
     ]
 );

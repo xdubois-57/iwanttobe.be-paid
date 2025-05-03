@@ -56,7 +56,8 @@ class InvolvedHomeController {
         if ($code === false) {
             http_response_code(500);
             $db = DatabaseHelper::getInstance();
-            echo 'Failed to create event. Error: ' . htmlspecialchars($db->getErrorMessage());
+            $lang = LanguageController::getInstance();
+            echo $lang->translate('event_create_failed') . ' ' . htmlspecialchars($db->getErrorMessage());
             return;
         }
         
@@ -88,7 +89,8 @@ class InvolvedHomeController {
         
         if (!$eventExists) {
             http_response_code(404);
-            echo 'Event not found';
+            $lang = LanguageController::getInstance();
+            echo $lang->translate('event_not_found');
             return;
         }
         
@@ -129,7 +131,8 @@ class InvolvedHomeController {
         
         if (!$event) {
             http_response_code(404);
-            echo 'Event not found';
+            $lang = LanguageController::getInstance();
+            echo $lang->translate('event_not_found');
             return;
         }
         
@@ -138,7 +141,8 @@ class InvolvedHomeController {
             // Show password prompt form with error if applicable
             $currentApp = 'involved';
             $eventCode = $code;
-            $errorMessage = isset($_GET['error']) && $_GET['error'] === 'invalid_password' ? 'Invalid password. Please try again.' : null;
+            $lang = LanguageController::getInstance();
+            $errorMessage = isset($_GET['error']) && $_GET['error'] === 'invalid_password' ? $lang->translate('invalid_password') : null;
             require_once __DIR__ . '/../views/password_prompt.php';
             return;
         }
@@ -207,7 +211,8 @@ class InvolvedHomeController {
         $event = $eventModel->getByKey($code);
         if (!$event) {
             http_response_code(404);
-            echo 'Event not found';
+            $lang = LanguageController::getInstance();
+            echo $lang->translate('event_not_found');
             return;
         }
 
@@ -241,7 +246,8 @@ class InvolvedHomeController {
         $event = $eventModel->getByKey($code);
         if (!$event) {
             http_response_code(404);
-            echo 'Event not found';
+            $lang = LanguageController::getInstance();
+            echo $lang->translate('event_not_found');
             return;
         }
 
@@ -270,7 +276,8 @@ class InvolvedHomeController {
         $event = $eventModel->getByKey($code);
         if (!$event) {
             http_response_code(404);
-            echo 'Event not found';
+            $lang = LanguageController::getInstance();
+            echo $lang->translate('event_not_found');
             return;
         }
 
@@ -284,7 +291,8 @@ class InvolvedHomeController {
         $wordCloud = $wcModel->getById($wcid);
         if (!$wordCloud || (int)$wordCloud['event_id'] !== (int)$event['id']) {
             http_response_code(404);
-            echo 'Word cloud not found';
+            $lang = LanguageController::getInstance();
+            echo $lang->translate('wordcloud_not_found');
             return;
         }
 
@@ -307,7 +315,8 @@ class InvolvedHomeController {
         $event = $eventModel->getByKey($code);
         if (!$event) {
             http_response_code(404);
-            echo 'Event not found';
+            $lang = LanguageController::getInstance();
+            echo $lang->translate('event_not_found');
             return;
         }
 
@@ -321,7 +330,8 @@ class InvolvedHomeController {
         $wordCloud = $wcModel->getById($wcid);
         if (!$wordCloud || (int)$wordCloud['event_id'] !== (int)$event['id']) {
             http_response_code(404);
-            echo 'Word cloud not found';
+            $lang = LanguageController::getInstance();
+            echo $lang->translate('wordcloud_not_found');
             return;
         }
 
@@ -350,7 +360,8 @@ class InvolvedHomeController {
         $event = $eventModel->getByKey($code);
         if (!$event) {
             http_response_code(404);
-            echo 'Event not found';
+            $lang = LanguageController::getInstance();
+            echo $lang->translate('event_not_found');
             return;
         }
 
@@ -364,7 +375,8 @@ class InvolvedHomeController {
         $wordCloud = $wcModel->getById($wcid);
         if (!$wordCloud || (int)$wordCloud['event_id'] !== (int)$event['id']) {
             http_response_code(404);
-            echo 'Word cloud not found';
+            $lang = LanguageController::getInstance();
+            echo $lang->translate('wordcloud_not_found');
             return;
         }
 
@@ -387,32 +399,30 @@ class InvolvedHomeController {
 
         if (empty($word)) {
             header('Content-Type: application/json');
-            echo json_encode(['success' => false, 'error' => 'Word parameter is required']);
+            echo json_encode(['success' => false, 'error' => LanguageController::getInstance()->translate('word_parameter_is_required')]);
             exit;
         }
 
         $eventModel = new EventModel();
         $event = $eventModel->getByKey($code);
         if (!$event) {
-            http_response_code(404);
             header('Content-Type: application/json');
-            echo json_encode(['success' => false, 'error' => 'Event not found']);
+            echo json_encode(['success' => false, 'error' => LanguageController::getInstance()->translate('event_not_found')]);
             exit;
         }
 
         // Authorization check
         if (!empty($event['password']) && !$this->isAuthorized($code)) {
             header('Content-Type: application/json');
-            echo json_encode(['success' => false, 'error' => 'Unauthorized']);
+            echo json_encode(['success' => false, 'error' => LanguageController::getInstance()->translate('unauthorized')]);
             exit;
         }
 
         $wcModel = new WordCloudModel();
         $wordCloud = $wcModel->getById($wcid);
         if (!$wordCloud || (int)$wordCloud['event_id'] !== (int)$event['id']) {
-            http_response_code(404);
             header('Content-Type: application/json');
-            echo json_encode(['success' => false, 'error' => 'Word cloud not found']);
+            echo json_encode(['success' => false, 'error' => LanguageController::getInstance()->translate('wordcloud_not_found')]);
             exit;
         }
 

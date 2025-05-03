@@ -7,6 +7,6 @@ return array_merge(
     require __DIR__.'/de/home.php',
     require __DIR__.'/de/menu.php',
     [
-        'description' => 'Erstellen Sie Umfragen, Wortwolken und machen Sie jede Veranstaltung interaktiv und unterhaltsam.'
+        'description' => 'Involved! erleichtert es Teams, gemeinnützigen Organisationen und Gemeinschaftsgruppen, lebhafte Veranstaltungen zu organisieren, ansprechende Retrospektiven durchzuführen und interaktive Umfragen zu starten—und macht so jedes Meeting zu einem unvergesslichen Erlebnis.'
     ]
 );

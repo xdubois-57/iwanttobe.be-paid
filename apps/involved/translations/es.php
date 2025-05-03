@@ -7,6 +7,6 @@ return array_merge(
     require __DIR__.'/es/home.php',
     require __DIR__.'/es/menu.php',
     [
-        'description' => 'Crea encuestas, nubes de palabras y haz que cualquier evento sea interactivo y divertido.'
+        'description' => 'Involved! facilita a equipos, organizaciones sin fines de lucro y grupos comunitarios la organización de eventos animados, retrospectivas atractivas y encuestas interactivas, convirtiendo cualquier reunión en una experiencia memorable.'
     ]
 );

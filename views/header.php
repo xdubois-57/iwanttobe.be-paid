@@ -92,7 +92,15 @@ if (method_exists($lang, 'loadTranslations')) {
             'generating': '<?php echo $lang->translate('generating'); ?>',
             'share_text': '<?php echo $lang->translate('share_text'); ?>',
             'cookie_notice': '<?php echo $lang->translate('cookie_notice'); ?>',
-            'cookie_accept': '<?php echo $lang->translate('cookie_accept'); ?>'
+            'cookie_accept': '<?php echo $lang->translate('cookie_accept'); ?>',
+            // Involved app EventQrBlock translations
+            'event_code': '<?php echo $lang->translate('event_code'); ?>',
+            'event_password': '<?php echo $lang->translate('event_password'); ?>',
+            'share_button': '<?php echo $lang->translate('share_button'); ?>',
+            'share_title': '<?php echo $lang->translate('share_title'); ?>',
+            'copy_success': '<?php echo $lang->translate('copy_success'); ?>',
+            'share_error': '<?php echo $lang->translate('share_error'); ?>',
+            'share_link_prompt': '<?php echo $lang->translate('share_link_prompt'); ?>'
         };
         return translations[key] || key;
     };

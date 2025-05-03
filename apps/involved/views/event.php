@@ -107,13 +107,17 @@ use chillerlan\QRCode\QROptions;
     <div class="grid" style="margin-top: 2rem; gap: 2rem;">
         <!-- Left column (3/4 width) -->
         <article style="grid-column: span 3;">
+            <h2>Event Details</h2>
+            <p>Event code: <?php echo htmlspecialchars($eventData['key']); ?></p>
+            <p>Created at: <?php echo htmlspecialchars($eventData['created_at']); ?></p>
+            
             <?php if (!empty($wordClouds)): ?>
             <h3 style="margin-top:1.5rem;">Word Clouds</h3>
             <div style="margin-top:1rem;">
                 <ul id="word-list" style="list-style:none; padding:0;">
                 <?php foreach ($wordClouds as $wc): ?>
                     <li class="wordcloud-list-item">
-                        <div class="wordcloud-list-content" onclick="window.open('/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/<?php echo urlencode($eventData['key']); ?>/wordcloud/<?php echo $wc['id']; ?>', '_blank');">
+                        <div class="wordcloud-list-content" onclick="window.open('/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/<?php echo urlencode($eventData['key']); ?>/<?php echo $wc['id']; ?>', '_blank');">
                             <span class="wordcloud-list-question">
                                 <?php echo htmlspecialchars($wc['question']); ?>
                             </span>
@@ -129,6 +133,7 @@ use chillerlan\QRCode\QROptions;
             <?php else: ?>
             <p style="margin-top:1.5rem;">No word clouds yet.</p>
             <?php endif; ?>
+            
             <form method="post" action="/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/<?php echo urlencode($eventData['key']); ?>/wordcloud/create" style="margin-top:1.5rem;">
                 <input type="text" name="question" placeholder="Enter question" required style="width:100%;margin-bottom:0.5rem;">
                 <button class="primary" type="submit" style="width:100%;">Create Word Cloud</button>
@@ -137,19 +142,28 @@ use chillerlan\QRCode\QROptions;
 
         <!-- Right column (1/4 width) -->
         <article style="grid-column: span 1; text-align: center;">
-            <div id="event-qr-block" style="margin: 1rem 0;"></div>
+            <h2>QR Code</h2>
+            <div style="margin: 1rem 0;">
+                <?php
+                $scheme = isset($_SERVER['REQUEST_SCHEME']) ? $_SERVER['REQUEST_SCHEME'] : 'http';
+                $currentUrl = $scheme . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+                $qrSvg = QrHelper::renderSvg($currentUrl);
+                ?>
+                <div style="max-width: 200px; margin: 0 auto;">
+                    <?php echo $qrSvg; ?>
+                </div>
+                <p style="margin-top: 0.5rem; font-size: 0.8rem;">
+                    Scan this QR code to access the event
+                </p>
+                <?php if (!empty($eventData['password'])): ?>
+                <p style="margin-top: 0.5rem; font-size: 0.8rem; color: #666;">
+                    Event password: <?php echo htmlspecialchars($eventData['password']); ?>
+                </p>
+                <?php endif; ?>
+            </div>
         </article>
     </div>
 </main>
-<script src="/apps/involved/js/eventQrBlock.js"></script>
-<script>
-// Compute the current event URL and data from PHP
-const eventUrl = <?php echo json_encode((isset($_SERVER['REQUEST_SCHEME']) ? $_SERVER['REQUEST_SCHEME'] : 'http') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']); ?>;
-const eventCode = <?php echo json_encode($eventData['key']); ?>;
-const eventPassword = <?php echo json_encode($eventData['password'] ?? null); ?>;
-// Render the QR/event info block
-new EventQrBlock('#event-qr-block', eventUrl, eventCode, eventPassword);
-</script>
 <script>
 document.querySelectorAll('.delete-wordcloud-form').forEach(form => {
     form.addEventListener('submit', function(event) {
