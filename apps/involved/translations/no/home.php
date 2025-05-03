@@ -44,12 +44,12 @@ return [
     // Wordcloud page
     'add_your_word' => 'Legg til Ditt Ord',
     'scan_qr_access' => 'Skann denne QR-koden for å få tilgang til arrangementet',
-    'event_password' => 'Arrangementspassord:',
+    'event_password' => 'PIN:',
     'wordcloud_failed_delete' => 'Kunne ikke slette ordet',
     'wordcloud_error_delete' => 'Det oppstod en feil ved sletting av ordet',
     
     // EventQrBlock component
-    'event_code' => 'Arrangementskode:',
+    'event_code' => 'Kode:',
     'share_button' => 'Del',
     'share_title' => 'Delta på mitt arrangement',
     'share_text' => 'Delta på mitt arrangement med koden:',

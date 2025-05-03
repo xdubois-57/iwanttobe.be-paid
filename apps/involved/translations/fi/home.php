@@ -44,12 +44,12 @@ return [
     // Wordcloud page
     'add_your_word' => 'Lisää Sanasi',
     'scan_qr_access' => 'Skannaa tämä QR-koodi päästäksesi tapahtumaan',
-    'event_password' => 'Tapahtuman salasana:',
+    'event_password' => 'PIN:',
     'wordcloud_failed_delete' => 'Sanan poistaminen epäonnistui',
     'wordcloud_error_delete' => 'Tapahtui virhe sanan poistamisen yhteydessä',
     
     // EventQrBlock component
-    'event_code' => 'Tapahtumakoodi:',
+    'event_code' => 'Koodi:',
     'share_button' => 'Jaa',
     'share_title' => 'Liity tapahtumaani',
     'share_text' => 'Liity tapahtumaani koodilla:',

@@ -44,12 +44,12 @@ return [
     // Wordcloud page
     'add_your_word' => 'Přidejte své slovo',
     'scan_qr_access' => 'Naskenujte tento QR kód pro přístup k události',
-    'event_password' => 'Heslo události:',
+    'event_password' => 'PIN:',
     'wordcloud_failed_delete' => 'Nepodařilo se smazat slovo',
     'wordcloud_error_delete' => 'Při mazání slova došlo k chybě',
     
     // EventQrBlock component
-    'event_code' => 'Kód události:',
+    'event_code' => 'Kód:',
     'share_button' => 'Sdílet',
     'share_title' => 'Připojte se k mé události',
     'share_text' => 'Připojte se k mé události pomocí kódu:',

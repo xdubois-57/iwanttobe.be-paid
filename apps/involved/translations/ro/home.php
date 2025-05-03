@@ -44,12 +44,12 @@ return [
     // Wordcloud page
     'add_your_word' => 'Adaugă Cuvântul Tău',
     'scan_qr_access' => 'Scanează acest cod QR pentru a accesa evenimentul',
-    'event_password' => 'Parola evenimentului:',
+    'event_password' => 'PIN:',
     'wordcloud_failed_delete' => 'Ștergerea cuvântului a eșuat',
     'wordcloud_error_delete' => 'A apărut o eroare la ștergerea cuvântului',
     
     // EventQrBlock component
-    'event_code' => 'Cod eveniment:',
+    'event_code' => 'Cod:',
     'share_button' => 'Distribuie',
     'share_title' => 'Alătură-te evenimentului meu',
     'share_text' => 'Alătură-te evenimentului meu folosind codul:',

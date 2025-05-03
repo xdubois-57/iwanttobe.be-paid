@@ -44,12 +44,12 @@ return [
     // Wordcloud page
     'add_your_word' => 'Add Your Word',
     'scan_qr_access' => 'Scan this QR code to access the event',
-    'event_password' => 'Event password:',
+    'event_password' => 'PIN:',
     'wordcloud_failed_delete' => 'Failed to delete word',
     'wordcloud_error_delete' => 'An error occurred while deleting the word',
     
     // EventQrBlock component
-    'event_code' => 'Event code:',
+    'event_code' => 'Code:',
     'share_button' => 'Share',
     'share_title' => 'Join my event',
     'share_text' => 'Join my event using code:',

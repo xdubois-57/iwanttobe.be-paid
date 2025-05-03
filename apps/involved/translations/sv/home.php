@@ -44,12 +44,12 @@ return [
     // Wordcloud page
     'add_your_word' => 'Lägg till Ditt Ord',
     'scan_qr_access' => 'Skanna denna QR-kod för att få åtkomst till eventet',
-    'event_password' => 'Eventlösenord:',
+    'event_password' => 'PIN:',
     'wordcloud_failed_delete' => 'Kunde inte ta bort ord',
     'wordcloud_error_delete' => 'Ett fel uppstod vid borttagning av ord',
     
     // EventQrBlock component
-    'event_code' => 'Eventkod:',
+    'event_code' => 'Kod:',
     'share_button' => 'Dela',
     'share_title' => 'Gå med i mitt event',
     'share_text' => 'Gå med i mitt event med koden:',

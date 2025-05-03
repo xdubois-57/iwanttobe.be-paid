@@ -44,12 +44,12 @@ return [
     // Wordcloud page
     'add_your_word' => 'Tilføj Dit Ord',
     'scan_qr_access' => 'Scan denne QR-kode for at få adgang til begivenheden',
-    'event_password' => 'Begivenhedsadgangskode:',
+    'event_password' => 'PIN:',
     'wordcloud_failed_delete' => 'Kunne ikke slette ord',
     'wordcloud_error_delete' => 'Der opstod en fejl ved sletning af ordet',
     
     // EventQrBlock component
-    'event_code' => 'Begivenhedskode:',
+    'event_code' => 'Kode:',
     'share_button' => 'Del',
     'share_title' => 'Deltag i min begivenhed',
     'share_text' => 'Deltag i min begivenhed med koden:',

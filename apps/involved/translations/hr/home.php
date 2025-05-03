@@ -8,11 +8,11 @@ return [
     'involved_features' => 'Povežite se s lokalnim inicijativama, pratite svoje volonterske sate i napravite razliku.',
     'join_event_title' => 'Pridružite se Događaju',
     'join_event_description' => 'Unesite 4-znamenkasti kod za pridruživanje postojećem događaju.',
-    'event_code_placeholder' => 'Kod događaja',
+    'event_code_placeholder' => 'Kôd:',
     'join_event_button' => 'Pridružite se Događaju',
     'create_event_title' => 'Stvorite Događaj',
     'create_event_description' => 'Generirajte novi događaj s neobaveznom lozinkom za siguran pristup.',
-    'password_placeholder' => 'Lozinka (neobavezno)',
+    'password_placeholder' => 'PIN:',
     'create_event_button' => 'Stvorite Novi Događaj',
     
     // Password prompt page
@@ -44,13 +44,13 @@ return [
     // Wordcloud page
     'add_your_word' => 'Dodajte Svoju Riječ',
     'scan_qr_access' => 'Skenirajte ovaj QR kod za pristup događaju',
-    'event_password' => 'Lozinka događaja:',
+    'event_password' => 'PIN:',
     'wordcloud_failed_delete' => 'Brisanje riječi nije uspjelo',
     'wordcloud_error_delete' => 'Došlo je do pogreške prilikom brisanja riječi',
     
     // EventQrBlock component
-    'event_code' => 'Kod događaja:',
-    'share_button' => 'Dijelite',
+    'event_code' => 'Kôd:',
+    'share_button' => 'Dijeli',
     'share_title' => 'Pridružite se mom događaju',
     'share_text' => 'Pridružite se mom događaju pomoću koda:',
     'copy_success' => 'Poveznica kopirana u međuspremnik!',

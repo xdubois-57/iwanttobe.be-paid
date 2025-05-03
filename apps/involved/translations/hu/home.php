@@ -44,12 +44,12 @@ return [
     // Wordcloud page
     'add_your_word' => 'Adja Hozzá Szavát',
     'scan_qr_access' => 'Olvassa be ezt a QR-kódot az eseményhez való hozzáféréshez',
-    'event_password' => 'Esemény jelszava:',
+    'event_password' => 'PIN:',
     'wordcloud_failed_delete' => 'A szó törlése sikertelen',
     'wordcloud_error_delete' => 'Hiba történt a szó törlése közben',
     
     // EventQrBlock component
-    'event_code' => 'Eseménykód:',
+    'event_code' => 'Kód:',
     'share_button' => 'Megosztás',
     'share_title' => 'Csatlakozzon az eseményemhez',
     'share_text' => 'Csatlakozzon az eseményemhez a következő kóddal:',

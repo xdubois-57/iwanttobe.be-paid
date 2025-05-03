@@ -44,12 +44,12 @@ return [
     // Wordcloud page
     'add_your_word' => 'Dodaj Swoje Słowo',
     'scan_qr_access' => 'Zeskanuj ten kod QR, aby uzyskać dostęp do wydarzenia',
-    'event_password' => 'Hasło wydarzenia:',
+    'event_password' => 'PIN:',
     'wordcloud_failed_delete' => 'Nie udało się usunąć słowa',
     'wordcloud_error_delete' => 'Wystąpił błąd podczas usuwania słowa',
     
     // EventQrBlock component
-    'event_code' => 'Kod wydarzenia:',
+    'event_code' => 'Kod:',
     'share_button' => 'Udostępnij',
     'share_title' => 'Dołącz do mojego wydarzenia',
     'share_text' => 'Dołącz do mojego wydarzenia, używając kodu:',

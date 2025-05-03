@@ -44,12 +44,12 @@ return [
     // Wordcloud page
     'add_your_word' => 'Voeg Je Woord Toe',
     'scan_qr_access' => 'Scan deze QR-code voor toegang tot het evenement',
-    'event_password' => 'Evenementwachtwoord:',
+    'event_password' => 'PIN:',
     'wordcloud_failed_delete' => 'Kon woord niet verwijderen',
     'wordcloud_error_delete' => 'Er is een fout opgetreden bij het verwijderen van het woord',
     
     // EventQrBlock component
-    'event_code' => 'Evenementcode:',
+    'event_code' => 'Code:',
     'share_button' => 'Delen',
     'share_title' => 'Doe mee aan mijn evenement',
     'share_text' => 'Doe mee aan mijn evenement met de code:',

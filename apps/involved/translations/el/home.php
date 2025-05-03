@@ -44,12 +44,12 @@ return [
     // Wordcloud page
     'add_your_word' => 'Προσθέστε τη Λέξη Σας',
     'scan_qr_access' => 'Σαρώστε αυτόν τον κωδικό QR για πρόσβαση στην εκδήλωση',
-    'event_password' => 'Κωδικός πρόσβασης εκδήλωσης:',
+    'event_password' => 'PIN:',
     'wordcloud_failed_delete' => 'Η διαγραφή της λέξης απέτυχε',
     'wordcloud_error_delete' => 'Παρουσιάστηκε σφάλμα κατά τη διαγραφή της λέξης',
     
     // EventQrBlock component
-    'event_code' => 'Κωδικός εκδήλωσης:',
+    'event_code' => 'Κωδικός:',
     'share_button' => 'Κοινοποίηση',
     'share_title' => 'Συμμετέχετε στην εκδήλωσή μου',
     'share_text' => 'Συμμετέχετε στην εκδήλωσή μου με τον κωδικό:',

@@ -44,13 +44,13 @@ return [
     // Wordcloud page
     'add_your_word' => 'Dodajte Svojo Besedo',
     'scan_qr_access' => 'Skenirajte to QR kodo za dostop do dogodka',
-    'event_password' => 'Geslo dogodka:',
+    'event_password' => 'PIN:',
     'wordcloud_failed_delete' => 'Brisanje besede ni uspelo',
     'wordcloud_error_delete' => 'Pri brisanju besede je prišlo do napake',
     
     // EventQrBlock component
-    'event_code' => 'Koda dogodka:',
-    'share_button' => 'Delite',
+    'event_code' => 'Koda:',
+    'share_button' => 'Deli',
     'share_title' => 'Pridružite se mojemu dogodku',
     'share_text' => 'Pridružite se mojemu dogodku z uporabo kode:',
     'copy_success' => 'Povezava kopirana v odložišče!',
