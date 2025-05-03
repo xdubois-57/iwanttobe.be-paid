@@ -68,36 +68,31 @@ require_once __DIR__ . '/../../../views/header.php';
             <div id="word-cloud-container" class="word-cloud-wrapper" data-wordcloud-url="/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/<?php echo urlencode($eventData['key']); ?>/<?php echo $wordCloudData['id']; ?>/words"></div>
         </article>
         <article style="grid-column: span 1; text-align: center;">
-            <div style="margin: 1rem 0;">
-                <?php
-                $scheme = isset($_SERVER['REQUEST_SCHEME']) ? $_SERVER['REQUEST_SCHEME'] : 'http';
-                $currentUrl = $scheme . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-                // Change URL to point to the add word form
-                $addWordUrl = $scheme . "://" . $_SERVER['HTTP_HOST'] . '/' . 
-                    htmlspecialchars($lang->getCurrentLanguage()) . '/involved/' . 
-                    urlencode($eventData['key']) . '/' . 
-                    $wordCloudData['id'] . '/add';
-                $qrSvg = QrHelper::renderSvg($addWordUrl);
-                ?>
-                <div style="max-width: 200px; margin: 0 auto;">
-                    <a href="<?php echo $addWordUrl; ?>" id="qr-code-link">
-                        <?php echo $qrSvg; ?>
-                    </a>
-                </div>
-                <div style="margin-top: 1rem; display: flex; justify-content: center; align-items: center; height: 50px;">
-                    <a href="<?php echo $addWordUrl; ?>" role="button" target="_blank">
-                        Add Your Word
-                    </a>
-                </div>
-                <?php if (!empty($eventData['password'])): ?>
-                <div style="margin-top: 1rem; text-align: center;">
-                    <p><strong>Event Password</strong></p>
-                    <p style="word-break: break-all;" id="event-password">
-                        <?php echo htmlspecialchars($eventData['password']); ?>
-                    </p>
-                </div>
-                <?php endif; ?>
-            </div>
+            <div id="wordcloud-qr-block" style="margin: 1rem 0;"></div>
+            <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // Compute the add word URL
+                const scheme = window.location.protocol.replace(':', '');
+                const host = window.location.host;
+                const lang = '<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>';
+                const eventKey = '<?php echo htmlspecialchars($eventData["key"]); ?>';
+                const wordCloudId = '<?php echo $wordCloudData["id"]; ?>';
+                const eventPassword = <?php echo json_encode($eventData['password'] ?? null); ?>;
+                
+                // Construct the add word URL
+                const addWordUrl = `${scheme}://${host}/${lang}/involved/${eventKey}/${wordCloudId}/add`;
+                
+                // Render the QR/event info block with the question as additional text and show share button
+                new EventQrBlock(
+                    '#wordcloud-qr-block',
+                    addWordUrl,
+                    eventKey,
+                    eventPassword,
+                    <?php echo json_encode($wordCloudData['question']); ?>,
+                    true // Show share button
+                );
+            });
+            </script>
         </article>
     </div>
     
@@ -180,9 +175,7 @@ require_once __DIR__ . '/../../../views/header.php';
 
 <!-- Fullscreen QR container -->
 <div class="fullscreen-qr-container" id="fullscreen-qr">
-    <a href="<?php echo $addWordUrl; ?>" target="_blank">
-        <?php echo $qrSvg; ?>
-    </a>
+    <div id="fullscreen-qr-block"></div>
     <?php if (!empty($eventData['password'])): ?>
     <div class="fullscreen-password">
         <strong>Event Password:</strong><br>
@@ -191,7 +184,33 @@ require_once __DIR__ . '/../../../views/header.php';
     <?php endif; ?>
 </div>
 
+<script>
+// Initialize fullscreen QR block when the fullscreen event is triggered
+document.addEventListener('DOMContentLoaded', function() {
+    // Custom handler for WordCloud fullscreen events
+    window.addEventListener('wordcloud-fullscreen-change', function(e) {
+        if (e.detail.isFullScreen) {
+            // Initialize the fullscreen QR block only when needed
+            if (!document.getElementById('fullscreen-qr-block').hasAttribute('data-initialized')) {
+                const scheme = window.location.protocol.replace(':', '');
+                const host = window.location.host;
+                const lang = '<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>';
+                const eventKey = '<?php echo htmlspecialchars($eventData["key"]); ?>';
+                const wordCloudId = '<?php echo $wordCloudData["id"]; ?>';
+                const eventPassword = <?php echo json_encode($eventData['password'] ?? null); ?>;
+                
+                const addWordUrl = `${scheme}://${host}/${lang}/involved/${eventKey}/${wordCloudId}/add`;
+                
+                new EventQrBlock('#fullscreen-qr-block', addWordUrl, eventKey, eventPassword, '', false);
+                document.getElementById('fullscreen-qr-block').setAttribute('data-initialized', 'true');
+            }
+        }
+    });
+});
+</script>
+
 <!-- Include WordCloud library -->
+<script src="/apps/involved/js/eventQrBlock.js"></script>
 <script src="/vendor/timdream/wordcloud2.js"></script>
 <script src="/js/wordcloud.js"></script>
 
