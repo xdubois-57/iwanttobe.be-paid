@@ -107,10 +107,6 @@ use chillerlan\QRCode\QROptions;
     <div class="grid" style="margin-top: 2rem; gap: 2rem;">
         <!-- Left column (3/4 width) -->
         <article style="grid-column: span 3;">
-            <h2>Event Details</h2>
-            <p>Event code: <?php echo htmlspecialchars($eventData['key']); ?></p>
-            <p>Created at: <?php echo htmlspecialchars($eventData['created_at']); ?></p>
-            
             <?php if (!empty($wordClouds)): ?>
             <h3 style="margin-top:1.5rem;">Word Clouds</h3>
             <div style="margin-top:1rem;">
@@ -133,7 +129,6 @@ use chillerlan\QRCode\QROptions;
             <?php else: ?>
             <p style="margin-top:1.5rem;">No word clouds yet.</p>
             <?php endif; ?>
-            
             <form method="post" action="/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/<?php echo urlencode($eventData['key']); ?>/wordcloud/create" style="margin-top:1.5rem;">
                 <input type="text" name="question" placeholder="Enter question" required style="width:100%;margin-bottom:0.5rem;">
                 <button class="primary" type="submit" style="width:100%;">Create Word Cloud</button>
@@ -142,7 +137,6 @@ use chillerlan\QRCode\QROptions;
 
         <!-- Right column (1/4 width) -->
         <article style="grid-column: span 1; text-align: center;">
-            <h2>QR Code</h2>
             <div id="event-qr-block" style="margin: 1rem 0;"></div>
         </article>
     </div>
