@@ -87,13 +87,13 @@ require_once __DIR__ . '/../../../views/header.php';
                 // Construct the add word URL
                 const addWordUrl = `${scheme}://${host}/${lang}/involved/${eventKey}/wordcloud/${wordCloudId}/add`;
                 
-                // Render the QR/event info block with the question as additional text and show share button
+                // Render the QR/event info block with no question text
                 new EventQrBlock(
                     '#wordcloud-qr-block',
                     addWordUrl,
                     eventKey,
                     eventPassword,
-                    <?php echo json_encode($wordCloudData['question']); ?>,
+                    '', // No additional text 
                     true // Show share button
                 );
             });
