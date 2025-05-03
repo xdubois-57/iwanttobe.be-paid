@@ -176,12 +176,6 @@ require_once __DIR__ . '/../../../views/header.php';
 <!-- Fullscreen QR container -->
 <div class="fullscreen-qr-container" id="fullscreen-qr">
     <div id="fullscreen-qr-block"></div>
-    <?php if (!empty($eventData['password'])): ?>
-    <div class="fullscreen-password">
-        <strong>Event Password:</strong><br>
-        <?php echo htmlspecialchars($eventData['password']); ?>
-    </div>
-    <?php endif; ?>
 </div>
 
 <script>
