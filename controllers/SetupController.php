@@ -119,6 +119,13 @@ class SetupController {
         
         // Try to connect and check if database exists - check EARLY, before any form processing
         try {
+            // Ensure all required database config keys are set
+            $dbConfig['host'] = $dbConfig['host'] ?? '127.0.0.1';
+            $dbConfig['port'] = $dbConfig['port'] ?? '3306';
+            $dbConfig['name'] = $dbConfig['name'] ?? 'qrtransfer';
+            $dbConfig['username'] = $dbConfig['username'] ?? 'root';
+            $dbConfig['password'] = $dbConfig['password'] ?? '';
+            
             // Check if database exists (connect without dbname)
             $dsn = "mysql:host={$dbConfig['host']};port={$dbConfig['port']};charset=utf8mb4";
             $pdo = new PDO(
@@ -197,6 +204,13 @@ class SetupController {
         // Always reload and check credentials for connectivity status on every step
         if (isset($dbConfig)) {
             try {
+                // Ensure all required database config keys are set
+                $dbConfig['host'] = $dbConfig['host'] ?? '127.0.0.1';
+                $dbConfig['port'] = $dbConfig['port'] ?? '3306';
+                $dbConfig['name'] = $dbConfig['name'] ?? 'qrtransfer';
+                $dbConfig['username'] = $dbConfig['username'] ?? 'root';
+                $dbConfig['password'] = $dbConfig['password'] ?? '';
+                
                 // Check if database exists (connect without dbname)
                 $dsn = "mysql:host={$dbConfig['host']};port={$dbConfig['port']};charset=utf8mb4";
                 $pdo = new PDO(
@@ -296,6 +310,13 @@ class SetupController {
         // Generate table summary for display
         if ($databaseExists) {
             try {
+                // Ensure all required database config keys are set
+                $dbConfig['host'] = $dbConfig['host'] ?? '127.0.0.1';
+                $dbConfig['port'] = $dbConfig['port'] ?? '3306';
+                $dbConfig['name'] = $dbConfig['name'] ?? 'qrtransfer';
+                $dbConfig['username'] = $dbConfig['username'] ?? 'root';
+                $dbConfig['password'] = $dbConfig['password'] ?? '';
+                
                 $dsnWithDb = "mysql:host={$dbConfig['host']};port={$dbConfig['port']};dbname={$dbConfig['name']};charset=utf8mb4";
                 $pdo = new PDO(
                     $dsnWithDb,
@@ -391,6 +412,13 @@ class SetupController {
                 ];
                 
                 try {
+                    // Ensure all required database config keys are set
+                    $dbConfig['host'] = $dbConfig['host'] ?? '127.0.0.1';
+                    $dbConfig['port'] = $dbConfig['port'] ?? '3306';
+                    $dbConfig['name'] = $dbConfig['name'] ?? 'qrtransfer';
+                    $dbConfig['username'] = $dbConfig['username'] ?? 'root';
+                    $dbConfig['password'] = $dbConfig['password'] ?? '';
+                    
                     // Try to connect to MySQL server
                     $dsn = "mysql:host={$dbConfig['host']};port={$dbConfig['port']};charset=utf8mb4";
                     $pdo = new PDO(
@@ -452,6 +480,13 @@ class SetupController {
                         }
                     }
                     
+                    // Ensure all required database config keys are set
+                    $dbConfig['host'] = $dbConfig['host'] ?? '127.0.0.1';
+                    $dbConfig['port'] = $dbConfig['port'] ?? '3306';
+                    $dbConfig['name'] = $dbConfig['name'] ?? 'qrtransfer';
+                    $dbConfig['username'] = $dbConfig['username'] ?? 'root';
+                    $dbConfig['password'] = $dbConfig['password'] ?? '';
+                    
                     // Try to connect to MySQL server
                     $dsn = "mysql:host={$dbConfig['host']};port={$dbConfig['port']};charset=utf8mb4";
                     $pdo = new PDO(
@@ -512,6 +547,13 @@ class SetupController {
         $databaseValid = false;
         if (isset($dbConfig) && !empty($dbConfig['host'])) {
             try {
+                // Ensure all required database config keys are set
+                $dbConfig['host'] = $dbConfig['host'] ?? '127.0.0.1';
+                $dbConfig['port'] = $dbConfig['port'] ?? '3306';
+                $dbConfig['name'] = $dbConfig['name'] ?? 'qrtransfer';
+                $dbConfig['username'] = $dbConfig['username'] ?? 'root';
+                $dbConfig['password'] = $dbConfig['password'] ?? '';
+                
                 // Check if database exists
                 $dsn = "mysql:host={$dbConfig['host']};port={$dbConfig['port']};charset=utf8mb4";
                 $pdo = new PDO(
