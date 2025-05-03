@@ -9,7 +9,11 @@ return [
     'support_text' => 'Questa app è gratuita. Se ti piace, offrimi un caffè scansionando il codice QR qui sotto con la tua app bancaria!',
     'support_text_alt' => 'Questa app è gratuita. Se ti piace, offrimi un caffè cliccando qui!',
     'download_qr' => 'Scarica codice QR',
-    'share_qr' => 'Condividi il codice QR',
+    'share_qr' => 'Condividi codice QR',
     'cookie_notice' => 'Questo sito utilizza cookie essenziali',
     'cookie_accept' => 'OK',
+    
+    // Short description for landing page
+    'short_description' => 'Genera e condividi codici QR per trasferimenti di denaro rapidi e semplici.',
+    'description' => 'Genera codici QR di pagamento per la tua app bancaria - invia e ricevi denaro facilmente.'
 ];

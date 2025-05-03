@@ -10,6 +10,10 @@ return [
     'support_text_alt' => 'Esta aplicación es gratuita. Si te gusta, invítame un café haciendo clic aquí!',
     'download_qr' => 'Descargar código QR',
     'share_qr' => 'Compartir código QR',
+    
+    // Short description for landing page
+    'short_description' => 'Genera y comparte códigos QR para transferencias de dinero rápidas y sencillas.',
+    'description' => 'Genera códigos QR de pago para tu aplicación bancaria - envía y recibe dinero fácilmente.',
     'cookie_notice' => 'Este sitio web utiliza cookies esenciales',
     'cookie_accept' => 'Aceptar',
 ];

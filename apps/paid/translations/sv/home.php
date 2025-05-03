@@ -10,6 +10,10 @@ return [
     'support_text_alt' => 'Denna app är gratis. Om du gillar den, bjud mig på en kaffe genom att klicka här!',
     'download_qr' => 'Ladda ner QR-kod',
     'share_qr' => 'Dela QR-kod',
+    
+    // Short description for landing page
+    'short_description' => 'Generera och dela QR-koder för snabba och enkla penningöverföringar.',
+    'description' => 'Generera betalnings-QR-koder för din bankapp - skicka och ta emot pengar enkelt.',
     'cookie_notice' => 'Denna webbplats använder nödvändiga cookies',
     'cookie_accept' => 'Acceptera',
 ];

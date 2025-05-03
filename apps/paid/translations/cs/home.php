@@ -10,6 +10,10 @@ return [
     'support_text_alt' => 'Tato aplikace je zdarma. Pokud se vám líbí, kupte mi kávu kliknutím zde!',
     'download_qr' => 'Stáhnout QR kód',
     'share_qr' => 'Sdílet QR kód',
+    
+    // Short description for landing page
+    'short_description' => 'Vytvářejte a sdílejte QR kódy pro rychlé a snadné převody peněz.',
+    'description' => 'Generujte platební QR kódy pro vaši bankovní aplikaci - snadno posílejte a přijímejte peníze.',
     'cookie_notice' => 'Tato stránka používá nezbytné cookies',
     'cookie_accept' => 'Přijmout',
 ];

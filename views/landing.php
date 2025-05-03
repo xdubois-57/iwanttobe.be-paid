@@ -107,7 +107,7 @@ $wordCloudData = json_encode($wordCloudWords);
                 </svg>
             <?php endif; ?>
             <h3><?php echo htmlspecialchars($app->getDisplayName()); ?></h3>
-            <p><?php echo htmlspecialchars($app->getDescription()); ?></p>
+            <p><?php echo htmlspecialchars($app->getShortDescription()); ?></p>
         </a>
         <?php endforeach; ?>
     </div>

@@ -8,6 +8,9 @@ return [
     'support_text_alt' => 'Diese App ist kostenlos. Wenn sie dir gefällt, spendiere mir einen Kaffee, indem du hier klickst!',
     'download_qr' => 'QR-Code herunterladen',
     'share_qr' => 'QR-Code teilen',
+    // Short description for landing page
+    'short_description' => 'Generieren und teilen Sie QR-Codes für schnelle und einfache Geldüberweisungen.',
+    'description' => 'Generieren Sie Zahlungs-QR-Codes für Ihre Banking-App - senden und empfangen Sie Geld einfach.',
     'cookie_notice' => 'Diese Seite verwendet essentielle Cookies',
     'cookie_accept' => 'OK',
     'home_support_text' => 'Kaufe mir einen Kaffee',

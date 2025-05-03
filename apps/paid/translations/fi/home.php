@@ -10,6 +10,10 @@ return [
     'support_text_alt' => 'Tämä sovellus on ilmainen. Jos pidät siitä, tarjoa minulle kahvi klikkaamalla tästä!',
     'download_qr' => 'Lataa QR-koodi',
     'share_qr' => 'Jaa QR-koodi',
+    
+    // Short description for landing page
+    'short_description' => 'Luo ja jaa QR-koodeja nopeita ja helppoja rahansiirtoja varten.',
+    'description' => 'Luo maksun QR-koodeja pankkisovellustasi varten - lähetä ja vastaanota rahaa helposti.',
     'cookie_notice' => 'Tämä sivusto käyttää välttämättömiä evästeitä',
     'cookie_accept' => 'Hyväksyn',
 ];

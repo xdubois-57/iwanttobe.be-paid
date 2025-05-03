@@ -10,6 +10,11 @@ return [
     'support_text_alt' => 'Este aplicativo é gratuito. Se você gostar, ofereça-me um café clicando aqui!',
     'download_qr' => 'Baixar código QR',
     'share_qr' => 'Compartilhar código QR',
+    
+    // Short description for landing page
+    'short_description' => 'Gere e compartilhe códigos QR para transferências de dinheiro rápidas e fáceis.',
+    'description' => 'Gere códigos QR de pagamento para seu aplicativo bancário - envie e receba dinheiro facilmente.',
+    
     'cookie_notice' => 'Este site usa cookies essenciais',
     'cookie_accept' => 'OK',
 ];

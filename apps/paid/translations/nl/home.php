@@ -71,6 +71,11 @@ return [
     'support_text_alt' => 'Deze app is gratis. Als je hem leuk vindt, trakteer me dan op een kopje koffie door hier te klikken!',
     'download_qr' => 'QR-code downloaden',
     'share_qr' => 'QR-code delen',
+    
+    // Short description for landing page
+    'short_description' => 'Genereer en deel QR-codes voor snelle en eenvoudige geldoverdrachten.',
+    'description' => 'Genereer betalings-QR-codes voor uw bankapp - verstuur en ontvang eenvoudig geld.',
+    
     'cookie_notice' => 'Deze site gebruikt essentiële cookies',
     'cookie_accept' => 'OK',
 ];
