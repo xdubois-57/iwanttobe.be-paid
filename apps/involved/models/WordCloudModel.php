@@ -50,13 +50,47 @@ class WordCloudModel
     }
 
     /**
-     * Get all words for a word cloud
+     * Get all words for a word cloud, aggregating duplicates by summing their weights
      * @param int $wordCloudId
-     * @return array list of words
+     * @return array list of words with aggregated weights
      */
     public function getWords(int $wordCloudId): array
     {
-        return $this->db->fetchAll('SELECT * FROM WORD WHERE wordcloud_id = ? ORDER BY created_at DESC', [$wordCloudId]) ?? [];
+        // First get the raw words
+        $rawWords = $this->db->fetchAll('SELECT * FROM WORD WHERE wordcloud_id = ? ORDER BY created_at DESC', [$wordCloudId]) ?? [];
+        
+        // Aggregate duplicates by summing their weights
+        $aggregatedWords = [];
+        foreach ($rawWords as $word) {
+            $lowerWord = strtolower($word['word']);
+            if (!isset($aggregatedWords[$lowerWord])) {
+                $aggregatedWords[$lowerWord] = [
+                    'word' => $word['word'],
+                    'weight' => 1,
+                    'created_at' => $word['created_at']
+                ];
+            } else {
+                $aggregatedWords[$lowerWord]['weight'] += 1;
+            }
+        }
+        
+        // Convert to array of values
+        return array_values($aggregatedWords);
+    }
+
+    /**
+     * Delete a word from a word cloud by its text
+     * @param int $wordCloudId
+     * @param string $word
+     * @return bool success
+     */
+    public function deleteWordByText(int $wordCloudId, string $word): bool
+    {
+        // Delete the word with the matching text (case-insensitive)
+        return $this->db->delete('WORD', 'wordcloud_id = ? AND LOWER(word) = ?', [
+            $wordCloudId,
+            strtolower($word)
+        ]);
     }
 
     /**

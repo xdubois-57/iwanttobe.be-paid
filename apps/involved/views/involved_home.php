@@ -10,29 +10,24 @@ require_once __DIR__ . '/../../../views/header.php';
     </article>
 
     <!-- Grid container for responsive layout -->
-    <div class="grid" style="margin-top: 2rem;">
+    <div class="grid" style="margin-top: 2rem; gap: 2rem;">
         <!-- Join Event (first) -->
-        <article>
+        <article style="padding: 1rem;">
             <h2>Join Event</h2>
-            <p>Enter the 4-character code and optional password to join an existing event.</p>
-            <form method="post" action="/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/join">
-                <label for="event-code">Event Code</label>
-                <input id="event-code" name="event_code" placeholder="4-character code (e.g. AB12)" required maxlength="4" style="text-transform:uppercase; width: 100%;">
-                
-                <label for="join-password">Password</label>
-                <input id="join-password" name="password" type="password" placeholder="Enter password if required" style="width: 100%;">
+            <p style="margin: 0.5rem 0;">Enter a 4-character code to join an existing event.</p>
+            <form method="post" action="/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/join" style="margin-top: 1rem;">
+                <input id="event-code" name="event_code" placeholder="Event code" required maxlength="4" style="width: 100%;">
                 
                 <button class="primary" type="submit" style="margin-top: 1rem; width: 100%;">Join Event</button>
             </form>
         </article>
 
         <!-- Create Event (second) -->
-        <article>
+        <article style="padding: 1rem;">
             <h2>Create Event</h2>
-            <p>Generate a new event with an optional password for secure access.</p>
-            <form method="post" action="/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/create">
-                <label for="create-password">Password (Optional)</label>
-                <input id="create-password" name="password" type="password" placeholder="Add password for secure access" style="width: 100%;">
+            <p style="margin: 0.5rem 0;">Generate a new event with an optional password for secure access.</p>
+            <form method="post" action="/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/create" style="margin-top: 1rem;">
+                <input id="create-password" name="password" type="password" placeholder="Password (optional)" style="width: 100%;">
                 
                 <button class="primary" type="submit" style="margin-top: 1rem; width: 100%;">Create New Event</button>
             </form>

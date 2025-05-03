@@ -377,6 +377,54 @@ class InvolvedHomeController {
     }
 
     /**
+     * Delete a word from a word cloud
+     */
+    public function deleteWord($params = []) {
+        $code = strtoupper($params['code'] ?? '');
+        $wcid = (int)($params['wcid'] ?? 0);
+        $word = isset($_POST['word']) ? trim($_POST['word']) : '';
+        $langSlug = $params['lang'] ?? LanguageController::getInstance()->getCurrentLanguage();
+
+        if (empty($word)) {
+            header('Content-Type: application/json');
+            echo json_encode(['success' => false, 'error' => 'Word parameter is required']);
+            exit;
+        }
+
+        $eventModel = new EventModel();
+        $event = $eventModel->getByKey($code);
+        if (!$event) {
+            http_response_code(404);
+            header('Content-Type: application/json');
+            echo json_encode(['success' => false, 'error' => 'Event not found']);
+            exit;
+        }
+
+        // Authorization check
+        if (!empty($event['password']) && !$this->isAuthorized($code)) {
+            header('Content-Type: application/json');
+            echo json_encode(['success' => false, 'error' => 'Unauthorized']);
+            exit;
+        }
+
+        $wcModel = new WordCloudModel();
+        $wordCloud = $wcModel->getById($wcid);
+        if (!$wordCloud || (int)$wordCloud['event_id'] !== (int)$event['id']) {
+            http_response_code(404);
+            header('Content-Type: application/json');
+            echo json_encode(['success' => false, 'error' => 'Word cloud not found']);
+            exit;
+        }
+
+        // Delete the word
+        $success = $wcModel->deleteWordByText($wcid, $word);
+        
+        header('Content-Type: application/json');
+        echo json_encode(['success' => $success]);
+        exit;
+    }
+
+    /**
      * Serve word cloud words as JSON for AJAX endpoint
      * GET /{lang}/involved/{code}/{wcid}/words
      * @param array $params

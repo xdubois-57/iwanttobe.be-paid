@@ -12,8 +12,44 @@ use chillerlan\QRCode\QROptions;
 <main class="container">
     <article>
         <h1>Event <?php echo htmlspecialchars($eventData['key']); ?></h1>
-        <p>Description: <?php echo htmlspecialchars($eventData['description'] ?? ''); ?></p>
         <p>Created at: <?php echo htmlspecialchars($eventData['created_at']); ?></p>
+    </article>
+    <style>
+        .word-cloud-item {
+            display: inline-block;
+            margin: 0.3rem;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        .word-cloud-item:hover {
+            transform: scale(1.05);
+        }
+        .word-cloud-item:hover .word-cloud-delete {
+            color: #dc3545;
+        }
+    </style>
+    <script>
+    function deleteWordCloud(lang, eventCode, wordCloudId) {
+        if (confirm('Are you sure you want to delete this word cloud?')) {
+            fetch('/' + lang + '/involved/' + eventCode + '/wordcloud/' + wordCloudId + '/delete', {
+                method: 'POST'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.reload();
+                } else {
+                    alert('Failed to delete word cloud');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while deleting the word cloud');
+            });
+        }
+    }
+    </script>
     </article>
 
     <!-- Two-column layout -->
@@ -23,29 +59,34 @@ use chillerlan\QRCode\QROptions;
             <h2>Event Details</h2>
             <p>Event code: <?php echo htmlspecialchars($eventData['key']); ?></p>
             <p>Created at: <?php echo htmlspecialchars($eventData['created_at']); ?></p>
-            <p>Description: <?php echo htmlspecialchars($eventData['description'] ?? ''); ?></p>
-            <h3 style="margin-top:1.5rem;">Word Clouds</h3>
-            <form method="post" action="/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/<?php echo urlencode($eventData['key']); ?>/wordcloud/create" style="margin-bottom:1rem;">
-                <input type="text" name="question" placeholder="Enter question" required style="width:100%;margin-bottom:0.5rem;">
-                <button class="secondary" type="submit" style="width:100%;">Create Word Cloud</button>
-            </form>
-
+            
             <?php if (!empty($wordClouds)): ?>
-            <ul style="list-style:none;padding:0;">
+            <h3 style="margin-top:1.5rem;">Word Clouds</h3>
+            <div style="margin-top:1rem;">
                 <?php foreach ($wordClouds as $wc): ?>
-                <li style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #ddd;padding:0.5rem 0;">
-                    <a href="/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/<?php echo urlencode($eventData['key']); ?>/<?php echo $wc['id']; ?>" style="flex:1;">
+                <div class="word-cloud-item" 
+                     onclick="window.open('/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/<?php echo urlencode($eventData['key']); ?>/<?php echo $wc['id']; ?>', '_blank');">
+                    <div style="display:flex; align-items:center; padding:0.5rem 1rem; background:#f4f4f4; border-radius:1rem;">
                         <?php echo htmlspecialchars($wc['question']); ?>
-                    </a>
-                    <form method="post" action="/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/<?php echo urlencode($eventData['key']); ?>/wordcloud/<?php echo $wc['id']; ?>/delete" style="margin:0;">
-                        <button type="submit" style="background:none;border:none;color:red;font-size:1rem;">&times;</button>
-                    </form>
-                </li>
+                        <form method="post" action="/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/<?php echo urlencode($eventData['key']); ?>/wordcloud/<?php echo $wc['id']; ?>/delete" 
+                              style="margin-left:0.5rem;">
+                            <button onclick="deleteWordCloud('<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>', '<?php echo htmlspecialchars($eventData['key']); ?>', <?php echo $wc['id']; ?>)"
+                                    style="padding:0; background:none; border:none; cursor:pointer; color:#666; font-size:1.2rem;">
+                                ×
+                            </button>
+                        </form>
+                    </div>
+                </div>
                 <?php endforeach; ?>
-            </ul>
+            </div>
             <?php else: ?>
-            <p>No word clouds yet.</p>
+            <p style="margin-top:1.5rem;">No word clouds yet.</p>
             <?php endif; ?>
+            
+            <form method="post" action="/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/<?php echo urlencode($eventData['key']); ?>/wordcloud/create" style="margin-top:1.5rem;">
+                <input type="text" name="question" placeholder="Enter question" required style="width:100%;margin-bottom:0.5rem;">
+                <button class="primary" type="submit" style="width:100%;">Create Word Cloud</button>
+            </form>
         </article>
 
         <!-- Right column (1/4 width) -->

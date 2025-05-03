@@ -26,33 +26,16 @@ require_once __DIR__ . '/../../../views/header.php';
 ?>
 <main class="container">
     <article>
-        <h1>Word Cloud <?php echo htmlspecialchars($wordCloudData['id']); ?></h1>
-        <p>Question: <?php echo htmlspecialchars($wordCloudData['question']); ?></p>
-        <p>Event: <?php echo htmlspecialchars($eventData['key']); ?></p>
+        <h1><?php echo htmlspecialchars($wordCloudData['question']); ?></h1>
+        <p>
+            <a href="/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/<?php echo urlencode($eventData['key']); ?>">
+                ← Back to event <?php echo htmlspecialchars($eventData['key']); ?>
+            </a>
+        </p>
     </article>
     <div class="grid" style="margin-top: 2rem; gap: 2rem;">
         <article style="grid-column: span 3;">
-            <h3>Word Cloud Visualization</h3>
             <div id="word-cloud-container" class="word-cloud-wrapper" data-wordcloud-url="/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/<?php echo urlencode($eventData['key']); ?>/<?php echo $wordCloudData['id']; ?>/words"></div>
-            
-            <?php 
-            // Fetch words for this cloud
-            $wcModel = new WordCloudModel();
-            $words = $wcModel->getWords($wordCloudData['id']);
-            
-            if (!empty($words)): 
-            ?>
-            <div style="margin-top: 1.5rem;">
-                <h3>Words</h3>
-                <ul style="list-style:none; padding:0;">
-                <?php foreach ($words as $word): ?>
-                    <li style="display:inline-block; margin:0.3rem; padding:0.5rem 1rem; background:#f4f4f4; border-radius:1rem;">
-                        <?php echo htmlspecialchars($word['word']); ?>
-                    </li>
-                <?php endforeach; ?>
-                </ul>
-            </div>
-            <?php endif; ?>
         </article>
         <article style="grid-column: span 1; text-align: center;">
             <div style="margin: 1rem 0;">
@@ -72,7 +55,7 @@ require_once __DIR__ . '/../../../views/header.php';
                     </a>
                 </div>
                 <div style="margin-top: 1rem; display: flex; justify-content: center; align-items: center; height: 50px;">
-                    <a href="<?php echo $addWordUrl; ?>" role="button">
+                    <a href="<?php echo $addWordUrl; ?>" role="button" target="_blank">
                         Add Your Word
                     </a>
                 </div>
@@ -87,6 +70,96 @@ require_once __DIR__ . '/../../../views/header.php';
             </div>
         </article>
     </div>
+    
+    <article style="margin-top: 2rem;">
+        <?php 
+        // Fetch words for this cloud
+        $wcModel = new WordCloudModel();
+        $words = $wcModel->getWords($wordCloudData['id']);
+        
+        if (!empty($words)): 
+        ?>
+        <div>
+            <ul id="word-list" style="list-style:none; padding:0;">
+            <?php foreach ($words as $word): ?>
+                <li style="display:inline-block; margin:0.3rem; position:relative;">
+                    <div style="display:flex; align-items:center; padding:0.5rem 1rem; background:#f4f4f4; border-radius:1rem;">
+                        <?php echo htmlspecialchars($word['word']); ?>
+                        <button onclick="deleteWord(<?php echo $wordCloudData['id']; ?>, '<?php echo addslashes($word['word']); ?>')"
+                                style="margin-left:0.5rem; padding:0; background:none; border:none; cursor:pointer; color:#666; font-size:1.2rem;">
+                            ×
+                        </button>
+                    </div>
+                </li>
+            <?php endforeach; ?>
+            </ul>
+
+            <script>
+            function deleteWord(wordCloudId, word) {
+                fetch('/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/<?php echo urlencode($eventData['key']); ?>/<?php echo $wordCloudData['id']; ?>/delete', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: 'word=' + encodeURIComponent(word)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        refreshWordList();
+                    } else {
+                        alert('Failed to delete word');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred while deleting the word');
+                });
+            }
+
+            // Dynamic refresh for the word list
+            const wordListUl = document.getElementById('word-list');
+            function refreshWordList() {
+                fetch('/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/<?php echo urlencode($eventData['key']); ?>/<?php echo $wordCloudData['id']; ?>/words')
+                    .then(response => response.json())
+                    .then(words => {
+                        wordListUl.innerHTML = '';
+                        if (words.length > 0) {
+                            console.log('First word object:', words[0]); // DEBUG
+                        }
+                        words.forEach(word => {
+                            const li = document.createElement('li');
+                            li.style.display = 'inline-block';
+                            li.style.margin = '0.3rem';
+                            li.style.position = 'relative';
+                            const div = document.createElement('div');
+                            div.style.display = 'flex';
+                            div.style.alignItems = 'center';
+                            div.style.padding = '0.5rem 1rem';
+                            div.style.background = '#f4f4f4';
+                            div.style.borderRadius = '1rem';
+                            div.appendChild(document.createTextNode(word[0]));
+                            const btn = document.createElement('button');
+                            btn.textContent = '×';
+                            btn.style.marginLeft = '0.5rem';
+                            btn.style.padding = '0';
+                            btn.style.background = 'none';
+                            btn.style.border = 'none';
+                            btn.style.cursor = 'pointer';
+                            btn.style.color = '#666';
+                            btn.style.fontSize = '1.2rem';
+                            btn.onclick = () => deleteWord(<?php echo $wordCloudData['id']; ?>, word[0]);
+                            div.appendChild(btn);
+                            li.appendChild(div);
+                            wordListUl.appendChild(li);
+                        });
+                    });
+            }
+            setInterval(refreshWordList, 5000);
+            </script>
+        </div>
+        <?php endif; ?>
+    </article>
 </main>
 <!-- Include WordCloud library -->
 <script src="/vendor/timdream/wordcloud2.js"></script>
