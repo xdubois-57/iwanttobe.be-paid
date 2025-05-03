@@ -479,16 +479,21 @@ class WordCloudManager {
         const container = document.getElementById('word-cloud-container');
         if (!container) return;
         
+        // Check if a custom canvas height is specified
+        const canvasHeight = container.hasAttribute('data-canvas-height') 
+            ? parseInt(container.getAttribute('data-canvas-height'), 10) 
+            : 400;
+        
         // Prioritize dynamic word cloud if data-wordcloud-url is present
         if (container.hasAttribute('data-wordcloud-url')) {
             const apiUrl = container.getAttribute('data-wordcloud-url');
-            const wordCloud = new WordCloudManager('word-cloud-container', {}, 400);
+            const wordCloud = new WordCloudManager('word-cloud-container', {}, canvasHeight);
             wordCloud.startPolling(apiUrl);
             wordCloud.makeResponsive();
             wordCloud.addMobileScrollBehavior();
         } else if (container.hasAttribute('data-words')) {
             const wordCloudData = JSON.parse(container.getAttribute('data-words'));
-            const wordCloud = new WordCloudManager('word-cloud-container', {}, 400);
+            const wordCloud = new WordCloudManager('word-cloud-container', {}, canvasHeight);
             wordCloud.loadStaticData(wordCloudData);
             wordCloud.makeResponsive();
             wordCloud.addMobileScrollBehavior();
