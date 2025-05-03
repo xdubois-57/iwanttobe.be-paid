@@ -161,6 +161,10 @@ class InvolvedHomeController {
                 }
             }
             
+            // If there's a redirect parameter in the URL, we'll use that
+            // Otherwise we'll use the current request URI
+            $originalUrl = isset($_GET['redirect']) ? $_GET['redirect'] : $_SERVER['REQUEST_URI'];
+            
             require_once __DIR__ . '/../views/password_prompt.php';
             return;
         }
@@ -205,7 +209,7 @@ class InvolvedHomeController {
         }
         
         if (empty($password)) {
-            header('Location: /' . $langSlug . '/involved/' . urlencode($code) . '?error=missing_password');
+            header('Location: /' . $langSlug . '/involved/' . urlencode($code) . '?error=missing_password&redirect=' . urlencode($_POST['redirect_url'] ?? ''));
             exit;
         }
         
@@ -214,15 +218,24 @@ class InvolvedHomeController {
         
         if (!$event) {
             // Redirect back to password prompt with error
-            header('Location: /' . $langSlug . '/involved/' . urlencode($code) . '?error=invalid_password');
+            header('Location: /' . $langSlug . '/involved/' . urlencode($code) . '?error=invalid_password&redirect=' . urlencode($_POST['redirect_url'] ?? ''));
             exit;
         }
         
         // Password verified, mark event as authorized
         $this->authorizeEvent($code);
         
-        // Redirect to event page
-        header('Location: /' . $langSlug . '/involved/' . urlencode($code));
+        // Check if we have a redirect URL from the form
+        $redirectUrl = isset($_POST['redirect_url']) ? $_POST['redirect_url'] : '';
+        
+        // Make sure the redirect URL is for this event
+        if (!empty($redirectUrl) && strpos($redirectUrl, '/involved/' . $code) !== false) {
+            // It's a valid redirect URL for this event, use it
+            header('Location: ' . $redirectUrl);
+        } else {
+            // Fallback to standard event page
+            header('Location: /' . $langSlug . '/involved/' . urlencode($code));
+        }
         exit;
     }
 

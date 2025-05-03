@@ -17,6 +17,7 @@ require_once __DIR__ . '/../../../views/header.php';
         
         <form method="post" action="/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/verify-password">
             <input type="hidden" name="event_code" value="<?php echo htmlspecialchars($eventCode); ?>">
+            <input type="hidden" name="redirect_url" value="<?php echo htmlspecialchars($originalUrl ?? $_SERVER['REQUEST_URI']); ?>">
             
             <label for="password"><?php echo htmlspecialchars($lang->translate('password_label')); ?></label>
             <input id="password" name="password" type="password" 
