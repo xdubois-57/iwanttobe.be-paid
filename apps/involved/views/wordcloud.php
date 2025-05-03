@@ -97,7 +97,9 @@ require_once __DIR__ . '/../../../views/header.php';
 ?>
 <main class="container">
     <article>
-        <h1><?php echo htmlspecialchars($wordCloudData['question']); ?></h1>
+        <h1 data-likes="<?php echo isset($wordCloudData['likes']) ? (int)$wordCloudData['likes'] : 0; ?>">
+            <?php echo htmlspecialchars($wordCloudData['question']); ?>
+        </h1>
         <p>
             <a href="/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/<?php echo urlencode($eventData['key']); ?>">
                 ← Back to event <?php echo htmlspecialchars($eventData['key']); ?>
@@ -276,6 +278,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <!-- Include WordCloud library -->
 <script src="/apps/involved/js/eventQrBlock.js"></script>
+<script src="/apps/involved/js/OverlayObjectHelper.js"></script>
 <script src="/vendor/timdream/wordcloud2.js"></script>
 <script src="/js/wordcloud.js"></script>
 

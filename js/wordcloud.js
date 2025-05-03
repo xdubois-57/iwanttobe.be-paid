@@ -139,6 +139,34 @@ class WordCloudManager {
         // Set fullscreen state
         this.isFullScreen = true;
         
+        // Activate the OverlayObjectHelper if available
+        if (window.OverlayObjectHelper) {
+            // Get question text if available from meta, otherwise use document title
+            const questionEl = document.querySelector('h1[data-likes]');
+            const questionText = questionEl?.textContent?.trim() || document.title;
+            const likeCount = parseInt(questionEl?.getAttribute('data-likes') || '0', 10);
+            
+            console.log('[WordCloudManager] OverlayObjectHelper found, setting title and heart:', {
+                questionElement: questionEl ? 'found' : 'not found',
+                questionText: questionText,
+                likeCount: likeCount
+            });
+            
+            // Always activate first before setting properties
+            window.OverlayObjectHelper.activate();
+            
+            // Then set title and heart
+            if (questionText) {
+                console.log('[WordCloudManager] Setting title:', questionText);
+                window.OverlayObjectHelper.addTitle(questionText);
+            }
+            
+            console.log('[WordCloudManager] Setting heart count:', likeCount);
+            window.OverlayObjectHelper.addHeart(likeCount);
+        } else {
+            console.warn('[WordCloudManager] OverlayObjectHelper not found');
+        }
+        
         // Dispatch custom event for fullscreen change
         window.dispatchEvent(new CustomEvent('wordcloud-fullscreen-change', {
             detail: { isFullScreen: true }
@@ -152,7 +180,7 @@ class WordCloudManager {
         };
         document.addEventListener('keydown', this.escKeyHandler);
     }
-    
+
     getFullscreenOptions(width, height) {
         // Create optimized options for fullscreen mode
         const fullScreenOptions = Object.assign({}, this.options);
@@ -186,6 +214,11 @@ class WordCloudManager {
             document.removeEventListener('keydown', this.escKeyHandler);
             this.fullScreenOverlay = null;
             this.isFullScreen = false;
+            
+            // Deactivate OverlayObjectHelper if available
+            if (window.OverlayObjectHelper) {
+                window.OverlayObjectHelper.deactivate();
+            }
             
             // Dispatch custom event for fullscreen change
             window.dispatchEvent(new CustomEvent('wordcloud-fullscreen-change', {
