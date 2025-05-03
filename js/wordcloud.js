@@ -114,9 +114,13 @@ class WordCloudManager {
         const fullScreenCanvas = document.createElement('canvas');
         fullScreenCanvas.className = 'word-cloud-fullscreen-canvas';
         
-        // Use almost the full viewport size to maximize space
-        const width = window.innerWidth - 40; // 20px padding on each side
-        const height = window.innerHeight - 40;
+        // Calculate dimensions with 5% margin on desktop (0% on mobile)
+        const isDesktop = window.innerWidth >= 768;
+        const marginPercentage = isDesktop ? 5 : 0;
+        const margin = Math.floor(window.innerWidth * (marginPercentage / 100));
+        
+        const width = window.innerWidth - (2 * margin); // 2 margins (left and right)
+        const height = window.innerHeight - (2 * margin); // 2 margins (top and bottom)
         
         fullScreenCanvas.width = width;
         fullScreenCanvas.height = height;
