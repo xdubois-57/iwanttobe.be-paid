@@ -20,6 +20,7 @@ return [
     'password_prompt_text' => 'This event requires a password:',
     'password_submit' => 'Access Event',
     'invalid_password' => 'Invalid password, please try again.',
+    'missing_password' => 'Please enter a password.',
     'protected_event_title' => 'Protected Event',
     'password_prompt_description' => 'Please enter the password to access this event:',
     'password_label' => 'Password',

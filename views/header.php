@@ -100,7 +100,9 @@ if (method_exists($lang, 'loadTranslations')) {
             'share_title': <?php echo json_encode($lang->translate('share_title')); ?>,
             'copy_success': <?php echo json_encode($lang->translate('copy_success')); ?>,
             'share_error': <?php echo json_encode($lang->translate('share_error')); ?>,
-            'share_link_prompt': <?php echo json_encode($lang->translate('share_link_prompt')); ?>
+            'share_link_prompt': <?php echo json_encode($lang->translate('share_link_prompt')); ?>,
+            // Password prompt translations
+            'invalid_password': <?php echo json_encode($lang->translate('invalid_password')); ?>
         };
         return translations[key] || key;
     };

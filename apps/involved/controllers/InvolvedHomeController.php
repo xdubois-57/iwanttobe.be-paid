@@ -142,7 +142,25 @@ class InvolvedHomeController {
             $currentApp = 'involved';
             $eventCode = $code;
             $lang = LanguageController::getInstance();
-            $errorMessage = isset($_GET['error']) && $_GET['error'] === 'invalid_password' ? $lang->translate('invalid_password') : null;
+            
+            $errorMessage = null;
+            if (isset($_GET['error'])) {
+                if ($_GET['error'] === 'invalid_password') {
+                    // Hardcode the error messages for now to ensure they display correctly
+                    if ($lang->getCurrentLanguage() === 'fr') {
+                        $errorMessage = 'Mot de passe invalide, veuillez réessayer.';
+                    } else {
+                        $errorMessage = 'Invalid password, please try again.';
+                    }
+                } elseif ($_GET['error'] === 'missing_password') {
+                    if ($lang->getCurrentLanguage() === 'fr') {
+                        $errorMessage = 'Veuillez entrer un mot de passe.';
+                    } else {
+                        $errorMessage = 'Please enter a password.';
+                    }
+                }
+            }
+            
             require_once __DIR__ . '/../views/password_prompt.php';
             return;
         }
