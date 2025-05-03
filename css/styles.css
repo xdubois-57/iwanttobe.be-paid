@@ -189,8 +189,28 @@ html[data-theme="dark"] .beta-badge {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
 }
 
+/* Coming soon badge */
+.coming-soon-badge {
+    position: absolute;
+    top: 20px;
+    right: -30px;
+    background-color: #2196F3; /* Blue color for coming soon */
+    color: var(--primary-inverse);
+    padding: 0.25rem 2rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    transform: rotate(45deg);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+html[data-theme="dark"] .coming-soon-badge {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
 @media (max-width: 768px) {
-    .beta-badge {
+    .beta-badge, .coming-soon-badge {
         font-size: 0.7rem;
         padding: 0.2rem 1.5rem;
         right: -25px;

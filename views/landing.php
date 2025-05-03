@@ -95,6 +95,7 @@ $wordCloudData = json_encode($wordCloudWords);
                     <circle cx="15" cy="15" r="1.8"/>
                 </svg>
             <?php elseif ($app->getSlug() === 'drive'): ?>
+                <span class="coming-soon-badge">coming soon</span>
                 <svg class="app-logo" style="margin-bottom:10px;" viewBox="8 14 8 5" width="50" height="50" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                     <rect x="8" y="16" width="8" height="2"/>
                     <polygon points="9,16 11,14 13,14 15,16"/>
