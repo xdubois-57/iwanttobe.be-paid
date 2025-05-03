@@ -85,22 +85,22 @@ if (method_exists($lang, 'loadTranslations')) {
     // Expose PHP translations to JavaScript
     window.t = function(key) {
         const translations = {
-            'save_favorite': '<?php echo $lang->translate('save_favorite'); ?>',
-            'update_favorite': '<?php echo $lang->translate('update_favorite'); ?>',
+            'save_favorite': <?php echo json_encode($lang->translate('save_favorite')); ?>,
+            'update_favorite': <?php echo json_encode($lang->translate('update_favorite')); ?>,
             // Add other frequently used translations
             'app_name': 'iwantto.be Paid',
-            'generating': '<?php echo $lang->translate('generating'); ?>',
-            'share_text': '<?php echo $lang->translate('share_text'); ?>',
-            'cookie_notice': '<?php echo $lang->translate('cookie_notice'); ?>',
-            'cookie_accept': '<?php echo $lang->translate('cookie_accept'); ?>',
+            'generating': <?php echo json_encode($lang->translate('generating')); ?>,
+            'share_text': <?php echo json_encode($lang->translate('share_text')); ?>,
+            'cookie_notice': <?php echo json_encode($lang->translate('cookie_notice')); ?>,
+            'cookie_accept': <?php echo json_encode($lang->translate('cookie_accept')); ?>,
             // Involved app EventQrBlock translations
-            'event_code': '<?php echo $lang->translate('event_code'); ?>',
-            'event_password': '<?php echo $lang->translate('event_password'); ?>',
-            'share_button': '<?php echo $lang->translate('share_button'); ?>',
-            'share_title': '<?php echo $lang->translate('share_title'); ?>',
-            'copy_success': '<?php echo $lang->translate('copy_success'); ?>',
-            'share_error': '<?php echo $lang->translate('share_error'); ?>',
-            'share_link_prompt': '<?php echo $lang->translate('share_link_prompt'); ?>'
+            'event_code': <?php echo json_encode($lang->translate('event_code')); ?>,
+            'event_password': <?php echo json_encode($lang->translate('event_password')); ?>,
+            'share_button': <?php echo json_encode($lang->translate('share_button')); ?>,
+            'share_title': <?php echo json_encode($lang->translate('share_title')); ?>,
+            'copy_success': <?php echo json_encode($lang->translate('copy_success')); ?>,
+            'share_error': <?php echo json_encode($lang->translate('share_error')); ?>,
+            'share_link_prompt': <?php echo json_encode($lang->translate('share_link_prompt')); ?>
         };
         return translations[key] || key;
     };

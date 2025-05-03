@@ -142,28 +142,35 @@ use chillerlan\QRCode\QROptions;
 
         <!-- Right column (1/4 width) -->
         <article style="grid-column: span 1; text-align: center;">
-            <h2>QR Code</h2>
-            <div style="margin: 1rem 0;">
-                <?php
-                $scheme = isset($_SERVER['REQUEST_SCHEME']) ? $_SERVER['REQUEST_SCHEME'] : 'http';
-                $currentUrl = $scheme . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-                $qrSvg = QrHelper::renderSvg($currentUrl);
-                ?>
-                <div style="max-width: 200px; margin: 0 auto;">
-                    <?php echo $qrSvg; ?>
-                </div>
-                <p style="margin-top: 0.5rem; font-size: 0.8rem;">
-                    Scan this QR code to access the event
-                </p>
-                <?php if (!empty($eventData['password'])): ?>
-                <p style="margin-top: 0.5rem; font-size: 0.8rem; color: #666;">
-                    Event password: <?php echo htmlspecialchars($eventData['password']); ?>
-                </p>
-                <?php endif; ?>
-            </div>
+            <div id="event-qr-block" style="margin: 1rem 0;"></div>
+            <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // Compute the current event URL
+                const scheme = window.location.protocol.replace(':', '');
+                const host = window.location.host;
+                const lang = '<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>';
+                const eventKey = '<?php echo htmlspecialchars($eventData["key"]); ?>';
+                const eventPassword = <?php echo json_encode($eventData['password'] ?? null); ?>;
+                
+                // Construct the event URL
+                const eventUrl = `${scheme}://${host}/${lang}/involved/${eventKey}`;
+                
+                // Render the QR/event info block
+                new EventQrBlock(
+                    '#event-qr-block',
+                    eventUrl,
+                    eventKey,
+                    eventPassword
+                );
+            });
+            </script>
         </article>
     </div>
 </main>
+
+<!-- Load EventQrBlock script -->
+<script src="/apps/involved/js/eventQrBlock.js"></script>
+
 <script>
 document.querySelectorAll('.delete-wordcloud-form').forEach(form => {
     form.addEventListener('submit', function(event) {
