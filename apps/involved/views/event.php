@@ -56,13 +56,6 @@ use chillerlan\QRCode\QROptions;
             display: flex;
             align-items: center;
         }
-        .wordcloud-list-cross {
-            display: flex;
-            align-items: center;
-            margin-left: 0.5rem;
-            font-size: 1rem;
-            line-height: 1.2;
-        }
         .word-cloud-delete {
             margin-left: 0.5rem;
             padding: 0;
@@ -71,12 +64,10 @@ use chillerlan\QRCode\QROptions;
             cursor: pointer;
             color: #666;
             font-size: 1.2rem;
-            display: flex;
-            align-items: center;
-        }
-        .wordcloud-list-cross {
-            display: flex;
-            align-items: center;
+            line-height: 1;
+            vertical-align: middle;
+            position: relative;
+            top: 7px;
         }
     </style>
     <script>
@@ -120,12 +111,10 @@ use chillerlan\QRCode\QROptions;
                             <span class="wordcloud-list-question">
                                 <?php echo htmlspecialchars($wc['question']); ?>
                             </span>
-                            <span class="wordcloud-list-cross">
-                                <button type="button" class="word-cloud-delete"
-                                    onclick="event.preventDefault(); event.stopPropagation(); deleteWordCloud('<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>', '<?php echo htmlspecialchars($eventData['key']); ?>', <?php echo $wc['id']; ?>)">
-                                    ×
-                                </button>
-                            </span>
+                            <button type="button" class="word-cloud-delete"
+                                onclick="event.preventDefault(); event.stopPropagation(); deleteWordCloud('<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>', '<?php echo htmlspecialchars($eventData['key']); ?>', <?php echo $wc['id']; ?>)">
+                                ×
+                            </button>
                         </div>
                     </li>
                 <?php endforeach; ?>
