@@ -28,6 +28,56 @@ use chillerlan\QRCode\QROptions;
         .word-cloud-item:hover .word-cloud-delete {
             color: #dc3545;
         }
+        .wordcloud-list-item {
+            display: inline-block;
+            margin: 0.3rem;
+            position: relative;
+        }
+        .wordcloud-list-content {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem 1rem;
+            background: #f4f4f4;
+            border-radius: 1rem;
+            transition: background 0.2s;
+            cursor: pointer;
+        }
+        .wordcloud-list-content:hover {
+            background: #e0e0e0;
+        }
+        .wordcloud-list-question {
+            cursor: pointer;
+            border-radius: 0.7rem;
+            padding: 0.1rem 0.4rem;
+            transition: none;
+            background: none;
+            font-size: 1rem;
+            line-height: 1.2;
+            display: flex;
+            align-items: center;
+        }
+        .wordcloud-list-cross {
+            display: flex;
+            align-items: center;
+            margin-left: 0.5rem;
+            font-size: 1rem;
+            line-height: 1.2;
+        }
+        .word-cloud-delete {
+            margin-left: 0.5rem;
+            padding: 0;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #666;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+        }
+        .wordcloud-list-cross {
+            display: flex;
+            align-items: center;
+        }
     </style>
     <script>
     function deleteWordCloud(lang, eventCode, wordCloudId) {
@@ -63,21 +113,23 @@ use chillerlan\QRCode\QROptions;
             <?php if (!empty($wordClouds)): ?>
             <h3 style="margin-top:1.5rem;">Word Clouds</h3>
             <div style="margin-top:1rem;">
+                <ul id="word-list" style="list-style:none; padding:0;">
                 <?php foreach ($wordClouds as $wc): ?>
-                <div class="word-cloud-item" 
-                     onclick="window.open('/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/<?php echo urlencode($eventData['key']); ?>/<?php echo $wc['id']; ?>', '_blank');">
-                    <div style="display:flex; align-items:center; padding:0.5rem 1rem; background:#f4f4f4; border-radius:1rem;">
-                        <?php echo htmlspecialchars($wc['question']); ?>
-                        <form method="post" action="/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/<?php echo urlencode($eventData['key']); ?>/wordcloud/<?php echo $wc['id']; ?>/delete" 
-                              style="margin-left:0.5rem;">
-                            <button onclick="deleteWordCloud('<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>', '<?php echo htmlspecialchars($eventData['key']); ?>', <?php echo $wc['id']; ?>)"
-                                    style="padding:0; background:none; border:none; cursor:pointer; color:#666; font-size:1.2rem;">
-                                ×
-                            </button>
-                        </form>
-                    </div>
-                </div>
+                    <li class="wordcloud-list-item">
+                        <div class="wordcloud-list-content" onclick="window.open('/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/<?php echo urlencode($eventData['key']); ?>/<?php echo $wc['id']; ?>', '_blank');">
+                            <span class="wordcloud-list-question">
+                                <?php echo htmlspecialchars($wc['question']); ?>
+                            </span>
+                            <span class="wordcloud-list-cross">
+                                <button type="button" class="word-cloud-delete"
+                                    onclick="event.preventDefault(); event.stopPropagation(); deleteWordCloud('<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>', '<?php echo htmlspecialchars($eventData['key']); ?>', <?php echo $wc['id']; ?>)">
+                                    ×
+                                </button>
+                            </span>
+                        </div>
+                    </li>
                 <?php endforeach; ?>
+                </ul>
             </div>
             <?php else: ?>
             <p style="margin-top:1.5rem;">No word clouds yet.</p>
@@ -113,4 +165,14 @@ use chillerlan\QRCode\QROptions;
         </article>
     </div>
 </main>
+<script>
+document.querySelectorAll('.delete-wordcloud-form').forEach(form => {
+    form.addEventListener('submit', function(event) {
+        event.stopPropagation();
+        if (!confirm('Are you sure you want to delete this word cloud?')) {
+            event.preventDefault();
+        }
+    });
+});
+</script>
 <?php require_once __DIR__ . '/../../../views/footer.php'; ?>

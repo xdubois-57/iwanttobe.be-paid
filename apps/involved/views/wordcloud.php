@@ -82,13 +82,19 @@ require_once __DIR__ . '/../../../views/header.php';
         <div>
             <ul id="word-list" style="list-style:none; padding:0;">
             <?php foreach ($words as $word): ?>
-                <li style="display:inline-block; margin:0.3rem; position:relative;">
-                    <div style="display:flex; align-items:center; padding:0.5rem 1rem; background:#f4f4f4; border-radius:1rem;">
-                        <?php echo htmlspecialchars($word['word']); ?>
-                        <button onclick="deleteWord(<?php echo $wordCloudData['id']; ?>, '<?php echo addslashes($word['word']); ?>')"
-                                style="margin-left:0.5rem; padding:0; background:none; border:none; cursor:pointer; color:#666; font-size:1.2rem;">
-                            ×
-                        </button>
+                <?php
+                    $wordText = '';
+                    if (is_array($word) && isset($word[0]) && $word[0] !== null) {
+                        $wordText = (string)$word[0];
+                    } elseif (is_string($word) && $word !== '') {
+                        $wordText = $word;
+                    }
+                    if ($wordText === '') continue;
+                ?>
+                <li style="display: inline-block; margin: 0.3rem; position: relative;">
+                    <div style="display: flex; align-items: center; padding: 0.5rem 1rem; background: rgb(244, 244, 244); border-radius: 1rem;">
+                        <?php echo htmlspecialchars($wordText, ENT_QUOTES, 'UTF-8'); ?>
+                        <button onclick="deleteWord(<?php echo $wordCloudData['id']; ?>, '<?php echo addslashes($wordText); ?>')" style="margin-left: 0.5rem; padding: 0px; background: none; border: medium; cursor: pointer; color: rgb(102, 102, 102); font-size: 1.2rem;">×</button>
                     </div>
                 </li>
             <?php endforeach; ?>
@@ -124,32 +130,12 @@ require_once __DIR__ . '/../../../views/header.php';
                     .then(response => response.json())
                     .then(words => {
                         wordListUl.innerHTML = '';
-                        if (words.length > 0) {
-                            console.log('First word object:', words[0]); // DEBUG
-                        }
                         words.forEach(word => {
                             const li = document.createElement('li');
-                            li.style.display = 'inline-block';
-                            li.style.margin = '0.3rem';
-                            li.style.position = 'relative';
+                            li.setAttribute('style', 'display: inline-block; margin: 0.3rem; position: relative;');
                             const div = document.createElement('div');
-                            div.style.display = 'flex';
-                            div.style.alignItems = 'center';
-                            div.style.padding = '0.5rem 1rem';
-                            div.style.background = '#f4f4f4';
-                            div.style.borderRadius = '1rem';
-                            div.appendChild(document.createTextNode(word[0]));
-                            const btn = document.createElement('button');
-                            btn.textContent = '×';
-                            btn.style.marginLeft = '0.5rem';
-                            btn.style.padding = '0';
-                            btn.style.background = 'none';
-                            btn.style.border = 'none';
-                            btn.style.cursor = 'pointer';
-                            btn.style.color = '#666';
-                            btn.style.fontSize = '1.2rem';
-                            btn.onclick = () => deleteWord(<?php echo $wordCloudData['id']; ?>, word[0]);
-                            div.appendChild(btn);
+                            div.setAttribute('style', 'display: flex; align-items: center; padding: 0.5rem 1rem; background: rgb(244, 244, 244); border-radius: 1rem;');
+                            div.innerHTML = `${Array.isArray(word) ? word[0] : word}<button onclick=\"deleteWord(${<?php echo $wordCloudData['id']; ?>}, '${(Array.isArray(word) ? word[0] : word).replace(/'/g, "\\'")}')\" style=\"margin-left: 0.5rem; padding: 0px; background: none; border: medium; cursor: pointer; color: rgb(102, 102, 102); font-size: 1.2rem;\">×</button>`;
                             li.appendChild(div);
                             wordListUl.appendChild(li);
                         });
