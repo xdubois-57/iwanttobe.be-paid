@@ -269,31 +269,36 @@ class InvolvedHomeController {
         $wcid = (int)($params['wcid'] ?? 0);
         $langSlug = $params['lang'] ?? LanguageController::getInstance()->getCurrentLanguage();
 
+        header('Content-Type: application/json');
+
         if ($code === '' || $wcid === 0) {
-            header('Location: /' . $langSlug . '/involved/' . urlencode($code));
-            exit;
+            http_response_code(400);
+            echo json_encode(['success' => false, 'error' => 'missing_parameters']);
+            return;
         }
 
         $eventModel = new EventModel();
         $event = $eventModel->getByKey($code);
         if (!$event) {
             http_response_code(404);
-            $lang = LanguageController::getInstance();
-            echo $lang->translate('event_not_found');
+            echo json_encode(['success' => false, 'error' => 'event_not_found']);
             return;
         }
 
-        // Authorization check
         if (!empty($event['password']) && !$this->isAuthorized($code)) {
-            header('Location: /' . $langSlug . '/involved/' . urlencode($code));
-            exit;
+            http_response_code(403);
+            echo json_encode(['success' => false, 'error' => 'unauthorized']);
+            return;
         }
 
         $wcModel = new WordCloudModel();
-        $wcModel->delete($wcid);
-
-        header('Location: /' . $langSlug . '/involved/' . urlencode($code));
-        exit;
+        $success = $wcModel->delete($wcid);
+        if ($success) {
+            echo json_encode(['success' => true]);
+        } else {
+            http_response_code(500);
+            echo json_encode(['success' => false, 'error' => 'delete_failed']);
+        }
     }
 
     /**
