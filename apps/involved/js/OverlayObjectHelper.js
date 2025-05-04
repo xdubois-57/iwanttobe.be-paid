@@ -303,18 +303,13 @@ class OverlayObjectHelper {
                 if (data.success && Array.isArray(data.emojis) && data.emojis.length > 0) {
                     // Log that we received emojis for debugging
                     console.log('[OverlayObjectHelper] Received emojis:', data.emojis);
-                    
-                    // Distribute animations randomly over the next 5 seconds
-                    data.emojis.forEach(emoji => {
-                        // Calculate a random delay between 0 and 5000ms
-                        const randomDelay = Math.random() * 5000;
-                        
-                        // Schedule the emoji animation
+                    // Distribute animations randomly over the next 4 seconds (first emoji: no delay)
+                    data.emojis.forEach((emoji, idx) => {
+                        let delay = (idx === 0) ? 0 : Math.random() * 4000; // 0-4000ms for all but first
                         setTimeout(() => {
                             this.animateEmoji(emoji);
-                        }, randomDelay);
-                        
-                        console.log(`[OverlayObjectHelper] Scheduled emoji ${emoji} to animate in ${randomDelay.toFixed(0)}ms`);
+                        }, delay);
+                        console.log(`[OverlayObjectHelper] Scheduled emoji ${emoji} to animate in ${delay.toFixed(0)}ms`);
                     });
                 } else {
                     console.log('[OverlayObjectHelper] No new emojis to show');
@@ -574,15 +569,14 @@ class OverlayObjectHelper {
      */
     setQrData(url, eventCode, eventPassword = null, additionalText = '', showShareButton = true) {
         console.log('[OverlayObjectHelper] Setting QR data:', { url, eventCode, password: !!eventPassword });
-        
+        // Always hide the share button in the overlay QR block
         this.qrBlockConfig = {
             url: url,
             eventCode: eventCode,
             eventPassword: eventPassword,
             additionalText: additionalText,
-            showShareButton: showShareButton
+            showShareButton: false // Force hiding the share button
         };
-        
         // If the QR block is already visible, update it
         if (this.qrContainer && this.qrContainer.style.display === 'block') {
             this.showQrBlock();
