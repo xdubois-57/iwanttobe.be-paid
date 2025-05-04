@@ -203,7 +203,7 @@ class WordCloudManager {
             // Get the shorter dimension for scaling
             const shortestSide = Math.min(width, height);
             // Calculate ideal max font size (25% of shorter dimension)
-            const targetMaxFont = shortestSide * 0.25;
+            const targetMaxFont = shortestSide * 0.25; // 25% of shorter side
             // Scale linearly based on weight
             return (weight / this.currentMaxWeight) * targetMaxFont;
         };
@@ -391,8 +391,12 @@ class WordCloudManager {
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.fillStyle = this.detectDarkMode() ? '#666666' : '#cccccc';
-        ctx.font = '16px sans-serif';
-        ctx.fillText('No data available', this.canvas.width / 2, this.canvas.height / 2);
+        ctx.font = '12px sans-serif'; // Make the text smaller
+        if (window.lang && typeof window.lang.translate === 'function') {
+            ctx.fillText(window.lang.translate('scan_qr_to_answer'), this.canvas.width / 2, this.canvas.height / 2);
+        } else {
+            ctx.fillText('Scan the QR code to answer', this.canvas.width / 2, this.canvas.height / 2);
+        }
     }
 
     loadStaticData(data) {

@@ -7,6 +7,7 @@ return array_merge(
     require __DIR__.'/de/home.php',
     require __DIR__.'/de/menu.php',
     [
-        'description' => 'Involved! erleichtert es Teams, gemeinnützigen Organisationen und Gemeinschaftsgruppen, lebhafte Veranstaltungen zu organisieren, ansprechende Retrospektiven durchzuführen und interaktive Umfragen zu starten—und macht so jedes Meeting zu einem unvergesslichen Erlebnis.'
+        'description' => 'Involved! erleichtert es Teams, gemeinnützigen Organisationen und Gemeinschaftsgruppen, lebhafte Veranstaltungen zu organisieren, ansprechende Retrospektiven durchzuführen und interaktive Umfragen zu starten—und macht so jedes Meeting zu einem unvergesslichen Erlebnis.',
+        'scan_qr_to_answer' => 'Scannen Sie den QR-Code, um zu antworten',
     ]
 );

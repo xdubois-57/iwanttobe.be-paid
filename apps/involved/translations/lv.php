@@ -5,5 +5,8 @@
 
 return array_merge(
     require __DIR__.'/lv/menu.php',
-    require __DIR__.'/lv/home.php'
+    require __DIR__.'/lv/home.php',
+    [
+        'scan_qr_to_answer' => 'Skenējiet QR kodu, lai atbildētu',
+    ]
 );

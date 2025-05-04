@@ -7,6 +7,7 @@ return array_merge(
     require __DIR__.'/cs/home.php',
     require __DIR__.'/cs/menu.php',
     [
-        'description' => 'Involved! usnadňuje týmům, neziskovým organizacím a komunitním skupinám organizovat živé události, vést poutavé retrospektivy a spouštět interaktivní ankety—a proměňuje každou schůzku v nezapomenutelný zážitek.'
+        'description' => 'Involved! usnadňuje týmům, neziskovým organizacím a komunitním skupinám organizovat živé události, vést poutavé retrospektivy a spouštět interaktivní ankety—a proměňuje každou schůzku v nezapomenutelný zážitek.',
+        'scan_qr_to_answer' => 'Naskenujte QR kód pro odpověď',
     ]
 );

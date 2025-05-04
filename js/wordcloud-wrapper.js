@@ -16,7 +16,12 @@
                 // Make sure list exists and is an array
                 if (!options.list || !Array.isArray(options.list) || options.list.length === 0) {
                     console.warn('[WordCloud Wrapper] Empty or invalid word list provided. Using placeholder.');
-                    options.list = [['No words available', 1]];
+                    // Use translated string if available
+                    let placeholder = 'Scan the QR code to answer';
+                    if (window.lang && typeof window.lang.translate === 'function') {
+                        placeholder = window.lang.translate('scan_qr_to_answer');
+                    }
+                    options.list = [[placeholder, 1]];
                 }
                 
                 // Make sure settings is always an object
