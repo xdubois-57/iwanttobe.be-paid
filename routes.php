@@ -63,6 +63,9 @@ $router->get('/{lang}', 'LandingController@index');
 $router->get('/{lang}/gdpr', 'GDPRController@index');
 $router->get('/{lang}/support', 'SupportController@index');
 
+// Waiting room for event
+$router->get('/{lang}/involved/{code}/wait', 'InvolvedHomeController@showWaitingRoom');
+
 // AJAX endpoints for global features
 $router->post('/ajax/like', 'AjaxController@incrementLikes');
 $router->get('/ajax/likes', 'AjaxController@getLikes');

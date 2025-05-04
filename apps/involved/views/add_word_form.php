@@ -119,4 +119,7 @@ require_once __DIR__ . '/../../../views/header.php';
         </script>
     </article>
 </main>
+<a href="/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/<?php echo htmlspecialchars($eventData['key']); ?>" style="position:fixed;right:2vw;bottom:2vw;z-index:1000;font-size:1.1em;color:#007bff;text-decoration:underline;background:#fff4;padding:0.5em 1em;border-radius:1.5em;box-shadow:0 2px 8px #0001;">
+    Aller à l’administration de l’évènement
+</a>
 <?php require_once __DIR__ . '/../../../views/footer.php'; ?>

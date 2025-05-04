@@ -83,39 +83,20 @@ class InvolvedHomeController {
         }
 
         $model = new EventModel();
-        
-        // First check if the event exists without checking password
-        $eventExists = $model->getByKey($code);
-        
-        if (!$eventExists) {
-            http_response_code(404);
-            $lang = LanguageController::getInstance();
-            echo $lang->translate('event_not_found');
-            return;
-        }
-        
-        // Now check if a password is needed and if the provided one is correct
-        if ($eventExists['password'] && !empty($eventExists['password'])) {
-            // Password protected event
-            if (empty($password)) {
-                // No password provided but needed - redirect to event page which will show password prompt
-                header('Location: /' . $langSlug . '/involved/' . urlencode($code));
-                exit;
-            }
-            
-            // Password provided, check if correct
-            $event = $model->getByKey($code, $password);
-            if (!$event) {
-                // Invalid password - redirect to event page with error
-                header('Location: /' . $langSlug . '/involved/' . urlencode($code) . '?error=invalid_password');
-                exit;
-            }
+        $event = $model->getByKey($code);
+        if (!$event) {
+            header('Location: /' . $langSlug . '/involved?error=event_not_found');
+            exit;
         }
 
-        // Everything OK - mark this event as authorized for the current session
-        $this->authorizeEvent($code);
+        // Check for active URL
+        if (!empty($event['active_url'])) {
+            header('Location: ' . $event['active_url']);
+            exit;
+        }
 
-        header('Location: /' . $langSlug . '/involved/' . urlencode($code));
+        // If no active URL, redirect to waiting room
+        header('Location: /' . $langSlug . '/involved/' . urlencode($code) . '/wait');
         exit;
     }
 
@@ -400,14 +381,6 @@ class InvolvedHomeController {
             return;
         }
 
-        // Authorization check
-        if (!empty($event['password']) && !$this->isAuthorized($code)) {
-            // Redirect to the event page with the complete URL for later redirection
-            $originalUrl = $_SERVER['REQUEST_URI'];
-            header('Location: /' . $langSlug . '/involved/' . urlencode($code) . '?redirect=' . urlencode($originalUrl));
-            exit;
-        }
-
         $wcModel = new WordCloudModel();
         $wordCloud = $wcModel->getById($wcid);
         if (!$wordCloud || (int)$wordCloud['event_id'] !== (int)$event['id']) {
@@ -445,12 +418,6 @@ class InvolvedHomeController {
             $lang = LanguageController::getInstance();
             echo $lang->translate('event_not_found');
             return;
-        }
-
-        // Authorization check
-        if (!empty($event['password']) && !$this->isAuthorized($code)) {
-            header('Location: /' . $langSlug . '/involved/' . urlencode($code));
-            exit;
         }
 
         $wcModel = new WordCloudModel();
@@ -541,6 +508,22 @@ class InvolvedHomeController {
         header('Content-Type: application/json');
         echo json_encode($result);
         exit;
+    }
+
+    /**
+     * Show waiting room page if event has no active URL
+     */
+    public function showWaitingRoom($params) {
+        $code = strtoupper($params['code'] ?? '');
+        $model = new EventModel();
+        $event = $model->getByKey($code);
+        if (!$event) {
+            http_response_code(404);
+            $lang = LanguageController::getInstance();
+            echo $lang->translate('event_not_found');
+            return;
+        }
+        require_once __DIR__ . '/../views/waiting_room.php';
     }
 
     /**
