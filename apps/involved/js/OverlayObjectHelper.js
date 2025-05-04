@@ -3,8 +3,8 @@ class OverlayObjectHelper {
         this.active = false;
         this.overlay = null;
         this.title = null;
-        this.heartCount = 0;
-        this.previousHeartCount = 0;
+        this.emojiCount = 0;
+        this.previousEmojiCount = 0;
         this.currentUrl = null;
         this.pollingInterval = null;
         this.presenceInterval = null;
@@ -14,6 +14,7 @@ class OverlayObjectHelper {
         this.animationInProgress = false;
         this.pollingFrequency = 7500; // Poll every 7.5 seconds (4 times more often)
         this.qrBlockConfig = null; // New property to store QR block configuration
+        this.emojiInterval = null; // New property to store emoji polling interval
         
         // Initialize the helper when created
         this.initialize();
@@ -100,24 +101,18 @@ class OverlayObjectHelper {
         const h1Element = document.querySelector('h1');
         if (h1Element) {
             this.title = h1Element.textContent.trim();
-            
-            // Also get the initial heart count if available
-            if (h1Element.hasAttribute('data-likes')) {
-                this.heartCount = parseInt(h1Element.getAttribute('data-likes')) || 0;
-            }
         }
         
         this.render();
         
-        // Calculate current URL for like tracking
+        // Calculate current URL for emoji tracking
         this.calculateCurrentUrl();
         
-        // Start polling for like updates
-        this.startPolling();
+        // Start emoji polling
+        this.startEmojiPolling();
         
         console.log('[OverlayObjectHelper] Activated:', { 
             title: this.title,
-            heartCount: this.heartCount,
             url: this.currentUrl
         });
     }
@@ -136,7 +131,7 @@ class OverlayObjectHelper {
         }
         
         // Stop polling intervals
-        this.stopPolling();
+        this.stopEmojiPolling();
         
         // Reset state
         this.active = false;
@@ -144,16 +139,16 @@ class OverlayObjectHelper {
         console.log('[OverlayObjectHelper] Overlay deactivated');
     }
 
-    addHeart(count = 0) {
+    addEmoji() {
         // Store previous count for animation
-        this.previousHeartCount = this.heartCount;
-        this.heartCount = count;
+        this.previousEmojiCount = this.emojiCount;
+        this.emojiCount++;
         
-        // Check for increase in hearts to trigger animation
-        const difference = this.heartCount - this.previousHeartCount;
+        // Check for increase in emojis to trigger animation
+        const difference = this.emojiCount - this.previousEmojiCount;
         if (difference > 0) {
             for (let i = 0; i < difference; i++) {
-                this.queueHeartAnimation();
+                this.animateEmoji();
             }
         }
         
@@ -161,29 +156,29 @@ class OverlayObjectHelper {
     }
 
     /**
-     * Set the heart count and trigger animations if needed
-     * @param {number} count - The new heart count
+     * Set the emoji count and trigger animations if needed
+     * @param {number} count - The new emoji count
      */
-    setHeartCount(count) {
+    setEmojiCount(count) {
         if (typeof count !== 'number' || isNaN(count)) {
-            console.warn('[OverlayObjectHelper] Invalid heart count provided:', count);
+            console.warn('[OverlayObjectHelper] Invalid emoji count provided:', count);
             return;
         }
         
         // Store previous count for animation
-        this.previousHeartCount = this.heartCount;
-        this.heartCount = count;
+        this.previousEmojiCount = this.emojiCount;
+        this.emojiCount = count;
         
-        // Check for increase in hearts to trigger animation
-        const difference = this.heartCount - this.previousHeartCount;
+        // Check for increase in emojis to trigger animation
+        const difference = this.emojiCount - this.previousEmojiCount;
         if (difference > 0) {
             for (let i = 0; i < difference; i++) {
-                this.queueHeartAnimation();
+                this.animateEmoji();
             }
         }
         
         this.render();
-        console.log(`[OverlayObjectHelper] Heart count updated to: ${count}`);
+        console.log(`[OverlayObjectHelper] Emoji count updated to: ${count}`);
     }
 
     isDarkMode() {
@@ -234,27 +229,11 @@ class OverlayObjectHelper {
             const eventKey = pathSegments[3];
             const wcid = pathSegments[5];
             
-            // Construct the main wordcloud URL for like tracking
+            // Construct the main wordcloud URL for emoji tracking
+            // Remove '/add' or any other extra paths to ensure consistent tracking
             this.currentUrl = `${baseUrl}/${lang}/involved/${eventKey}/wordcloud/${wcid}`;
-            console.log('[OverlayObjectHelper] Normalized URL for like tracking:', this.currentUrl);
+            console.log('[OverlayObjectHelper] Normalized URL for emoji tracking:', this.currentUrl);
         }
-    }
-
-    startPolling() {
-        this.stopPolling(); // Clear any existing interval
-        
-        if (!this.currentUrl) {
-            console.warn('[OverlayObjectHelper] No URL to poll for likes');
-            return;
-        }
-        
-        // Poll every 7.5 seconds
-        this.pollingInterval = setInterval(() => {
-            this.fetchLikes();
-        }, this.pollingFrequency);
-        
-        // Also fetch immediately
-        this.fetchLikes();
     }
 
     startPresencePolling() {
@@ -298,90 +277,66 @@ class OverlayObjectHelper {
             });
     }
 
-    fetchLikes() {
+    startEmojiPolling() {
+        if (this.emojiInterval) {
+            clearInterval(this.emojiInterval);
+        }
+        // Poll every 10s
+        this.emojiInterval = setInterval(() => this.fetchEmojis(), 10000);
+        // immediate first call
+        this.fetchEmojis();
+    }
+
+    stopEmojiPolling() {
+        if (this.emojiInterval) {
+            clearInterval(this.emojiInterval);
+            this.emojiInterval = null;
+        }
+    }
+
+    fetchEmojis() {
         if (!this.currentUrl) {
             this.calculateCurrentUrl();
         }
-        
-        fetch('/ajax/likes?url=' + encodeURIComponent(this.currentUrl))
-            .then(res => res.json())
+        fetch('/ajax/emoji?url=' + encodeURIComponent(this.currentUrl) + '&max=15')
+            .then(r => r.json())
             .then(data => {
-                if (data.success) {
-                    const previousCount = this.heartCount;
-                    
-                    // Update the count
-                    if (this.heartCount === 0 && previousCount === 0) {
-                        // First time setting the value - don't animate
-                        this.heartCount = data.likes;
-                        this.previousHeartCount = data.likes;
-                        this.render();
-                    } else {
-                        // Normal update - potentially animate
-                        this.setHeartCount(data.likes);
-                    }
-                    
-                    console.log(`[OverlayObjectHelper] Likes fetched: ${data.likes}`);
+                if (data.success && Array.isArray(data.emojis)) {
+                    // Log that we received emojis for debugging
+                    console.log('[OverlayObjectHelper] Received emojis:', data.emojis);
+                    data.emojis.forEach(e => this.animateEmoji(e));
+                } else {
+                    console.log('[OverlayObjectHelper] No new emojis to show');
                 }
             })
-            .catch(error => {
-                console.error('[OverlayObjectHelper] Error fetching likes:', error);
-            });
+            .catch(err => console.error('[OverlayObjectHelper] fetchEmojis error', err));
     }
 
-    like() {
-        if (!this.currentUrl) {
-            this.calculateCurrentUrl();
-        }
+    animateEmoji(emoji) {
+        if (!this.overlay) return;
         
-        fetch('/ajax/like?url=' + encodeURIComponent(this.currentUrl), {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: 'action=like'
-        })
-        .then(res => res.json())
-        .then(data => {
-            if (data.success) {
-                this.setHeartCount(data.likes);
-            } else {
-                console.error('[OverlayObjectHelper] Like failed:', data.error);
-            }
-        })
-        .catch(error => {
-            console.error('[OverlayObjectHelper] Error liking:', error);
+        console.log('[OverlayObjectHelper] Animating emoji:', emoji);
+        
+        const el = document.createElement('div');
+        el.textContent = emoji;
+        el.style.position = 'absolute';
+        el.style.left = '20px';
+        el.style.bottom = '0px';
+        el.style.fontSize = '2.5rem';
+        el.style.zIndex = '11002';
+        el.style.transition = 'transform 3s linear, opacity 3s linear';
+        // random horizontal destination at top
+        const endX = Math.random() * (window.innerWidth - 40);
+        const translate = `translate(${endX}px, -${window.innerHeight + 100}px)`;
+        this.overlay.appendChild(el);
+        // force reflow then animate
+        requestAnimationFrame(() => {
+            el.style.transform = translate;
+            el.style.opacity = '0';
         });
-    }
-
-    cleanup() {
-        if (this.overlay) {
-            // Remove overlay from DOM
-            if (this.overlay.parentNode) {
-                this.overlay.parentNode.removeChild(this.overlay);
-            }
-            this.overlay = null;
-        }
-        
-        // Clear all intervals
-        this.stopPolling();
-        
-        // Clear animation queue
-        this.animationQueue = [];
-        this.animationInProgress = false;
-    }
-
-    /**
-     * Set the title for the overlay
-     * @param {string} newTitle - The title text to display
-     */
-    addTitle(newTitle) {
-        if (typeof newTitle === 'string' && newTitle.trim() !== '') {
-            this.title = newTitle.trim();
-            console.log('[OverlayObjectHelper] Title set to:', this.title);
-            this.render();
-        } else {
-            console.warn('[OverlayObjectHelper] Invalid title provided:', newTitle);
-        }
+        el.addEventListener('transitionend', () => {
+            if (el.parentNode) el.parentNode.removeChild(el);
+        });
     }
 
     render() {
@@ -390,7 +345,7 @@ class OverlayObjectHelper {
         console.log('[OverlayObjectHelper] Rendering overlay:', { 
             active: this.active, 
             title: this.title, 
-            heartCount: this.heartCount,
+            emojiCount: this.emojiCount,
             overlay: this.overlay ? 'created' : 'null'
         });
         
@@ -426,27 +381,27 @@ class OverlayObjectHelper {
             console.warn('[OverlayObjectHelper] No title to render');
         }
         
-        // Render heart and counter
-        if (typeof this.heartCount === 'number') {
-            const heartContainer = document.createElement('div');
-            heartContainer.style.position = 'absolute';
-            heartContainer.style.display = 'flex';
-            heartContainer.style.gap = '20px';
-            heartContainer.style.justifyContent = 'center';
-            heartContainer.style.alignItems = 'center';
-            heartContainer.style.top = '120px';
-            heartContainer.style.left = '50%';
-            heartContainer.style.transform = 'translateX(-50%)';
-            heartContainer.style.zIndex = '2147483647'; // Maximum z-index
+        // Render emoji and counter
+        if (typeof this.emojiCount === 'number') {
+            const emojiContainer = document.createElement('div');
+            emojiContainer.style.position = 'absolute';
+            emojiContainer.style.display = 'flex';
+            emojiContainer.style.gap = '20px';
+            emojiContainer.style.justifyContent = 'center';
+            emojiContainer.style.alignItems = 'center';
+            emojiContainer.style.top = '120px';
+            emojiContainer.style.left = '50%';
+            emojiContainer.style.transform = 'translateX(-50%)';
+            emojiContainer.style.zIndex = '2147483647'; // Maximum z-index
             
-            // Heart count
-            const heartElement = document.createElement('div');
-            heartElement.id = 'heart-count-display';
-            heartElement.innerHTML = `❤️ ${this.heartCount}`;
-            heartElement.style.fontSize = '1.5rem';
-            heartElement.style.cursor = 'pointer';
-            heartElement.style.transition = 'transform 0.2s';
-            heartElement.onclick = () => this.like();
+            // Emoji count
+            const emojiElement = document.createElement('div');
+            emojiElement.id = 'emoji-count-display';
+            emojiElement.innerHTML = `👍 ${this.emojiCount}`;
+            emojiElement.style.fontSize = '1.5rem';
+            emojiElement.style.cursor = 'pointer';
+            emojiElement.style.transition = 'transform 0.2s';
+            emojiElement.onclick = () => this.sendEmoji();
             
             // Presence count
             const presenceElement = document.createElement('div');
@@ -455,58 +410,79 @@ class OverlayObjectHelper {
             presenceElement.style.fontSize = '1.5rem';
             
             // Add elements to container
-            heartContainer.appendChild(heartElement);
-            heartContainer.appendChild(presenceElement);
+            emojiContainer.appendChild(emojiElement);
+            emojiContainer.appendChild(presenceElement);
             
             // Add container to overlay
-            this.overlay.appendChild(heartContainer);
+            this.overlay.appendChild(emojiContainer);
             
             // Start presence polling
             this.startPresencePolling();
         } else {
-            const heartContainer = document.createElement('div');
-            heartContainer.style.position = 'absolute';
-            heartContainer.style.top = '40px';
-            heartContainer.style.right = '40px';
-            heartContainer.style.display = 'flex';
-            heartContainer.style.alignItems = 'center';
-            heartContainer.style.gap = '8px';
-            heartContainer.style.zIndex = '2147483647'; // Maximum z-index
+            const emojiContainer = document.createElement('div');
+            emojiContainer.style.position = 'absolute';
+            emojiContainer.style.top = '40px';
+            emojiContainer.style.right = '40px';
+            emojiContainer.style.display = 'flex';
+            emojiContainer.style.alignItems = 'center';
+            emojiContainer.style.gap = '8px';
+            emojiContainer.style.zIndex = '2147483647'; // Maximum z-index
             
-            // Heart count
-            const heartCount = document.createElement('div');
-            heartCount.id = 'heart-count-display';
-            heartCount.innerHTML = `❤️ ${this.heartCount}`;
-            heartCount.style.fontSize = '1.5rem';
-            heartCount.style.cursor = 'pointer';
-            heartCount.style.transition = 'transform 0.2s';
-            heartCount.onclick = () => this.like();
+            // Emoji count
+            const emojiCount = document.createElement('div');
+            emojiCount.id = 'emoji-count-display';
+            emojiCount.innerHTML = `👍 ${this.emojiCount}`;
+            emojiCount.style.fontSize = '1.5rem';
+            emojiCount.style.cursor = 'pointer';
+            emojiCount.style.transition = 'transform 0.2s';
+            emojiCount.onclick = () => this.sendEmoji();
             
-            // Add heart count to container
-            heartContainer.appendChild(heartCount);
+            // Add emoji count to container
+            emojiContainer.appendChild(emojiCount);
             
             // Add container to overlay
-            this.overlay.appendChild(heartContainer);
+            this.overlay.appendChild(emojiContainer);
         }
     }
 
+    sendEmoji() {
+        // backward compatibility – send default 👍 emoji
+        if (!window.OverlayClientHelper || typeof window.OverlayClientHelper.sendEmoji !== 'function') {
+            console.warn('[OverlayObjectHelper] OverlayClientHelper.sendEmoji missing');
+            return Promise.resolve();
+        }
+        return window.OverlayClientHelper.sendEmoji('👍');
+    }
+
+    cleanup() {
+        if (this.overlay) {
+            // Remove overlay from DOM
+            if (this.overlay.parentNode) {
+                this.overlay.parentNode.removeChild(this.overlay);
+            }
+            this.overlay = null;
+        }
+        
+        // Clear all intervals
+        this.stopEmojiPolling();
+        
+        // Clear animation queue
+        this.animationQueue = [];
+        this.animationInProgress = false;
+    }
+
     /**
-     * Stops all polling intervals (both likes and presence)
+     * Set the title for the overlay
+     * @param {string} newTitle - The title text to display
      */
-    stopPolling() {
-        // Clear like polling interval
-        if (this.pollingInterval) {
-            clearInterval(this.pollingInterval);
-            this.pollingInterval = null;
+    addTitle(newTitle) {
+        if (typeof newTitle === 'string' && newTitle.trim() !== '') {
+            this.title = newTitle.trim();
+            console.log('[OverlayObjectHelper] Title set to:', this.title);
+            this.render();
+        } else {
+            console.warn('[OverlayObjectHelper] Invalid title provided:', newTitle);
         }
-        
-        // Clear presence polling interval
-        if (this.presenceInterval) {
-            clearInterval(this.presenceInterval);
-            this.presenceInterval = null;
-        }
-        
-        console.log('[OverlayObjectHelper] Polling stopped');
     }
 
     /**

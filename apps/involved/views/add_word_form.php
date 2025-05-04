@@ -34,23 +34,35 @@ require_once __DIR__ . '/../../../views/header.php';
         </form>
         
         <div style="text-align: center; margin-top: 1.5rem;">
-            <button id="like-button" type="button" style="background: none; border: none; cursor: pointer; font-size: 2rem; padding: 0.5rem 1rem; transition: transform 0.2s;">
-                <span id="like-heart" style="display: inline-block;">❤️</span>
-                <span id="like-count" style="font-size: 1.5rem; margin-left: 0.5rem;">0</span>
-            </button>
+            <div id="emoji-buttons" style="display:inline-flex; gap:1rem;">
+                <button class="emoji-btn" data-emoji="❤️" type="button" style="background:none; border:none; cursor:pointer; font-size:2.2rem; transition:transform 0.2s;">❤️</button>
+                <button class="emoji-btn" data-emoji="😂" type="button" style="background:none; border:none; cursor:pointer; font-size:2.2rem; transition:transform 0.2s;">😂</button>
+                <button class="emoji-btn" data-emoji="👍" type="button" style="background:none; border:none; cursor:pointer; font-size:2.2rem; transition:transform 0.2s;">👍</button>
+            </div>
         </div>
         
         <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const likeBtn = document.getElementById('like-button');
-            const likeCount = document.getElementById('like-count');
-            const heart = document.getElementById('like-heart');
+            const emojiButtonsDiv = document.getElementById('emoji-buttons');
+            const buttons = emojiButtonsDiv.querySelectorAll('.emoji-btn');
             
             // Ensure window.OverlayClientHelper exists
             if (typeof window.OverlayClientHelper !== 'undefined') {
-                // Get current URL
-                if (!window.OverlayClientHelper.currentUrl) {
-                    // Set URL manually if calculateCurrentUrl isn't available
+                // Normalize URL to match wordcloud format
+                // Extract URL components: /lang/involved/eventCode/wordcloud/wordcloudId/add
+                const pathSegments = window.location.pathname.split('/').filter(s => s);
+                if (pathSegments.length >= 6 && pathSegments[1] === 'involved' && pathSegments[3] === 'wordcloud') {
+                    const baseUrl = window.location.origin;
+                    const lang = pathSegments[0];
+                    const eventKey = pathSegments[2]; 
+                    const wcid = pathSegments[4];
+                    
+                    // Set the normalized URL for consistent tracking
+                    const normalizedUrl = `${baseUrl}/${lang}/involved/${eventKey}/wordcloud/${wcid}`;
+                    window.OverlayClientHelper.currentUrl = normalizedUrl;
+                    console.log('[Page] Set normalized URL for tracking:', normalizedUrl);
+                } else {
+                    // Fallback to current URL without query params
                     const urlObj = new URL(window.location.href);
                     urlObj.hash = '';
                     urlObj.search = '';
@@ -63,80 +75,42 @@ require_once __DIR__ . '/../../../views/header.php';
                     window.OverlayClientHelper.startPresenceTracking();
                 }
                 
-                function fetchLikes() {
-                    fetch('/ajax/likes?url=' + encodeURIComponent(window.OverlayClientHelper.currentUrl))
-                        .then(res => res.json())
-                        .then(data => {
-                            if (data.success) {
-                                likeCount.textContent = data.likes;
-                            }
-                        })
-                        .catch(error => console.error('Error fetching likes:', error));
-                }
-
-                function incrementLike() {
-                    // Show animation regardless of server response
-                    heart.style.transform = 'scale(1.3)';
-                    setTimeout(() => heart.style.transform = '', 200);
+                function sendEmoji(emojiChar, btnEl) {
+                    // simple click animation
+                    btnEl.style.transform = 'scale(1.3)';
+                    setTimeout(() => btnEl.style.transform = '', 200);
                     
-                    // Send like using the OverlayClientHelper
-                    if (typeof window.OverlayClientHelper.like === 'function') {
-                        window.OverlayClientHelper.like()
-                            .then(likes => {
-                                likeCount.textContent = likes;
-                            })
-                            .catch(error => console.error('Error incrementing like:', error));
+                    if (window.OverlayClientHelper && typeof window.OverlayClientHelper.sendEmoji === 'function') {
+                        window.OverlayClientHelper.sendEmoji(emojiChar).catch(err => console.error('Error sending emoji:', err));
                     } else {
-                        // Fallback if like method doesn't exist
+                        // Fallback direct POST
                         const formData = new FormData();
                         formData.append('url', window.OverlayClientHelper.currentUrl);
-                        
-                        fetch('/ajax/like', {
-                            method: 'POST',
-                            body: formData
-                        })
-                        .then(res => res.json())
-                        .then(data => {
-                            if (data.success) {
-                                likeCount.textContent = data.likes;
-                            }
-                        })
-                        .catch(error => console.error('Error incrementing like:', error));
+                        formData.append('emoji', emojiChar);
+                        fetch('/ajax/emoji', { method:'POST', body: formData }).catch(err => console.error('Error sending emoji:', err));
                     }
                 }
-
-                likeBtn.addEventListener('click', incrementLike);
                 
-                // Load initial likes count
-                fetchLikes();
-            } else {
-                console.error("OverlayClientHelper not available");
-                // Basic like functionality without the helper
-                likeBtn.addEventListener('click', function() {
-                    const formData = new FormData();
-                    const currentUrl = window.location.href.split('?')[0].split('#')[0];
-                    formData.append('url', currentUrl);
-                    
-                    fetch('/ajax/like', {
-                        method: 'POST',
-                        body: formData
-                    })
-                    .then(res => res.json())
-                    .then(data => {
-                        if (data.success) {
-                            likeCount.textContent = data.likes;
-                        }
+                buttons.forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const emoji = btn.dataset.emoji;
+                        sendEmoji(emoji, btn);
                     });
                 });
-                
-                // Initial load
-                fetch('/ajax/likes?url=' + encodeURIComponent(window.location.href.split('?')[0].split('#')[0]))
-                    .then(res => res.json())
-                    .then(data => {
-                        if (data.success) {
-                            likeCount.textContent = data.likes;
-                        }
+            } else {
+                console.error("OverlayClientHelper not available");
+                // Still allow emoji POST directly
+                buttons.forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const emojiChar = btn.dataset.emoji;
+                        btn.style.transform = 'scale(1.3)';
+                        setTimeout(() => btn.style.transform = '', 200);
+                        const formData = new FormData();
+                        formData.append('url', window.location.href.split('?')[0].split('#')[0]);
+                        formData.append('emoji', emojiChar);
+                        fetch('/ajax/emoji', { method:'POST', body: formData }).catch(err => console.error('Error sending emoji:', err));
                     });
+                });
             }
         });
         </script>

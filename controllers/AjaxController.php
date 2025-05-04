@@ -11,6 +11,7 @@ class AjaxController {
      * Increment likes for a given URL
      * POST /ajax/like
      * @param array $params
+     * @deprecated
      */
     public function incrementLikes($params = []) {
         // CORS headers for AJAX
@@ -79,6 +80,7 @@ class AjaxController {
      * Get likes count for a given URL
      * GET /ajax/likes?url=...
      * @param array $params
+     * @deprecated
      */
     public function getLikes($params = []) {
         // CORS headers for AJAX
@@ -187,7 +189,8 @@ class AjaxController {
         // Build and log the exact JSON response we're sending
         $response = [
             'success' => true, 
-            'count' => $activeCount
+            'count' => $activeCount,
+            'active_users' => $activeCount  // Add for backward compatibility
         ];
         file_put_contents($logFile, date('Y-m-d H:i:s') . " - AjaxController: JSON response: " . json_encode($response) . "\n", FILE_APPEND);
         
@@ -242,5 +245,85 @@ class AjaxController {
         
         file_put_contents($logFile, date('Y-m-d H:i:s') . " - AjaxController: getPresence JSON response: " . json_encode($response) . "\n", FILE_APPEND);
         echo json_encode($response);
+    }
+    
+    /**
+     * Append an emoji to the queue for a URL
+     * POST /ajax/emoji
+     * Required POST params: url, emoji
+     */
+    public function appendEmoji($params = []) {
+        // CORS headers
+        header('Access-Control-Allow-Origin: *');
+        header('Access-Control-Allow-Methods: POST');
+        header('Access-Control-Allow-Headers: Content-Type');
+        header('Content-Type: application/json');
+
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            http_response_code(405);
+            echo json_encode(['success' => false, 'error' => 'Method not allowed']);
+            return;
+        }
+
+        $url   = $_POST['url']   ?? '';
+        $emoji = $_POST['emoji'] ?? '';
+
+        if ($url === '' || $emoji === '') {
+            http_response_code(400);
+            echo json_encode(['success' => false, 'error' => 'url and emoji required']);
+            return;
+        }
+
+        if (!filter_var($url, FILTER_VALIDATE_URL)) {
+            http_response_code(400);
+            echo json_encode(['success' => false, 'error' => 'Invalid URL']);
+            return;
+        }
+
+        // Append via model
+        $model = new OverlayObjectModel();
+        $ok = $model->appendEmoji($url, $emoji);
+        if ($ok) {
+            echo json_encode(['success' => true]);
+        } else {
+            http_response_code(500);
+            echo json_encode(['success' => false, 'error' => 'DB error']);
+        }
+    }
+
+    /**
+     * Get (and pop) the next emojis from the queue
+     * GET /ajax/emoji?url=...&max=10
+     */
+    public function getEmojis($params = []) {
+        // CORS headers
+        header('Access-Control-Allow-Origin: *');
+        header('Access-Control-Allow-Methods: GET');
+        header('Access-Control-Allow-Headers: Content-Type');
+        header('Content-Type: application/json');
+
+        if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
+            http_response_code(405);
+            echo json_encode(['success' => false, 'error' => 'Method not allowed']);
+            return;
+        }
+
+        $url = $_GET['url'] ?? '';
+        $max = isset($_GET['max']) ? (int)$_GET['max'] : 10;
+
+        if ($url === '') {
+            http_response_code(400);
+            echo json_encode(['success' => false, 'error' => 'url required']);
+            return;
+        }
+        if (!filter_var($url, FILTER_VALIDATE_URL)) {
+            http_response_code(400);
+            echo json_encode(['success' => false, 'error' => 'Invalid URL']);
+            return;
+        }
+
+        $model  = new OverlayObjectModel();
+        $emojis = $model->popQueuedEmojis($url, $max);
+        echo json_encode(['success' => true, 'emojis' => $emojis]);
     }
 }

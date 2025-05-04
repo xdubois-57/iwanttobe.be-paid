@@ -14,59 +14,79 @@ class OverlayObjectModel
     }
 
     /**
-     * Increment likes for a URL, creating the entry if it doesn't exist
+     * Append an emoji to the queue for a URL. Creates the record if it doesn't exist
+     *
      * @param string $url
-     * @return int|false New likes count or false
+     * @param string $emoji Single Unicode emoji character
+     * @return bool Success
      */
-    public function incrementLikes(string $url): int|false
+    public function appendEmoji(string $url, string $emoji): bool
     {
         if (!$this->db->isConnected()) {
             error_log('DB connection failed: ' . $this->db->getErrorMessage());
             return false;
         }
 
-        // Begin transaction for atomicity
         $this->db->beginTransaction();
-
         try {
-            // Check if the URL exists
-            $exists = $this->db->fetchOne('SELECT id, likes FROM OVERLAY_OBJECT WHERE url = ?', [$url]);
-            
-            if ($exists) {
-                // Update existing record
-                $this->db->query('UPDATE OVERLAY_OBJECT SET likes = likes + 1 WHERE url = ?', [$url]);
-                $likes = $exists['likes'] + 1;
+            // Fetch existing queue (if any)
+            $row = $this->db->fetchOne('SELECT id, emoji_queue FROM OVERLAY_OBJECT WHERE url = ?', [$url]);
+            if ($row) {
+                $queue = $row['emoji_queue'] ? json_decode($row['emoji_queue'], true) : [];
+                if (!is_array($queue)) {
+                    $queue = [];
+                }
+                $queue[] = $emoji;
+                $this->db->query('UPDATE OVERLAY_OBJECT SET emoji_queue = ? WHERE id = ?', [json_encode($queue), $row['id']]);
             } else {
-                // Create new record
                 $this->db->insert('OVERLAY_OBJECT', [
-                    'url' => $url,
-                    'likes' => 1
+                    'url'         => $url,
+                    'emoji_queue' => json_encode([$emoji])
                 ]);
-                $likes = 1;
             }
-            
             $this->db->commit();
-            return $likes;
+            return true;
         } catch (Exception $e) {
             $this->db->rollback();
-            error_log('Failed to increment likes: ' . $e->getMessage());
+            error_log('Failed to append emoji: ' . $e->getMessage());
             return false;
         }
     }
 
     /**
-     * Get likes count for a URL
+     * Pop up to $max emojis from the queue for the given URL (FIFO)
+     *
      * @param string $url
-     * @return int Likes count (0 if not found)
+     * @param int    $max
+     * @return array List of emojis (may be empty)
      */
-    public function getLikes(string $url): int
+    public function popQueuedEmojis(string $url, int $max = 10): array
     {
         if (!$this->db->isConnected()) {
             error_log('DB connection failed: ' . $this->db->getErrorMessage());
-            return 0;
+            return [];
         }
-        
-        $likes = $this->db->fetchValue('SELECT likes FROM OVERLAY_OBJECT WHERE url = ?', [$url]);
-        return $likes !== false ? (int)$likes : 0;
+
+        $this->db->beginTransaction();
+        try {
+            $row = $this->db->fetchOne('SELECT id, emoji_queue FROM OVERLAY_OBJECT WHERE url = ? FOR UPDATE', [$url]);
+            if (!$row || !$row['emoji_queue']) {
+                $this->db->commit();
+                return [];
+            }
+            $queue = json_decode($row['emoji_queue'], true);
+            if (!is_array($queue) || empty($queue)) {
+                $this->db->commit();
+                return [];
+            }
+            $popped = array_splice($queue, 0, $max);
+            $this->db->query('UPDATE OVERLAY_OBJECT SET emoji_queue = ? WHERE id = ?', [json_encode($queue), $row['id']]);
+            $this->db->commit();
+            return $popped;
+        } catch (Exception $e) {
+            $this->db->rollback();
+            error_log('Failed to pop emojis: ' . $e->getMessage());
+            return [];
+        }
     }
 }

@@ -34,13 +34,13 @@ class OverlayPresenceModel {
             // Check if this is a wordcloud URL format: /lang/involved/eventkey/wordcloud/wcid[/add]
             if (count($pathSegments) >= 5 && $pathSegments[1] === 'involved' && $pathSegments[3] === 'wordcloud') {
                 // Normalize URL to always match the main wordcloud URL
-                if (isset($pathSegments[5]) && $pathSegments[5] === 'add') {
-                    // This is an "add word" page - normalize to the main wordcloud URL
+                if (count($pathSegments) > 5) {
+                    // This could be an "add word" page or any subpage - normalize to the main wordcloud URL
                     $scheme = isset($parsedUrl['scheme']) ? $parsedUrl['scheme'] : 'http';
                     $host = $parsedUrl['host'] ?? '';
                     $port = isset($parsedUrl['port']) ? ':' . $parsedUrl['port'] : '';
                     
-                    // Rebuild the URL up to the wordcloud ID (removing /add)
+                    // Rebuild the URL up to the wordcloud ID (removing /add or any other subpath)
                     $url = "$scheme://$host$port/{$pathSegments[0]}/{$pathSegments[1]}/{$pathSegments[2]}/{$pathSegments[3]}/{$pathSegments[4]}";
                     error_log("Normalized URL for presence update: " . $url);
                 }
@@ -125,10 +125,10 @@ class OverlayPresenceModel {
             return $id;
         }
         
-        // Create a new record
+        // Create a new record - initialize emoji_queue as empty JSON array
         $this->db->query(
-            'INSERT INTO OVERLAY_OBJECT (url, likes) VALUES (?, 0)',
-            [$url]
+            'INSERT INTO OVERLAY_OBJECT (url, emoji_queue) VALUES (?, ?)',
+            [$url, '[]']
         );
         
         return $this->db->fetchValue(
@@ -163,13 +163,13 @@ class OverlayPresenceModel {
             // Check if this is a wordcloud URL format: /lang/involved/eventkey/wordcloud/wcid[/add]
             if (count($pathSegments) >= 5 && $pathSegments[1] === 'involved' && $pathSegments[3] === 'wordcloud') {
                 // Normalize URL to always match the main wordcloud URL
-                if (isset($pathSegments[5]) && $pathSegments[5] === 'add') {
-                    // This is an "add word" page - normalize to the main wordcloud URL
+                if (count($pathSegments) > 5) {
+                    // This could be an "add word" page or any subpage - normalize to the main wordcloud URL
                     $scheme = isset($parsedUrl['scheme']) ? $parsedUrl['scheme'] : 'http';
                     $host = $parsedUrl['host'] ?? '';
                     $port = isset($parsedUrl['port']) ? ':' . $parsedUrl['port'] : '';
                     
-                    // Rebuild the URL up to the wordcloud ID (removing /add)
+                    // Rebuild the URL up to the wordcloud ID (removing /add or any other subpath)
                     $url = "$scheme://$host$port/{$pathSegments[0]}/{$pathSegments[1]}/{$pathSegments[2]}/{$pathSegments[3]}/{$pathSegments[4]}";
                     file_put_contents($logFile, date('Y-m-d H:i:s') . " - Normalized URL for presence count: " . $url . "\n", FILE_APPEND);
                 }

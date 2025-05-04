@@ -46,42 +46,32 @@ class OverlayClientHelper {
     }
     
     /**
-     * Increment likes for the current page
-     * @returns {Promise} Promise resolving to the new like count
+     * Send an emoji reaction for the current page
+     * @param {string} emoji - Unicode emoji character
+     * @returns {Promise}
      */
-    like() {
+    sendEmoji(emoji) {
         if (!this.currentUrl) {
             this.calculateCurrentUrl();
         }
-        
-        console.log('[OverlayClientHelper] Liking URL:', this.currentUrl);
-        
+
         const formData = new FormData();
         formData.append('url', this.currentUrl);
-        
-        return fetch('/ajax/like', {
+        formData.append('emoji', emoji);
+
+        return fetch('/ajax/emoji', {
             method: 'POST',
             body: formData
         })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            if (data.success) {
-                console.log('[OverlayClientHelper] Like successful. New count:', data.likes);
-                return data.likes;
-            } else {
-                console.error('[OverlayClientHelper] Like failed:', data.error);
-                throw new Error(data.error);
-            }
-        })
-        .catch(error => {
-            console.error('[OverlayClientHelper] Error liking:', error);
-            throw error;
-        });
+        .then(res => res.json());
+    }
+
+    /**
+     * Increment a default 👍 emoji (backward compat for old like() callers)
+     * @returns {Promise}
+     */
+    like() {
+        return this.sendEmoji('👍');
     }
     
     /**
@@ -127,6 +117,8 @@ class OverlayClientHelper {
             this.calculateCurrentUrl();
         }
         
+        console.log('[OverlayClientHelper] Sending presence update for URL:', this.currentUrl);
+        
         const formData = new FormData();
         formData.append('url', this.currentUrl);
         
@@ -135,15 +127,21 @@ class OverlayClientHelper {
             body: formData
         })
         .then(response => {
+            // Log the raw response for debugging
+            response.clone().text().then(text => {
+                console.log('[OverlayClientHelper] Raw presence response:', text);
+            });
+            
             if (!response.ok) {
+                console.error('[OverlayClientHelper] Response not OK:', response.status, response.statusText);
                 throw new Error('Network response was not ok');
             }
             return response.json();
         })
         .then(data => {
             if (data.success) {
-                console.log('[OverlayClientHelper] Presence update successful. Active users:', data.active_users);
-                return data.active_users;
+                console.log('[OverlayClientHelper] Presence update successful. Active users:', data.count);
+                return data.count;
             } else {
                 console.error('[OverlayClientHelper] Presence update failed:', data.error);
                 throw new Error(data.error);

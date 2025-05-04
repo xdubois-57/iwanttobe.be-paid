@@ -1,12 +1,18 @@
 -- Database Initialization Script
 -- This script creates the necessary tables for the QR Transfer application
 
+-- Force foreign key checks off to avoid dependency issues when dropping tables
+SET FOREIGN_KEY_CHECKS = 0;
+
 -- Drop existing tables if they exist
 DROP TABLE IF EXISTS `WORD`;
 DROP TABLE IF EXISTS `WORDCLOUD`;
-DROP TABLE IF EXISTS `EVENT`;
-DROP TABLE IF EXISTS `OVERLAY_OBJECT`;
 DROP TABLE IF EXISTS `OVERLAY_PRESENCE`;
+DROP TABLE IF EXISTS `OVERLAY_OBJECT`;
+DROP TABLE IF EXISTS `EVENT`;
+
+-- Turn foreign key checks back on
+SET FOREIGN_KEY_CHECKS = 1;
 
 -- Create EVENT table
 CREATE TABLE IF NOT EXISTS `EVENT` (
@@ -38,11 +44,11 @@ CREATE TABLE IF NOT EXISTS `WORD` (
     FOREIGN KEY (`wordcloud_id`) REFERENCES `WORDCLOUD`(`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Create OVERLAY_OBJECT table for tracking likes
+-- Create OVERLAY_OBJECT table for tracking emoji reactions
 CREATE TABLE IF NOT EXISTS `OVERLAY_OBJECT` (
     `id` BIGINT AUTO_INCREMENT PRIMARY KEY,
     `url` VARCHAR(256) NOT NULL UNIQUE,
-    `likes` INT DEFAULT 0,
+    `emoji_queue` TEXT NULL, -- JSON-encoded FIFO queue of pending emoji reactions
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

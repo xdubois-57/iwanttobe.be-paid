@@ -141,7 +141,7 @@ class WordCloudManager {
         if (window.OverlayObjectHelper) {
             // Extract question text from header if available
             let questionText = '';
-            let likeCount = 0;
+            let emojiCount = 0;
             
             // Try to find the question text from the h1 in the main article
             const h1 = document.querySelector('main article h1');
@@ -149,13 +149,13 @@ class WordCloudManager {
                 questionText = h1.textContent.trim();
                 // Check if h1 has a data-likes attribute
                 if (h1.hasAttribute('data-likes')) {
-                    likeCount = parseInt(h1.getAttribute('data-likes'), 10) || 0;
+                    emojiCount = parseInt(h1.getAttribute('data-likes'), 10) || 0;
                 }
             }
             
             console.log('[WordCloudManager] Activating OverlayObjectHelper with:', {
                 questionText: questionText,
-                likeCount: likeCount
+                emojiCount: emojiCount
             });
             
             // Always activate first before setting properties
@@ -167,8 +167,8 @@ class WordCloudManager {
                 window.OverlayObjectHelper.addTitle(questionText);
             }
             
-            console.log('[WordCloudManager] Setting heart count:', likeCount);
-            window.OverlayObjectHelper.addHeart(likeCount);
+            console.log('[WordCloudManager] Setting emoji count:', emojiCount);
+            window.OverlayObjectHelper.setEmojiCount(emojiCount);
         } else {
             console.warn('[WordCloudManager] OverlayObjectHelper not found');
         }
