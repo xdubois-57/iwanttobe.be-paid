@@ -16,7 +16,7 @@ require_once __DIR__ . '/../../../views/header.php';
             <h2><?php echo htmlspecialchars($lang->translate('join_event_title')); ?></h2>
             <p style="margin: 0.5rem 0;"><?php echo htmlspecialchars($lang->translate('join_event_description')); ?></p>
             <form method="post" action="/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/join" style="margin-top: 1rem;">
-                <input id="event-code" name="event_code" placeholder="<?php echo htmlspecialchars($lang->translate('event_code_placeholder')); ?>" required maxlength="4" style="width: 100%;">
+                <input id="event-code" name="event_code" placeholder="<?php echo htmlspecialchars($lang->translate('event_code_placeholder')); ?>" required maxlength="6" minlength="6" pattern="[A-Z0-9]{6}" style="width: 100%;">
                 
                 <button class="primary" type="submit" style="margin-top: 1rem; width: 100%;"><?php echo htmlspecialchars($lang->translate('join_event_button')); ?></button>
             </form>

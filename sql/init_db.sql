@@ -17,7 +17,7 @@ SET FOREIGN_KEY_CHECKS = 1;
 -- Create EVENT table
 CREATE TABLE IF NOT EXISTS `EVENT` (
     `id` BIGINT AUTO_INCREMENT PRIMARY KEY,
-    `key` VARCHAR(4) NOT NULL UNIQUE,
+    `key` VARCHAR(6) NOT NULL UNIQUE,
     `description` TEXT,
     `password` VARCHAR(255),  -- Clear text password
     `active_url` VARCHAR(512) NULL,  -- URL to redirect users to

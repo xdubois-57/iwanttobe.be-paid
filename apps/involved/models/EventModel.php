@@ -66,7 +66,7 @@ class EventModel
     }
 
     /**
-     * Generate unique 4-char code
+     * Generate unique 6-char code
      */
     private function generateUniqueCode(): string|false
     {
@@ -74,7 +74,7 @@ class EventModel
         $attempts = 0;
         do {
             $code = '';
-            for ($i = 0; $i < 4; $i++) {
+            for ($i = 0; $i < 6; $i++) {
                 $code .= $chars[array_rand($chars)];
             }
             $exists = $this->db->fetchValue('SELECT COUNT(*) FROM EVENT WHERE `key` = ?', [$code]);
