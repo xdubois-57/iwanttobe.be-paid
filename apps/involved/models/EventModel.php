@@ -150,4 +150,52 @@ class EventModel
             ];
         }
     }
+
+    /**
+     * Set the active URL for an event
+     * @param string $eventKey Event key/code
+     * @param string $activeUrl URL to set as active
+     * @return bool Success or failure
+     */
+    public function setActiveUrl(string $eventKey, string $activeUrl): bool
+    {
+        // Check connection
+        if (!$this->db->isConnected()) {
+            error_log('Database connection failed: ' . $this->db->getErrorMessage());
+            return false;
+        }
+        
+        $result = $this->db->update(
+            'EVENT',
+            ['active_url' => $activeUrl],
+            '`key` = ?',
+            [$eventKey]
+        );
+        
+        if ($result === false) {
+            error_log('Failed to update active URL for event ' . $eventKey);
+            return false;
+        }
+        
+        return true;
+    }
+    
+    /**
+     * Get active URL for an event by key
+     * @param string $eventKey Event key/code
+     * @return string|null Active URL or null if not set or event not found
+     */
+    public function getActiveUrl(string $eventKey): ?string
+    {
+        // Check connection
+        if (!$this->db->isConnected()) {
+            error_log('Database connection failed: ' . $this->db->getErrorMessage());
+            return null;
+        }
+        
+        return $this->db->fetchValue(
+            'SELECT active_url FROM EVENT WHERE `key` = ?',
+            [$eventKey]
+        );
+    }
 }

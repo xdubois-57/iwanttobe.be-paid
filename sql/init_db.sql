@@ -20,6 +20,7 @@ CREATE TABLE IF NOT EXISTS `EVENT` (
     `key` VARCHAR(4) NOT NULL UNIQUE,
     `description` TEXT,
     `password` VARCHAR(255),  -- Clear text password
+    `active_url` VARCHAR(512) NULL,  -- URL to redirect users to
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

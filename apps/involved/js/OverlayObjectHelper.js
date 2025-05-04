@@ -577,10 +577,46 @@ class OverlayObjectHelper {
             additionalText: additionalText,
             showShareButton: false // Force hiding the share button
         };
+        
+        // Set this URL as the active URL for this event
+        this.setActiveEventUrl(url, eventCode);
+        
         // If the QR block is already visible, update it
         if (this.qrContainer && this.qrContainer.style.display === 'block') {
             this.showQrBlock();
         }
+    }
+    
+    /**
+     * Sets the active URL for an event
+     * @param {string} url - URL to set as active
+     * @param {string} eventCode - Event code to update
+     */
+    setActiveEventUrl(url, eventCode) {
+        if (!url || !eventCode) return;
+        
+        console.log('[OverlayObjectHelper] Setting active URL for event:', eventCode, url);
+        
+        // Send AJAX request to update the event's active URL
+        const formData = new FormData();
+        formData.append('event_code', eventCode);
+        formData.append('active_url', url);
+        
+        fetch('/ajax/set_active_url', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                console.log('[OverlayObjectHelper] Successfully set active URL for event:', eventCode);
+            } else {
+                console.error('[OverlayObjectHelper] Failed to set active URL:', data.error);
+            }
+        })
+        .catch(error => {
+            console.error('[OverlayObjectHelper] Error setting active URL:', error);
+        });
     }
 }
 

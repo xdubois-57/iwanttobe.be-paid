@@ -126,30 +126,36 @@ class OverlayClientHelper {
             method: 'POST',
             body: formData
         })
-        .then(response => {
-            // Log the raw response for debugging
-            response.clone().text().then(text => {
-                console.log('[OverlayClientHelper] Raw presence response:', text);
-            });
-            
-            if (!response.ok) {
-                console.error('[OverlayClientHelper] Response not OK:', response.status, response.statusText);
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
+        .then(response => response.json())
         .then(data => {
-            if (data.success) {
-                console.log('[OverlayClientHelper] Presence update successful. Active users:', data.count);
-                return data.count;
-            } else {
-                console.error('[OverlayClientHelper] Presence update failed:', data.error);
-                throw new Error(data.error);
+            console.log('[OverlayClientHelper] Presence update response:', data);
+            
+            // Check if there's an active URL to redirect to
+            if (data.active_url && data.active_url !== window.location.href) {
+                console.log('[OverlayClientHelper] Redirecting to active URL:', data.active_url);
+                
+                // Store that we're performing a redirection to avoid loops
+                sessionStorage.setItem('redirected_from', window.location.href);
+                
+                // Redirect to the active URL
+                window.location.href = data.active_url;
+                return;
             }
+            
+            // Check if we just redirected and log it
+            const redirectedFrom = sessionStorage.getItem('redirected_from');
+            if (redirectedFrom) {
+                console.log('[OverlayClientHelper] Was redirected from:', redirectedFrom);
+                sessionStorage.removeItem('redirected_from');
+            }
+            
+            if (data && data.count !== undefined) {
+                return data.count;
+            }
+            return 0;
         })
         .catch(error => {
-            console.error('[OverlayClientHelper] Error updating presence:', error);
-            // Don't throw here to avoid breaking the interval
+            console.error('[OverlayClientHelper] Error sending presence update:', error);
             return 0;
         });
     }

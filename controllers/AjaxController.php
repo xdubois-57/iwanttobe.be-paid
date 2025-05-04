@@ -183,6 +183,27 @@ class AjaxController {
         // Get active users count
         $activeCount = $model->getActivePresenceCount($url);
         
+        // Get the active URL for the event, if available
+        $activeUrl = null;
+        
+        // Attempt to extract event code from the URL
+        $parsedUrl = parse_url($url);
+        $path = $parsedUrl['path'] ?? '';
+        $pathSegments = explode('/', trim($path, '/'));
+        
+        // Check if this is a /involved/ URL with an event code (format: /lang/involved/eventkey/...)
+        if (count($pathSegments) >= 3 && $pathSegments[1] === 'involved') {
+            $eventCode = $pathSegments[2];
+            
+            // Get the active URL for this event
+            require_once __DIR__ . '/../apps/involved/models/EventModel.php';
+            $eventModel = new EventModel();
+            $activeUrl = $eventModel->getActiveUrl($eventCode);
+            
+            // Log the active URL for debugging
+            file_put_contents($logFile, date('Y-m-d H:i:s') . " - AjaxController: Active URL for event {$eventCode}: " . ($activeUrl ?? 'null') . "\n", FILE_APPEND);
+        }
+        
         // Force the count to the actual value from the database for debugging
         file_put_contents($logFile, date('Y-m-d H:i:s') . " - AjaxController: About to return presence count: $activeCount for URL: $url\n", FILE_APPEND);
         
@@ -192,6 +213,12 @@ class AjaxController {
             'count' => $activeCount,
             'active_users' => $activeCount  // Add for backward compatibility
         ];
+        
+        // Add active_url to the response if available
+        if ($activeUrl) {
+            $response['active_url'] = $activeUrl;
+        }
+        
         file_put_contents($logFile, date('Y-m-d H:i:s') . " - AjaxController: JSON response: " . json_encode($response) . "\n", FILE_APPEND);
         
         echo json_encode($response);
@@ -199,7 +226,7 @@ class AjaxController {
     
     /**
      * Get presence count for a URL
-     * GET /ajax/presence
+     * GET /ajax/presence?url=...
      * @param array $params
      */
     public function getPresence($params = []) {
@@ -245,6 +272,62 @@ class AjaxController {
         
         file_put_contents($logFile, date('Y-m-d H:i:s') . " - AjaxController: getPresence JSON response: " . json_encode($response) . "\n", FILE_APPEND);
         echo json_encode($response);
+    }
+    
+    /**
+     * Set active URL for an event
+     * POST /ajax/set_active_url
+     * @param array $params
+     */
+    public function setActiveUrl($params = []) {
+        // CORS headers for AJAX
+        header('Access-Control-Allow-Origin: *');
+        header('Access-Control-Allow-Methods: POST');
+        header('Access-Control-Allow-Headers: Content-Type');
+        header('Content-Type: application/json');
+        
+        // Only allow POST method
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            http_response_code(405);
+            echo json_encode(['success' => false, 'error' => 'Method not allowed']);
+            return;
+        }
+        
+        // Get event code and active URL from POST data
+        $eventCode = isset($_POST['event_code']) ? trim($_POST['event_code']) : '';
+        $activeUrl = isset($_POST['active_url']) ? trim($_POST['active_url']) : '';
+        
+        if (empty($eventCode)) {
+            http_response_code(400);
+            echo json_encode(['success' => false, 'error' => 'Event code is required']);
+            return;
+        }
+        
+        if (empty($activeUrl)) {
+            http_response_code(400);
+            echo json_encode(['success' => false, 'error' => 'Active URL is required']);
+            return;
+        }
+        
+        // Validate URL format
+        if (!filter_var($activeUrl, FILTER_VALIDATE_URL)) {
+            http_response_code(400);
+            echo json_encode(['success' => false, 'error' => 'Invalid URL format']);
+            return;
+        }
+        
+        // Update the event's active URL in the database
+        require_once __DIR__ . '/../apps/involved/models/EventModel.php';
+        $model = new EventModel();
+        $result = $model->setActiveUrl($eventCode, $activeUrl);
+        
+        if ($result === false) {
+            http_response_code(500);
+            echo json_encode(['success' => false, 'error' => 'Failed to set active URL']);
+            return;
+        }
+        
+        echo json_encode(['success' => true]);
     }
     
     /**

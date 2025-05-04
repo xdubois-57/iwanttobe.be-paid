@@ -70,6 +70,7 @@ $router->post('/ajax/presence', 'AjaxController@updatePresence');
 $router->get('/ajax/presence', 'AjaxController@getPresence');
 $router->post('/ajax/emoji', 'AjaxController@appendEmoji');
 $router->get('/ajax/emoji', 'AjaxController@getEmojis');
+$router->post('/ajax/set_active_url', 'AjaxController@setActiveUrl');
 
 // Global QR code SVG endpoint (AJAX)
 $router->get('/qr/svg', 'GenericQrController@svg');
