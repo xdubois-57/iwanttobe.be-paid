@@ -15,13 +15,9 @@
             window.WordCloud = function(canvas, options) {
                 // Make sure list exists and is an array
                 if (!options.list || !Array.isArray(options.list) || options.list.length === 0) {
-                    console.warn('[WordCloud Wrapper] Empty or invalid word list provided. Using placeholder.');
-                    // Use translated string if available
-                    let placeholder = 'Scan the QR code to answer';
-                    if (window.lang && typeof window.lang.translate === 'function') {
-                        placeholder = window.lang.translate('scan_qr_to_answer');
-                    }
-                    options.list = [[placeholder, 1]];
+                    console.warn('[WordCloud Wrapper] Empty or invalid word list provided. Using empty list.');
+                    // Use empty list instead of placeholder
+                    options.list = [];
                 }
                 
                 // Make sure settings is always an object

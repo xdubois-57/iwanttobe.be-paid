@@ -35,16 +35,15 @@ class OverlayObjectHelper {
         // Create presence counter element if it doesn't exist
         const presenceElement = document.getElementById('presence-count-display');
         if (!presenceElement) {
-            const heartContainer = document.createElement('div');
-            heartContainer.style.position = 'absolute';
-            heartContainer.style.display = 'flex';
-            heartContainer.style.gap = '20px';
-            heartContainer.style.justifyContent = 'center';
-            heartContainer.style.alignItems = 'center';
-            heartContainer.style.top = '120px';
-            heartContainer.style.left = '50%';
-            heartContainer.style.transform = 'translateX(-50%)';
-            heartContainer.style.zIndex = '11001';
+            // Create presence counter in top right, aligned with title
+            const presenceContainer = document.createElement('div');
+            presenceContainer.style.position = 'absolute';
+            presenceContainer.style.display = 'flex';
+            presenceContainer.style.justifyContent = 'center';
+            presenceContainer.style.alignItems = 'center';
+            presenceContainer.style.top = '40px'; // Same top position as title
+            presenceContainer.style.right = '20px'; // Right side of screen
+            presenceContainer.style.zIndex = '11001';
             
             // Presence count
             const presenceElement = document.createElement('div');
@@ -53,11 +52,11 @@ class OverlayObjectHelper {
             presenceElement.style.fontSize = '1.5rem';
             
             // Add to container
-            heartContainer.appendChild(presenceElement);
+            presenceContainer.appendChild(presenceElement);
             
             // Add container to overlay if it exists
             if (this.overlay) {
-                this.overlay.appendChild(heartContainer);
+                this.overlay.appendChild(presenceContainer);
             }
         }
         
@@ -237,10 +236,10 @@ class OverlayObjectHelper {
     }
 
     startPresencePolling() {
-        // Poll every 5 seconds
+        // Poll every 10 seconds
         this.presenceInterval = setInterval(() => {
             this.fetchPresence();
-        }, 5000);
+        }, 10000);
         
         // Also fetch immediately
         this.fetchPresence();
@@ -393,68 +392,34 @@ class OverlayObjectHelper {
             console.warn('[OverlayObjectHelper] No title to render');
         }
         
-        // Render emoji and counter
-        if (typeof this.emojiCount === 'number') {
-            const emojiContainer = document.createElement('div');
-            emojiContainer.style.position = 'absolute';
-            emojiContainer.style.display = 'flex';
-            emojiContainer.style.gap = '20px';
-            emojiContainer.style.justifyContent = 'center';
-            emojiContainer.style.alignItems = 'center';
-            emojiContainer.style.top = '120px';
-            emojiContainer.style.left = '50%';
-            emojiContainer.style.transform = 'translateX(-50%)';
-            emojiContainer.style.zIndex = '2147483647'; // Maximum z-index
-            
-            // Emoji count
-            const emojiElement = document.createElement('div');
-            emojiElement.id = 'emoji-count-display';
-            emojiElement.innerHTML = `👍 ${this.emojiCount}`;
-            emojiElement.style.fontSize = '1.5rem';
-            emojiElement.style.cursor = 'pointer';
-            emojiElement.style.transition = 'transform 0.2s';
-            emojiElement.onclick = () => this.sendEmoji();
-            
-            // Presence count
-            const presenceElement = document.createElement('div');
-            presenceElement.id = 'presence-count-display';
-            presenceElement.innerHTML = `👤 0`;
-            presenceElement.style.fontSize = '1.5rem';
-            
-            // Add elements to container
-            emojiContainer.appendChild(emojiElement);
-            emojiContainer.appendChild(presenceElement);
-            
-            // Add container to overlay
-            this.overlay.appendChild(emojiContainer);
-            
-            // Start presence polling
-            this.startPresencePolling();
-        } else {
-            const emojiContainer = document.createElement('div');
-            emojiContainer.style.position = 'absolute';
-            emojiContainer.style.top = '40px';
-            emojiContainer.style.right = '40px';
-            emojiContainer.style.display = 'flex';
-            emojiContainer.style.alignItems = 'center';
-            emojiContainer.style.gap = '8px';
-            emojiContainer.style.zIndex = '2147483647'; // Maximum z-index
-            
-            // Emoji count
-            const emojiCount = document.createElement('div');
-            emojiCount.id = 'emoji-count-display';
-            emojiCount.innerHTML = `👍 ${this.emojiCount}`;
-            emojiCount.style.fontSize = '1.5rem';
-            emojiCount.style.cursor = 'pointer';
-            emojiCount.style.transition = 'transform 0.2s';
-            emojiCount.onclick = () => this.sendEmoji();
-            
-            // Add emoji count to container
-            emojiContainer.appendChild(emojiCount);
-            
-            // Add container to overlay
-            this.overlay.appendChild(emojiContainer);
+        // Add instruction message below title
+        const instructionDiv = document.createElement('div');
+        let instructionText = 'Scan the QR code to answer';
+        if (window.lang && typeof window.lang.translate === 'function') {
+            instructionText = window.lang.translate('scan_qr_to_answer');
         }
+        instructionDiv.textContent = instructionText;
+        instructionDiv.style.position = 'absolute';
+        instructionDiv.style.top = '100px';
+        instructionDiv.style.left = '50%';
+        instructionDiv.style.transform = 'translateX(-50%)';
+        instructionDiv.style.fontSize = '1.25rem';
+        instructionDiv.style.padding = '8px 16px';
+        instructionDiv.style.textAlign = 'center';
+        instructionDiv.style.maxWidth = '70%';
+        instructionDiv.style.zIndex = '2147483647';
+        
+        // Detect dark mode and apply appropriate styles
+        if (this.isDarkMode()) {
+            instructionDiv.style.color = 'var(--text-secondary, #cccccc)';
+        } else {
+            instructionDiv.style.color = '#555555';
+        }
+        
+        this.overlay.appendChild(instructionDiv);
+        
+        // Initialize presence counter
+        this.initializePresenceCounter();
     }
 
     sendEmoji() {
