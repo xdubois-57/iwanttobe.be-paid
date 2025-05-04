@@ -265,15 +265,5 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
-<!-- Initialize OverlayClientHelper for admin link -->
-<script src="/apps/involved/js/OverlayClientHelper.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Initialize the OverlayClientHelper which will add the admin link
-    const overlayClient = new OverlayClientHelper();
-    overlayClient.initialize();
-});
-</script>
-
 <!-- WordCloud library and JavaScript are now loaded through the app.php getJavaScriptFiles method -->
 <?php require_once __DIR__ . '/../../../views/footer.php'; ?>
