@@ -8,6 +8,8 @@ class OverlayClientHelper {
         this.currentUrl = null;
         this.presenceInterval = null;
         this.presenceIntervalTime = 30000; // 30 seconds in milliseconds
+        this.eventCode = null;
+        this.currentLang = null;
     }
     
     /**
@@ -15,7 +17,13 @@ class OverlayClientHelper {
      */
     initialize() {
         this.calculateCurrentUrl();
+        this.extractEventCodeAndLang();
         console.log('[OverlayClientHelper] Initialized with URL:', this.currentUrl);
+        
+        // Add admin link if we're on an event page
+        if (this.eventCode) {
+            this.addAdminLink();
+        }
     }
     
     /**
@@ -43,6 +51,70 @@ class OverlayClientHelper {
             this.currentUrl = `${baseUrl}/${lang}/involved/${eventKey}/wordcloud/${wcid}`;
             console.log('[OverlayClientHelper] Normalized URL for tracking:', this.currentUrl);
         }
+    }
+    
+    /**
+     * Extract event code and language from the current URL
+     */
+    extractEventCodeAndLang() {
+        const urlObj = new URL(window.location.href);
+        const pathSegments = urlObj.pathname.split('/');
+        
+        // URL format: /{lang}/involved/{eventCode}/...
+        if (pathSegments.length >= 4 && pathSegments[2].toLowerCase() === 'involved') {
+            this.eventCode = pathSegments[3].toUpperCase();
+            this.currentLang = pathSegments[1];
+            console.log('[OverlayClientHelper] Extracted event code:', this.eventCode, 'and language:', this.currentLang);
+        }
+    }
+    
+    /**
+     * Add admin link to the page if we're on an event page
+     */
+    addAdminLink() {
+        if (!this.eventCode || !this.currentLang) {
+            return;
+        }
+        
+        // Check if the link already exists
+        if (document.querySelector('.event-admin-link')) {
+            return;
+        }
+        
+        // Create the admin link
+        const adminLink = document.createElement('a');
+        adminLink.href = `/${this.currentLang}/involved/${this.eventCode}`;
+        adminLink.className = 'event-admin-link';
+        adminLink.style.position = 'fixed';
+        adminLink.style.right = '2vw';
+        adminLink.style.bottom = '2vw';
+        adminLink.style.zIndex = '1000';
+        adminLink.style.fontSize = '1.1em';
+        adminLink.style.color = '#007bff';
+        adminLink.style.textDecoration = 'underline';
+        adminLink.style.background = '#fff4';
+        adminLink.style.padding = '0.5em 1em';
+        adminLink.style.borderRadius = '1.5em';
+        adminLink.style.boxShadow = '0 2px 8px #0001';
+        
+        // Set link text (attempt to localize if possible)
+        const translations = {
+            'fr': 'Aller à l\'administration de l\'évènement',
+            'en': 'Go to event administration',
+            'nl': 'Ga naar evenementbeheer',
+            'de': 'Zur Ereignisverwaltung',
+            'es': 'Ir a la administración del evento',
+            'it': 'Vai all\'amministrazione dell\'evento',
+            'pl': 'Przejdź do administracji wydarzeniem',
+            'pt': 'Ir para administração do evento',
+            'sv': 'Gå till händelseadministration'
+        };
+        
+        // Use translated text or fallback to French
+        adminLink.textContent = translations[this.currentLang] || translations['fr'];
+        
+        // Add the link to the document
+        document.body.appendChild(adminLink);
     }
     
     /**
