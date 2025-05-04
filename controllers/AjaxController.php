@@ -280,6 +280,14 @@ class AjaxController {
             return;
         }
 
+        // Allow only certain emojis
+        $allowedEmojis = ['❤️', '😂', '👍', '🔥', '🎉', '😅'];
+        if (!in_array($emoji, $allowedEmojis)) {
+            http_response_code(400);
+            echo json_encode(['success' => false, 'error' => 'Invalid emoji']);
+            return;
+        }
+
         // Append via model
         $model = new OverlayObjectModel();
         $ok = $model->appendEmoji($url, $emoji);

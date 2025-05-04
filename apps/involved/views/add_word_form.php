@@ -38,6 +38,9 @@ require_once __DIR__ . '/../../../views/header.php';
                 <button class="emoji-btn" data-emoji="❤️" type="button" style="background:none; border:none; cursor:pointer; font-size:2.2rem; transition:transform 0.2s;">❤️</button>
                 <button class="emoji-btn" data-emoji="😂" type="button" style="background:none; border:none; cursor:pointer; font-size:2.2rem; transition:transform 0.2s;">😂</button>
                 <button class="emoji-btn" data-emoji="👍" type="button" style="background:none; border:none; cursor:pointer; font-size:2.2rem; transition:transform 0.2s;">👍</button>
+                <button class="emoji-btn" data-emoji="🔥" type="button" style="background:none; border:none; cursor:pointer; font-size:2.2rem; transition:transform 0.2s;">🔥</button>
+                <button class="emoji-btn" data-emoji="🎉" type="button" style="background:none; border:none; cursor:pointer; font-size:2.2rem; transition:transform 0.2s;">🎉</button>
+                <button class="emoji-btn" data-emoji="😅" type="button" style="background:none; border:none; cursor:pointer; font-size:2.2rem; transition:transform 0.2s;">😅</button>
             </div>
         </div>
         
