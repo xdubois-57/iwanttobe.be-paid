@@ -281,8 +281,8 @@ class OverlayObjectHelper {
         if (this.emojiInterval) {
             clearInterval(this.emojiInterval);
         }
-        // Poll every 10s
-        this.emojiInterval = setInterval(() => this.fetchEmojis(), 10000);
+        // Poll every 5 seconds
+        this.emojiInterval = setInterval(() => this.fetchEmojis(), 5000);
         // immediate first call
         this.fetchEmojis();
     }
@@ -301,10 +301,22 @@ class OverlayObjectHelper {
         fetch('/ajax/emoji?url=' + encodeURIComponent(this.currentUrl) + '&max=15')
             .then(r => r.json())
             .then(data => {
-                if (data.success && Array.isArray(data.emojis)) {
+                if (data.success && Array.isArray(data.emojis) && data.emojis.length > 0) {
                     // Log that we received emojis for debugging
                     console.log('[OverlayObjectHelper] Received emojis:', data.emojis);
-                    data.emojis.forEach(e => this.animateEmoji(e));
+                    
+                    // Distribute animations randomly over the next 5 seconds
+                    data.emojis.forEach(emoji => {
+                        // Calculate a random delay between 0 and 5000ms
+                        const randomDelay = Math.random() * 5000;
+                        
+                        // Schedule the emoji animation
+                        setTimeout(() => {
+                            this.animateEmoji(emoji);
+                        }, randomDelay);
+                        
+                        console.log(`[OverlayObjectHelper] Scheduled emoji ${emoji} to animate in ${randomDelay.toFixed(0)}ms`);
+                    });
                 } else {
                     console.log('[OverlayObjectHelper] No new emojis to show');
                 }
