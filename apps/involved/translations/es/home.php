@@ -75,4 +75,8 @@ return [
     'word_parameter_is_required' => 'El parámetro de palabra es obligatorio',
     'unauthorized' => 'No autorizado',
     'error_heading' => 'Error:',
+    
+    'waiting_room_title' => 'Por favor, espere a que comience el evento',
+    'waiting_room_message' => 'El organizador iniciará el evento en breve. Por favor, mantenga esta página abierta.',
+    'waiting_room_tip' => 'Esta página se actualizará automáticamente cuando comience el evento.',
 ];

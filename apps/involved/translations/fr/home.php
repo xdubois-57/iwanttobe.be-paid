@@ -76,5 +76,10 @@ return [
     'word_add_failed' => 'Échec de l\'ajout du mot',
     'unauthorized_access' => 'Tentative d\'accès non autorisée',
     'word_parameter_is_required' => 'Le paramètre mot est requis',
-    'unauthorized' => 'Non autorisé'
+    'unauthorized' => 'Non autorisé',
+    
+    // Waiting room translations
+    'waiting_room_title' => 'Merci de patienter, l’évènement va bientôt commencer',
+    'waiting_room_message' => 'L’organisateur de l’évènement va bientôt démarrer. Merci de garder cette page ouverte.',
+    'waiting_room_tip' => 'Cette page se mettra à jour automatiquement dès que l’évènement commencera.',
 ];

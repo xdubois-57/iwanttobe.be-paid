@@ -12,4 +12,24 @@ require_once __DIR__ . '/../../../views/header.php';
         <?php echo htmlspecialchars($lang->translate('waiting_room_tip', 'This page will update automatically when the event begins.')); ?>
     </div>
 </main>
+<a href="/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/<?php echo htmlspecialchars($event['key']); ?>" style="position:fixed;right:2vw;bottom:2vw;z-index:1000;font-size:1.1em;color:#007bff;text-decoration:underline;background:#fff4;padding:0.5em 1em;border-radius:1.5em;box-shadow:0 2px 8px #0001;">
+    Aller à l'administration de l'évènement
+</a>
+
+<!-- Initialize the overlay client helper just like in the add word form -->
+<script src="/apps/involved/js/OverlayClientHelper.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize the overlay client for presence tracking
+    const overlayClient = new OverlayClientHelper();
+    
+    // Set URL for tracking
+    overlayClient.currentUrl = window.location.href;
+    
+    // Start presence tracking, which will automatically redirect when active_url is set
+    overlayClient.presenceIntervalTime = 3000; // Check every 3 seconds (default is 30 seconds)
+    overlayClient.startPresenceTracking();
+});
+</script>
+
 <?php require_once __DIR__ . '/../../../views/footer.php'; ?>

@@ -122,6 +122,27 @@ class OverlayObjectHelper {
      */
     deactivate() {
         console.log('[OverlayObjectHelper] Deactivating overlay');
+        // --- Reset active URL when overlay is deactivated ---
+        if (this.qrBlockConfig && this.qrBlockConfig.eventCode) {
+            const eventCode = this.qrBlockConfig.eventCode;
+            const formData = new FormData();
+            formData.append('event_code', eventCode);
+            formData.append('active_url', ''); // Clear the active URL
+            fetch('/ajax/set_active_url', {
+                method: 'POST',
+                body: formData
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    console.log('[OverlayObjectHelper] Active URL reset for event (deactivate):', eventCode);
+                } else {
+                    console.error('[OverlayObjectHelper] Failed to reset active URL (deactivate):', data.error);
+                }
+            })
+            .catch(err => console.error('[OverlayObjectHelper] Error resetting active URL (deactivate):', err));
+        }
+        // -----------------------------------------------------
         
         // Clean up overlay
         if (this.overlay && this.overlay.parentNode) {

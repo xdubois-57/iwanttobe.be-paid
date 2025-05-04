@@ -537,7 +537,7 @@ class InvolvedHomeController {
         }
         
         // Default response (used in case of any error)
-        $response = ['success' => true, 'count' => 0];
+        $response = ['success' => true, 'count' => 0, 'active_url' => null];
         
         try {
             // Get URL parameter
@@ -549,9 +549,27 @@ class InvolvedHomeController {
             
             $db = DatabaseHelper::getInstance();
             
+            // Extract event code from URL (format: /{lang}/involved/{eventCode}/...)
+            $parsed = parse_url($url);
+            $path = $parsed['path'] ?? '';
+            $segments = explode('/', trim($path, '/'));
+            $eventCode = null;
+            if (count($segments) >= 3 && strtolower($segments[1]) === 'involved') {
+                $eventCode = strtoupper($segments[2]);
+            }
+            
+            $activeUrl = null;
+            if ($eventCode) {
+                require_once __DIR__ . '/../models/EventModel.php';
+                $eventModel = new EventModel();
+                $event = $eventModel->getByKey($eventCode);
+                if ($event && !empty($event['active_url'])) {
+                    $activeUrl = $event['active_url'];
+                }
+            }
+            
             // For now, just return a simple success with 1 active user (the current user)
-            // This gives immediate feedback while we fix the underlying database issue
-            $response = ['success' => true, 'count' => 1];
+            $response = ['success' => true, 'count' => 1, 'active_url' => $activeUrl];
             
             // Output as JSON
             header('Content-Type: application/json');
@@ -560,7 +578,7 @@ class InvolvedHomeController {
             
         } catch (Exception $e) {
             // Just use the default response with count=1 for now
-            $response = ['success' => true, 'count' => 1];
+            $response = ['success' => true, 'count' => 1, 'active_url' => null];
             
             // Output as JSON
             header('Content-Type: application/json');

@@ -75,5 +75,10 @@ return [
     'word_add_failed' => 'Wort konnte nicht hinzugefügt werden',
     'unauthorized_access' => 'Unberechtigter Zugriffsversuch',
     'word_parameter_is_required' => 'Wort-Parameter ist erforderlich',
-    'unauthorized' => 'Nicht autorisiert'
+    'unauthorized' => 'Nicht autorisiert',
+    
+    // Waiting room
+    'waiting_room_title' => 'Bitte warten Sie, bis das Event beginnt',
+    'waiting_room_message' => 'Der Veranstalter startet das Event in Kürze. Bitte lassen Sie diese Seite geöffnet.',
+    'waiting_room_tip' => 'Diese Seite wird automatisch aktualisiert, sobald das Event beginnt.',
 ];

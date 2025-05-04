@@ -71,4 +71,8 @@ return [
     
     // Short description for landing page
     'short_description' => 'Ordmoln, omröstningar och retrospektiv – gör dina möten interaktiva och minnesvärda.',
+    
+    'waiting_room_title' => 'Vänligen vänta tills evenemanget börjar',
+    'waiting_room_message' => 'Arrangören startar evenemanget snart. Lämna denna sida öppen.',
+    'waiting_room_tip' => 'Denna sida uppdateras automatiskt när evenemanget börjar.',
 ];

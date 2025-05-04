@@ -303,13 +303,27 @@ class AjaxController {
             return;
         }
         
-        if (empty($activeUrl)) {
+        // Allow empty string for activeUrl to mean "clear the active URL"
+        if ($activeUrl === null) {
             http_response_code(400);
             echo json_encode(['success' => false, 'error' => 'Active URL is required']);
             return;
         }
+        if ($activeUrl === '') {
+            // Clear the active URL in the database
+            require_once __DIR__ . '/../apps/involved/models/EventModel.php';
+            $model = new EventModel();
+            $result = $model->setActiveUrl($eventCode, '');
+            if ($result === false) {
+                http_response_code(500);
+                echo json_encode(['success' => false, 'error' => 'Failed to clear active URL']);
+                return;
+            }
+            echo json_encode(['success' => true]);
+            return;
+        }
         
-        // Validate URL format
+        // Validate URL format for non-empty URLs
         if (!filter_var($activeUrl, FILTER_VALIDATE_URL)) {
             http_response_code(400);
             echo json_encode(['success' => false, 'error' => 'Invalid URL format']);

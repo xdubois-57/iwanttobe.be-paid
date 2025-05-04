@@ -70,5 +70,9 @@ return [
     'word_add_failed' => 'Kon woord niet toevoegen',
     'unauthorized_access' => 'Ongeautoriseerde toegangspoging',
     'word_parameter_is_required' => 'Woordparameter is vereist',
-    'unauthorized' => 'Niet geautoriseerd'
+    'unauthorized' => 'Niet geautoriseerd',
+    
+    'waiting_room_title' => 'Even geduld, het evenement begint zo',
+    'waiting_room_message' => 'De organisator start het evenement binnenkort. Laat deze pagina open.',
+    'waiting_room_tip' => 'Deze pagina wordt automatisch bijgewerkt zodra het evenement begint.',
 ];

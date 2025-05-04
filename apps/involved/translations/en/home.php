@@ -67,6 +67,11 @@ return [
     // Short description for landing page
     'short_description' => 'Word clouds, polls, and retrospectives – make your meetings interactive and memorable.',
     
+    // Waiting room
+    'waiting_room_title' => 'Please wait for the event to start',
+    'waiting_room_message' => 'The event organizer will start soon. Please keep this page open.',
+    'waiting_room_tip' => 'This page will update automatically when the event begins.',
+    
     // Controller messages
     'event_create_failed' => 'Failed to create event. Error:',
     'event_not_found' => 'Event not found',

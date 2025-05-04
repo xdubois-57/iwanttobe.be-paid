@@ -71,4 +71,9 @@ return [
     
     // Short description for landing page
     'short_description' => 'Nuvole di parole, sondaggi e retrospettive: rendi i tuoi incontri interattivi e memorabili.',
+    
+    // Waiting room translations
+    'waiting_room_title' => 'Attendere che l’evento abbia inizio',
+    'waiting_room_message' => 'L’organizzatore avvierà presto l’evento. Si prega di lasciare aperta questa pagina.',
+    'waiting_room_tip' => 'Questa pagina si aggiornerà automaticamente all’inizio dell’evento.',
 ];
