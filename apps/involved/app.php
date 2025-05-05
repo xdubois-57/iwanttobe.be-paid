@@ -18,6 +18,7 @@
  */
 
 require_once __DIR__ . '/controllers/InvolvedHomeController.php';
+require_once __DIR__ . '/controllers/AjaxController.php';
 
 class InvolvedApp implements AppInterface {
     /**
@@ -70,6 +71,13 @@ class InvolvedApp implements AppInterface {
      */
     public function registerRoutes(Router $router): void
     {
+        // Redirect /involved to /{lang}/involved
+        $router->get('/involved', function() {
+            $lang = \LanguageController::detectBrowserLanguage();
+            header('Location: /' . $lang . '/involved');
+            exit;
+        });
+        
         $router->get('/{lang}/involved', 'InvolvedHomeController@index');
         $router->post('/{lang}/involved/create', 'InvolvedHomeController@create');
         $router->post('/{lang}/involved/join', 'InvolvedHomeController@join');
@@ -83,8 +91,14 @@ class InvolvedApp implements AppInterface {
         $router->get('/{lang}/involved/{code}', 'InvolvedHomeController@show');
         $router->post('/{lang}/involved/verify-password', 'InvolvedHomeController@verifyPassword');
         
-        // Add presence check route
-        $router->get('/ajax/presence', 'InvolvedHomeController@checkPresence');
+        // AJAX endpoints
+        $router->post('/{lang}/involved/ajax/like', 'InvolvedAjaxController@incrementLikes');
+        $router->get('/{lang}/involved/ajax/likes', 'InvolvedAjaxController@getLikes');
+        $router->post('/{lang}/involved/ajax/presence', 'InvolvedAjaxController@updatePresence');
+        $router->get('/{lang}/involved/ajax/presence', 'InvolvedAjaxController@getPresence');
+        $router->post('/{lang}/involved/ajax/set_active_url', 'InvolvedAjaxController@setActiveUrl');
+        $router->post('/{lang}/involved/ajax/emoji', 'InvolvedAjaxController@appendEmoji');
+        $router->get('/{lang}/involved/ajax/emoji', 'InvolvedAjaxController@getEmojis');
     }
     
     /**

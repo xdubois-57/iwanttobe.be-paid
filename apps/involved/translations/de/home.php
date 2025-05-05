@@ -61,6 +61,8 @@ return [
     'copy_success' => 'Link in die Zwischenablage kopiert!',
     'share_error' => 'Konnte nicht teilen. Link stattdessen in die Zwischenablage kopiert.',
     'share_link_prompt' => 'Diesen Link kopieren:',
+    'qrblock_scan_or_visit' => 'iwantto.be/involved',
+    'qrblock_scan_or_visit' => 'iwantto.be/involved',
     
     // OverlayClientHelper
     'admin_link_text' => 'Zur Ereignisverwaltung',
@@ -88,4 +90,7 @@ return [
     'waiting_room_title' => 'Bitte warten Sie, bis das Event beginnt',
     'waiting_room_message' => 'Der Veranstalter startet das Event in Kürze. Bitte lassen Sie diese Seite geöffnet.',
     'waiting_room_tip' => 'Diese Seite wird automatisch aktualisiert, sobald das Event beginnt.',
+    
+    // Event memory features
+    'my_events' => 'Meine Veranstaltungen',
 ];

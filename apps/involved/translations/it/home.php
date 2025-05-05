@@ -63,6 +63,10 @@ return [
     'copy_success' => 'Link copiato negli appunti!',
     'share_error' => 'Impossibile condividere. Link copiato negli appunti come alternativa.',
     'share_link_prompt' => 'Copia questo link:',
+    'qrblock_scan_or_visit' => 'iwantto.be/involved',
+    
+    // Event memory features
+    'my_events' => 'I miei eventi',
     
     // Controller messages
     'event_create_failed' => 'Impossibile creare l\'evento. Errore:',

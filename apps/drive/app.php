@@ -60,7 +60,18 @@ class DriveApp implements AppInterface
      */
     public function registerRoutes(Router $router): void
     {
+        // Redirect /drive to /{lang}/drive
+        $router->get('/drive', function() {
+            $lang = LanguageController::detectBrowserLanguage();
+            header('Location: /' . $lang . '/drive');
+            exit;
+        });
+        
         $router->get('/{lang}/drive', 'DriveHomeController@index');
+        $router->get('/{lang}/drive/qr/{code}', 'DriveHomeController@qr');
+        $router->get('/{lang}/drive/qr/{code}/download', 'DriveHomeController@download');
+        $router->post('/{lang}/drive/qr/{code}/upload', 'DriveHomeController@upload');
+        $router->post('/{lang}/drive/qr/{code}/delete', 'DriveHomeController@delete');
     }
     
     /**

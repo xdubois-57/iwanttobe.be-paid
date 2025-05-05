@@ -26,18 +26,17 @@
  * - API routes (POST requests for AJAX operations)
  */
 
-// Include necessary controller classes and core framework
+// Load controllers and core components
 require_once 'controllers/Router.php';
+require_once 'controllers/LandingController.php';
 require_once 'controllers/LanguageController.php';
 require_once 'controllers/SetupController.php';
 require_once 'controllers/QrController.php';
-require_once 'controllers/AjaxController.php';
+require_once 'controllers/GDPRController.php';
+require_once 'controllers/SupportController.php';
 require_once 'core/AppRegistry.php';
 
 // Core global controllers remain at root-level controllers
-require_once 'controllers/GDPRController.php';
-require_once 'controllers/SupportController.php';
-require_once 'controllers/LandingController.php';
 
 // Initialize the router
 $router = new Router();
@@ -66,30 +65,12 @@ $router->get('/{lang}/support', 'SupportController@index');
 // Waiting room for event
 $router->get('/{lang}/involved/{code}/wait', 'InvolvedHomeController@showWaitingRoom');
 
-// AJAX endpoints for global features
-$router->post('/ajax/like', 'AjaxController@incrementLikes');
-$router->get('/ajax/likes', 'AjaxController@getLikes');
-$router->post('/ajax/presence', 'AjaxController@updatePresence');
-$router->get('/ajax/presence', 'AjaxController@getPresence');
-$router->post('/ajax/emoji', 'AjaxController@appendEmoji');
-$router->get('/ajax/emoji', 'AjaxController@getEmojis');
-$router->post('/ajax/set_active_url', 'AjaxController@setActiveUrl');
-
 // Global QR code SVG endpoint (AJAX)
 $router->get('/qr/svg', 'GenericQrController@svg');
 
 // Redirect root to detected language based on browser preferences
 $router->get('/', function() {
-    // Get available languages from config
-    $config = require __DIR__ . '/config/languages.php';
-    $availableLanguages = array_keys($config['available_languages']);
-    
-    // Get browser language preference
-    $browserLang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'] ?? '', 0, 2);
-    
-    // Use browser language if supported, otherwise default to English
-    $lang = in_array($browserLang, $availableLanguages) ? $browserLang : 'en';
-    
+    $lang = LanguageController::detectBrowserLanguage();
     header('Location: /' . $lang);
     exit;
 });

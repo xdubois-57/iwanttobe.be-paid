@@ -139,10 +139,13 @@ if (method_exists($lang, 'loadTranslations')) {
             'create_event_description': <?php echo json_encode($lang->translate('create_event_description')); ?>,
             'delete_failed': <?php echo json_encode($lang->translate('delete_failed')); ?>,
             'an_error_occurred': <?php echo json_encode($lang->translate('an_error_occurred')); ?>,
-            'short_description': <?php echo json_encode($lang->translate('short_description')); ?>
+            'short_description': <?php echo json_encode($lang->translate('short_description')); ?>,
+            'qrblock_scan_or_visit': <?php echo json_encode($lang->translate('qrblock_scan_or_visit')); ?>,
         };
         return translations[key] || key;
     };
+    window.TRANSLATIONS = window.TRANSLATIONS || {};
+    window.TRANSLATIONS['qrblock_scan_or_visit'] = <?php echo json_encode($lang->translate('qrblock_scan_or_visit')); ?>;
     </script>
 </head>
 <body>

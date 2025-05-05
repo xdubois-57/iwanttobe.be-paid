@@ -59,6 +59,7 @@ return [
     'admin_link_text' => 'Gå til begivenhedsadministration',
     'scan_qr_to_answer' => 'Scan QR-koden for at svare',
     'admin_password_label' => 'Administratoradgangskode:',
+    'qrblock_scan_or_visit' => 'iwantto.be/involved',
     
     // Short description for landing page
     'short_description' => 'Ordskyer, afstemninger og retrospektiver – gør dine møder interaktive og mindeværdige.',

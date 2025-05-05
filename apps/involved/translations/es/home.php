@@ -59,6 +59,10 @@ return [
     'copy_success' => '¡Enlace copiado al portapapeles!',
     'share_error' => 'No se pudo compartir. Enlace copiado al portapapeles en su lugar.',
     'share_link_prompt' => 'Copiar este enlace:',
+    'qrblock_scan_or_visit' => 'iwantto.be/involved',
+    
+    // Event memory features
+    'my_events' => 'Mis eventos',
     
     // OverlayClientHelper
     'admin_link_text' => 'Ir a la administración del evento',

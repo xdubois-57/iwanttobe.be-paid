@@ -34,13 +34,13 @@ require_once __DIR__ . '/../../../views/header.php';
         </form>
         
         <div style="text-align: center; margin-top: 1.5rem;">
-            <div id="emoji-buttons" style="display:inline-flex; gap:1rem;">
-                <button class="emoji-btn" data-emoji="❤️" type="button" style="background:none; border:none; cursor:pointer; font-size:2.2rem; transition:transform 0.2s;">❤️</button>
-                <button class="emoji-btn" data-emoji="😂" type="button" style="background:none; border:none; cursor:pointer; font-size:2.2rem; transition:transform 0.2s;">😂</button>
-                <button class="emoji-btn" data-emoji="👍" type="button" style="background:none; border:none; cursor:pointer; font-size:2.2rem; transition:transform 0.2s;">👍</button>
-                <button class="emoji-btn" data-emoji="🔥" type="button" style="background:none; border:none; cursor:pointer; font-size:2.2rem; transition:transform 0.2s;">🔥</button>
-                <button class="emoji-btn" data-emoji="🎉" type="button" style="background:none; border:none; cursor:pointer; font-size:2.2rem; transition:transform 0.2s;">🎉</button>
-                <button class="emoji-btn" data-emoji="😅" type="button" style="background:none; border:none; cursor:pointer; font-size:2.2rem; transition:transform 0.2s;">😅</button>
+            <div id="emoji-buttons" style="display:inline-flex; gap:0; align-items:center;">
+                <button class="emoji-btn" data-emoji="❤️" type="button" style="background:none; border:none; cursor:pointer; font-size:1.5rem; transition:transform 0.2s; margin:0; padding:0 2px;">❤️</button>
+                <button class="emoji-btn" data-emoji="😂" type="button" style="background:none; border:none; cursor:pointer; font-size:1.5rem; transition:transform 0.2s; margin:0; padding:0 2px;">😂</button>
+                <button class="emoji-btn" data-emoji="👍" type="button" style="background:none; border:none; cursor:pointer; font-size:1.5rem; transition:transform 0.2s; margin:0; padding:0 2px;">👍</button>
+                <button class="emoji-btn" data-emoji="🔥" type="button" style="background:none; border:none; cursor:pointer; font-size:1.5rem; transition:transform 0.2s; margin:0; padding:0 2px;">🔥</button>
+                <button class="emoji-btn" data-emoji="🎉" type="button" style="background:none; border:none; cursor:pointer; font-size:1.5rem; transition:transform 0.2s; margin:0; padding:0 2px;">🎉</button>
+                <button class="emoji-btn" data-emoji="😅" type="button" style="background:none; border:none; cursor:pointer; font-size:1.5rem; transition:transform 0.2s; margin:0; padding:0 2px;">😅</button>
             </div>
         </div>
         
