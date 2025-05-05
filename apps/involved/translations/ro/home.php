@@ -58,6 +58,7 @@ return [
     'share_link_prompt' => 'Copiază acest link:',
     'admin_link_text' => 'Mergi la administrarea evenimentului',
     'scan_qr_to_answer' => 'Scanați codul QR pentru a răspunde',
+    'admin_password_label' => 'Parolă administrator:',
     
     // Short description for landing page
     'short_description' => 'Nori de cuvinte, sondaje și retrospective – fă-ți întâlnirile interactive și de neuitat.',

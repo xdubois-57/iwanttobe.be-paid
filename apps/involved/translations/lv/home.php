@@ -50,6 +50,7 @@ return [
     'share_link_prompt' => 'Kopējiet šo saiti:',
     'admin_link_text' => 'Doties uz pasākuma administrēšanu',
     'scan_qr_to_answer' => 'Skenējiet QR kodu, lai atbildētu',
+    'admin_password_label' => 'Administratora parole:',
     
     // Add word page
     'please_enter_word' => 'Lūdzu, ievadiet vārdu.',

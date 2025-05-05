@@ -58,6 +58,7 @@ return [
     'share_link_prompt' => 'Kopirajte ovu poveznicu:',
     'admin_link_text' => 'Idi na administraciju događaja',
     'scan_qr_to_answer' => 'Skenirajte QR kod za odgovor',
+    'admin_password_label' => 'Lozinka administratora:',
     
     // Short description for landing page
     'short_description' => 'Oblaci riječi, ankete i retrospektive – učinite svoje sastanke interaktivnima i nezaboravnima.',

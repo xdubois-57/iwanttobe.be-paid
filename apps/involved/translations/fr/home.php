@@ -56,6 +56,7 @@ return [
     
     // OverlayClientHelper
     'admin_link_text' => 'Aller à l\'administration de l\'évènement',
+    'admin_password_label' => 'Mot de passe administrateur:',
     
     // OverlayObjectHelper
     'scan_qr_to_answer' => 'Scannez le QR code pour répondre',

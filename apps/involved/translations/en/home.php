@@ -66,6 +66,7 @@ return [
     
     // OverlayClientHelper
     'admin_link_text' => 'Go to event administration',
+    'admin_password_label' => 'Administrator password:',
 
     // OverlayObjectHelper
     'scan_qr_to_answer' => 'Scan the QR code to answer',

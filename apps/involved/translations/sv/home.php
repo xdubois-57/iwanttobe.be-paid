@@ -19,6 +19,7 @@ return [
     'protected_event_title' => 'Skyddat Event',
     'password_prompt_description' => 'Detta event kräver ett lösenord. Ange det nedan för att fortsätta.',
     'password_label' => 'Lösenord',
+    'admin_password_label' => 'Administratörslösenord:',
     'password_prompt_placeholder' => 'Ange eventlösenord',
     'continue_button' => 'Fortsätt',
     'error_heading' => 'Fel:',

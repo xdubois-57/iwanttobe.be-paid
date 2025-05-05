@@ -73,4 +73,5 @@ return [
     
     // Short description for landing page
     'short_description' => 'Σύννεφα λέξεων, δημοσκοπήσεις και αναδρομές – κάντε τις συναντήσεις σας διαδραστικές και αξέχαστες.',
+    'admin_password_label' => 'Κωδικός διαχειριστή:',
 ];

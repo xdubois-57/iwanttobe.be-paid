@@ -50,6 +50,7 @@ return [
     
     // OverlayClientHelper
     'admin_link_text' => "Vai all'amministrazione dell'evento",
+    'admin_password_label' => 'Password amministratore:',
     
     // OverlayObjectHelper
     'scan_qr_to_answer' => 'Scansiona il codice QR per rispondere',

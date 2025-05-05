@@ -58,6 +58,7 @@ return [
     'share_error' => 'Jakaminen epäonnistui. Linkki kopioitu leikepöydälle vaihtoehtoisesti.',
     'share_link_prompt' => 'Kopioi tämä linkki:',
     'admin_link_text' => 'Siirry tapahtuman hallintaan',
+    'admin_password_label' => 'Ylläpitäjän salasana:',
     
     // Short description for landing page
     'short_description' => 'Sanapilvet, kyselyt ja retrospektiivit – tee kokouksistasi interaktiivisia ja unohtumattomia.',

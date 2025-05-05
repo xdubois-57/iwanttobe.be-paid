@@ -59,6 +59,7 @@ return [
     
     // OverlayClientHelper
     'admin_link_text' => 'Ga naar evenementbeheer',
+    'admin_password_label' => 'Beheerderswachtwoord:',
     
     // OverlayObjectHelper
     'scan_qr_to_answer' => 'Scan de QR-code om te antwoorden',

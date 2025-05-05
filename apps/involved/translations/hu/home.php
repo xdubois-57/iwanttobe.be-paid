@@ -41,6 +41,7 @@ return [
     'delete_failed' => 'A szófelhő törlése sikertelen',
     'an_error_occurred' => 'Hiba történt a szófelhő törlése közben',
     'admin_link_text' => 'Ugrás az esemény adminisztrációjára',
+    'admin_password_label' => 'Adminisztrátori jelszó:',
     
     // Wordcloud page
     'add_your_word' => 'Adja hozzá a szavát',

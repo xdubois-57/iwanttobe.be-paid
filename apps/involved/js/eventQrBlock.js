@@ -27,13 +27,6 @@ class EventQrBlock {
         infoDiv.style.fontSize = '0.95em';
         infoDiv.style.color = 'var(--text-primary, #333)';
         infoDiv.innerHTML = `<div><strong>${this.getTranslation('event_code')}</strong> ${this.escape(this.eventCode)}</div>`;
-        if (this.eventPassword) {
-            const pwdDiv = document.createElement('div');
-            pwdDiv.style.marginTop = '0.4em';
-            pwdDiv.style.color = 'var(--text-secondary, #666)';
-            pwdDiv.innerHTML = `<strong>${this.getTranslation('event_password')}</strong> ${this.escape(this.eventPassword)}`;
-            infoDiv.appendChild(pwdDiv);
-        }
         this.container.appendChild(infoDiv);
         // Share button - only add if showShareButton is true
         if (this.showShareButton) {

@@ -58,6 +58,7 @@ return [
     'share_link_prompt' => 'Kopirajte to povezavo:',
     'admin_link_text' => 'Pojdi na upravljanje dogodka',
     'scan_qr_to_answer' => 'Skenirajte QR kodo za odgovor',
+    'admin_password_label' => 'Skrbniško geslo:',
     
     // Short description for landing page
     'short_description' => 'Oblaki besed, ankete in retrospektive – naredite svoja srečanja interaktivna in nepozabna.',

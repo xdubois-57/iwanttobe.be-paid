@@ -58,6 +58,7 @@ return [
     'share_link_prompt' => 'Kopier denne lenken:',
     'admin_link_text' => 'Gå til arrangementsadministrasjon',
     'scan_qr_to_answer' => 'Skann QR-koden for å svare',
+    'admin_password_label' => 'Administratorpassord:',
     
     // Controller messages
     'event_create_failed' => 'Kunne ikke opprette arrangement. Feil:',

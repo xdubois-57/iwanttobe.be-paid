@@ -13,6 +13,45 @@ use chillerlan\QRCode\QROptions;
     <article>
         <h1><?php echo htmlspecialchars($lang->translate('event_heading')); ?> <?php echo htmlspecialchars($eventData['key']); ?></h1>
         <p><?php echo htmlspecialchars($lang->translate('created_at')); ?> <?php echo htmlspecialchars($eventData['created_at']); ?></p>
+        <?php if (!empty($eventData['password'])): ?>
+            <div style="margin-top:0.5em;display:flex;align-items:center;gap:0.5em;">
+                <span style="margin:0;">
+                    <?php echo htmlspecialchars($lang->translate('admin_password_label')); ?>
+                </span>
+                <span id="event-password-span" style="font-family:monospace;font-size:1em;user-select:all;letter-spacing:0.1em;cursor:pointer;" tabindex="0">
+                    <?php echo str_repeat('•', mb_strlen($eventData['password'])); ?>
+                </span>
+            </div>
+            <script>
+            (function() {
+                const pwdSpan = document.getElementById('event-password-span');
+                const realPwd = <?php echo json_encode($eventData['password']); ?>;
+                const bullets = '•'.repeat(realPwd.length);
+                let showing = false;
+                function show() {
+                    pwdSpan.textContent = realPwd;
+                    showing = true;
+                }
+                function hide() {
+                    pwdSpan.textContent = bullets;
+                    showing = false;
+                }
+                pwdSpan.addEventListener('mousedown', show);
+                pwdSpan.addEventListener('touchstart', show);
+                pwdSpan.addEventListener('mouseup', hide);
+                pwdSpan.addEventListener('mouseleave', hide);
+                pwdSpan.addEventListener('touchend', hide);
+                pwdSpan.addEventListener('touchcancel', hide);
+                // Accessibility: also allow keyboard
+                pwdSpan.addEventListener('keydown', function(e) {
+                    if (e.key === ' ' || e.key === 'Enter') { show(); }
+                });
+                pwdSpan.addEventListener('keyup', function(e) {
+                    if (showing && (e.key === ' ' || e.key === 'Enter')) { hide(); }
+                });
+            })();
+            </script>
+        <?php endif; ?>
     </article>
     <style>
         .word-cloud-item {

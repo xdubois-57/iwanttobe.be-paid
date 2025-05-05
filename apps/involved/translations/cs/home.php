@@ -58,6 +58,7 @@ return [
     'share_link_prompt' => 'Zkopírujte tento odkaz:',
     'admin_link_text' => 'Přejít na správu události',
     'scan_qr_to_answer' => 'Naskenujte QR kód pro odpověď',
+    'admin_password_label' => 'Heslo správce:',
     
     // Short description for landing page
     'short_description' => 'Word cloudy, ankety a retrospektivy – udělejte své schůzky interaktivními a nezapomenutelnými.',

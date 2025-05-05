@@ -51,6 +51,7 @@ return [
     // OverlayClientHelper
     'admin_link_text' => 'Przejdź do administracji wydarzeniem',
     'scan_qr_to_answer' => 'Zeskanuj kod QR, aby odpowiedzieć',
+    'admin_password_label' => 'Hasło administratora:',
     
     // EventQrBlock component
     'event_code' => 'Kod:',

@@ -58,6 +58,7 @@ return [
     'share_link_prompt' => 'Afritaðu þennan tengil:',
     'admin_link_text' => 'Fara í viðburðastjórnun',
     'scan_qr_to_answer' => 'Skannaðu QR-kóðann til að svara',
+    'admin_password_label' => 'Stjórnendaleynd:',
     
     // Controller messages
     'event_create_failed' => 'Ekki tókst að búa til viðburð. Villa:',

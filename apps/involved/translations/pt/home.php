@@ -60,7 +60,8 @@ return [
     // OverlayClientHelper
     'admin_link_text' => 'Ir para administração do evento',
     'scan_qr_to_answer' => 'Escaneie o código QR para responder',
-
+    'admin_password_label' => 'Senha do administrador:',
+    
     // Short description for landing page
     'short_description' => 'Nuvens de palavras, enquetes e retrospectivas – torne suas reuniões interativas e inesquecíveis.',
     
