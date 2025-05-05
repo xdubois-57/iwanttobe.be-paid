@@ -8,8 +8,8 @@ return [
     'involved_features' => 'Savieno ar vietējām iniciatīvām, seko līdzi brīvprātīgā darba stundām un veic pārmaiņas.',
     
     'join_event_title' => 'Pievienoties Pasākumam',
-    'join_event_description' => 'Ievadiet 4 ciparu kodu, lai pievienotos esošam pasākumam.',
-    'event_code_placeholder' => 'Pasākuma kods',
+    'join_event_description' => 'Ievadiet 6 rakstzīmju kodu, lai pievienotos esošam pasākumam.',
+    'event_code_placeholder' => 'Pasākuma kods (6 rakstzīmes)',
     'join_event_button' => 'Pievienoties Pasākumam',
     'create_event_title' => 'Izveidot Pasākumu',
     'create_event_description' => 'Ģenerēt jaunu pasākumu ar papildu paroli drošai piekļuvei.',
@@ -34,11 +34,11 @@ return [
     'an_error_occurred' => 'Dzēšot vārdu mākoni, radās kļūda',
     
     // Wordcloud page
-    'add_your_word' => 'Pievienot Savu Vārdu',
+    'add_your_word' => 'Pievienojiet savu vārdu',
     'scan_qr_access' => 'Skenējiet šo QR kodu, lai piekļūtu pasākumam',
     'event_password' => 'PIN:',
-    'wordcloud_failed_delete' => 'Neizdevās dzēst vārdu',
-    'wordcloud_error_delete' => 'Dzēšot vārdu, radās kļūda',
+    'wordcloud_failed_delete' => 'Neizdevās izdzēst vārdu.',
+    'wordcloud_error_delete' => 'Radās kļūda, dzēšot vārdu.',
     
     // EventQrBlock component
     'event_code' => 'Kods:',
@@ -48,6 +48,15 @@ return [
     'copy_success' => 'Saite nokopēta starpliktuvē!',
     'share_error' => 'Nevarēja dalīties. Saite nokopēta starpliktuvē.',
     'share_link_prompt' => 'Kopējiet šo saiti:',
+    'admin_link_text' => 'Doties uz pasākuma administrēšanu',
+    'scan_qr_to_answer' => 'Skenējiet QR kodu, lai atbildētu',
+    'admin_password_label' => 'Administratora parole:',
+    
+    // Add word page
+    'please_enter_word' => 'Lūdzu, ievadiet vārdu.',
+    'word_added_success' => 'Jūsu vārds ir pievienots!',
+    'word_input_placeholder' => 'Ievadiet savu vārdu šeit...',
+    'add_word_button' => 'Pievienot vārdu',
     
     // Short description for landing page
     'short_description' => 'Vārdu mākoņi, aptaujas un retrospektīvas – padariet savas sanāksmes interaktīvas un neaizmirstamas.',

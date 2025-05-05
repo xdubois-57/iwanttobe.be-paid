@@ -7,6 +7,7 @@ return array_merge(
     require __DIR__.'/nl/home.php',
     require __DIR__.'/nl/menu.php',
     [
-        'description' => 'Involved! maakt het gemakkelijk voor teams, non-profitorganisaties en gemeenschapsgroepen om levendige evenementen te organiseren, boeiende retrospectives te houden en interactieve peilingen te starten—en verandert elke vergadering in een onvergetelijke ervaring.'
+        'description' => 'Involved! maakt het gemakkelijk voor teams, non-profitorganisaties en gemeenschapsgroepen om levendige evenementen te organiseren, boeiende retrospectives te houden en interactieve peilingen te starten—en verandert elke vergadering in een onvergetelijke ervaring.',
+        'scan_qr_to_answer' => 'Scan de QR-code om te antwoorden',
     ]
 );

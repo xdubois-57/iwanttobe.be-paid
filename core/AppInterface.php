@@ -61,4 +61,11 @@ interface AppInterface
      * @return string
      */
     public function getDescription(): string;
+    
+    /**
+     * Returns an array of JavaScript files to be included for this app
+     * Each file path should be relative to the app directory
+     * @return array
+     */
+    public function getJavaScriptFiles(): array;
 }

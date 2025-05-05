@@ -7,6 +7,7 @@ return array_merge(
     require __DIR__.'/sl/home.php',
     require __DIR__.'/sl/menu.php',
     [
-        'description' => 'Involved! ekipam, neprofitnim organizacijam in skupnostnim skupinam olajša organizacijo živahnih dogodkov, izvajanje zanimivih retrospektiv in zagon interaktivnih anket—ter spremeni vsako srečanje v nepozabno izkušnjo.'
+        'description' => 'Involved! ekipam, neprofitnim organizacijam in skupnostnim skupinam olajša organizacijo živahnih dogodkov, izvajanje zanimivih retrospektiv in zagon interaktivnih anket—ter spremeni vsako srečanje v nepozabno izkušnjo.',
+        'scan_qr_to_answer' => 'Skenirajte QR kodo za odgovor',
     ]
 );

@@ -81,6 +81,27 @@ if (method_exists($lang, 'loadTranslations')) {
     <?php if (in_array($lang->getCurrentLanguage(), ['ar', 'he', 'fa', 'ur'])): ?>
         <script>document.documentElement.setAttribute('dir', 'rtl');</script>
     <?php endif; ?>
+    
+    <?php
+    // Load app-specific JavaScript files
+    $appRegistry = AppRegistry::getInstance();
+    $currentApp = $appRegistry->getCurrent();
+    if ($currentApp !== null && $currentApp !== 'landing') {
+        // If we have a current app and it's not the landing page
+        if (method_exists($currentApp, 'getJavaScriptFiles')) {
+            $jsFiles = $currentApp->getJavaScriptFiles();
+            foreach ($jsFiles as $jsFile) {
+                // Check if it's a full path (starting with /) or app-specific path
+                if (strpos($jsFile, '/') === 0) {
+                    echo '<script src="' . $jsFile . '"></script>' . PHP_EOL;
+                } else {
+                    echo '<script src="/apps/' . $currentApp->getSlug() . '/' . $jsFile . '"></script>' . PHP_EOL;
+                }
+            }
+        }
+    }
+    ?>
+    
     <script>
     // Expose PHP translations to JavaScript
     window.t = function(key) {
@@ -102,7 +123,23 @@ if (method_exists($lang, 'loadTranslations')) {
             'share_error': <?php echo json_encode($lang->translate('share_error')); ?>,
             'share_link_prompt': <?php echo json_encode($lang->translate('share_link_prompt')); ?>,
             // Password prompt translations
-            'invalid_password': <?php echo json_encode($lang->translate('invalid_password')); ?>
+            'invalid_password': <?php echo json_encode($lang->translate('invalid_password')); ?>,
+
+            // Involved app specific (OverlayClientHelper, OverlayObjectHelper, etc)
+            'admin_link_text': <?php echo json_encode($lang->translate('admin_link_text')); ?>,
+            'scan_qr_to_answer': <?php echo json_encode($lang->translate('scan_qr_to_answer')); ?>,
+            'add_your_word': <?php echo json_encode($lang->translate('add_your_word')); ?>,
+            'wordcloud_failed_delete': <?php echo json_encode($lang->translate('wordcloud_failed_delete')); ?>,
+            'wordcloud_error_delete': <?php echo json_encode($lang->translate('wordcloud_error_delete')); ?>,
+            'join_event_description': <?php echo json_encode($lang->translate('join_event_description')); ?>,
+            'event_code_placeholder': <?php echo json_encode($lang->translate('event_code_placeholder')); ?>,
+            'join_event_button': <?php echo json_encode($lang->translate('join_event_button')); ?>,
+            'scan_qr_access': <?php echo json_encode($lang->translate('scan_qr_access')); ?>,
+            'create_event_title': <?php echo json_encode($lang->translate('create_event_title')); ?>,
+            'create_event_description': <?php echo json_encode($lang->translate('create_event_description')); ?>,
+            'delete_failed': <?php echo json_encode($lang->translate('delete_failed')); ?>,
+            'an_error_occurred': <?php echo json_encode($lang->translate('an_error_occurred')); ?>,
+            'short_description': <?php echo json_encode($lang->translate('short_description')); ?>
         };
         return translations[key] || key;
     };

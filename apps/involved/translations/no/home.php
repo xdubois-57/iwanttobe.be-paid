@@ -7,8 +7,8 @@ return [
     'involved_intro_text' => 'Involved! gjør det enkelt for team, ideelle organisasjoner og fellesskapsgrupper å organisere livlige arrangementer, gjennomføre engasjerende retrospektiver og lansere interaktive undersøkelser—og gjør ethvert møte til en minneverdig opplevelse.',
     'involved_features' => 'Koble til lokale initiativer, spor dine frivillige timer og gjør en forskjell.',
     'join_event_title' => 'Delta på Arrangement',
-    'join_event_description' => 'Skriv inn en 4-tegns kode for å delta på et eksisterende arrangement.',
-    'event_code_placeholder' => 'Arrangementskode',
+    'join_event_description' => 'Skriv inn en 6-tegns kode for å bli med på et eksisterende arrangement.',
+    'event_code_placeholder' => 'Arrangementkode (6 tegn)',
     'join_event_button' => 'Delta på Arrangement',
     'create_event_title' => 'Opprett Arrangement',
     'create_event_description' => 'Generer et nytt arrangement med valgfritt passord for sikker tilgang.',
@@ -25,10 +25,10 @@ return [
     
     // Add word form
     'back_to_wordcloud' => '← Tilbake til ordsky',
-    'word_added_success' => 'Ditt ord har blitt lagt til!',
     'please_enter_word' => 'Vennligst skriv inn et ord.',
-    'word_input_placeholder' => 'Skriv inn ditt svar (maks 30 tegn)',
-    'add_word_button' => 'Legg til Ord',
+    'word_added_success' => 'Ditt ord har blitt lagt til!',
+    'word_input_placeholder' => 'Skriv inn ditt ord her...',
+    'add_word_button' => 'Legg til ord',
     
     // Event page
     'event_title_prefix' => 'Arrangement',
@@ -42,11 +42,11 @@ return [
     'an_error_occurred' => 'Det oppstod en feil ved sletting av ordskyen',
     
     // Wordcloud page
-    'add_your_word' => 'Legg til Ditt Ord',
+    'add_your_word' => 'Legg til ditt ord',
     'scan_qr_access' => 'Skann denne QR-koden for å få tilgang til arrangementet',
     'event_password' => 'PIN:',
-    'wordcloud_failed_delete' => 'Kunne ikke slette ordet',
-    'wordcloud_error_delete' => 'Det oppstod en feil ved sletting av ordet',
+    'wordcloud_failed_delete' => 'Kunne ikke slette ordet.',
+    'wordcloud_error_delete' => 'Det oppstod en feil under sletting av ordet.',
     
     // EventQrBlock component
     'event_code' => 'Kode:',
@@ -56,6 +56,9 @@ return [
     'copy_success' => 'Lenke kopiert til utklippstavlen!',
     'share_error' => 'Kunne ikke dele. Lenke kopiert til utklippstavlen i stedet.',
     'share_link_prompt' => 'Kopier denne lenken:',
+    'admin_link_text' => 'Gå til arrangementsadministrasjon',
+    'scan_qr_to_answer' => 'Skann QR-koden for å svare',
+    'admin_password_label' => 'Administratorpassord:',
     
     // Controller messages
     'event_create_failed' => 'Kunne ikke opprette arrangement. Feil:',

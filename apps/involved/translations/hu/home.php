@@ -7,8 +7,8 @@ return [
     'involved_intro_text' => 'Az Involved! megkönnyíti a csapatok, nonprofit szervezetek és közösségi csoportok számára az élénk események szervezését, az érdekes retrospektívák vezetését és az interaktív közvélemény-kutatások indítását—minden találkozót emlékezetes élménnyé változtatva.',
     'involved_features' => 'Kapcsolódjon helyi kezdeményezésekhez, kövesse nyomon önkéntes óráit és tegyen különbséget.',
     'join_event_title' => 'Csatlakozás Eseményhez',
-    'join_event_description' => 'Adjon meg egy 4 karakteres kódot egy meglévő eseményhez való csatlakozáshoz.',
-    'event_code_placeholder' => 'Eseménykód',
+    'join_event_description' => 'Adjon meg egy 6 karakteres kódot egy meglévő eseményhez való csatlakozáshoz.',
+    'event_code_placeholder' => 'Eseménykód (6 karakter)',
     'join_event_button' => 'Csatlakozás Eseményhez',
     'create_event_title' => 'Esemény Létrehozása',
     'create_event_description' => 'Hozzon létre egy új eseményt opcionális jelszóval a biztonságos hozzáférés érdekében.',
@@ -25,10 +25,10 @@ return [
     
     // Add word form
     'back_to_wordcloud' => '← Vissza a szófelhőhöz',
-    'word_added_success' => 'A szavát sikeresen hozzáadtuk!',
     'please_enter_word' => 'Kérjük, adjon meg egy szót.',
-    'word_input_placeholder' => 'Adja meg a válaszát (max. 30 karakter)',
-    'add_word_button' => 'Szó Hozzáadása',
+    'word_added_success' => 'A szava hozzáadva!',
+    'word_input_placeholder' => 'Írja be ide a szavát...',
+    'add_word_button' => 'Szó hozzáadása',
     
     // Event page
     'event_title_prefix' => 'Esemény',
@@ -40,13 +40,16 @@ return [
     'confirm_delete_wordcloud' => 'Biztosan törölni szeretné ezt a szófelhőt?',
     'delete_failed' => 'A szófelhő törlése sikertelen',
     'an_error_occurred' => 'Hiba történt a szófelhő törlése közben',
+    'admin_link_text' => 'Ugrás az esemény adminisztrációjára',
+    'admin_password_label' => 'Adminisztrátori jelszó:',
     
     // Wordcloud page
-    'add_your_word' => 'Adja Hozzá Szavát',
+    'add_your_word' => 'Adja hozzá a szavát',
     'scan_qr_access' => 'Olvassa be ezt a QR-kódot az eseményhez való hozzáféréshez',
+    'scan_qr_to_answer' => 'Olvassa be a QR-kódot a válaszhoz',
     'event_password' => 'PIN:',
-    'wordcloud_failed_delete' => 'A szó törlése sikertelen',
-    'wordcloud_error_delete' => 'Hiba történt a szó törlése közben',
+    'wordcloud_failed_delete' => 'A szó törlése sikertelen.',
+    'wordcloud_error_delete' => 'Hiba történt a szó törlésekor.',
     
     // EventQrBlock component
     'event_code' => 'Kód:',

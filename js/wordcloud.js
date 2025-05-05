@@ -99,29 +99,27 @@ class WordCloudManager {
             position: 'fixed',
             top: '0',
             left: '0',
-            width: '100%',
-            height: '100%',
+            width: '100vw',
+            height: '100vh',
             zIndex: '10000',
+            background: pageBackgroundColor || 'white',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            backgroundColor: pageBackgroundColor,
-            padding: '20px',
-            boxSizing: 'border-box'
+            padding: '2rem',
+            boxSizing: 'border-box',
+            overflow: 'hidden'
         });
         
         // Create new canvas for fullscreen
         const fullScreenCanvas = document.createElement('canvas');
         fullScreenCanvas.className = 'word-cloud-fullscreen-canvas';
         
-        // Calculate dimensions with 5% margin on desktop (0% on mobile)
-        const isDesktop = window.innerWidth >= 768;
-        const marginPercentage = isDesktop ? 5 : 0;
-        const margin = Math.floor(window.innerWidth * (marginPercentage / 100));
+        // Get window dimensions for the canvas
+        const width = window.innerWidth - 40; // 20px padding on each side
+        const height = window.innerHeight - 40;
         
-        const width = window.innerWidth - (2 * margin); // 2 margins (left and right)
-        const height = window.innerHeight - (2 * margin); // 2 margins (top and bottom)
-        
+        // Set canvas dimensions
         fullScreenCanvas.width = width;
         fullScreenCanvas.height = height;
         
@@ -139,6 +137,42 @@ class WordCloudManager {
         // Set fullscreen state
         this.isFullScreen = true;
         
+        // Use OverlayObjectHelper if available
+        if (window.OverlayObjectHelper) {
+            // Extract question text from header if available
+            let questionText = '';
+            let emojiCount = 0;
+            
+            // Try to find the question text from the h1 in the main article
+            const h1 = document.querySelector('main article h1');
+            if (h1) {
+                questionText = h1.textContent.trim();
+                // Check if h1 has a data-likes attribute
+                if (h1.hasAttribute('data-likes')) {
+                    emojiCount = parseInt(h1.getAttribute('data-likes'), 10) || 0;
+                }
+            }
+            
+            console.log('[WordCloudManager] Activating OverlayObjectHelper with:', {
+                questionText: questionText,
+                emojiCount: emojiCount
+            });
+            
+            // Always activate first before setting properties
+            window.OverlayObjectHelper.activate();
+            
+            // Then set title and heart
+            if (questionText) {
+                console.log('[WordCloudManager] Setting title:', questionText);
+                window.OverlayObjectHelper.addTitle(questionText);
+            }
+            
+            console.log('[WordCloudManager] Setting emoji count:', emojiCount);
+            window.OverlayObjectHelper.setEmojiCount(emojiCount);
+        } else {
+            console.warn('[WordCloudManager] OverlayObjectHelper not found');
+        }
+        
         // Dispatch custom event for fullscreen change
         window.dispatchEvent(new CustomEvent('wordcloud-fullscreen-change', {
             detail: { isFullScreen: true }
@@ -152,7 +186,7 @@ class WordCloudManager {
         };
         document.addEventListener('keydown', this.escKeyHandler);
     }
-    
+
     getFullscreenOptions(width, height) {
         // Create optimized options for fullscreen mode
         const fullScreenOptions = Object.assign({}, this.options);
@@ -169,7 +203,7 @@ class WordCloudManager {
             // Get the shorter dimension for scaling
             const shortestSide = Math.min(width, height);
             // Calculate ideal max font size (25% of shorter dimension)
-            const targetMaxFont = shortestSide * 0.25;
+            const targetMaxFont = shortestSide * 0.25; // 25% of shorter side
             // Scale linearly based on weight
             return (weight / this.currentMaxWeight) * targetMaxFont;
         };
@@ -186,6 +220,11 @@ class WordCloudManager {
             document.removeEventListener('keydown', this.escKeyHandler);
             this.fullScreenOverlay = null;
             this.isFullScreen = false;
+            
+            // Deactivate OverlayObjectHelper if available
+            if (window.OverlayObjectHelper) {
+                window.OverlayObjectHelper.deactivate();
+            }
             
             // Dispatch custom event for fullscreen change
             window.dispatchEvent(new CustomEvent('wordcloud-fullscreen-change', {
@@ -352,8 +391,12 @@ class WordCloudManager {
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.fillStyle = this.detectDarkMode() ? '#666666' : '#cccccc';
-        ctx.font = '16px sans-serif';
-        ctx.fillText('No data available', this.canvas.width / 2, this.canvas.height / 2);
+        ctx.font = '12px sans-serif'; // Make the text smaller
+        if (window.lang && typeof window.lang.translate === 'function') {
+            ctx.fillText(window.lang.translate('scan_qr_to_answer'), this.canvas.width / 2, this.canvas.height / 2);
+        } else {
+            ctx.fillText('Scan the QR code to answer', this.canvas.width / 2, this.canvas.height / 2);
+        }
     }
 
     loadStaticData(data) {

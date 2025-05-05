@@ -10,49 +10,6 @@ $lang = LanguageController::getInstance();
         margin-bottom: 2rem;
     }
     
-    .fullscreen-qr-container {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        z-index: 10001;
-        background-color: var(--background-primary-translucent, rgba(255, 255, 255, 0.9));
-        color: var(--text-primary, #121212);
-        padding: 15px;
-        border-radius: 8px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-        max-width: 300px;
-        text-align: center;
-        display: none;
-    }
-    
-    .fullscreen-qr-container img, 
-    .fullscreen-qr-container svg {
-        max-width: 100%;
-        height: auto;
-    }
-    
-    .fullscreen-password {
-        margin-top: 10px;
-        font-size: 0.9rem;
-        word-break: break-all;
-        color: var(--text-secondary, #333);
-    }
-    
-    @media (max-width: 768px) {
-        .word-cloud-wrapper {
-            margin-bottom: 1.5rem;
-        }
-        
-        .word-cloud-wrapper canvas {
-            max-width: 100%;
-            height: auto;
-        }
-        
-        .fullscreen-qr-container {
-            max-width: 180px;
-        }
-    }
-    
     .wordcloud-list-item {
         display: inline-block;
         margin: 0.3rem;
@@ -91,13 +48,26 @@ $lang = LanguageController::getInstance();
     .word-cloud-delete:hover {
         color: #dc3545;
     }
+    
+    @media (max-width: 768px) {
+        .word-cloud-wrapper {
+            margin-bottom: 1.5rem;
+        }
+        
+        .word-cloud-wrapper canvas {
+            max-width: 100%;
+            height: auto;
+        }
+    }
 </style>
 <?php
 require_once __DIR__ . '/../../../views/header.php';
 ?>
 <main class="container">
     <article>
-        <h1><?php echo htmlspecialchars($wordCloudData['question']); ?></h1>
+        <h1 data-likes="<?php echo isset($wordCloudData['likes']) ? (int)$wordCloudData['likes'] : 0; ?>">
+            <?php echo htmlspecialchars($wordCloudData['question']); ?>
+        </h1>
         <p>
             <a href="/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/<?php echo urlencode($eventData['key']); ?>">
                 ← Back to event <?php echo htmlspecialchars($eventData['key']); ?>
@@ -244,54 +214,56 @@ require_once __DIR__ . '/../../../views/header.php';
     </article>
 </main>
 
-<!-- Fullscreen QR container -->
-<div class="fullscreen-qr-container" id="fullscreen-qr">
-    <div id="fullscreen-qr-block"></div>
-</div>
-
 <script>
 // Initialize fullscreen QR block when the fullscreen event is triggered
 document.addEventListener('DOMContentLoaded', function() {
-    // Custom handler for WordCloud fullscreen events
+    console.log("Setting up wordcloud-fullscreen event listener");
+    
+    // Monitor for fullscreen change events from WordCloudManager
     window.addEventListener('wordcloud-fullscreen-change', function(e) {
+        console.log("Fullscreen change event received", e.detail);
         if (e.detail.isFullScreen) {
-            // Initialize the fullscreen QR block only when needed
-            if (!document.getElementById('fullscreen-qr-block').hasAttribute('data-initialized')) {
-                const scheme = window.location.protocol.replace(':', '');
-                const host = window.location.host;
-                const lang = '<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>';
-                const eventKey = '<?php echo htmlspecialchars($eventData["key"]); ?>';
-                const wordCloudId = '<?php echo $wordCloudData["id"]; ?>';
-                const eventPassword = <?php echo json_encode($eventData['password'] ?? null); ?>;
+            // Gather the necessary URL parameters
+            const scheme = window.location.protocol.replace(':', '');
+            const host = window.location.host;
+            const lang = '<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>';
+            const eventKey = '<?php echo htmlspecialchars($eventData["key"]); ?>';
+            const wordCloudId = '<?php echo $wordCloudData["id"]; ?>';
+            const eventPassword = <?php echo json_encode($eventData['password'] ?? null); ?>;
+            
+            // Construct the add word URL
+            const addWordUrl = `${scheme}://${host}/${lang}/involved/${eventKey}/wordcloud/${wordCloudId}/add`;
+            
+            // Use OverlayObjectHelper to display QR code
+            if (window.OverlayObjectHelper) {
+                // First ensure the QR block is hidden before setting new data
+                window.OverlayObjectHelper.hideQrBlock();
                 
-                const addWordUrl = `${scheme}://${host}/${lang}/involved/${eventKey}/wordcloud/${wordCloudId}/add`;
-                
-                new EventQrBlock('#fullscreen-qr-block', addWordUrl, eventKey, eventPassword, '', false);
-                document.getElementById('fullscreen-qr-block').setAttribute('data-initialized', 'true');
+                // Set QR data and show it
+                setTimeout(function() {
+                    window.OverlayObjectHelper.setQrData(
+                        addWordUrl,
+                        eventKey,
+                        eventPassword,
+                        '',  // No additional text
+                        true // Show share button
+                    );
+                    
+                    // Show QR container
+                    window.OverlayObjectHelper.showQrBlock();
+                }, 100); // Small delay to ensure proper rendering
+            } else {
+                console.error('OverlayObjectHelper not available for QR display');
+            }
+        } else {
+            // Hide QR when exiting fullscreen
+            if (window.OverlayObjectHelper) {
+                window.OverlayObjectHelper.hideQrBlock();
             }
         }
     });
 });
 </script>
 
-<!-- Include WordCloud library -->
-<script src="/apps/involved/js/eventQrBlock.js"></script>
-<script src="/vendor/timdream/wordcloud2.js"></script>
-<script src="/js/wordcloud.js"></script>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Setup fullscreen QR code toggle
-    const fullscreenQR = document.getElementById('fullscreen-qr');
-    
-    // Custom handler for WordCloud fullscreen events
-    window.addEventListener('wordcloud-fullscreen-change', function(e) {
-        if (e.detail.isFullScreen) {
-            fullscreenQR.style.display = 'block';
-        } else {
-            fullscreenQR.style.display = 'none';
-        }
-    });
-});
-</script>
+<!-- WordCloud library and JavaScript are now loaded through the app.php getJavaScriptFiles method -->
 <?php require_once __DIR__ . '/../../../views/footer.php'; ?>

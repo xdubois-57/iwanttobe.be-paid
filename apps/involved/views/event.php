@@ -13,6 +13,45 @@ use chillerlan\QRCode\QROptions;
     <article>
         <h1><?php echo htmlspecialchars($lang->translate('event_heading')); ?> <?php echo htmlspecialchars($eventData['key']); ?></h1>
         <p><?php echo htmlspecialchars($lang->translate('created_at')); ?> <?php echo htmlspecialchars($eventData['created_at']); ?></p>
+        <?php if (!empty($eventData['password'])): ?>
+            <div style="margin-top:0.5em;display:flex;align-items:center;gap:0.5em;">
+                <span style="margin:0;">
+                    <?php echo htmlspecialchars($lang->translate('admin_password_label')); ?>
+                </span>
+                <span id="event-password-span" style="font-family:monospace;font-size:1em;user-select:all;letter-spacing:0.1em;cursor:pointer;" tabindex="0">
+                    <?php echo str_repeat('•', mb_strlen($eventData['password'])); ?>
+                </span>
+            </div>
+            <script>
+            (function() {
+                const pwdSpan = document.getElementById('event-password-span');
+                const realPwd = <?php echo json_encode($eventData['password']); ?>;
+                const bullets = '•'.repeat(realPwd.length);
+                let showing = false;
+                function show() {
+                    pwdSpan.textContent = realPwd;
+                    showing = true;
+                }
+                function hide() {
+                    pwdSpan.textContent = bullets;
+                    showing = false;
+                }
+                pwdSpan.addEventListener('mousedown', show);
+                pwdSpan.addEventListener('touchstart', show);
+                pwdSpan.addEventListener('mouseup', hide);
+                pwdSpan.addEventListener('mouseleave', hide);
+                pwdSpan.addEventListener('touchend', hide);
+                pwdSpan.addEventListener('touchcancel', hide);
+                // Accessibility: also allow keyboard
+                pwdSpan.addEventListener('keydown', function(e) {
+                    if (e.key === ' ' || e.key === 'Enter') { show(); }
+                });
+                pwdSpan.addEventListener('keyup', function(e) {
+                    if (showing && (e.key === ' ' || e.key === 'Enter')) { hide(); }
+                });
+            })();
+            </script>
+        <?php endif; ?>
     </article>
     <style>
         .word-cloud-item {
@@ -113,8 +152,6 @@ use chillerlan\QRCode\QROptions;
     <div class="grid" style="margin-top: 2rem; gap: 2rem;">
         <!-- Left column (3/4 width) -->
         <article style="grid-column: span 3;">
-            <h2><?php echo htmlspecialchars($lang->translate('word_cloud')); ?></h2>
-            
             <?php if (!empty($wordClouds)): ?>
             <h3 style="margin-top:1.5rem;"><?php echo htmlspecialchars($lang->translate('word_clouds_title')); ?></h3>
             <div style="margin-top:1rem;">
@@ -143,37 +180,8 @@ use chillerlan\QRCode\QROptions;
                 <button class="primary" type="submit" style="width:100%;"><?php echo htmlspecialchars($lang->translate('create_word_cloud_button')); ?></button>
             </form>
         </article>
-
-        <!-- Right column (1/4 width) -->
-        <article style="grid-column: span 1; text-align: center;">
-            <div id="event-qr-block" style="margin: 1rem 0;"></div>
-            <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                // Compute the current event URL
-                const scheme = window.location.protocol.replace(':', '');
-                const host = window.location.host;
-                const lang = '<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>';
-                const eventKey = '<?php echo htmlspecialchars($eventData["key"]); ?>';
-                const eventPassword = <?php echo json_encode($eventData['password'] ?? null); ?>;
-                
-                // Construct the event URL
-                const eventUrl = `${scheme}://${host}/${lang}/involved/${eventKey}`;
-                
-                // Render the QR/event info block
-                new EventQrBlock(
-                    '#event-qr-block',
-                    eventUrl,
-                    eventKey,
-                    eventPassword
-                );
-            });
-            </script>
-        </article>
     </div>
 </main>
-
-<!-- Load EventQrBlock script -->
-<script src="/apps/involved/js/eventQrBlock.js"></script>
 
 <script>
 document.querySelectorAll('.delete-wordcloud-form').forEach(form => {

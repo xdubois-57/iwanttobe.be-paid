@@ -98,6 +98,14 @@ class DriveApp implements AppInterface
         $lang->loadAppTranslationsForPath($this->getTranslationsPath());
         return $lang->translate('short_description');
     }
+    
+    /**
+     * @inheritDoc
+     */
+    public function getJavaScriptFiles(): array
+    {
+        return [];
+    }
 }
 
 // Auto-register this app when the file is included

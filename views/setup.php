@@ -142,6 +142,13 @@ if (!defined('QR_TRANSFER')) {
                         <!-- Table summary will be injected here -->
                         <?php if (isset($tableSummaryHtml)) echo $tableSummaryHtml; ?>
                     </div>
+                    
+                    <!-- Table data preview in step 1 -->
+                    <?php if (!empty($tableDataHtml)): ?>
+                    <div class="table-data-preview">
+                        <?php echo $tableDataHtml; ?>
+                    </div>
+                    <?php endif; ?>
                 </div>
                 <form method="post" action="<?php echo htmlspecialchars($actionUrl); ?>" style="display: flex; gap: 1rem; align-items: center;">
                     <input type="hidden" name="wizard_step" value="1">
@@ -240,6 +247,31 @@ if (!defined('QR_TRANSFER')) {
                         <li><strong>Database:</strong> <?php echo htmlspecialchars($dbConfig['name'] ?? 'qrtransfer'); ?></li>
                     </ul>
                 </div>
+                
+                <?php if (!empty($tableSummaryHtml)): ?>
+                <div class="database-status">
+                    <?php echo $tableSummaryHtml; ?>
+                </div>
+                <?php endif; ?>
+                
+                <?php if (!empty($tableDataHtml)): ?>
+                <div class="table-data-preview">
+                    <?php echo $tableDataHtml; ?>
+                </div>
+                <?php else: ?>
+                <!-- Debug Info -->
+                <div class="debug-info" style="border: 1px solid #ccc; padding: 10px; margin: 10px 0; background: #f9f9f9;">
+                    <h4>Debug Information</h4>
+                    <p>Table data view is empty. Check the following:</p>
+                    <ul>
+                        <li>Step: <?php echo isset($step) ? $step : 'Not set'; ?></li>
+                        <li>Database exists: <?php echo isset($databaseExists) && $databaseExists ? 'Yes' : 'No'; ?></li>
+                        <li>Database valid: <?php echo isset($databaseValid) && $databaseValid ? 'Yes' : 'No'; ?></li>
+                        <li>Table summary HTML length: <?php echo isset($tableSummaryHtml) ? strlen($tableSummaryHtml) : 0; ?></li>
+                        <li>Table data HTML length: <?php echo isset($tableDataHtml) ? strlen($tableDataHtml) : 0; ?></li>
+                    </ul>
+                </div>
+                <?php endif; ?>
                 
                 <form action="<?php echo $actionUrl; ?>" method="post" id="initialization-form">
                     <input type="hidden" name="wizard_step" value="3">

@@ -7,8 +7,8 @@ return [
     'involved_intro_text' => 'Involved! gerir teymum, félagasamtökum og samfélagshópum auðvelt að skipuleggja líflega viðburði, halda hvetjandi endurskoðanir og setja af stað gagnvirkar kannanir—og breytir sérhverjum fundi í eftirminnilega upplifun.',
     'involved_features' => 'Tengstu við staðbundin framtak, fylgstu með sjálfboðaliðastundum þínum og hafðu áhrif.',
     'join_event_title' => 'Taka Þátt í Viðburði',
-    'join_event_description' => 'Sláðu inn 4-stafa kóða til að taka þátt í fyrirliggjandi viðburði.',
-    'event_code_placeholder' => 'Viðburðarkóði',
+    'join_event_description' => 'Sláðu inn 6 stafa kóða til að taka þátt í viðburði.',
+    'event_code_placeholder' => 'Viðburðarkóði (6 stafir)',
     'join_event_button' => 'Taka Þátt í Viðburði',
     'create_event_title' => 'Búa til Viðburð',
     'create_event_description' => 'Búðu til nýjan viðburð með valfrjálsu lykilorði fyrir öruggan aðgang.',
@@ -25,10 +25,10 @@ return [
     
     // Add word form
     'back_to_wordcloud' => '← Til baka í orðský',
-    'word_added_success' => 'Orðinu þínu hefur verið bætt við!',
     'please_enter_word' => 'Vinsamlegast sláðu inn orð.',
-    'word_input_placeholder' => 'Sláðu inn svarið þitt (mest 30 stafir)',
-    'add_word_button' => 'Bæta við Orði',
+    'word_added_success' => 'Orðið þitt hefur verið bætt við!',
+    'word_input_placeholder' => 'Sláðu inn orðið þitt hér...',
+    'add_word_button' => 'Bæta við orði',
     
     // Event page
     'event_title_prefix' => 'Viðburður',
@@ -42,11 +42,11 @@ return [
     'an_error_occurred' => 'Villa kom upp við eyðingu orðskýs',
     
     // Wordcloud page
-    'add_your_word' => 'Bættu við Orði',
+    'add_your_word' => 'Bættu við þínu orði',
     'scan_qr_access' => 'Skannaðu þennan QR-kóða til að fá aðgang að viðburðinum',
     'event_password' => 'PIN:',
-    'wordcloud_failed_delete' => 'Eyðing orðs mistókst',
-    'wordcloud_error_delete' => 'Villa kom upp við eyðingu orðs',
+    'wordcloud_failed_delete' => 'Ekki tókst að eyða orðinu.',
+    'wordcloud_error_delete' => 'Villa kom upp við að eyða orðinu.',
     
     // EventQrBlock component
     'event_code' => 'Kóði:',
@@ -56,6 +56,9 @@ return [
     'copy_success' => 'Tengill afritaður á klippispjald!',
     'share_error' => 'Ekki tókst að deila. Tengill afritaður á klippispjald í staðinn.',
     'share_link_prompt' => 'Afritaðu þennan tengil:',
+    'admin_link_text' => 'Fara í viðburðastjórnun',
+    'scan_qr_to_answer' => 'Skannaðu QR-kóðann til að svara',
+    'admin_password_label' => 'Stjórnendaleynd:',
     
     // Controller messages
     'event_create_failed' => 'Ekki tókst að búa til viðburð. Villa:',
