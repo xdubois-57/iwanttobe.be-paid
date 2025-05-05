@@ -7,8 +7,8 @@ return [
     'involved_intro_text' => 'Involved! maakt het gemakkelijk voor teams, non-profitorganisaties en gemeenschapsgroepen om levendige evenementen te organiseren, boeiende retrospectives te houden en interactieve peilingen te starten—en verandert elke vergadering in een onvergetelijke ervaring.',
     'involved_features' => 'Maak verbinding met lokale initiatieven, houd je vrijwilligersuren bij en maak een verschil.',
     'join_event_title' => 'Deelnemen aan Evenement',
-    'join_event_description' => 'Voer een 4-tekens code in om deel te nemen aan een bestaand evenement.',
-    'event_code_placeholder' => 'Evenementcode',
+    'join_event_description' => 'Voer een 6-karaktercode in om deel te nemen aan een bestaand evenement.',
+    'event_code_placeholder' => 'Evenementcode (6 tekens)',
     'join_event_button' => 'Deelnemen aan Evenement',
     'create_event_title' => 'Evenement Aanmaken',
     'create_event_description' => 'Genereer een nieuw evenement met een optioneel wachtwoord voor veilige toegang.',
@@ -25,10 +25,10 @@ return [
     
     // Add word form
     'back_to_wordcloud' => '← Terug naar woordwolk',
-    'word_added_success' => 'Je woord is succesvol toegevoegd!',
     'please_enter_word' => 'Voer een woord in.',
-    'word_input_placeholder' => 'Voer je antwoord in (max. 30 tekens)',
-    'add_word_button' => 'Woord Toevoegen',
+    'word_added_success' => 'Je woord is toegevoegd!',
+    'word_input_placeholder' => 'Typ hier je woord...',
+    'add_word_button' => 'Woord toevoegen',
     
     // Event page
     'event_title_prefix' => 'Evenement',
@@ -42,11 +42,11 @@ return [
     'an_error_occurred' => 'Er is een fout opgetreden bij het verwijderen van de woordwolk',
     
     // Wordcloud page
-    'add_your_word' => 'Voeg Je Woord Toe',
+    'add_your_word' => 'Voeg je woord toe',
     'scan_qr_access' => 'Scan deze QR-code voor toegang tot het evenement',
     'event_password' => 'PIN:',
-    'wordcloud_failed_delete' => 'Kon woord niet verwijderen',
-    'wordcloud_error_delete' => 'Er is een fout opgetreden bij het verwijderen van het woord',
+    'wordcloud_failed_delete' => 'Woord verwijderen mislukt.',
+    'wordcloud_error_delete' => 'Er is een fout opgetreden bij het verwijderen van het woord.',
     
     // EventQrBlock component
     'event_code' => 'Code:',
@@ -56,6 +56,12 @@ return [
     'copy_success' => 'Link gekopieerd naar klembord!',
     'share_error' => 'Kon niet delen. Link in plaats daarvan naar klembord gekopieerd.',
     'share_link_prompt' => 'Kopieer deze link:',
+    
+    // OverlayClientHelper
+    'admin_link_text' => 'Ga naar evenementbeheer',
+    
+    // OverlayObjectHelper
+    'scan_qr_to_answer' => 'Scan de QR-code om te antwoorden',
     
     // Short description for landing page
     'short_description' => 'Woordwolken, peilingen en retrospectives – maak je bijeenkomsten interactief en onvergetelijk.',

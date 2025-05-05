@@ -113,8 +113,6 @@ use chillerlan\QRCode\QROptions;
     <div class="grid" style="margin-top: 2rem; gap: 2rem;">
         <!-- Left column (3/4 width) -->
         <article style="grid-column: span 3;">
-            <h2><?php echo htmlspecialchars($lang->translate('word_cloud')); ?></h2>
-            
             <?php if (!empty($wordClouds)): ?>
             <h3 style="margin-top:1.5rem;"><?php echo htmlspecialchars($lang->translate('word_clouds_title')); ?></h3>
             <div style="margin-top:1rem;">
@@ -143,37 +141,8 @@ use chillerlan\QRCode\QROptions;
                 <button class="primary" type="submit" style="width:100%;"><?php echo htmlspecialchars($lang->translate('create_word_cloud_button')); ?></button>
             </form>
         </article>
-
-        <!-- Right column (1/4 width) -->
-        <article style="grid-column: span 1; text-align: center;">
-            <div id="event-qr-block" style="margin: 1rem 0;"></div>
-            <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                // Compute the current event URL
-                const scheme = window.location.protocol.replace(':', '');
-                const host = window.location.host;
-                const lang = '<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>';
-                const eventKey = '<?php echo htmlspecialchars($eventData["key"]); ?>';
-                const eventPassword = <?php echo json_encode($eventData['password'] ?? null); ?>;
-                
-                // Construct the event URL
-                const eventUrl = `${scheme}://${host}/${lang}/involved/${eventKey}`;
-                
-                // Render the QR/event info block
-                new EventQrBlock(
-                    '#event-qr-block',
-                    eventUrl,
-                    eventKey,
-                    eventPassword
-                );
-            });
-            </script>
-        </article>
     </div>
 </main>
-
-<!-- Load EventQrBlock script -->
-<script src="/apps/involved/js/eventQrBlock.js"></script>
 
 <script>
 document.querySelectorAll('.delete-wordcloud-form').forEach(form => {

@@ -7,8 +7,8 @@ return [
     'involved_intro_text' => 'Involved! gör det enkelt för team, ideella organisationer och samhällsgrupper att organisera livliga evenemang, genomföra engagerande retrospektiv och lansera interaktiva omröstningar—och förvandlar varje möte till en minnesvärd upplevelse.',
     'involved_features' => 'Anslut till lokala initiativ, spåra dina volontärtimmar och gör skillnad.',
     'join_event_title' => 'Gå med i Event',
-    'join_event_description' => 'Ange en 4-teckens kod för att gå med i ett befintligt event.',
-    'event_code_placeholder' => 'Eventkod',
+    'join_event_description' => 'Ange en 6-teckenskod för att gå med i ett befintligt evenemang.',
+    'event_code_placeholder' => 'Eventkod (6 tecken)',
     'join_event_button' => 'Gå med i Event',
     'create_event_title' => 'Skapa Event',
     'create_event_description' => 'Generera ett nytt event med valfritt lösenord för säker åtkomst.',
@@ -25,10 +25,10 @@ return [
     
     // Add word form
     'back_to_wordcloud' => '← Tillbaka till ordmoln',
-    'word_added_success' => 'Ditt ord har lagts till!',
     'please_enter_word' => 'Vänligen ange ett ord.',
-    'word_input_placeholder' => 'Ange ditt svar (max 30 tecken)',
-    'add_word_button' => 'Lägg till Ord',
+    'word_added_success' => 'Ditt ord har lagts till!',
+    'word_input_placeholder' => 'Skriv ditt ord här...',
+    'add_word_button' => 'Lägg till ord',
     
     // Event page
     'event_title_prefix' => 'Event',
@@ -42,11 +42,11 @@ return [
     'an_error_occurred' => 'Ett fel uppstod vid borttagning av ordmoln',
     
     // Wordcloud page
-    'add_your_word' => 'Lägg till Ditt Ord',
+    'add_your_word' => 'Lägg till ditt ord',
     'scan_qr_access' => 'Skanna denna QR-kod för att få åtkomst till eventet',
     'event_password' => 'PIN:',
-    'wordcloud_failed_delete' => 'Kunde inte ta bort ord',
-    'wordcloud_error_delete' => 'Ett fel uppstod vid borttagning av ord',
+    'wordcloud_failed_delete' => 'Det gick inte att ta bort ordet.',
+    'wordcloud_error_delete' => 'Ett fel uppstod när ordet skulle tas bort.',
     
     // EventQrBlock component
     'event_code' => 'Kod:',
@@ -56,6 +56,10 @@ return [
     'copy_success' => 'Länk kopierad till urklipp!',
     'share_error' => 'Kunde inte dela. Länk kopierad till urklipp istället.',
     'share_link_prompt' => 'Kopiera denna länk:',
+    
+    // OverlayClientHelper
+    'admin_link_text' => 'Gå till händelseadministration',
+    'scan_qr_to_answer' => 'Skanna QR-koden för att svara',
     
     // Controller messages
     'event_create_failed' => 'Kunde inte skapa event. Fel:',

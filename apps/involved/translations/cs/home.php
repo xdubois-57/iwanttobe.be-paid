@@ -7,8 +7,8 @@ return [
     'involved_intro_text' => 'Involved! usnadňuje týmům, neziskovým organizacím a komunitním skupinám organizovat živé události, vést poutavé retrospektivy a spouštět interaktivní ankety—a proměňuje každou schůzku v nezapomenutelný zážitek.',
     'involved_features' => 'Spojte se s místními iniciativami, sledujte své dobrovolnické hodiny a měňte věci k lepšímu.',
     'join_event_title' => 'Připojit se k události',
-    'join_event_description' => 'Zadejte 4znakový kód pro připojení k existující události.',
-    'event_code_placeholder' => 'Kód události',
+    'join_event_description' => 'Zadejte 6místný kód pro připojení ke stávající události.',
+    'event_code_placeholder' => 'Kód události (6 znaků)',
     'join_event_button' => 'Připojit se k události',
     'create_event_title' => 'Vytvořit událost',
     'create_event_description' => 'Vytvořte novou událost s volitelným heslem pro bezpečný přístup.',
@@ -25,9 +25,9 @@ return [
     
     // Add word form
     'back_to_wordcloud' => '← Zpět na word cloud',
-    'word_added_success' => 'Vaše slovo bylo úspěšně přidáno!',
-    'please_enter_word' => 'Prosím, zadejte slovo.',
-    'word_input_placeholder' => 'Zadejte svou odpověď (max. 30 znaků)',
+    'please_enter_word' => 'Zadejte prosím slovo.',
+    'word_added_success' => 'Vaše slovo bylo přidáno!',
+    'word_input_placeholder' => 'Zadejte zde své slovo...',
     'add_word_button' => 'Přidat slovo',
     
     // Event page
@@ -45,8 +45,8 @@ return [
     'add_your_word' => 'Přidejte své slovo',
     'scan_qr_access' => 'Naskenujte tento QR kód pro přístup k události',
     'event_password' => 'PIN:',
-    'wordcloud_failed_delete' => 'Nepodařilo se smazat slovo',
-    'wordcloud_error_delete' => 'Při mazání slova došlo k chybě',
+    'wordcloud_failed_delete' => 'Nepodařilo se odstranit slovo.',
+    'wordcloud_error_delete' => 'Při odstraňování slova došlo k chybě.',
     
     // EventQrBlock component
     'event_code' => 'Kód:',
@@ -56,6 +56,8 @@ return [
     'copy_success' => 'Odkaz zkopírován do schránky!',
     'share_error' => 'Nelze sdílet. Odkaz byl místo toho zkopírován do schránky.',
     'share_link_prompt' => 'Zkopírujte tento odkaz:',
+    'admin_link_text' => 'Přejít na správu události',
+    'scan_qr_to_answer' => 'Naskenujte QR kód pro odpověď',
     
     // Short description for landing page
     'short_description' => 'Word cloudy, ankety a retrospektivy – udělejte své schůzky interaktivními a nezapomenutelnými.',

@@ -7,8 +7,8 @@ return [
     'involved_intro_text' => 'Involved! rende facile per team, organizzazioni no-profit e gruppi comunitari organizzare eventi vivaci, condurre retrospettive coinvolgenti e lanciare sondaggi interattivi, trasformando ogni riunione in un\'esperienza memorabile.',
     'involved_features' => 'Connettiti con iniziative locali, tieni traccia delle tue ore di volontariato e fai la differenza.',
     'join_event_title' => 'Partecipa all\'Evento',
-    'join_event_description' => 'Inserisci un codice di 4 caratteri per partecipare a un evento esistente.',
-    'event_code_placeholder' => 'Codice evento',
+    'join_event_description' => 'Inserisci un codice di 6 caratteri per partecipare a un evento esistente.',
+    'event_code_placeholder' => 'Codice evento (6 caratteri)',
     'join_event_button' => 'Partecipa all\'Evento',
     'create_event_title' => 'Crea Evento',
     'create_event_description' => 'Genera un nuovo evento con una password opzionale per un accesso sicuro.',
@@ -25,10 +25,10 @@ return [
     
     // Add word form
     'back_to_wordcloud' => '← Torna alla nuvola di parole',
-    'word_added_success' => 'La tua parola è stata aggiunta con successo!',
-    'please_enter_word' => 'Per favore inserisci una parola.',
-    'word_input_placeholder' => 'Inserisci la tua risposta (max 30 caratteri)',
-    'add_word_button' => 'Aggiungi Parola',
+    'please_enter_word' => 'Per favore, inserisci una parola.',
+    'word_added_success' => 'La tua parola è stata aggiunta!',
+    'word_input_placeholder' => 'Scrivi qui la tua parola...',
+    'add_word_button' => 'Aggiungi parola',
     
     // Event page
     'event_title_prefix' => 'Evento',
@@ -42,11 +42,17 @@ return [
     'an_error_occurred' => 'Si è verificato un errore durante l\'eliminazione della nuvola di parole',
     
     // Wordcloud page
-    'add_your_word' => 'Aggiungi la Tua Parola',
+    'add_your_word' => 'Aggiungi la tua parola',
     'scan_qr_access' => 'Scansiona questo codice QR per accedere all\'evento',
     'event_password' => 'PIN:',
-    'wordcloud_failed_delete' => 'Impossibile eliminare la parola',
-    'wordcloud_error_delete' => 'Si è verificato un errore durante l\'eliminazione della parola',
+    'wordcloud_failed_delete' => 'Impossibile eliminare la parola.',
+    'wordcloud_error_delete' => 'Si è verificato un errore durante l\'eliminazione della parola.',
+    
+    // OverlayClientHelper
+    'admin_link_text' => "Vai all'amministrazione dell'evento",
+    
+    // OverlayObjectHelper
+    'scan_qr_to_answer' => 'Scansiona il codice QR per rispondere',
     
     // EventQrBlock component
     'event_code' => 'Codice:',

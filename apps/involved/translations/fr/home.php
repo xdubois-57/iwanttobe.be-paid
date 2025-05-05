@@ -7,8 +7,8 @@ return [
     'involved_intro_text' => 'Involved! facilite pour les équipes, les organisations à but non lucratif et les groupes communautaires l\'organisation d\'événements animés, la tenue de rétrospectives engageantes et le lancement de sondages interactifs—transformant toute réunion en une expérience mémorable.',
     'involved_features' => 'Connectez-vous avec des initiatives locales, suivez vos heures de bénévolat et faites la différence.',
     'join_event_title' => 'Rejoindre un Événement',
-    'join_event_description' => 'Entrez un code à 4 caractères pour rejoindre un événement existant.',
-    'event_code_placeholder' => 'Code d\'événement',
+    'join_event_description' => 'Entrez un code à 6 caractères pour rejoindre un événement existant.',
+    'event_code_placeholder' => 'Code de l’événement (6 caractères)',
     'join_event_button' => 'Rejoindre l\'Événement',
     'create_event_title' => 'Créer un Événement',
     'create_event_description' => 'Générez un nouvel événement avec un mot de passe optionnel pour un accès sécurisé.',
@@ -29,10 +29,10 @@ return [
     
     // Add word form
     'back_to_wordcloud' => '← Retour au nuage de mots',
-    'word_added_success' => 'Votre mot a été ajouté avec succès!',
     'please_enter_word' => 'Veuillez entrer un mot.',
-    'word_input_placeholder' => 'Entrez votre réponse (30 caractères max)',
-    'add_word_button' => 'Ajouter un Mot',
+    'word_added_success' => 'Votre mot a été ajouté !',
+    'word_input_placeholder' => 'Tapez votre mot ici...',
+    'add_word_button' => 'Ajouter le mot',
     
     // Event page
     'event_heading' => 'Événement',
@@ -48,11 +48,17 @@ return [
     'an_error_occurred' => 'Une erreur s\'est produite lors de la suppression du nuage de mots',
     
     // Wordcloud page
-    'add_your_word' => 'Ajoutez Votre Mot',
+    'add_your_word' => 'Ajoutez votre mot',
     'scan_qr_access' => 'Scannez ce code QR pour accéder à l\'événement',
     'event_password' => 'Mot de passe:',
-    'wordcloud_failed_delete' => 'Échec de la suppression du mot',
-    'wordcloud_error_delete' => 'Une erreur s\'est produite lors de la suppression du mot',
+    'wordcloud_failed_delete' => 'Échec de la suppression du mot.',
+    'wordcloud_error_delete' => 'Une erreur est survenue lors de la suppression du mot.',
+    
+    // OverlayClientHelper
+    'admin_link_text' => 'Aller à l\'administration de l\'évènement',
+    
+    // OverlayObjectHelper
+    'scan_qr_to_answer' => 'Scannez le QR code pour répondre',
     
     // EventQrBlock component
     'event_code' => 'Code:',

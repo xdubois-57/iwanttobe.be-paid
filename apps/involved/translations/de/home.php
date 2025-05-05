@@ -7,8 +7,8 @@ return [
     'involved_intro_text' => 'Involved! erleichtert es Teams, gemeinnützigen Organisationen und Gemeinschaftsgruppen, lebhafte Veranstaltungen zu organisieren, ansprechende Retrospektiven durchzuführen und interaktive Umfragen zu starten—und macht so jedes Meeting zu einem unvergesslichen Erlebnis.',
     'involved_features' => 'Verbinden Sie sich mit lokalen Initiativen, verfolgen Sie Ihre Freiwilligenstunden und bewirken Sie etwas.',
     'join_event_title' => 'Event beitreten',
-    'join_event_description' => 'Geben Sie einen 4-stelligen Code ein, um einem bestehenden Event beizutreten.',
-    'event_code_placeholder' => 'Event-Code',
+    'join_event_description' => 'Geben Sie einen 6-stelligen Code ein, um an einer bestehenden Veranstaltung teilzunehmen.',
+    'event_code_placeholder' => 'Veranstaltungscode (6 Zeichen)',
     'join_event_button' => 'Event beitreten',
     'create_event_title' => 'Event erstellen',
     'create_event_description' => 'Erstellen Sie ein neues Event mit optionalem Passwort für sicheren Zugriff.',
@@ -29,9 +29,9 @@ return [
     
     // Add word form
     'back_to_wordcloud' => '← Zurück zur Wortwolke',
-    'word_added_success' => 'Ihr Wort wurde erfolgreich hinzugefügt!',
     'please_enter_word' => 'Bitte geben Sie ein Wort ein.',
-    'word_input_placeholder' => 'Geben Sie Ihre Antwort ein (max. 30 Zeichen)',
+    'word_added_success' => 'Ihr Wort wurde hinzugefügt!',
+    'word_input_placeholder' => 'Geben Sie hier Ihr Wort ein...',
     'add_word_button' => 'Wort hinzufügen',
     
     // Event page
@@ -46,11 +46,11 @@ return [
     'an_error_occurred' => 'Beim Löschen der Wortwolke ist ein Fehler aufgetreten',
     
     // Wordcloud page
-    'add_your_word' => 'Ihr Wort hinzufügen',
+    'add_your_word' => 'Fügen Sie Ihr Wort hinzu',
     'scan_qr_access' => 'Scannen Sie diesen QR-Code, um auf das Event zuzugreifen',
     'event_password' => 'PIN:',
-    'wordcloud_failed_delete' => 'Wort konnte nicht gelöscht werden',
-    'wordcloud_error_delete' => 'Beim Löschen des Wortes ist ein Fehler aufgetreten',
+    'wordcloud_failed_delete' => 'Wort konnte nicht gelöscht werden.',
+    'wordcloud_error_delete' => 'Beim Löschen des Wortes ist ein Fehler aufgetreten.',
     
     // EventQrBlock component
     'event_code' => 'Code:',
@@ -61,6 +61,12 @@ return [
     'copy_success' => 'Link in die Zwischenablage kopiert!',
     'share_error' => 'Konnte nicht teilen. Link stattdessen in die Zwischenablage kopiert.',
     'share_link_prompt' => 'Diesen Link kopieren:',
+    
+    // OverlayClientHelper
+    'admin_link_text' => 'Zur Ereignisverwaltung',
+    
+    // OverlayObjectHelper
+    'scan_qr_to_answer' => 'QR-Code scannen, um zu antworten',
     
     // Short description for landing page
     'short_description' => 'Wortwolken, Umfragen und Retrospektiven – machen Sie Ihre Treffen interaktiv und unvergesslich.',

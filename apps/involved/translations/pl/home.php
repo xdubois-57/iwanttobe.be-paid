@@ -7,8 +7,8 @@ return [
     'involved_intro_text' => 'Involved! ułatwia zespołom, organizacjom non-profit i grupom społecznym organizowanie żywych wydarzeń, prowadzenie angażujących retrospektyw i uruchamianie interaktywnych ankiet—zmieniając każde spotkanie w niezapomniane doświadczenie.',
     'involved_features' => 'Połącz się z lokalnymi inicjatywami, śledź swoje godziny wolontariatu i wprowadzaj zmiany.',
     'join_event_title' => 'Dołącz do Wydarzenia',
-    'join_event_description' => 'Wprowadź 4-znakowy kod, aby dołączyć do istniejącego wydarzenia.',
-    'event_code_placeholder' => 'Kod wydarzenia',
+    'join_event_description' => 'Wpisz 6-znakowy kod, aby dołączyć do istniejącego wydarzenia.',
+    'event_code_placeholder' => 'Kod wydarzenia (6 znaków)',
     'join_event_button' => 'Dołącz do Wydarzenia',
     'create_event_title' => 'Utwórz Wydarzenie',
     'create_event_description' => 'Wygeneruj nowe wydarzenie z opcjonalnym hasłem dla bezpiecznego dostępu.',
@@ -25,10 +25,10 @@ return [
     
     // Add word form
     'back_to_wordcloud' => '← Powrót do chmury słów',
-    'word_added_success' => 'Twoje słowo zostało dodane pomyślnie!',
-    'please_enter_word' => 'Proszę wprowadzić słowo.',
-    'word_input_placeholder' => 'Wprowadź swoją odpowiedź (maks. 30 znaków)',
-    'add_word_button' => 'Dodaj Słowo',
+    'word_added_success' => 'Twoje słowo zostało dodane!',
+    'please_enter_word' => 'Proszę wpisać słowo.',
+    'word_input_placeholder' => 'Wpisz tutaj swoje słowo...',
+    'add_word_button' => 'Dodaj słowo',
     
     // Event page
     'event_title_prefix' => 'Wydarzenie',
@@ -42,11 +42,15 @@ return [
     'an_error_occurred' => 'Wystąpił błąd podczas usuwania chmury słów',
     
     // Wordcloud page
-    'add_your_word' => 'Dodaj Swoje Słowo',
+    'add_your_word' => 'Dodaj swoje słowo',
     'scan_qr_access' => 'Zeskanuj ten kod QR, aby uzyskać dostęp do wydarzenia',
     'event_password' => 'PIN:',
-    'wordcloud_failed_delete' => 'Nie udało się usunąć słowa',
-    'wordcloud_error_delete' => 'Wystąpił błąd podczas usuwania słowa',
+    'wordcloud_failed_delete' => 'Nie udało się usunąć słowa.',
+    'wordcloud_error_delete' => 'Wystąpił błąd podczas usuwania słowa.',
+    
+    // OverlayClientHelper
+    'admin_link_text' => 'Przejdź do administracji wydarzeniem',
+    'scan_qr_to_answer' => 'Zeskanuj kod QR, aby odpowiedzieć',
     
     // EventQrBlock component
     'event_code' => 'Kod:',

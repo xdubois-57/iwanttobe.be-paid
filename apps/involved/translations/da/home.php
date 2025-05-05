@@ -7,8 +7,8 @@ return [
     'involved_intro_text' => 'Involved! gør det nemt for teams, non-profit organisationer og lokalsamfundsgrupper at organisere livlige begivenheder, gennemføre engagerende retrospektiver og lancere interaktive afstemninger—og forvandler ethvert møde til en mindeværdig oplevelse.',
     'involved_features' => 'Forbind dig med lokale initiativer, følg dine frivillige timer og gør en forskel.',
     'join_event_title' => 'Deltag i Begivenhed',
-    'join_event_description' => 'Indtast en 4-tegns kode for at deltage i en eksisterende begivenhed.',
-    'event_code_placeholder' => 'Begivenhedskode',
+    'join_event_description' => 'Indtast en 6-tegns kode for at deltage i en eksisterende begivenhed.',
+    'event_code_placeholder' => 'Begivenhedskode (6 tegn)',
     'join_event_button' => 'Deltag i Begivenhed',
     'create_event_title' => 'Opret Begivenhed',
     'create_event_description' => 'Generer en ny begivenhed med valgfri adgangskode for sikker adgang.',
@@ -25,10 +25,10 @@ return [
     
     // Add word form
     'back_to_wordcloud' => '← Tilbage til ordsky',
-    'word_added_success' => 'Dit ord er blevet tilføjet!',
     'please_enter_word' => 'Indtast venligst et ord.',
-    'word_input_placeholder' => 'Indtast dit svar (maks. 30 tegn)',
-    'add_word_button' => 'Tilføj Ord',
+    'word_added_success' => 'Dit ord er blevet tilføjet!',
+    'word_input_placeholder' => 'Skriv dit ord her...',
+    'add_word_button' => 'Tilføj ord',
     
     // Event page
     'event_title_prefix' => 'Begivenhed',
@@ -42,11 +42,11 @@ return [
     'an_error_occurred' => 'Der opstod en fejl ved sletning af ordskyen',
     
     // Wordcloud page
-    'add_your_word' => 'Tilføj Dit Ord',
+    'add_your_word' => 'Tilføj dit ord',
     'scan_qr_access' => 'Scan denne QR-kode for at få adgang til begivenheden',
     'event_password' => 'PIN:',
-    'wordcloud_failed_delete' => 'Kunne ikke slette ord',
-    'wordcloud_error_delete' => 'Der opstod en fejl ved sletning af ordet',
+    'wordcloud_failed_delete' => 'Kunne ikke slette ordet.',
+    'wordcloud_error_delete' => 'Der opstod en fejl under sletning af ordet.',
     
     // EventQrBlock component
     'event_code' => 'Kode:',
@@ -56,6 +56,8 @@ return [
     'copy_success' => 'Link kopieret til udklipsholder!',
     'share_error' => 'Kunne ikke dele. Link kopieret til udklipsholder i stedet.',
     'share_link_prompt' => 'Kopier dette link:',
+    'admin_link_text' => 'Gå til begivenhedsadministration',
+    'scan_qr_to_answer' => 'Scan QR-koden for at svare',
     
     // Short description for landing page
     'short_description' => 'Ordskyer, afstemninger og retrospektiver – gør dine møder interaktive og mindeværdige.',

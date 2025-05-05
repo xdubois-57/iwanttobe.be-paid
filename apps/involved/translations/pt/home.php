@@ -7,8 +7,8 @@ return [
     'involved_intro_text' => 'Involved! torna mais fácil para equipes, organizações sem fins lucrativos e grupos comunitários organizarem eventos animados, realizarem retrospectivas envolventes e lançarem pesquisas interativas—transformando qualquer reunião em uma experiência memorável.',
     'involved_features' => 'Conecte-se com iniciativas locais, acompanhe suas horas de voluntariado e faça a diferença.',
     'join_event_title' => 'Participar do Evento',
-    'join_event_description' => 'Digite um código de 4 caracteres para participar de um evento existente.',
-    'event_code_placeholder' => 'Código do evento',
+    'join_event_description' => 'Digite um código de 6 caracteres para entrar em um evento existente.',
+    'event_code_placeholder' => 'Código do evento (6 caracteres)',
     'join_event_button' => 'Participar do Evento',
     'create_event_title' => 'Criar Evento',
     'create_event_description' => 'Gere um novo evento com uma senha opcional para acesso seguro.',
@@ -25,10 +25,10 @@ return [
     
     // Add word form
     'back_to_wordcloud' => '← Voltar para a nuvem de palavras',
-    'word_added_success' => 'Sua palavra foi adicionada com sucesso!',
-    'please_enter_word' => 'Por favor, digite uma palavra.',
-    'word_input_placeholder' => 'Digite sua resposta (máx. 30 caracteres)',
-    'add_word_button' => 'Adicionar Palavra',
+    'word_added_success' => 'Sua palavra foi adicionada!',
+    'please_enter_word' => 'Por favor, insira uma palavra.',
+    'word_input_placeholder' => 'Digite sua palavra aqui...',
+    'add_word_button' => 'Adicionar palavra',
     
     // Event page
     'event_title_prefix' => 'Evento',
@@ -42,11 +42,11 @@ return [
     'an_error_occurred' => 'Ocorreu um erro ao excluir a nuvem de palavras',
     
     // Wordcloud page
-    'add_your_word' => 'Adicione Sua Palavra',
+    'add_your_word' => 'Adicione sua palavra',
     'scan_qr_access' => 'Escaneie este código QR para acessar o evento',
     'event_password' => 'PIN:',
-    'wordcloud_failed_delete' => 'Falha ao excluir a palavra',
-    'wordcloud_error_delete' => 'Ocorreu um erro ao excluir a palavra',
+    'wordcloud_failed_delete' => 'Falha ao excluir a palavra.',
+    'wordcloud_error_delete' => 'Ocorreu um erro ao excluir a palavra.',
     
     // EventQrBlock component
     'event_code' => 'Código:',
@@ -57,6 +57,10 @@ return [
     'share_error' => 'Não foi possível compartilhar. Link copiado para a área de transferência como alternativa.',
     'share_link_prompt' => 'Copie este link:',
     
+    // OverlayClientHelper
+    'admin_link_text' => 'Ir para administração do evento',
+    'scan_qr_to_answer' => 'Escaneie o código QR para responder',
+
     // Short description for landing page
     'short_description' => 'Nuvens de palavras, enquetes e retrospectivas – torne suas reuniões interativas e inesquecíveis.',
     

@@ -7,8 +7,8 @@ return [
     'involved_intro_text' => 'Involved! tekee tiimeille, voittoa tavoittelemattomille järjestöille ja yhteisöryhmille helpoksi järjestää eloisia tapahtumia, pitää mukaansatempaavia retrospektiivejä ja käynnistää interaktiivisia kyselyitä—muuttaen jokaisen kokouksen ikimuistoiseksi kokemukseksi.',
     'involved_features' => 'Yhdisty paikallisiin aloitteisiin, seuraa vapaaehtoistyötuntejasi ja tee vaikutus.',
     'join_event_title' => 'Liity Tapahtumaan',
-    'join_event_description' => 'Syötä 4-merkkinen koodi liittyäksesi olemassa olevaan tapahtumaan.',
-    'event_code_placeholder' => 'Tapahtumakoodi',
+    'join_event_description' => 'Syötä 6-merkkinen koodi liittyäksesi olemassa olevaan tapahtumaan.',
+    'event_code_placeholder' => 'Tapahtumakoodi (6 merkkiä)',
     'join_event_button' => 'Liity Tapahtumaan',
     'create_event_title' => 'Luo Tapahtuma',
     'create_event_description' => 'Luo uusi tapahtuma valinnaisella salasanalla turvallista pääsyä varten.',
@@ -25,10 +25,10 @@ return [
     
     // Add word form
     'back_to_wordcloud' => '← Takaisin sanapilveen',
-    'word_added_success' => 'Sanasi on lisätty onnistuneesti!',
-    'please_enter_word' => 'Ole hyvä ja syötä sana.',
-    'word_input_placeholder' => 'Syötä vastauksesi (enintään 30 merkkiä)',
-    'add_word_button' => 'Lisää Sana',
+    'please_enter_word' => 'Anna sana.',
+    'word_added_success' => 'Sanasi on lisätty!',
+    'word_input_placeholder' => 'Kirjoita sanasi tähän...',
+    'add_word_button' => 'Lisää sana',
     
     // Event page
     'event_title_prefix' => 'Tapahtuma',
@@ -42,11 +42,12 @@ return [
     'an_error_occurred' => 'Tapahtui virhe sanapilven poistamisen yhteydessä',
     
     // Wordcloud page
-    'add_your_word' => 'Lisää Sanasi',
+    'add_your_word' => 'Lisää sanasi',
     'scan_qr_access' => 'Skannaa tämä QR-koodi päästäksesi tapahtumaan',
     'event_password' => 'PIN:',
-    'wordcloud_failed_delete' => 'Sanan poistaminen epäonnistui',
-    'wordcloud_error_delete' => 'Tapahtui virhe sanan poistamisen yhteydessä',
+    'scan_qr_to_answer' => 'Skannaa QR-koodi vastataksesi',
+    'wordcloud_failed_delete' => 'Sanatietojen poistaminen epäonnistui.',
+    'wordcloud_error_delete' => 'Sanatietojen poistossa tapahtui virhe.',
     
     // EventQrBlock component
     'event_code' => 'Koodi:',
@@ -56,6 +57,7 @@ return [
     'copy_success' => 'Linkki kopioitu leikepöydälle!',
     'share_error' => 'Jakaminen epäonnistui. Linkki kopioitu leikepöydälle vaihtoehtoisesti.',
     'share_link_prompt' => 'Kopioi tämä linkki:',
+    'admin_link_text' => 'Siirry tapahtuman hallintaan',
     
     // Short description for landing page
     'short_description' => 'Sanapilvet, kyselyt ja retrospektiivit – tee kokouksistasi interaktiivisia ja unohtumattomia.',

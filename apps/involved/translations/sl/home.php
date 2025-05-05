@@ -7,8 +7,8 @@ return [
     'involved_intro_text' => 'Involved! ekipam, neprofitnim organizacijam in skupnostnim skupinam olajša organizacijo živahnih dogodkov, izvajanje zanimivih retrospektiv in zagon interaktivnih anket—ter spremeni vsako srečanje v nepozabno izkušnjo.',
     'involved_features' => 'Povežite se z lokalnimi pobudami, sledite svojim prostovoljnim uram in naredite razliko.',
     'join_event_title' => 'Pridružite se Dogodku',
-    'join_event_description' => 'Vnesite 4-znakovno kodo za pridružitev obstoječemu dogodku.',
-    'event_code_placeholder' => 'Koda dogodka',
+    'join_event_description' => 'Vnesite 6-mestno kodo za pridružitev obstoječemu dogodku.',
+    'event_code_placeholder' => 'Koda dogodka (6 znakov)',
     'join_event_button' => 'Pridružite se Dogodku',
     'create_event_title' => 'Ustvarite Dogodek',
     'create_event_description' => 'Ustvarite nov dogodek z neobveznim geslom za varen dostop.',
@@ -25,10 +25,10 @@ return [
     
     // Add word form
     'back_to_wordcloud' => '← Nazaj na oblak besed',
-    'word_added_success' => 'Vaša beseda je bila uspešno dodana!',
+    'word_added_success' => 'Vaša beseda je bila dodana!',
     'please_enter_word' => 'Prosimo, vnesite besedo.',
-    'word_input_placeholder' => 'Vnesite svoj odgovor (največ 30 znakov)',
-    'add_word_button' => 'Dodajte Besedo',
+    'word_input_placeholder' => 'Vnesite svojo besedo tukaj...',
+    'add_word_button' => 'Dodaj besedo',
     
     // Event page
     'event_title_prefix' => 'Dogodek',
@@ -42,11 +42,11 @@ return [
     'an_error_occurred' => 'Pri brisanju oblaka besed je prišlo do napake',
     
     // Wordcloud page
-    'add_your_word' => 'Dodajte Svojo Besedo',
+    'add_your_word' => 'Dodajte svojo besedo',
     'scan_qr_access' => 'Skenirajte to QR kodo za dostop do dogodka',
     'event_password' => 'PIN:',
-    'wordcloud_failed_delete' => 'Brisanje besede ni uspelo',
-    'wordcloud_error_delete' => 'Pri brisanju besede je prišlo do napake',
+    'wordcloud_failed_delete' => 'Brisanje besede ni uspelo.',
+    'wordcloud_error_delete' => 'Prišlo je do napake pri brisanju besede.',
     
     // EventQrBlock component
     'event_code' => 'Koda:',
@@ -56,6 +56,8 @@ return [
     'copy_success' => 'Povezava kopirana v odložišče!',
     'share_error' => 'Deljenje ni uspelo. Povezava je bila namesto tega kopirana v odložišče.',
     'share_link_prompt' => 'Kopirajte to povezavo:',
+    'admin_link_text' => 'Pojdi na upravljanje dogodka',
+    'scan_qr_to_answer' => 'Skenirajte QR kodo za odgovor',
     
     // Short description for landing page
     'short_description' => 'Oblaki besed, ankete in retrospektive – naredite svoja srečanja interaktivna in nepozabna.',

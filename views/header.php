@@ -123,7 +123,23 @@ if (method_exists($lang, 'loadTranslations')) {
             'share_error': <?php echo json_encode($lang->translate('share_error')); ?>,
             'share_link_prompt': <?php echo json_encode($lang->translate('share_link_prompt')); ?>,
             // Password prompt translations
-            'invalid_password': <?php echo json_encode($lang->translate('invalid_password')); ?>
+            'invalid_password': <?php echo json_encode($lang->translate('invalid_password')); ?>,
+
+            // Involved app specific (OverlayClientHelper, OverlayObjectHelper, etc)
+            'admin_link_text': <?php echo json_encode($lang->translate('admin_link_text')); ?>,
+            'scan_qr_to_answer': <?php echo json_encode($lang->translate('scan_qr_to_answer')); ?>,
+            'add_your_word': <?php echo json_encode($lang->translate('add_your_word')); ?>,
+            'wordcloud_failed_delete': <?php echo json_encode($lang->translate('wordcloud_failed_delete')); ?>,
+            'wordcloud_error_delete': <?php echo json_encode($lang->translate('wordcloud_error_delete')); ?>,
+            'join_event_description': <?php echo json_encode($lang->translate('join_event_description')); ?>,
+            'event_code_placeholder': <?php echo json_encode($lang->translate('event_code_placeholder')); ?>,
+            'join_event_button': <?php echo json_encode($lang->translate('join_event_button')); ?>,
+            'scan_qr_access': <?php echo json_encode($lang->translate('scan_qr_access')); ?>,
+            'create_event_title': <?php echo json_encode($lang->translate('create_event_title')); ?>,
+            'create_event_description': <?php echo json_encode($lang->translate('create_event_description')); ?>,
+            'delete_failed': <?php echo json_encode($lang->translate('delete_failed')); ?>,
+            'an_error_occurred': <?php echo json_encode($lang->translate('an_error_occurred')); ?>,
+            'short_description': <?php echo json_encode($lang->translate('short_description')); ?>
         };
         return translations[key] || key;
     };

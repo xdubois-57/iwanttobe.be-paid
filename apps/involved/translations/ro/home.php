@@ -7,8 +7,8 @@ return [
     'involved_intro_text' => 'Involved! face mai ușor pentru echipe, organizații non-profit și grupuri comunitare să organizeze evenimente vibrante, să conducă retrospective captivante și să lanseze sondaje interactive—transformând orice întâlnire într-o experiență memorabilă.',
     'involved_features' => 'Conectează-te cu inițiative locale, urmărește-ți orele de voluntariat și fă o diferență.',
     'join_event_title' => 'Alătură-te Evenimentului',
-    'join_event_description' => 'Introdu un cod de 4 caractere pentru a te alătura unui eveniment existent.',
-    'event_code_placeholder' => 'Cod eveniment',
+    'join_event_description' => 'Introduceți un cod de 6 caractere pentru a vă alătura unui eveniment existent.',
+    'event_code_placeholder' => 'Cod eveniment (6 caractere)',
     'join_event_button' => 'Alătură-te Evenimentului',
     'create_event_title' => 'Creează Eveniment',
     'create_event_description' => 'Generează un nou eveniment cu o parolă opțională pentru acces securizat.',
@@ -25,10 +25,10 @@ return [
     
     // Add word form
     'back_to_wordcloud' => '← Înapoi la norul de cuvinte',
-    'word_added_success' => 'Cuvântul tău a fost adăugat cu succes!',
-    'please_enter_word' => 'Te rugăm să introduci un cuvânt.',
-    'word_input_placeholder' => 'Introdu răspunsul tău (max. 30 caractere)',
-    'add_word_button' => 'Adaugă Cuvânt',
+    'word_added_success' => 'Cuvântul dvs. a fost adăugat!',
+    'please_enter_word' => 'Vă rugăm să introduceți un cuvânt.',
+    'word_input_placeholder' => 'Scrieți cuvântul aici...',
+    'add_word_button' => 'Adăugați cuvânt',
     
     // Event page
     'event_title_prefix' => 'Eveniment',
@@ -42,11 +42,11 @@ return [
     'an_error_occurred' => 'A apărut o eroare la ștergerea norului de cuvinte',
     
     // Wordcloud page
-    'add_your_word' => 'Adaugă Cuvântul Tău',
+    'add_your_word' => 'Adăugați cuvântul dvs.',
     'scan_qr_access' => 'Scanează acest cod QR pentru a accesa evenimentul',
     'event_password' => 'PIN:',
-    'wordcloud_failed_delete' => 'Ștergerea cuvântului a eșuat',
-    'wordcloud_error_delete' => 'A apărut o eroare la ștergerea cuvântului',
+    'wordcloud_failed_delete' => 'Ștergerea cuvântului a eșuat.',
+    'wordcloud_error_delete' => 'A apărut o eroare la ștergerea cuvântului.',
     
     // EventQrBlock component
     'event_code' => 'Cod:',
@@ -56,6 +56,8 @@ return [
     'copy_success' => 'Link copiat în clipboard!',
     'share_error' => 'Nu s-a putut distribui. Link copiat în clipboard în schimb.',
     'share_link_prompt' => 'Copiază acest link:',
+    'admin_link_text' => 'Mergi la administrarea evenimentului',
+    'scan_qr_to_answer' => 'Scanați codul QR pentru a răspunde',
     
     // Short description for landing page
     'short_description' => 'Nori de cuvinte, sondaje și retrospective – fă-ți întâlnirile interactive și de neuitat.',

@@ -81,21 +81,8 @@ class OverlayClientHelper {
             return;
         }
         
-        // Set link text (attempt to localize if possible)
-        const translations = {
-            'fr': 'Aller à l\'administration de l\'évènement',
-            'en': 'Go to event administration',
-            'nl': 'Ga naar evenementbeheer',
-            'de': 'Zur Ereignisverwaltung',
-            'es': 'Ir a la administración del evento',
-            'it': 'Vai all\'amministrazione dell\'evento',
-            'pl': 'Przejdź do administracji wydarzeniem',
-            'pt': 'Ir para administração do evento',
-            'sv': 'Gå till händelseadministration'
-        };
-        
-        // Use translated text or fallback to French
-        const linkText = translations[this.currentLang] || translations['fr'];
+        // Set link text using the generic translation mechanism
+        const linkText = window.t('admin_link_text');
         
         // Find the navigation menu
         const navLinks = document.querySelector('.nav-links ul');

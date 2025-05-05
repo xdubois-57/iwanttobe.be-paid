@@ -7,8 +7,8 @@ return [
     'involved_intro_text' => 'Involved! makes it easy for teams, non-profits, and community groups to organize lively events, run engaging retrospectives, and launch interactive polls—turning any meeting into a memorable experience.',
     'involved_features' => 'Connect with local initiatives, track your volunteer hours, and make a difference.',
     'join_event_title' => 'Join Event',
-    'join_event_description' => 'Enter a 4-character code to join an existing event.',
-    'event_code_placeholder' => 'Event code',
+    'join_event_description' => 'Enter a 6-character code to join an existing event.',
+    'event_code_placeholder' => 'Event code (6 characters)',
     'join_event_button' => 'Join Event',
     'create_event_title' => 'Create Event',
     'create_event_description' => 'Generate a new event with an optional password for secure access.',
@@ -30,9 +30,9 @@ return [
     
     // Add word form
     'back_to_wordcloud' => '← Back to word cloud',
-    'word_added_success' => 'Your word has been added successfully!',
     'please_enter_word' => 'Please enter a word.',
-    'word_input_placeholder' => 'Enter your answer (max 30 characters)',
+    'word_added_success' => 'Your word has been added!',
+    'word_input_placeholder' => 'Type your word here...',
     'add_word_button' => 'Add Word',
     
     // Event page
@@ -49,11 +49,11 @@ return [
     'an_error_occurred' => 'An error occurred while deleting the word cloud',
     
     // Wordcloud page
-    'add_your_word' => 'Add Your Word',
+    'add_your_word' => 'Add your word',
     'scan_qr_access' => 'Scan this QR code to access the event',
     'event_password' => 'PIN:',
-    'wordcloud_failed_delete' => 'Failed to delete word',
-    'wordcloud_error_delete' => 'An error occurred while deleting the word',
+    'wordcloud_failed_delete' => 'Failed to delete word.',
+    'wordcloud_error_delete' => 'An error occurred while deleting the word.',
     
     // EventQrBlock component
     'event_code' => 'Code:',
@@ -64,6 +64,12 @@ return [
     'share_error' => 'Could not share. Link copied to clipboard instead.',
     'share_link_prompt' => 'Copy this link:',
     
+    // OverlayClientHelper
+    'admin_link_text' => 'Go to event administration',
+
+    // OverlayObjectHelper
+    'scan_qr_to_answer' => 'Scan the QR code to answer',
+
     // Short description for landing page
     'short_description' => 'Word clouds, polls, and retrospectives – make your meetings interactive and memorable.',
     
