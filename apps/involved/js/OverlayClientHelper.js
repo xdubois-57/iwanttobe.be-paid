@@ -18,7 +18,21 @@ class OverlayClientHelper {
     initialize() {
         this.calculateCurrentUrl();
         this.extractEventCodeAndLang();
-        console.log('[OverlayClientHelper] Initialized with URL:', this.currentUrl);
+
+        // Ensure we have a language set
+        if (!this.currentLang) {
+            // Fallback: extract language from URL
+            const urlObj = new URL(window.location.href);
+            const pathSegments = urlObj.pathname.split('/');
+            if (pathSegments.length >= 2) {
+                this.currentLang = pathSegments[1];
+            } else {
+                // Default to English if we can't determine the language
+                this.currentLang = 'en';
+            }
+        }
+        
+        console.log('[OverlayClientHelper] Initialized with URL:', this.currentUrl, 'language:', this.currentLang);
         
         // Modify navigation if we're on an event page
         if (this.eventCode) {
@@ -117,11 +131,20 @@ class OverlayClientHelper {
             this.calculateCurrentUrl();
         }
 
+        // Make sure we have a valid language
+        if (!this.currentLang) {
+            this.currentLang = 'en'; // Default to English if language not available
+            console.warn('[OverlayClientHelper] No language detected, defaulting to:', this.currentLang);
+        }
+        
+        // Get the base URL (protocol + hostname + port)
+        const baseUrl = window.location.origin;
+
         const formData = new FormData();
         formData.append('url', this.currentUrl);
         formData.append('emoji', emoji);
 
-        return fetch('/ajax/emoji', {
+        return fetch(`${baseUrl}/${this.currentLang}/involved/ajax/emoji`, {
             method: 'POST',
             body: formData
         })
@@ -179,12 +202,21 @@ class OverlayClientHelper {
             this.calculateCurrentUrl();
         }
         
+        // Make sure we have a valid language
+        if (!this.currentLang) {
+            this.currentLang = 'en'; // Default to English if language not available
+            console.warn('[OverlayClientHelper] No language detected, defaulting to:', this.currentLang);
+        }
+        
+        // Get the base URL (protocol + hostname + port)
+        const baseUrl = window.location.origin;
+        
         console.log('[OverlayClientHelper] Sending presence update for URL:', this.currentUrl);
         
         const formData = new FormData();
         formData.append('url', this.currentUrl);
         
-        return fetch('/ajax/presence', {
+        return fetch(`${baseUrl}/${this.currentLang}/involved/ajax/presence`, {
             method: 'POST',
             body: formData
         })

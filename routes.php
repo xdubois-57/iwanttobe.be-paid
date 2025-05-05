@@ -26,18 +26,17 @@
  * - API routes (POST requests for AJAX operations)
  */
 
-// Include necessary controller classes and core framework
+// Load controllers and core components
 require_once 'controllers/Router.php';
+require_once 'controllers/LandingController.php';
 require_once 'controllers/LanguageController.php';
 require_once 'controllers/SetupController.php';
 require_once 'controllers/QrController.php';
-require_once 'controllers/AjaxController.php';
+require_once 'controllers/GDPRController.php';
+require_once 'controllers/SupportController.php';
 require_once 'core/AppRegistry.php';
 
 // Core global controllers remain at root-level controllers
-require_once 'controllers/GDPRController.php';
-require_once 'controllers/SupportController.php';
-require_once 'controllers/LandingController.php';
 
 // Initialize the router
 $router = new Router();
@@ -65,15 +64,6 @@ $router->get('/{lang}/support', 'SupportController@index');
 
 // Waiting room for event
 $router->get('/{lang}/involved/{code}/wait', 'InvolvedHomeController@showWaitingRoom');
-
-// AJAX endpoints for global features
-$router->post('/ajax/like', 'AjaxController@incrementLikes');
-$router->get('/ajax/likes', 'AjaxController@getLikes');
-$router->post('/ajax/presence', 'AjaxController@updatePresence');
-$router->get('/ajax/presence', 'AjaxController@getPresence');
-$router->post('/ajax/emoji', 'AjaxController@appendEmoji');
-$router->get('/ajax/emoji', 'AjaxController@getEmojis');
-$router->post('/ajax/set_active_url', 'AjaxController@setActiveUrl');
 
 // Global QR code SVG endpoint (AJAX)
 $router->get('/qr/svg', 'GenericQrController@svg');

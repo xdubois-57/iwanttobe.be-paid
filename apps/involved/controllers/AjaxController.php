@@ -2,11 +2,11 @@
 /**
  * Controller for AJAX requests.
  */
-require_once __DIR__ . '/../apps/involved/models/OverlayObjectModel.php';
-require_once __DIR__ . '/../apps/involved/models/OverlayPresenceModel.php';
-require_once __DIR__ . '/../controllers/LanguageController.php';
+require_once __DIR__ . '/../models/OverlayObjectModel.php';
+require_once __DIR__ . '/../models/OverlayPresenceModel.php';
+require_once __DIR__ . '/../../../controllers/LanguageController.php';
 
-class AjaxController {
+class InvolvedAjaxController {
     /**
      * Increment likes for a given URL
      * POST /ajax/like
@@ -132,13 +132,13 @@ class AjaxController {
         header('Content-Type: application/json');
         
         // Dedicated log file
-        $logFile = __DIR__ . '/../logs/presence_debug.log';
-        file_put_contents($logFile, date('Y-m-d H:i:s') . " - AjaxController: updatePresence called\n", FILE_APPEND);
+        $logFile = __DIR__ . '/../../../logs/presence_debug.log';
+        file_put_contents($logFile, date('Y-m-d H:i:s') . " - InvolvedAjaxController: updatePresence called\n", FILE_APPEND);
         
         // Only allow POST method
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             http_response_code(405);
-            file_put_contents($logFile, date('Y-m-d H:i:s') . " - AjaxController: Method not allowed: " . $_SERVER['REQUEST_METHOD'] . "\n", FILE_APPEND);
+            file_put_contents($logFile, date('Y-m-d H:i:s') . " - InvolvedAjaxController: Method not allowed: " . $_SERVER['REQUEST_METHOD'] . "\n", FILE_APPEND);
             echo json_encode(['success' => false, 'error' => 'Method not allowed']);
             return;
         }
@@ -148,7 +148,7 @@ class AjaxController {
         
         if (empty($url)) {
             http_response_code(400);
-            file_put_contents($logFile, date('Y-m-d H:i:s') . " - AjaxController: Empty URL\n", FILE_APPEND);
+            file_put_contents($logFile, date('Y-m-d H:i:s') . " - InvolvedAjaxController: Empty URL\n", FILE_APPEND);
             echo json_encode(['success' => false, 'error' => 'URL is required']);
             return;
         }
@@ -156,7 +156,7 @@ class AjaxController {
         // Validate URL format
         if (!filter_var($url, FILTER_VALIDATE_URL)) {
             http_response_code(400);
-            file_put_contents($logFile, date('Y-m-d H:i:s') . " - AjaxController: Invalid URL format: $url\n", FILE_APPEND);
+            file_put_contents($logFile, date('Y-m-d H:i:s') . " - InvolvedAjaxController: Invalid URL format: $url\n", FILE_APPEND);
             echo json_encode(['success' => false, 'error' => 'Invalid URL format']);
             return;
         }
@@ -167,7 +167,7 @@ class AjaxController {
         }
         
         $sessionId = session_id();
-        file_put_contents($logFile, date('Y-m-d H:i:s') . " - AjaxController: Processing with session ID: $sessionId\n", FILE_APPEND);
+        file_put_contents($logFile, date('Y-m-d H:i:s') . " - InvolvedAjaxController: Processing with session ID: $sessionId\n", FILE_APPEND);
         
         // Update presence
         $model = new OverlayPresenceModel();
@@ -175,7 +175,7 @@ class AjaxController {
         
         if ($result === false) {
             http_response_code(500);
-            file_put_contents($logFile, date('Y-m-d H:i:s') . " - AjaxController: Failed to update presence\n", FILE_APPEND);
+            file_put_contents($logFile, date('Y-m-d H:i:s') . " - InvolvedAjaxController: Failed to update presence\n", FILE_APPEND);
             echo json_encode(['success' => false, 'error' => 'Failed to update presence']);
             return;
         }
@@ -196,16 +196,16 @@ class AjaxController {
             $eventCode = $pathSegments[2];
             
             // Get the active URL for this event
-            require_once __DIR__ . '/../apps/involved/models/EventModel.php';
+            require_once __DIR__ . '/../models/EventModel.php';
             $eventModel = new EventModel();
             $activeUrl = $eventModel->getActiveUrl($eventCode);
             
             // Log the active URL for debugging
-            file_put_contents($logFile, date('Y-m-d H:i:s') . " - AjaxController: Active URL for event {$eventCode}: " . ($activeUrl ?? 'null') . "\n", FILE_APPEND);
+            file_put_contents($logFile, date('Y-m-d H:i:s') . " - InvolvedAjaxController: Active URL for event {$eventCode}: " . ($activeUrl ?? 'null') . "\n", FILE_APPEND);
         }
         
         // Force the count to the actual value from the database for debugging
-        file_put_contents($logFile, date('Y-m-d H:i:s') . " - AjaxController: About to return presence count: $activeCount for URL: $url\n", FILE_APPEND);
+        file_put_contents($logFile, date('Y-m-d H:i:s') . " - InvolvedAjaxController: About to return presence count: $activeCount for URL: $url\n", FILE_APPEND);
         
         // Build and log the exact JSON response we're sending
         $response = [
@@ -219,7 +219,7 @@ class AjaxController {
             $response['active_url'] = $activeUrl;
         }
         
-        file_put_contents($logFile, date('Y-m-d H:i:s') . " - AjaxController: JSON response: " . json_encode($response) . "\n", FILE_APPEND);
+        file_put_contents($logFile, date('Y-m-d H:i:s') . " - InvolvedAjaxController: JSON response: " . json_encode($response) . "\n", FILE_APPEND);
         
         echo json_encode($response);
     }
@@ -236,13 +236,13 @@ class AjaxController {
         header('Access-Control-Allow-Headers: Content-Type');
         header('Content-Type: application/json');
         
-        $logFile = __DIR__ . '/../logs/presence_debug.log';
-        file_put_contents($logFile, date('Y-m-d H:i:s') . " - AjaxController: getPresence called (GET method)\n", FILE_APPEND);
+        $logFile = __DIR__ . '/../../../logs/presence_debug.log';
+        file_put_contents($logFile, date('Y-m-d H:i:s') . " - InvolvedAjaxController: getPresence called (GET method)\n", FILE_APPEND);
         
         // Only allow GET method
         if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
             http_response_code(405);
-            file_put_contents($logFile, date('Y-m-d H:i:s') . " - AjaxController: Method not allowed in getPresence: " . $_SERVER['REQUEST_METHOD'] . "\n", FILE_APPEND);
+            file_put_contents($logFile, date('Y-m-d H:i:s') . " - InvolvedAjaxController: Method not allowed in getPresence: " . $_SERVER['REQUEST_METHOD'] . "\n", FILE_APPEND);
             echo json_encode(['success' => false, 'error' => 'Method not allowed']);
             return;
         }
@@ -252,25 +252,25 @@ class AjaxController {
         
         if (empty($url)) {
             http_response_code(400);
-            file_put_contents($logFile, date('Y-m-d H:i:s') . " - AjaxController: Empty URL in getPresence\n", FILE_APPEND);
+            file_put_contents($logFile, date('Y-m-d H:i:s') . " - InvolvedAjaxController: Empty URL in getPresence\n", FILE_APPEND);
             echo json_encode(['success' => false, 'error' => 'URL is required']);
             return;
         }
         
-        file_put_contents($logFile, date('Y-m-d H:i:s') . " - AjaxController: Getting presence for URL: $url\n", FILE_APPEND);
+        file_put_contents($logFile, date('Y-m-d H:i:s') . " - InvolvedAjaxController: Getting presence for URL: $url\n", FILE_APPEND);
         
         // Get presence count
         $model = new OverlayPresenceModel();
         $count = $model->getActivePresenceCount($url);
         
-        file_put_contents($logFile, date('Y-m-d H:i:s') . " - AjaxController: getPresence returning count: $count for URL: $url\n", FILE_APPEND);
+        file_put_contents($logFile, date('Y-m-d H:i:s') . " - InvolvedAjaxController: getPresence returning count: $count for URL: $url\n", FILE_APPEND);
         
         $response = [
             'success' => true,
             'count' => $count
         ];
         
-        file_put_contents($logFile, date('Y-m-d H:i:s') . " - AjaxController: getPresence JSON response: " . json_encode($response) . "\n", FILE_APPEND);
+        file_put_contents($logFile, date('Y-m-d H:i:s') . " - InvolvedAjaxController: getPresence JSON response: " . json_encode($response) . "\n", FILE_APPEND);
         echo json_encode($response);
     }
     
@@ -311,7 +311,7 @@ class AjaxController {
         }
         if ($activeUrl === '') {
             // Clear the active URL in the database
-            require_once __DIR__ . '/../apps/involved/models/EventModel.php';
+            require_once __DIR__ . '/../models/EventModel.php';
             $model = new EventModel();
             $result = $model->setActiveUrl($eventCode, '');
             if ($result === false) {
@@ -331,7 +331,7 @@ class AjaxController {
         }
         
         // Update the event's active URL in the database
-        require_once __DIR__ . '/../apps/involved/models/EventModel.php';
+        require_once __DIR__ . '/../models/EventModel.php';
         $model = new EventModel();
         $result = $model->setActiveUrl($eventCode, $activeUrl);
         

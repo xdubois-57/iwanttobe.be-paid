@@ -15,12 +15,25 @@ class OverlayObjectHelper {
         this.pollingFrequency = 7500; // Poll every 7.5 seconds (4 times more often)
         this.qrBlockConfig = null; // New property to store QR block configuration
         this.emojiInterval = null; // New property to store emoji polling interval
+        this.currentLang = null; // New property to store the current language
         
         // Initialize the helper when created
         this.initialize();
     }
 
     initialize() {
+        // Extract current language from URL
+        const urlObj = new URL(window.location.href);
+        const pathSegments = urlObj.pathname.split('/');
+        if (pathSegments.length >= 2) {
+            this.currentLang = pathSegments[1];
+            console.log('[OverlayObjectHelper] Detected language:', this.currentLang);
+        } else {
+            // Default to English if we can't determine the language
+            this.currentLang = 'en';
+            console.log('[OverlayObjectHelper] Using default language: en');
+        }
+        
         // Initialize presence polling
         this.startPresencePolling();
         
@@ -128,7 +141,17 @@ class OverlayObjectHelper {
             const formData = new FormData();
             formData.append('event_code', eventCode);
             formData.append('active_url', ''); // Clear the active URL
-            fetch('/ajax/set_active_url', {
+            
+            // Make sure we have a valid language
+            if (!this.currentLang) {
+                this.currentLang = 'en'; // Default to English if language not available
+                console.warn('[OverlayObjectHelper] No language detected, defaulting to:', this.currentLang);
+            }
+            
+            // Get the base URL (protocol + hostname + port)
+            const baseUrl = window.location.origin;
+            
+            fetch(`${baseUrl}/${this.currentLang}/involved/ajax/set_active_url`, {
                 method: 'POST',
                 body: formData
             })
@@ -142,7 +165,6 @@ class OverlayObjectHelper {
             })
             .catch(err => console.error('[OverlayObjectHelper] Error resetting active URL (deactivate):', err));
         }
-        // -----------------------------------------------------
         
         // Clean up overlay
         if (this.overlay && this.overlay.parentNode) {
@@ -254,6 +276,12 @@ class OverlayObjectHelper {
             this.currentUrl = `${baseUrl}/${lang}/involved/${eventKey}/wordcloud/${wcid}`;
             console.log('[OverlayObjectHelper] Normalized URL for emoji tracking:', this.currentUrl);
         }
+        
+        // Extract the current language
+        const urlParts = this.currentUrl.split('/');
+        if (urlParts.length >= 3) {
+            this.currentLang = urlParts[1];
+        }
     }
 
     startPresencePolling() {
@@ -277,9 +305,22 @@ class OverlayObjectHelper {
             return;
         }
         
+        // Make sure we have a valid language
+        if (!this.currentLang) {
+            this.currentLang = 'en'; // Default to English if language not available
+            console.warn('[OverlayObjectHelper] No language detected, defaulting to:', this.currentLang);
+        }
+        
         console.log('[OverlayObjectHelper] Fetching presence for URL:', this.currentUrl);
         
-        fetch('/ajax/presence?url=' + encodeURIComponent(this.currentUrl))
+        // Get the base URL (protocol + hostname + port)
+        const baseUrl = window.location.origin;
+        
+        // Construct a proper URL
+        const presenceUrl = `${baseUrl}/${this.currentLang}/involved/ajax/presence?url=${encodeURIComponent(this.currentUrl)}`;
+        console.log('[OverlayObjectHelper] Presence endpoint URL:', presenceUrl);
+        
+        fetch(presenceUrl)
             .then(res => res.json())
             .then(data => {
                 if (data.success) {
@@ -318,7 +359,21 @@ class OverlayObjectHelper {
         if (!this.currentUrl) {
             this.calculateCurrentUrl();
         }
-        fetch('/ajax/emoji?url=' + encodeURIComponent(this.currentUrl) + '&max=15')
+        
+        // Make sure we have a valid language
+        if (!this.currentLang) {
+            this.currentLang = 'en'; // Default to English if language not available
+            console.warn('[OverlayObjectHelper] No language detected, defaulting to:', this.currentLang);
+        }
+        
+        // Get the base URL (protocol + hostname + port)
+        const baseUrl = window.location.origin;
+        
+        // Construct a proper URL
+        const emojisUrl = `${baseUrl}/${this.currentLang}/involved/ajax/emoji?url=${encodeURIComponent(this.currentUrl)}&max=15`;
+        console.log('[OverlayObjectHelper] Emojis endpoint URL:', emojisUrl);
+        
+        fetch(emojisUrl)
             .then(r => r.json())
             .then(data => {
                 if (data.success && Array.isArray(data.emojis) && data.emojis.length > 0) {
@@ -618,26 +673,33 @@ class OverlayObjectHelper {
         
         console.log('[OverlayObjectHelper] Setting active URL for event:', eventCode, url);
         
-        // Send AJAX request to update the event's active URL
+        // Make sure we have a valid language
+        if (!this.currentLang) {
+            this.currentLang = 'en'; // Default to English if language not available
+            console.warn('[OverlayObjectHelper] No language detected, defaulting to:', this.currentLang);
+        }
+        
+        // Get the base URL (protocol + hostname + port)
+        const baseUrl = window.location.origin;
+        
+        // Update via Ajax
         const formData = new FormData();
         formData.append('event_code', eventCode);
         formData.append('active_url', url);
         
-        fetch('/ajax/set_active_url', {
+        fetch(`${baseUrl}/${this.currentLang}/involved/ajax/set_active_url`, {
             method: 'POST',
             body: formData
         })
-        .then(response => response.json())
+        .then(res => res.json())
         .then(data => {
             if (data.success) {
-                console.log('[OverlayObjectHelper] Successfully set active URL for event:', eventCode);
+                console.log('[OverlayObjectHelper] Active URL set successfully');
             } else {
                 console.error('[OverlayObjectHelper] Failed to set active URL:', data.error);
             }
         })
-        .catch(error => {
-            console.error('[OverlayObjectHelper] Error setting active URL:', error);
-        });
+        .catch(err => console.error('[OverlayObjectHelper] Error setting active URL:', err));
     }
 }
 
