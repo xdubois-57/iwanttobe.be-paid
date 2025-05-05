@@ -69,12 +69,19 @@ class EventRememberHelper {
         if (existingIndex >= 0) {
             // Update creation date for existing event
             this.eventsList[existingIndex].created = new Date().toISOString();
+            // Move to end of list
+            const event = this.eventsList.splice(existingIndex, 1)[0];
+            this.eventsList.push(event);
         } else {
             // Add new event
             this.eventsList.push({
                 code: eventCode,
                 created: new Date().toISOString()
             });
+            // Keep only the 5 most recent events
+            if (this.eventsList.length > 5) {
+                this.eventsList.shift(); // Remove oldest event
+            }
         }
         
         this.saveEvents();

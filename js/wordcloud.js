@@ -432,18 +432,42 @@ class WordCloudManager {
     }
 
     makeResponsive() {
+        let lastOrientationType = screen.orientation.type;
+        
         window.addEventListener('resize', () => {
-            const newWidth = this.container.offsetWidth;
-            this.canvas.width = newWidth;
-            
-            // Update ellipticity based on new dimensions
-            this.options.ellipticity = window.innerHeight / window.innerWidth;
-            
-            // Redraw with current data
-            if (this.options.list && this.options.list.length > 0) {
-                WordCloud(this.canvas, this.options);
+            // Only resize on mobile if orientation has changed
+            if (this.isMobile()) {
+                const currentOrientationType = screen.orientation.type;
+                if (currentOrientationType !== lastOrientationType) {
+                    lastOrientationType = currentOrientationType;
+                    this.handleResize();
+                }
+            } else {
+                // Always resize on desktop
+                this.handleResize();
             }
         });
+    }
+
+    handleResize() {
+        const newWidth = this.container.offsetWidth;
+        this.canvas.width = newWidth;
+        
+        // Update ellipticity based on new dimensions
+        this.options.ellipticity = window.innerHeight / window.innerWidth;
+        
+        // Redraw with current data
+        if (this.options.list && this.options.list.length > 0) {
+            WordCloud(this.canvas, this.options);
+        }
+    }
+
+    isMobile() {
+        // Check for mobile device using screen.orientation
+        return screen.orientation.type === 'portrait-primary' || 
+               screen.orientation.type === 'portrait-secondary' ||
+               screen.orientation.type === 'landscape-primary' ||
+               screen.orientation.type === 'landscape-secondary';
     }
 
     addMobileScrollBehavior() {
