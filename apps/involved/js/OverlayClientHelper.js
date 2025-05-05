@@ -20,9 +20,9 @@ class OverlayClientHelper {
         this.extractEventCodeAndLang();
         console.log('[OverlayClientHelper] Initialized with URL:', this.currentUrl);
         
-        // Add admin link if we're on an event page
+        // Modify navigation if we're on an event page
         if (this.eventCode) {
-            this.replaceHeaderWithAdminLink();
+            this.modifyNavigationForEventPage();
         }
     }
     
@@ -69,15 +69,15 @@ class OverlayClientHelper {
     }
     
     /**
-     * Replace the main navigation header with a simplified admin link header
+     * Modifies the main navigation header to include only the admin link
      */
-    replaceHeaderWithAdminLink() {
+    modifyNavigationForEventPage() {
         if (!this.eventCode || !this.currentLang) {
             return;
         }
         
-        // Check if we've already replaced the header
-        if (document.querySelector('.event-admin-header')) {
+        // Check if we've already modified the navigation
+        if (document.querySelector('.event-admin-link')) {
             return;
         }
         
@@ -97,50 +97,26 @@ class OverlayClientHelper {
         // Use translated text or fallback to French
         const linkText = translations[this.currentLang] || translations['fr'];
         
-        // Find and hide the main navigation
-        const mainNav = document.querySelector('nav');
-        if (mainNav) {
-            mainNav.style.display = 'none';
+        // Find the navigation menu
+        const navLinks = document.querySelector('.nav-links ul');
+        if (navLinks) {
+            // Clear all existing menu items
+            navLinks.innerHTML = '';
             
-            // Create the admin header
-            const adminHeader = document.createElement('header');
-            adminHeader.className = 'event-admin-header';
-            adminHeader.style.padding = '0.75rem 1rem';
-            adminHeader.style.backgroundColor = '#f8f9fa';
-            adminHeader.style.borderBottom = '1px solid #e9ecef';
-            adminHeader.style.display = 'flex';
-            adminHeader.style.justifyContent = 'space-between';
-            adminHeader.style.alignItems = 'center';
-            
-            // Add app title/logo on the left
-            const appTitle = document.createElement('div');
-            appTitle.className = 'app-title';
-            appTitle.style.fontWeight = 'bold';
-            appTitle.style.fontSize = '1.1rem';
-            appTitle.textContent = 'Involved!';
-            
-            // Create the admin link
+            // Create the admin link as a menu item
+            const adminLi = document.createElement('li');
             const adminLink = document.createElement('a');
             adminLink.href = `/${this.currentLang}/involved/${this.eventCode}`;
             adminLink.className = 'event-admin-link';
-            adminLink.style.color = '#007bff';
-            adminLink.style.textDecoration = 'underline';
             adminLink.textContent = linkText;
             
-            // Add elements to the header
-            adminHeader.appendChild(appTitle);
-            adminHeader.appendChild(adminLink);
+            // Add the admin link to the menu
+            adminLi.appendChild(adminLink);
+            navLinks.appendChild(adminLi);
             
-            // Insert the admin header where the nav was (before its next sibling)
-            if (mainNav.nextSibling) {
-                mainNav.parentNode.insertBefore(adminHeader, mainNav.nextSibling);
-            } else {
-                mainNav.parentNode.appendChild(adminHeader);
-            }
-            
-            console.log('[OverlayClientHelper] Replaced navigation with admin header');
+            console.log('[OverlayClientHelper] Modified navigation to show admin link only');
         } else {
-            console.log('[OverlayClientHelper] Could not find navigation to replace');
+            console.log('[OverlayClientHelper] Could not find navigation menu to modify');
         }
     }
     
