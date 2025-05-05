@@ -59,6 +59,9 @@ return [
     'qrblock_scan_or_visit' => 'iwantto.be/involved',
     'qrblock_scan_or_visit' => 'iwantto.be/involved',
     
+    // Event memory features
+    'my_events' => 'Mijn evenementen',
+    
     // OverlayClientHelper
     'admin_link_text' => 'Ga naar evenementbeheer',
     'admin_password_label' => 'Beheerderswachtwoord:',

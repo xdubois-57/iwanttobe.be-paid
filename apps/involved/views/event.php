@@ -193,4 +193,34 @@ document.querySelectorAll('.delete-wordcloud-form').forEach(form => {
     });
 });
 </script>
+
+<script>
+// Remember this event in local storage
+(function() {
+    try {
+        // Check if event should be remembered (either from URL param or just viewing)
+        const shouldRemember = new URLSearchParams(window.location.search).has('remember');
+        const eventCode = '<?php echo htmlspecialchars($eventData['key']); ?>';
+        
+        if (eventCode) {
+            // Load the helper script dynamically
+            const script = document.createElement('script');
+            script.src = '/apps/involved/js/eventRememberHelper.js';
+            script.onload = function() {
+                const helper = new EventRememberHelper();
+                helper.addEvent(eventCode);
+                
+                // If redirected from creation with remember parameter, clean URL
+                if (shouldRemember) {
+                    window.history.replaceState({}, document.title, window.location.pathname);
+                }
+            };
+            document.head.appendChild(script);
+        }
+    } catch (e) {
+        console.error('Error remembering event:', e);
+    }
+})();
+</script>
+
 <?php require_once __DIR__ . '/../../../views/footer.php'; ?>

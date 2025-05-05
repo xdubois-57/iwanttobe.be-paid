@@ -65,7 +65,14 @@ class InvolvedHomeController {
         $this->authorizeEvent($code);
         
         $langSlug = $params['lang'] ?? LanguageController::getInstance()->getCurrentLanguage();
-        header('Location: /' . $langSlug . '/involved/' . $code);
+        
+        // Store created event code for local storage
+        if (!isset($_SESSION['remember_created_event'])) {
+            $_SESSION['remember_created_event'] = $code;
+            header('Location: /' . $langSlug . '/involved/' . $code . '?remember=true');
+        } else {
+            header('Location: /' . $langSlug . '/involved/' . $code);
+        }
         exit;
     }
 

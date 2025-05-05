@@ -61,6 +61,9 @@ return [
     'share_link_prompt' => 'Copiar este enlace:',
     'qrblock_scan_or_visit' => 'iwantto.be/involved',
     
+    // Event memory features
+    'my_events' => 'Mis eventos',
+    
     // OverlayClientHelper
     'admin_link_text' => 'Ir a la administración del evento',
     'admin_password_label' => 'Contraseña de administrador:',

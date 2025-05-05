@@ -59,6 +59,9 @@ return [
     'share_link_prompt' => 'Kopiera denna länk:',
     'qrblock_scan_or_visit' => 'iwantto.be/involved',
     
+    // Event memory features
+    'my_events' => 'Mina händelser',
+    
     // OverlayClientHelper
     'admin_link_text' => 'Gå till händelseadministration',
     'scan_qr_to_answer' => 'Skanna QR-koden för att svara',

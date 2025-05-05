@@ -63,6 +63,10 @@ return [
     'share_link_prompt' => 'Skopiuj ten link:',
     'qrblock_scan_or_visit' => 'iwantto.be/involved',
     'qrblock_scan_or_visit' => 'iwantto.be/involved',
+    
+    // Event memory features
+    'my_events' => 'Moje wydarzenia',
+    
     // Short description for landing page
     'short_description' => 'Chmury słów, ankiety i retrospektywy – spraw, aby Twoje spotkania były interaktywne i niezapomniane.',
     

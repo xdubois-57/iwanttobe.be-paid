@@ -65,6 +65,9 @@ return [
     'share_link_prompt' => 'Copia questo link:',
     'qrblock_scan_or_visit' => 'iwantto.be/involved',
     
+    // Event memory features
+    'my_events' => 'I miei eventi',
+    
     // Controller messages
     'event_create_failed' => 'Impossibile creare l\'evento. Errore:',
     'event_not_found' => 'Evento non trovato',
