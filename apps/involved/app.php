@@ -71,6 +71,13 @@ class InvolvedApp implements AppInterface {
      */
     public function registerRoutes(Router $router): void
     {
+        // Redirect /involved to /{lang}/involved
+        $router->get('/involved', function() {
+            $lang = \LanguageController::detectBrowserLanguage();
+            header('Location: /' . $lang . '/involved');
+            exit;
+        });
+        
         $router->get('/{lang}/involved', 'InvolvedHomeController@index');
         $router->post('/{lang}/involved/create', 'InvolvedHomeController@create');
         $router->post('/{lang}/involved/join', 'InvolvedHomeController@join');

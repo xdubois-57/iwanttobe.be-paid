@@ -66,6 +66,13 @@ class PaidApp implements AppInterface
      */
     public function registerRoutes(Router $router): void
     {
+        // Redirect /paid to /{lang}/paid
+        $router->get('/paid', function() {
+            $lang = LanguageController::detectBrowserLanguage();
+            header('Location: /' . $lang . '/paid');
+            exit;
+        });
+        
         $router->get('/{lang}/paid', 'HomeController@index');
         $router->get('/{lang}/paid/why-us', 'WhyUsController@index');
         $router->post('/{lang}/paid/api/generate-qr', 'QRController@generate');

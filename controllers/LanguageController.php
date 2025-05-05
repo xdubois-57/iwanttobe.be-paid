@@ -25,8 +25,24 @@ class LanguageController {
     private $currentLang;
     
     private function __construct() {
-        $this->currentLang = $this->determineLanguage();
+        $this->currentLang = $this->detectBrowserLanguage();
         $this->loadTranslations();
+    }
+    
+    /**
+     * Detect language based on browser preferences
+     * @return string The detected language code (e.g., 'en', 'fr', etc.)
+     */
+    public static function detectBrowserLanguage() {
+        // Get available languages from config
+        $config = require __DIR__ . '/../config/languages.php';
+        $availableLanguages = array_keys($config['available_languages']);
+        
+        // Get browser language preference
+        $browserLang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'] ?? '', 0, 2);
+        
+        // Use browser language if supported, otherwise default to English
+        return in_array($browserLang, $availableLanguages) ? $browserLang : 'en';
     }
     
     public static function getInstance() {
