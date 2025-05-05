@@ -59,6 +59,7 @@ return [
     'admin_link_text' => 'Mergi la administrarea evenimentului',
     'scan_qr_to_answer' => 'Scanați codul QR pentru a răspunde',
     'admin_password_label' => 'Parolă administrator:',
+    'qrblock_scan_or_visit' => 'iwantto.be/involved',
     
     // Short description for landing page
     'short_description' => 'Nori de cuvinte, sondaje și retrospective – fă-ți întâlnirile interactive și de neuitat.',

@@ -63,6 +63,7 @@ return [
     'copy_success' => 'Link copied to clipboard!',
     'share_error' => 'Could not share. Link copied to clipboard instead.',
     'share_link_prompt' => 'Copy this link:',
+    'qrblock_scan_or_visit' => 'iwantto.be/involved',
     
     // OverlayClientHelper
     'admin_link_text' => 'Go to event administration',

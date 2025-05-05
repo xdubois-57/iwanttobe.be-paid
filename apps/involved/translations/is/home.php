@@ -59,6 +59,7 @@ return [
     'admin_link_text' => 'Fara í viðburðastjórnun',
     'scan_qr_to_answer' => 'Skannaðu QR-kóðann til að svara',
     'admin_password_label' => 'Stjórnendaleynd:',
+    'qrblock_scan_or_visit' => 'iwantto.be/involved',
     
     // Controller messages
     'event_create_failed' => 'Ekki tókst að búa til viðburð. Villa:',

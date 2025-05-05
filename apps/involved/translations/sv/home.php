@@ -57,6 +57,7 @@ return [
     'copy_success' => 'Länk kopierad till urklipp!',
     'share_error' => 'Kunde inte dela. Länk kopierad till urklipp istället.',
     'share_link_prompt' => 'Kopiera denna länk:',
+    'qrblock_scan_or_visit' => 'iwantto.be/involved',
     
     // OverlayClientHelper
     'admin_link_text' => 'Gå till händelseadministration',

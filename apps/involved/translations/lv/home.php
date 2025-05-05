@@ -51,6 +51,8 @@ return [
     'admin_link_text' => 'Doties uz pasākuma administrēšanu',
     'scan_qr_to_answer' => 'Skenējiet QR kodu, lai atbildētu',
     'admin_password_label' => 'Administratora parole:',
+    'qrblock_scan_or_visit' => 'iwantto.be/involved',
+    'scan_qr_access' => 'Skenējiet šo QR kodu, lai piekļūtu pasākumam',
     
     // Add word page
     'please_enter_word' => 'Lūdzu, ievadiet vārdu.',

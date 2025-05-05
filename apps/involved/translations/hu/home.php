@@ -59,6 +59,7 @@ return [
     'copy_success' => 'Link másolva a vágólapra!',
     'share_error' => 'Nem sikerült megosztani. A link helyette a vágólapra másolva.',
     'share_link_prompt' => 'Másolja ezt a linket:',
+    'qrblock_scan_or_visit' => 'iwantto.be/involved',
     
     // Short description for landing page
     'short_description' => 'Szófelhők, szavazások és retrospektívek – tedd az értekezleteidet interaktívvá és emlékezetessé.',

@@ -21,6 +21,14 @@ class EventQrBlock {
         const qrSvg = await this.fetchQrSvg(this.url);
         qrDiv.innerHTML = qrSvg;
         this.container.appendChild(qrDiv);
+        // Instruction text below QR code
+        const instructionDiv = document.createElement('div');
+        instructionDiv.style.marginTop = '0.7em';
+        instructionDiv.style.fontSize = '0.92em';
+        instructionDiv.style.color = 'var(--text-secondary, #888)';
+        instructionDiv.style.textAlign = 'center';
+        instructionDiv.innerHTML = this.escape(this.getTranslation('qrblock_scan_or_visit'));
+        this.container.appendChild(instructionDiv);
         // Event info
         const infoDiv = document.createElement('div');
         infoDiv.style.marginTop = '0.5em';
@@ -66,7 +74,8 @@ class EventQrBlock {
             'share_title': 'Join my event',
             'share_text': 'Join my event using code:',
             'copy_success': 'Link copied to clipboard!',
-            'share_error': 'Could not share. Link copied to clipboard instead.'
+            'share_error': 'Could not share. Link copied to clipboard instead.',
+            'qrblock_scan_or_visit': 'Scan the QR code or visit the link below'
         };
         
         // Return translation or key as fallback

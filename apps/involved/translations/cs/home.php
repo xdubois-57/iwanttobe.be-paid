@@ -59,6 +59,7 @@ return [
     'admin_link_text' => 'Přejít na správu události',
     'scan_qr_to_answer' => 'Naskenujte QR kód pro odpověď',
     'admin_password_label' => 'Heslo správce:',
+    'qrblock_scan_or_visit' => 'iwantto.be/involved',
     
     // Short description for landing page
     'short_description' => 'Word cloudy, ankety a retrospektivy – udělejte své schůzky interaktivními a nezapomenutelnými.',

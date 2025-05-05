@@ -56,6 +56,7 @@ return [
     'copy_success' => 'Link copiado para a área de transferência!',
     'share_error' => 'Não foi possível compartilhar. Link copiado para a área de transferência como alternativa.',
     'share_link_prompt' => 'Copie este link:',
+    'qrblock_scan_or_visit' => 'iwantto.be/involved',
     
     // OverlayClientHelper
     'admin_link_text' => 'Ir para administração do evento',

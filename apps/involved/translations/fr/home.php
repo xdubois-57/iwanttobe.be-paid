@@ -69,6 +69,7 @@ return [
     'copy_success' => 'Lien copié dans le presse-papiers!',
     'share_error' => 'Impossible de partager. Lien copié dans le presse-papiers à la place.',
     'share_link_prompt' => 'Copiez ce lien:',
+    'qrblock_scan_or_visit' => 'iwantto.be/involved',
     
     // Short description for landing page
     'short_description' => 'Nuages de mots, sondages et rétrospectives – rendez vos réunions interactives et inoubliables.',

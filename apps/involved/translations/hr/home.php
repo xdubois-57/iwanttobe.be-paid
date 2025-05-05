@@ -59,6 +59,7 @@ return [
     'admin_link_text' => 'Idi na administraciju događaja',
     'scan_qr_to_answer' => 'Skenirajte QR kod za odgovor',
     'admin_password_label' => 'Lozinka administratora:',
+    'qrblock_scan_or_visit' => 'iwantto.be/involved',
     
     // Short description for landing page
     'short_description' => 'Oblaci riječi, ankete i retrospektive – učinite svoje sastanke interaktivnima i nezaboravnima.',

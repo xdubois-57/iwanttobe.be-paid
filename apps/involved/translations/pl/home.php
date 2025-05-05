@@ -61,7 +61,8 @@ return [
     'copy_success' => 'Link skopiowany do schowka!',
     'share_error' => 'Nie udało się udostępnić. Link skopiowany do schowka zamiast tego.',
     'share_link_prompt' => 'Skopiuj ten link:',
-    
+    'qrblock_scan_or_visit' => 'iwantto.be/involved',
+    'qrblock_scan_or_visit' => 'iwantto.be/involved',
     // Short description for landing page
     'short_description' => 'Chmury słów, ankiety i retrospektywy – spraw, aby Twoje spotkania były interaktywne i niezapomniane.',
     

@@ -58,6 +58,7 @@ return [
     'copy_success' => 'Ο σύνδεσμος αντιγράφηκε στο πρόχειρο!',
     'share_error' => 'Δεν ήταν δυνατή η κοινοποίηση. Ο σύνδεσμος αντιγράφηκε στο πρόχειρο αντ\' αυτού.',
     'share_link_prompt' => 'Αντιγράψτε αυτόν τον σύνδεσμο:',
+    'qrblock_scan_or_visit' => 'iwantto.be/involved',
     
     // Controller messages
     'event_create_failed' => 'Η δημιουργία εκδήλωσης απέτυχε. Σφάλμα:',

@@ -59,8 +59,7 @@ return [
     'share_link_prompt' => 'Kopioi tämä linkki:',
     'admin_link_text' => 'Siirry tapahtuman hallintaan',
     'admin_password_label' => 'Ylläpitäjän salasana:',
-    
-    // Short description for landing page
+    'qrblock_scan_or_visit' => 'iwantto.be/involved',
     'short_description' => 'Sanapilvet, kyselyt ja retrospektiivit – tee kokouksistasi interaktiivisia ja unohtumattomia.',
     
     // Controller messages

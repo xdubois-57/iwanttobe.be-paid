@@ -56,6 +56,8 @@ return [
     'copy_success' => 'Link gekopieerd naar klembord!',
     'share_error' => 'Kon niet delen. Link in plaats daarvan naar klembord gekopieerd.',
     'share_link_prompt' => 'Kopieer deze link:',
+    'qrblock_scan_or_visit' => 'iwantto.be/involved',
+    'qrblock_scan_or_visit' => 'iwantto.be/involved',
     
     // OverlayClientHelper
     'admin_link_text' => 'Ga naar evenementbeheer',
