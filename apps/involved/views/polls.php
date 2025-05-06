@@ -50,6 +50,7 @@ $lang = LanguageController::getInstance();
         <!-- Right: QR code only -->
         <article style="grid-column: span 1; text-align:center;">
             <div id="poll-qr-block" style="margin:1rem 0;"></div>
+            <script src="/apps/involved/js/eventQrBlock.js"></script>
             <script>
             document.addEventListener('DOMContentLoaded',function(){
                 const scheme=window.location.protocol.replace(':','');
