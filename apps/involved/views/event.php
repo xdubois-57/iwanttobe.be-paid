@@ -192,8 +192,8 @@ use chillerlan\QRCode\QROptions;
                 <?php foreach ($eventItems as $item): ?>
                     <li class="wordcloud-list-item">
                         <div class="wordcloud-list-content">
+                        <span style="font-size:1.3em;vertical-align:middle;margin-right:0.5em;">≡</span>
                             <span class="wordcloud-list-question">
-                                <span style="font-size:1.2em;vertical-align:middle;margin-right:0.5em;">≡</span>
                                 <?php echo htmlspecialchars($item['question']); ?>
                             </span>
                             <form method="post" action="/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/<?php echo urlencode($eventData['key']); ?>/eventitem/<?php echo $item['id']; ?>/delete" style="display:inline;">
