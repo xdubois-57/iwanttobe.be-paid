@@ -174,14 +174,40 @@ use chillerlan\QRCode\QROptions;
             <?php else: ?>
             <p style="margin-top:1.5rem;"><?php echo htmlspecialchars($lang->translate('no_word_clouds')); ?></p>
             <?php endif; ?>
-            
             <form method="post" action="/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/<?php echo urlencode($eventData['key']); ?>/wordcloud/create" style="margin-top:1.5rem;">
                 <input type="text" name="question" placeholder="<?php echo htmlspecialchars($lang->translate('enter_question_placeholder')); ?>" required style="width:100%;margin-bottom:0.5rem;">
                 <button class="primary" type="submit" style="width:100%;"><?php echo htmlspecialchars($lang->translate('create_word_cloud_button')); ?></button>
             </form>
         </article>
+        <!-- Right column (1/4 width): Event Items List -->
+        <article style="grid-column: span 1;">
+            <h3 style="margin-top:1.5rem;">Event Items</h3>
+            <?php
+            require_once __DIR__ . '/../models/EventItemModel.php';
+            $eventItemModel = new EventItemModel();
+            $eventItems = $eventItemModel->getByEvent($eventData['id']);
+            ?>
+            <div style="margin-top:1rem;">
+                <ul id="event-item-list" style="list-style:none; padding:0;">
+                <?php foreach ($eventItems as $item): ?>
+                    <li class="wordcloud-list-item">
+                        <div class="wordcloud-list-content">
+                            <span class="wordcloud-list-question">
+                                <?php echo htmlspecialchars($item['question']); ?>
+                            </span>
+                            <form method="post" action="/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/<?php echo urlencode($eventData['key']); ?>/eventitem/<?php echo $item['id']; ?>/delete" style="display:inline;">
+                                <button type="submit" class="word-cloud-delete" title="Delete event item" onclick="return confirm('Are you sure you want to delete this event item?');">×</button>
+                            </form>
+                        </div>
+                    </li>
+                <?php endforeach; ?>
+                <?php if (empty($eventItems)): ?>
+                    <li><em>No event items yet.</em></li>
+                <?php endif; ?>
+                </ul>
+            </div>
+        </article>
     </div>
-</main>
 
 <script>
 document.querySelectorAll('.delete-wordcloud-form').forEach(form => {

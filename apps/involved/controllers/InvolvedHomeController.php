@@ -532,4 +532,45 @@ class InvolvedHomeController {
         }
         require_once __DIR__ . '/../views/waiting_room.php';
     }
+
+    /**
+     * Delete an event item by ID (POST)
+     * Route: /{lang}/involved/{code}/eventitem/{itemid}/delete
+     */
+    public function deleteEventItem($params = []) {
+        $code = strtoupper($params['code'] ?? '');
+        $itemId = (int)($params['itemid'] ?? 0);
+        $langSlug = $params['lang'] ?? LanguageController::getInstance()->getCurrentLanguage();
+
+        require_once __DIR__ . '/../models/EventModel.php';
+        require_once __DIR__ . '/../models/EventItemModel.php';
+        $eventModel = new EventModel();
+        $event = $eventModel->getByKey($code);
+        if (!$event) {
+            http_response_code(404);
+            echo LanguageController::getInstance()->translate('event_not_found');
+            return;
+        }
+        // Authorization check
+        if (!empty($event['password']) && !$this->isAuthorized($code)) {
+            http_response_code(403);
+            echo LanguageController::getInstance()->translate('unauthorized');
+            return;
+        }
+        $eventItemModel = new EventItemModel();
+        $item = $eventItemModel->getById($itemId);
+        if (!$item || (int)$item['event_id'] !== (int)$event['id']) {
+            http_response_code(404);
+            echo LanguageController::getInstance()->translate('event_item_not_found');
+            return;
+        }
+        $success = $eventItemModel->delete($itemId);
+        if ($success) {
+            header('Location: /' . $langSlug . '/involved/' . urlencode($code));
+        } else {
+            http_response_code(500);
+            echo LanguageController::getInstance()->translate('delete_failed');
+        }
+        exit;
+    }
 }

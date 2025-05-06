@@ -44,4 +44,30 @@ class EventItemModel
         $row = $this->db->fetchOne('SELECT * FROM EVENT_ITEM WHERE id = ?', [$id]);
         return $row === false ? null : $row;
     }
+
+    /**
+     * Fetch all event items for a given event, ordered by position.
+     *
+     * @param int $eventId
+     * @return array
+     */
+    public function getByEvent(int $eventId): array
+    {
+        $rows = $this->db->fetchAll('SELECT * FROM EVENT_ITEM WHERE event_id = ? ORDER BY position ASC, created_at ASC', [$eventId]);
+        return $rows ?? [];
+    }
+
+    /**
+     * Delete an event item by ID.
+     * @param int $id
+     * @return bool success
+     */
+    public function delete(int $id): bool
+    {
+        if (!$this->db->isConnected()) {
+            Logger::getInstance()->error('DB connection failed: ' . $this->db->getErrorMessage());
+            return false;
+        }
+        return $this->db->delete('EVENT_ITEM', 'id = ?', [$id]);
+    }
 }

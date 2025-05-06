@@ -142,6 +142,22 @@ class WordCloudModel
      */
     public function delete(int $id): bool
     {
-        return $this->db->delete('WORDCLOUD', 'id = ?', [$id]);
+        // Fetch the event_item_id before deleting the wordcloud
+        $row = $this->db->fetchOne('SELECT event_item_id FROM WORDCLOUD WHERE id = ?', [$id]);
+        if (!$row) {
+            Logger::getInstance()->warning('Attempted to delete non-existent wordcloud id: ' . $id);
+            return false;
+        }
+        $eventItemId = $row['event_item_id'];
+
+        // Delete the wordcloud entry
+        $deleted = $this->db->delete('WORDCLOUD', 'id = ?', [$id]);
+        if ($deleted) {
+            // Delete the corresponding event item
+            $eventItemModel = new EventItemModel();
+            $eventItemModel->delete($eventItemId);
+            Logger::getInstance()->info('Deleted wordcloud and corresponding event_item id: ' . $eventItemId);
+        }
+        return $deleted;
     }
 }
