@@ -152,36 +152,22 @@ use chillerlan\QRCode\QROptions;
     <div class="grid" style="margin-top: 2rem; gap: 2rem;">
         <!-- Left column (3/4 width) -->
         <article style="grid-column: span 3;">
-            <?php if (!empty($wordClouds)): ?>
-            <h3 style="margin-top:1.5rem;"><?php echo htmlspecialchars($lang->translate('word_clouds_title')); ?></h3>
-            <div style="margin-top:1rem;">
-                <ul id="word-list" style="list-style:none; padding:0;">
-                <?php foreach ($wordClouds as $wc): ?>
-                    <li class="wordcloud-list-item">
-                        <div class="wordcloud-list-content" onclick="window.open('/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/<?php echo urlencode($eventData['key']); ?>/wordcloud/<?php echo $wc['id']; ?>', '_blank');">
-                            <span class="wordcloud-list-question">
-                                <?php echo htmlspecialchars($wc['question']); ?>
-                            </span>
-                            <button type="button" class="word-cloud-delete"
-                                onclick="event.preventDefault(); event.stopPropagation(); deleteWordCloud('<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>', '<?php echo htmlspecialchars($eventData['key']); ?>', <?php echo $wc['id']; ?>)">
-                                ×
-                            </button>
-                        </div>
-                    </li>
-                <?php endforeach; ?>
-                </ul>
-            </div>
-            <?php else: ?>
-            <p style="margin-top:1.5rem;"><?php echo htmlspecialchars($lang->translate('no_word_clouds')); ?></p>
-            <?php endif; ?>
+            <h3 style="margin-top:1.5rem;">Add a new question</h3>
             <form method="post" action="/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/<?php echo urlencode($eventData['key']); ?>/wordcloud/create" style="margin-top:1.5rem;">
+                <label for="event-item-type" style="font-weight:bold;">Type</label>
+                <select id="event-item-type" name="event_item_type" style="width:100%;margin-bottom:0.5rem;">
+                    <option value="wordcloud" selected>Word cloud</option>
+                    <option value="multiple_choice">Multiple choice</option>
+                    <option value="text">Text</option>
+                    <!-- Add more types as needed -->
+                </select>
                 <input type="text" name="question" placeholder="<?php echo htmlspecialchars($lang->translate('enter_question_placeholder')); ?>" required style="width:100%;margin-bottom:0.5rem;">
-                <button class="primary" type="submit" style="width:100%;"><?php echo htmlspecialchars($lang->translate('create_word_cloud_button')); ?></button>
+                <button class="primary" type="submit" style="width:100%;">Add question</button>
             </form>
         </article>
         <!-- Right column (1/4 width): Event Items List -->
         <article style="grid-column: span 1;">
-            <h3 style="margin-top:1.5rem;">Event Items</h3>
+            <h3 style="margin-top:1.5rem;">Questions</h3>
             <?php
             require_once __DIR__ . '/../models/EventItemModel.php';
             $eventItemModel = new EventItemModel();
@@ -190,9 +176,9 @@ use chillerlan\QRCode\QROptions;
             <div style="margin-top:1rem;">
                 <ul id="event-item-list" style="list-style:none; padding:0;">
                 <?php foreach ($eventItems as $item): ?>
-                    <li class="wordcloud-list-item">
+                    <li class="wordcloud-list-item" data-id="<?php echo $item['id']; ?>">
                         <div class="wordcloud-list-content">
-                        <span style="font-size:1.3em;vertical-align:middle;margin-right:0.5em;">≡</span>
+                            <span class="drag-handle" style="font-size:1.3em;vertical-align:middle;margin-right:0.5em;cursor:grab;">≡</span>
                             <span class="wordcloud-list-question">
                                 <?php echo htmlspecialchars($item['question']); ?>
                             </span>
@@ -207,6 +193,33 @@ use chillerlan\QRCode\QROptions;
                 <?php endif; ?>
                 </ul>
             </div>
+            <!-- SortableJS CDN for drag-and-drop -->
+            <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+            <script>
+            (function() {
+                const list = document.getElementById('event-item-list');
+                if (!list) return;
+                const sortable = new Sortable(list, {
+                    handle: '.drag-handle',
+                    animation: 150,
+                    onEnd: function () {
+                        const orderedIds = Array.from(list.querySelectorAll('li')).map(li => parseInt(li.getAttribute('data-id'), 10));
+                        fetch('/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/<?php echo urlencode($eventData['key']); ?>/eventitem/reorder', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ orderedIds })
+                        })
+                        .then(res => res.json())
+                        .then(data => {
+                            if (!data.success) {
+                                console.error('Reorder failed', data.error);
+                            }
+                        })
+                        .catch(err => console.error('Reorder error', err));
+                    }
+                });
+            })();
+            </script>
         </article>
     </div>
 

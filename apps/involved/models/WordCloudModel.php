@@ -20,9 +20,10 @@ class WordCloudModel
      * @param int $eventId
      * @param string $question
      * @param int $position optional ordering value
+     * @param string $type event item type
      * @return int|false inserted ID or false
      */
-    public function create(int $eventId, string $question, int $position = 0): int|false
+    public function create(int $eventId, string $question, int $position = 0, string $type = 'wordcloud'): int|false
     {
         if (!$this->db->isConnected()) {
             Logger::getInstance()->error('DB connection failed: ' . $this->db->getErrorMessage());
@@ -30,7 +31,7 @@ class WordCloudModel
         }
         // First create an event item record
         $eventItemModel = new EventItemModel();
-        $eventItemId = $eventItemModel->create($eventId, $question, $position);
+        $eventItemId = $eventItemModel->create($eventId, $question, $position, $type);
 
         if ($eventItemId === false) {
             Logger::getInstance()->error('Failed to create EVENT_ITEM for word cloud');

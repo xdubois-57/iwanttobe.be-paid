@@ -91,6 +91,10 @@ class InvolvedApp implements AppInterface {
         $router->get('/{lang}/involved/{code}', 'InvolvedHomeController@show');
         $router->post('/{lang}/involved/verify-password', 'InvolvedHomeController@verifyPassword');
         
+        // Event item routes
+        $router->post('/{lang}/involved/{code}/eventitem/{itemid}/delete', 'InvolvedHomeController@deleteEventItem');
+        $router->post('/{lang}/involved/{code}/eventitem/reorder', 'InvolvedHomeController@reorderEventItems');
+        
         // AJAX endpoints
         $router->post('/{lang}/involved/ajax/like', 'InvolvedAjaxController@incrementLikes');
         $router->get('/{lang}/involved/ajax/likes', 'InvolvedAjaxController@getLikes');

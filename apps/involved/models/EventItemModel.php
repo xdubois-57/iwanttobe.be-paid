@@ -20,9 +20,10 @@ class EventItemModel
      * @param int $eventId  The parent event ID
      * @param string $question  The question text
      * @param int $position  Position/order among other items (optional)
+     * @param string $type  The type of the event item (e.g., 'wordcloud', 'multiple_choice', etc.)
      * @return int|false  Inserted ID on success, false on failure
      */
-    public function create(int $eventId, string $question, int $position = 0): int|false
+    public function create(int $eventId, string $question, int $position = 0, string $type = 'wordcloud'): int|false
     {
         if (!$this->db->isConnected()) {
             Logger::getInstance()->error('DB connection failed: ' . $this->db->getErrorMessage());
@@ -33,6 +34,7 @@ class EventItemModel
             'event_id' => $eventId,
             'question' => $question,
             'position' => $position,
+            'type' => $type
         ]);
     }
 
@@ -69,5 +71,33 @@ class EventItemModel
             return false;
         }
         return $this->db->delete('EVENT_ITEM', 'id = ?', [$id]);
+    }
+
+    /**
+     * Update positions of multiple event items in the provided order (0-based).
+     * @param int[] $orderedIds ordered array of event_item IDs
+     * @return bool success
+     */
+    public function updatePositions(array $orderedIds): bool
+    {
+        if (!$this->db->isConnected()) {
+            Logger::getInstance()->error('DB connection failed: ' . $this->db->getErrorMessage());
+            return false;
+        }
+        
+        $success = true;
+        foreach ($orderedIds as $pos => $id) {
+            $result = $this->db->query('UPDATE `EVENT_ITEM` SET `position` = ? WHERE `id` = ?', [$pos, $id]);
+            if ($result === false) {
+                $success = false;
+                Logger::getInstance()->error('Failed to update position for event_item ' . $id . ' to ' . $pos . ': ' . $this->db->getErrorMessage());
+            }
+        }
+        
+        if ($success) {
+            Logger::getInstance()->info('Updated positions for ' . count($orderedIds) . ' event items');
+        }
+        
+        return $success;
     }
 }

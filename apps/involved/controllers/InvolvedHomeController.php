@@ -261,8 +261,10 @@ class InvolvedHomeController {
      * Create a word cloud for an event
      */
     public function createWordCloud($params = []) {
+        Logger::getInstance()->debug('Route called: createWordCloud with params: ' . json_encode($params) . ', POST: ' . json_encode($_POST));
         $code = strtoupper($params['code'] ?? '');
         $question = isset($_POST['question']) ? trim($_POST['question']) : '';
+        $eventItemType = isset($_POST['event_item_type']) ? trim($_POST['event_item_type']) : 'wordcloud';
         $langSlug = $params['lang'] ?? LanguageController::getInstance()->getCurrentLanguage();
 
         if ($code === '' || $question === '') {
@@ -286,7 +288,8 @@ class InvolvedHomeController {
         }
 
         $wcModel = new WordCloudModel();
-        $newId = $wcModel->create((int)$event['id'], $question);
+        $newId = $wcModel->create((int)$event['id'], $question, 0, $eventItemType);
+        Logger::getInstance()->debug('WordCloudModel::create returned: ' . json_encode($newId));
 
         header('Location: /' . $langSlug . '/involved/' . urlencode($code));
         exit;
@@ -572,5 +575,38 @@ class InvolvedHomeController {
             echo LanguageController::getInstance()->translate('delete_failed');
         }
         exit;
+    }
+
+    /**
+     * Update the order of event items via AJAX
+     * POST JSON: { orderedIds: [id1, id2, ...] }
+     * Route: /{lang}/involved/{code}/eventitem/reorder
+     */
+    public function reorderEventItems($params = []) {
+        $code = strtoupper($params['code'] ?? '');
+        $langSlug = $params['lang'] ?? LanguageController::getInstance()->getCurrentLanguage();
+        $payload = json_decode(file_get_contents('php://input'), true);
+        $orderedIds = $payload['orderedIds'] ?? null;
+        header('Content-Type: application/json');
+        if (!$orderedIds || !is_array($orderedIds)) {
+            echo json_encode(['success' => false, 'error' => 'Invalid payload']);
+            return;
+        }
+        require_once __DIR__ . '/../models/EventModel.php';
+        require_once __DIR__ . '/../models/EventItemModel.php';
+        $eventModel = new EventModel();
+        $event = $eventModel->getByKey($code);
+        if (!$event) {
+            echo json_encode(['success' => false, 'error' => 'Event not found']);
+            return;
+        }
+        // Authorization
+        if (!empty($event['password']) && !$this->isAuthorized($code)) {
+            echo json_encode(['success' => false, 'error' => 'Unauthorized']);
+            return;
+        }
+        $eventItemModel = new EventItemModel();
+        $success = $eventItemModel->updatePositions($orderedIds);
+        echo json_encode(['success' => $success]);
     }
 }
