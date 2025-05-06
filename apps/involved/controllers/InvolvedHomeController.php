@@ -641,6 +641,9 @@ class InvolvedHomeController {
             return;
         }
 
+        require_once __DIR__ . '/../models/PollModel.php';
+        require_once __DIR__ . '/../models/PollAnswerModel.php';
+        require_once __DIR__ . '/../models/EventItemModel.php';
         $pollModel = new PollModel();
         $poll = $pollModel->getById($pid);
         if (!$poll) {

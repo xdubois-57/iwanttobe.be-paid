@@ -47,7 +47,7 @@ $lang = LanguageController::getInstance();
                 </a>
             </div>
         </article>
-        <!-- Right: QR + answers form -->
+        <!-- Right: QR code only -->
         <article style="grid-column: span 1; text-align:center;">
             <div id="poll-qr-block" style="margin:1rem 0;"></div>
             <script>
@@ -62,14 +62,18 @@ $lang = LanguageController::getInstance();
                 new EventQrBlock('#poll-qr-block', addVoteUrl, eventKey, eventPassword, '', true);
             });
             </script>
-            <h3 style="margin-top:1rem;">Add possible answer</h3>
-            <form id="add-answer-form" style="margin-top:0.5rem;">
-                <input type="text" id="answer-value" placeholder="Answer" required style="width:100%; margin-bottom:0.5rem;">
-                <button type="submit" class="primary" style="width:100%;">Add</button>
-            </form>
-            <ul id="answer-list" style="list-style:none;padding:0;margin-top:1rem;text-align:left;"></ul>
         </article>
     </div>
+
+    <!-- Add possible answers section in a separate article below -->
+    <article style="margin-top:2rem;">
+        <h3>Add possible answer</h3>
+        <form id="add-answer-form" style="margin-top:0.5rem;">
+            <input type="text" id="answer-value" placeholder="Answer" required style="width:100%; margin-bottom:0.5rem;">
+            <button type="submit" class="primary" style="width:100%;">Add</button>
+        </form>
+        <ul id="answer-list" style="list-style:none;padding:0;margin-top:1rem;text-align:left;"></ul>
+    </article>
 
 </main>
 <script>
