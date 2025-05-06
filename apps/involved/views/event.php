@@ -158,6 +158,9 @@ use chillerlan\QRCode\QROptions;
                 <select id="event-item-type" name="event_item_type" style="width:100%;margin-bottom:0.5rem;">
                     <option value="wordcloud" selected>Word cloud</option>
                     <option value="horizontal_bar_chart">Horizontal bar chart</option>
+                    <option value="vertical_bar_chart">Vertical bar chart</option>
+                    <option value="pie_chart">Pie chart</option>
+                    <option value="doughnut">Doughnut</option>
                 </select>
                 <input type="text" name="question" placeholder="<?php echo htmlspecialchars($lang->translate('enter_question_placeholder')); ?>" required style="width:100%;margin-bottom:0.5rem;">
                 <button class="primary" type="submit" style="width:100%;">Add question</button>
@@ -190,7 +193,7 @@ use chillerlan\QRCode\QROptions;
                                     $wc = $wcModel->getByEventItemId($item['id']);
                                     $itemId = $wc ? $wc['id'] : null;
                                     $itemLink = '/' . htmlspecialchars($lang->getCurrentLanguage()) . '/involved/' . urlencode($eventData['key']) . '/wordcloud/' . $itemId;
-                                } else if ($itemType === 'horizontal_bar_chart') {
+                                } else if (in_array($itemType, ['horizontal_bar_chart','vertical_bar_chart','pie_chart','doughnut'])) {
                                     require_once __DIR__ . '/../models/PollModel.php';
                                     $pollModel = new PollModel();
                                     $poll = $pollModel->getByEventItemId($item['id']);

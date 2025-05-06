@@ -291,18 +291,18 @@ class InvolvedHomeController {
             $wcModel = new WordCloudModel();
             $newId = $wcModel->create((int)$event['id'], $question, 0, $eventItemType);
             Logger::getInstance()->debug('WordCloudModel::create returned: ' . json_encode($newId));
-        } else if ($eventItemType === 'horizontal_bar_chart') {
-            // create poll
+        } else if (in_array($eventItemType, ['horizontal_bar_chart','vertical_bar_chart','pie_chart','doughnut'])) {
+            // create poll for various chart types
             require_once __DIR__ . '/../models/EventItemModel.php';
             require_once __DIR__ . '/../models/PollModel.php';
             $eventItemModel = new EventItemModel();
-            $eid = $eventItemModel->create((int)$event['id'], $question, 0, 'horizontal_bar_chart');
+            $eid = $eventItemModel->create((int)$event['id'], $question, 0, $eventItemType);
             if ($eid !== false) {
                 $pollModel = new PollModel();
-                $pid = $pollModel->create($eid, 'horizontal_bar_chart');
-                Logger::getInstance()->info('Created poll ' . $pid . ' for event item ' . $eid);
+                $pid = $pollModel->create($eid, $eventItemType);
+                Logger::getInstance()->info('Created poll ' . $pid . ' (type '.$eventItemType.') for event item ' . $eid);
             } else {
-                Logger::getInstance()->error('Failed to create event item for poll');
+                Logger::getInstance()->error('Failed to create event item for poll type '.$eventItemType);
             }
         }
 
