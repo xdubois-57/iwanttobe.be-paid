@@ -4,6 +4,7 @@
  */
 require_once __DIR__ . '/../../../lib/DatabaseHelper.php';
 require_once __DIR__ . '/../../../lib/Logger.php';
+require_once __DIR__ . '/EventItemModel.php';
 
 class WordCloudModel
 {
@@ -18,17 +19,27 @@ class WordCloudModel
      * Create a word cloud for an event
      * @param int $eventId
      * @param string $question
+     * @param int $position optional ordering value
      * @return int|false inserted ID or false
      */
-    public function create(int $eventId, string $question): int|false
+    public function create(int $eventId, string $question, int $position = 0): int|false
     {
         if (!$this->db->isConnected()) {
             Logger::getInstance()->error('DB connection failed: ' . $this->db->getErrorMessage());
             return false;
         }
+        // First create an event item record
+        $eventItemModel = new EventItemModel();
+        $eventItemId = $eventItemModel->create($eventId, $question, $position);
+
+        if ($eventItemId === false) {
+            Logger::getInstance()->error('Failed to create EVENT_ITEM for word cloud');
+            return false;
+        }
+
+        // Create the word cloud referencing the new event_item_id
         return $this->db->insert('WORDCLOUD', [
-            'event_id' => $eventId,
-            'question' => $question
+            'event_item_id' => $eventItemId
         ]);
     }
 
@@ -111,7 +122,8 @@ class WordCloudModel
      */
     public function getByEvent(int $eventId): array
     {
-        return $this->db->fetchAll('SELECT id, question, created_at FROM WORDCLOUD WHERE event_id = ? ORDER BY created_at DESC', [$eventId]) ?? [];
+        $rows = $this->db->fetchAll('SELECT wc.id, ei.question, ei.created_at FROM WORDCLOUD wc JOIN EVENT_ITEM ei ON wc.event_item_id = ei.id WHERE ei.event_id = ? ORDER BY ei.created_at DESC', [$eventId]);
+        return $rows ?? [];
     }
 
     /**
@@ -121,7 +133,7 @@ class WordCloudModel
      */
     public function getById(int $id): ?array
     {
-        $result = $this->db->fetchOne('SELECT * FROM WORDCLOUD WHERE id = ?', [$id]);
+        $result = $this->db->fetchOne('SELECT wc.*, ei.event_id, ei.question, ei.position FROM WORDCLOUD wc JOIN EVENT_ITEM ei ON wc.event_item_id = ei.id WHERE wc.id = ?', [$id]);
         return $result === false ? null : $result;
     }
 
