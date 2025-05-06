@@ -287,9 +287,24 @@ class InvolvedHomeController {
             exit;
         }
 
-        $wcModel = new WordCloudModel();
-        $newId = $wcModel->create((int)$event['id'], $question, 0, $eventItemType);
-        Logger::getInstance()->debug('WordCloudModel::create returned: ' . json_encode($newId));
+        if ($eventItemType === 'wordcloud') {
+            $wcModel = new WordCloudModel();
+            $newId = $wcModel->create((int)$event['id'], $question, 0, $eventItemType);
+            Logger::getInstance()->debug('WordCloudModel::create returned: ' . json_encode($newId));
+        } else if ($eventItemType === 'horizontal_bar_chart') {
+            // create poll
+            require_once __DIR__ . '/../models/EventItemModel.php';
+            require_once __DIR__ . '/../models/PollModel.php';
+            $eventItemModel = new EventItemModel();
+            $eid = $eventItemModel->create((int)$event['id'], $question, 0, 'horizontal_bar_chart');
+            if ($eid !== false) {
+                $pollModel = new PollModel();
+                $pid = $pollModel->create($eid, 'horizontal_bar_chart');
+                Logger::getInstance()->info('Created poll ' . $pid . ' for event item ' . $eid);
+            } else {
+                Logger::getInstance()->error('Failed to create event item for poll');
+            }
+        }
 
         header('Location: /' . $langSlug . '/involved/' . urlencode($code));
         exit;
@@ -608,5 +623,111 @@ class InvolvedHomeController {
         $eventItemModel = new EventItemModel();
         $success = $eventItemModel->updatePositions($orderedIds);
         echo json_encode(['success' => $success]);
+    }
+
+    /* ---------- P O L L S  ---------- */
+
+    public function showPoll($params = []) {
+        Logger::getInstance()->debug('showPoll called with ' . json_encode($params));
+        $code = strtoupper($params['code'] ?? '');
+        $pid  = (int)($params['pid'] ?? 0);
+        $langSlug = $params['lang'] ?? LanguageController::getInstance()->getCurrentLanguage();
+
+        $eventModel = new EventModel();
+        $event = $eventModel->getByKey($code);
+        if (!$event) {
+            http_response_code(404);
+            echo 'Event not found';
+            return;
+        }
+
+        $pollModel = new PollModel();
+        $poll = $pollModel->getById($pid);
+        if (!$poll) {
+            http_response_code(404);
+            echo 'Poll not found';
+            return;
+        }
+
+        $eventItemModel = new EventItemModel();
+        $eventItem = $eventItemModel->getById((int)$poll['event_item_id']);
+
+        $pollAnswerModel = new PollAnswerModel();
+        $answers = $pollAnswerModel->getByPoll($pid);
+
+        $lang = LanguageController::getInstance();
+        $lang->loadAppTranslationsForPath(__DIR__ . '/../translations');
+        require __DIR__ . '/../views/polls.php';
+    }
+
+    public function getPollAnswers($params = []) {
+        $pid = (int)($params['pid'] ?? 0);
+        require_once __DIR__ . '/../models/PollAnswerModel.php';
+        $pam = new PollAnswerModel();
+        $answers = $pam->getByPoll($pid);
+        header('Content-Type: application/json');
+        echo json_encode(['success' => true, 'answers' => $answers]);
+    }
+
+    public function addPollAnswer($params = []) {
+        $pid = (int)($params['pid'] ?? 0);
+        $value = isset($_POST['value']) ? trim($_POST['value']) : '';
+        Logger::getInstance()->debug('addPollAnswer pid=' . $pid . ' value=' . $value);
+        header('Content-Type: application/json');
+        if ($value === '') {
+            echo json_encode(['success' => false, 'error' => 'empty']);
+            return;
+        }
+        require_once __DIR__ . '/../models/PollAnswerModel.php';
+        $pam = new PollAnswerModel();
+        $id = $pam->create($pid, $value);
+        echo json_encode(['success' => $id !== false, 'id' => $id]);
+    }
+
+    public function votePollAnswer($params = []) {
+        $pid = (int)($params['pid'] ?? 0);
+        $aid = (int)($params['aid'] ?? 0);
+        Logger::getInstance()->debug('votePollAnswer pid=' . $pid . ' aid=' . $aid);
+        require_once __DIR__ . '/../models/PollAnswerModel.php';
+        $pam = new PollAnswerModel();
+        $ok = $pam->incrementVote($aid);
+        header('Content-Type: application/json');
+        echo json_encode(['success' => $ok]);
+    }
+
+    public function showPollAnswerForm($params = []) {
+        require_once __DIR__ . '/../models/PollModel.php';
+        require_once __DIR__ . '/../models/PollAnswerModel.php';
+        
+        $pid = (int)($params['pid'] ?? 0);
+        $code = strtoupper($params['code'] ?? '');
+        $langSlug = $params['lang'] ?? LanguageController::getInstance()->getCurrentLanguage();
+
+        $eventModel = new EventModel();
+        $event = $eventModel->getByKey($code);
+        if (!$event) {
+            http_response_code(404);
+            echo 'Event not found';
+            return;
+        }
+
+        $pollModel = new PollModel();
+        $poll = $pollModel->getById($pid);
+        if (!$poll) {
+            http_response_code(404);
+            echo 'Poll not found';
+            return;
+        }
+
+        $pollAnswerModel = new PollAnswerModel();
+        $answers = $pollAnswerModel->getByPoll($pid);
+
+        require __DIR__ . '/../views/answer_poll_form.php';
+    }
+
+    public function createPoll($params = []) {
+        // For backward compatibility: use createWordCloud with type horizontal_bar_chart
+        $_POST['event_item_type'] = 'horizontal_bar_chart';
+        $this->createWordCloud($params);
     }
 }

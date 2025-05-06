@@ -11,6 +11,8 @@ DROP TABLE IF EXISTS `OVERLAY_PRESENCE`;
 DROP TABLE IF EXISTS `OVERLAY_OBJECT`;
 DROP TABLE IF EXISTS `EVENT_ITEM`;
 DROP TABLE IF EXISTS `EVENT`;
+DROP TABLE IF EXISTS `POLLS`;
+DROP TABLE IF EXISTS `POLL_ANSWERS`;
 
 -- Turn foreign key checks back on
 SET FOREIGN_KEY_CHECKS = 1;
@@ -78,9 +80,32 @@ CREATE TABLE IF NOT EXISTS `OVERLAY_PRESENCE` (
     UNIQUE KEY `unique_presence` (`overlay_object_id`, `phpsessid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- Create POLLS table
+CREATE TABLE IF NOT EXISTS `POLLS` (
+    `id` BIGINT AUTO_INCREMENT PRIMARY KEY,
+    `event_item_id` BIGINT NOT NULL,
+    `type` VARCHAR(32) NOT NULL,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (`event_item_id`) REFERENCES `EVENT_ITEM`(`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Create POLL_ANSWERS table
+CREATE TABLE IF NOT EXISTS `POLL_ANSWERS` (
+    `id` BIGINT AUTO_INCREMENT PRIMARY KEY,
+    `poll_id` BIGINT NOT NULL,
+    `value` TEXT NOT NULL,
+    `votes` INT DEFAULT 0,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (`poll_id`) REFERENCES `POLLS`(`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 -- Add indexes for better performance
 CREATE INDEX idx_e_key ON EVENT(`key`);
 CREATE INDEX idx_wc_event_item_id ON WORDCLOUD(`event_item_id`);
 CREATE INDEX idx_w_wordcloud_id ON WORD(`wordcloud_id`);
+CREATE INDEX idx_polls_event_item_id ON POLLS(`event_item_id`);
+CREATE INDEX idx_pa_poll_id ON POLL_ANSWERS(`poll_id`);
 CREATE INDEX idx_oo_url ON OVERLAY_OBJECT(`url`);
 CREATE INDEX idx_op_overlay_object_id ON OVERLAY_PRESENCE(`overlay_object_id`);

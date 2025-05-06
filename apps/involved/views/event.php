@@ -157,9 +157,7 @@ use chillerlan\QRCode\QROptions;
                 <label for="event-item-type" style="font-weight:bold;">Type</label>
                 <select id="event-item-type" name="event_item_type" style="width:100%;margin-bottom:0.5rem;">
                     <option value="wordcloud" selected>Word cloud</option>
-                    <option value="multiple_choice">Multiple choice</option>
-                    <option value="text">Text</option>
-                    <!-- Add more types as needed -->
+                    <option value="horizontal_bar_chart">Horizontal bar chart</option>
                 </select>
                 <input type="text" name="question" placeholder="<?php echo htmlspecialchars($lang->translate('enter_question_placeholder')); ?>" required style="width:100%;margin-bottom:0.5rem;">
                 <button class="primary" type="submit" style="width:100%;">Add question</button>

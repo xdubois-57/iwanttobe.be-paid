@@ -88,6 +88,15 @@ class InvolvedApp implements AppInterface {
         $router->get('/{lang}/involved/{code}/wordcloud/{wcid}/add', 'InvolvedHomeController@showAddWordForm');
         $router->post('/{lang}/involved/{code}/wordcloud/{wcid}/add', 'InvolvedHomeController@addWord');
         $router->post('/{lang}/involved/{code}/wordcloud/{wcid}/word/delete', 'InvolvedHomeController@deleteWord');
+        
+        // Poll routes
+        $router->post('/{lang}/involved/{code}/poll/create', 'InvolvedHomeController@createPoll');
+        $router->get('/{lang}/involved/{code}/poll/{pid}', 'InvolvedHomeController@showPoll');
+        $router->get('/{lang}/involved/{code}/poll/{pid}/answers', 'InvolvedHomeController@getPollAnswers');
+        $router->post('/{lang}/involved/{code}/poll/{pid}/answer/add', 'InvolvedHomeController@addPollAnswer');
+        $router->post('/{lang}/involved/{code}/poll/{pid}/answer/{aid}/vote', 'InvolvedHomeController@votePollAnswer');
+        $router->get('/{lang}/involved/{code}/poll/{pid}/answer', 'InvolvedHomeController@showPollAnswerForm');
+        
         $router->get('/{lang}/involved/{code}', 'InvolvedHomeController@show');
         $router->post('/{lang}/involved/verify-password', 'InvolvedHomeController@verifyPassword');
         
