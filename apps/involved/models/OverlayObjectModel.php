@@ -3,6 +3,7 @@
  * OverlayObjectModel – wraps OVERLAY_OBJECT table operations.
  */
 require_once __DIR__ . '/../../../lib/DatabaseHelper.php';
+require_once __DIR__ . '/../../../lib/Logger.php';
 
 class OverlayObjectModel
 {
@@ -23,7 +24,7 @@ class OverlayObjectModel
     public function appendEmoji(string $url, string $emoji): bool
     {
         if (!$this->db->isConnected()) {
-            error_log('DB connection failed: ' . $this->db->getErrorMessage());
+            Logger::getInstance()->error('DB connection failed: ' . $this->db->getErrorMessage());
             return false;
         }
 
@@ -48,7 +49,7 @@ class OverlayObjectModel
             return true;
         } catch (Exception $e) {
             $this->db->rollback();
-            error_log('Failed to append emoji: ' . $e->getMessage());
+            Logger::getInstance()->error('Failed to append emoji: ' . $e->getMessage());
             return false;
         }
     }
@@ -63,7 +64,7 @@ class OverlayObjectModel
     public function popQueuedEmojis(string $url, int $max = 10): array
     {
         if (!$this->db->isConnected()) {
-            error_log('DB connection failed: ' . $this->db->getErrorMessage());
+            Logger::getInstance()->error('DB connection failed: ' . $this->db->getErrorMessage());
             return [];
         }
 
@@ -85,7 +86,7 @@ class OverlayObjectModel
             return $popped;
         } catch (Exception $e) {
             $this->db->rollback();
-            error_log('Failed to pop emojis: ' . $e->getMessage());
+            Logger::getInstance()->error('Failed to pop emojis: ' . $e->getMessage());
             return [];
         }
     }

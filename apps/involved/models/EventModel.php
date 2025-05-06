@@ -3,6 +3,7 @@
  * EventModel – wraps EVENT table operations for Involved! app.
  */
 require_once __DIR__ . '/../../../lib/DatabaseHelper.php';
+require_once __DIR__ . '/../../../lib/Logger.php';
 
 class EventModel
 {
@@ -22,7 +23,7 @@ class EventModel
     {
         // Check connection
         if (!$this->db->isConnected()) {
-            error_log('Database connection failed: ' . $this->db->getErrorMessage());
+            Logger::getInstance()->error('Database connection failed: ' . $this->db->getErrorMessage());
             return false;
         }
         
@@ -97,7 +98,7 @@ class EventModel
     {
         // Check connection
         if (!$this->db->isConnected()) {
-            error_log('Database connection failed: ' . $this->db->getErrorMessage());
+            Logger::getInstance()->error('Database connection failed: ' . $this->db->getErrorMessage());
             return [
                 'success' => false,
                 'error' => 'Database connection failed: ' . $this->db->getErrorMessage(),
@@ -116,13 +117,13 @@ class EventModel
             );
             
             // Log the deletion operation for audit purposes
-            error_log("GDPR Deletion: Preparing to delete {$countToDelete} events older than {$cutoffDate}");
+            Logger::getInstance()->error("GDPR Deletion: Preparing to delete {$countToDelete} events older than {$cutoffDate}");
             
             // Delete the events - cascading will handle related wordclouds and words
             $result = $this->db->delete('EVENT', 'updated_at < ?', [$cutoffDate]);
             
             if ($result === false) {
-                error_log('GDPR Deletion Error: ' . $this->db->getErrorMessage());
+                Logger::getInstance()->error('GDPR Deletion Error: ' . $this->db->getErrorMessage());
                 return [
                     'success' => false,
                     'error' => $this->db->getErrorMessage(),
@@ -134,7 +135,7 @@ class EventModel
             $deletedCount = $result;
             
             // Log successful deletion
-            error_log("GDPR Deletion: Successfully deleted {$deletedCount} events older than {$cutoffDate}");
+            Logger::getInstance()->error("GDPR Deletion: Successfully deleted {$deletedCount} events older than {$cutoffDate}");
             
             return [
                 'success' => true,
@@ -142,7 +143,7 @@ class EventModel
                 'cutoff_date' => $cutoffDate
             ];
         } catch (Exception $e) {
-            error_log('GDPR Deletion Exception: ' . $e->getMessage());
+            Logger::getInstance()->error('GDPR Deletion Exception: ' . $e->getMessage());
             return [
                 'success' => false,
                 'error' => $e->getMessage(),
@@ -161,7 +162,7 @@ class EventModel
     {
         // Check connection
         if (!$this->db->isConnected()) {
-            error_log('Database connection failed: ' . $this->db->getErrorMessage());
+            Logger::getInstance()->error('Database connection failed: ' . $this->db->getErrorMessage());
             return false;
         }
         
@@ -173,7 +174,7 @@ class EventModel
         );
         
         if ($result === false) {
-            error_log('Failed to update active URL for event ' . $eventKey);
+            Logger::getInstance()->error('Failed to update active URL for event ' . $eventKey);
             return false;
         }
         
@@ -189,7 +190,7 @@ class EventModel
     {
         // Check connection
         if (!$this->db->isConnected()) {
-            error_log('Database connection failed: ' . $this->db->getErrorMessage());
+            Logger::getInstance()->error('Database connection failed: ' . $this->db->getErrorMessage());
             return null;
         }
         

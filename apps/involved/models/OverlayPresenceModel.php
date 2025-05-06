@@ -3,6 +3,7 @@
  * Model for handling OVERLAY_PRESENCE table operations.
  */
 require_once __DIR__ . '/../../../lib/DatabaseHelper.php';
+require_once __DIR__ . '/../../../lib/Logger.php';
 
 class OverlayPresenceModel {
     private $db;
@@ -21,7 +22,7 @@ class OverlayPresenceModel {
      */
     public function updatePresence($url, $sessionId) {
         if (empty($url) || empty($sessionId)) {
-            error_log("ERROR: Empty URL or session ID provided to updatePresence");
+            Logger::getInstance()->error("Empty URL or session ID provided to updatePresence");
             return false;
         }
         
@@ -42,7 +43,7 @@ class OverlayPresenceModel {
                     
                     // Rebuild the URL up to the wordcloud ID (removing /add or any other subpath)
                     $url = "$scheme://$host$port/{$pathSegments[0]}/{$pathSegments[1]}/{$pathSegments[2]}/{$pathSegments[3]}/{$pathSegments[4]}";
-                    error_log("Normalized URL for presence update: " . $url);
+                    Logger::getInstance()->error("Normalized URL for presence update: " . $url);
                 }
             }
             
@@ -52,11 +53,11 @@ class OverlayPresenceModel {
             $objectId = $this->getOrCreateOverlayObjectId($url);
             if (!$objectId) {
                 $this->db->rollback();
-                error_log("ERROR: Failed to get or create overlay object ID for URL: " . $url);
+                Logger::getInstance()->error("Failed to get or create overlay object ID for URL: " . $url);
                 return false;
             }
             
-            error_log("DEBUG: Got object ID $objectId for URL $url");
+            Logger::getInstance()->error("Got object ID $objectId for URL $url");
             
             // Try to update an existing record
             $stmt = $this->db->query(
@@ -67,13 +68,13 @@ class OverlayPresenceModel {
             
             if ($stmt === false) {
                 $this->db->rollback();
-                error_log("ERROR: Update query failed: " . $this->db->getErrorMessage());
+                Logger::getInstance()->error("Update query failed: " . $this->db->getErrorMessage());
                 return false;
             }
             
             // Get the number of affected rows
             $updatedRows = $stmt->rowCount();
-            error_log("DEBUG: Update presence result: " . ($updatedRows === 0 ? "No rows updated" : "$updatedRows rows updated"));
+            Logger::getInstance()->error("Update presence result: " . ($updatedRows === 0 ? "No rows updated" : "$updatedRows rows updated"));
             
             // If no records were updated, insert a new one
             if ($updatedRows === 0) {
@@ -84,26 +85,26 @@ class OverlayPresenceModel {
                 
                 if ($stmt === false) {
                     $this->db->rollback();
-                    error_log("ERROR: Insert query failed: " . $this->db->getErrorMessage());
+                    Logger::getInstance()->error("Insert query failed: " . $this->db->getErrorMessage());
                     return false;
                 }
                 
                 $insertedRows = $stmt->rowCount();
-                error_log("DEBUG: Insert presence result: " . ($insertedRows > 0 ? "$insertedRows rows inserted" : "No rows inserted"));
+                Logger::getInstance()->error("Insert presence result: " . ($insertedRows > 0 ? "$insertedRows rows inserted" : "No rows inserted"));
                 
                 if ($insertedRows === 0) {
                     $this->db->rollback();
-                    error_log("ERROR: Failed to insert presence record");
+                    Logger::getInstance()->error("Failed to insert presence record");
                     return false;
                 }
             }
             
             $this->db->commit();
-            error_log("DEBUG: Presence tracking committed successfully for session $sessionId on URL $url");
+            Logger::getInstance()->error("Presence tracking committed successfully for session $sessionId on URL $url");
             return true;
         } catch (Exception $e) {
             $this->db->rollback();
-            error_log("ERROR: Exception updating presence: " . $e->getMessage());
+            Logger::getInstance()->error("Exception updating presence: " . $e->getMessage());
             return false;
         }
     }
@@ -145,12 +146,10 @@ class OverlayPresenceModel {
      * @return int Count of active users
      */
     public function getActivePresenceCount($url, $timeWindow = 90) {
-        // Create a dedicated debug log file
-        $logFile = __DIR__ . '/../../../logs/presence_debug.log';
-        file_put_contents($logFile, date('Y-m-d H:i:s') . " - Starting presence count check for URL: $url\n", FILE_APPEND);
+        Logger::getInstance()->debug("Starting presence count check for URL: $url");
         
         if (empty($url)) {
-            file_put_contents($logFile, date('Y-m-d H:i:s') . " - Empty URL provided to getActivePresenceCount\n", FILE_APPEND);
+            Logger::getInstance()->error("Empty URL provided to getActivePresenceCount");
             return 0;
         }
         
@@ -171,7 +170,7 @@ class OverlayPresenceModel {
                     
                     // Rebuild the URL up to the wordcloud ID (removing /add or any other subpath)
                     $url = "$scheme://$host$port/{$pathSegments[0]}/{$pathSegments[1]}/{$pathSegments[2]}/{$pathSegments[3]}/{$pathSegments[4]}";
-                    file_put_contents($logFile, date('Y-m-d H:i:s') . " - Normalized URL for presence count: " . $url . "\n", FILE_APPEND);
+                    Logger::getInstance()->debug("Normalized URL for presence count: " . $url);
                 }
             }
             
@@ -181,11 +180,11 @@ class OverlayPresenceModel {
             );
             
             if (!$objectId) {
-                file_put_contents($logFile, date('Y-m-d H:i:s') . " - No overlay object found for URL: " . $url . "\n", FILE_APPEND);
+                Logger::getInstance()->info("No overlay object found for URL: " . $url);
                 return 0;
             }
             
-            file_put_contents($logFile, date('Y-m-d H:i:s') . " - Looking up presence for object ID: $objectId, URL: $url\n", FILE_APPEND);
+            Logger::getInstance()->debug("Looking up presence for object ID: $objectId, URL: $url");
             
             // Log all presence entries for debugging
             $allEntries = $this->db->fetchAll(
@@ -193,9 +192,9 @@ class OverlayPresenceModel {
                 [$objectId]
             );
             
-            file_put_contents($logFile, date('Y-m-d H:i:s') . " - Total presence entries for object $objectId: " . count($allEntries) . "\n", FILE_APPEND);
+            Logger::getInstance()->debug("Total presence entries for object $objectId: " . count($allEntries));
             foreach ($allEntries as $entry) {
-                file_put_contents($logFile, date('Y-m-d H:i:s') . " - Session: {$entry['phpsessid']}, Last seen: {$entry['last_seen']}\n", FILE_APPEND);
+                Logger::getInstance()->debug("Session: {$entry['phpsessid']}, Last seen: {$entry['last_seen']}");
             }
             
             // For debugging, directly query and print the count
@@ -203,12 +202,12 @@ class OverlayPresenceModel {
                 'SELECT COUNT(*) FROM OVERLAY_PRESENCE WHERE overlay_object_id = ?',
                 [$objectId]
             );
-            file_put_contents($logFile, date('Y-m-d H:i:s') . " - Raw SQL count result for object ID $objectId: $rawCount\n", FILE_APPEND);
+            Logger::getInstance()->debug("Raw SQL count result for object ID $objectId: $rawCount");
             
             // For now, let's just count all entries regardless of last_seen time
             $count = count($allEntries);
             
-            file_put_contents($logFile, date('Y-m-d H:i:s') . " - Total presence count (ignoring time window): $count\n", FILE_APPEND);
+            Logger::getInstance()->debug("Total presence count (ignoring time window): $count");
             
             // Get active users with time window
             $activeCount = $this->db->fetchValue(
@@ -217,12 +216,12 @@ class OverlayPresenceModel {
                 [$objectId, $timeWindow]
             ) ?: 0;
             
-            file_put_contents($logFile, date('Y-m-d H:i:s') . " - Active presence count with {$timeWindow}s window: $activeCount\n", FILE_APPEND);
+            Logger::getInstance()->debug("Active presence count with {$timeWindow}s window: $activeCount");
             
             // Return the active count with time window
             return $activeCount;
         } catch (Exception $e) {
-            file_put_contents($logFile, date('Y-m-d H:i:s') . " - Error getting active presence count: " . $e->getMessage() . "\n", FILE_APPEND);
+            Logger::getInstance()->error("Error getting active presence count: " . $e->getMessage());
             return 0;
         }
     }

@@ -3,6 +3,7 @@
  * WordCloudModel – wraps WORDCLOUD table operations for Involved! app.
  */
 require_once __DIR__ . '/../../../lib/DatabaseHelper.php';
+require_once __DIR__ . '/../../../lib/Logger.php';
 
 class WordCloudModel
 {
@@ -22,7 +23,7 @@ class WordCloudModel
     public function create(int $eventId, string $question): int|false
     {
         if (!$this->db->isConnected()) {
-            error_log('DB connection failed: ' . $this->db->getErrorMessage());
+            Logger::getInstance()->error('DB connection failed: ' . $this->db->getErrorMessage());
             return false;
         }
         return $this->db->insert('WORDCLOUD', [
@@ -40,7 +41,7 @@ class WordCloudModel
     public function addWord(int $wordCloudId, string $word): int|false
     {
         if (!$this->db->isConnected()) {
-            error_log('DB connection failed: ' . $this->db->getErrorMessage());
+            Logger::getInstance()->error('DB connection failed: ' . $this->db->getErrorMessage());
             return false;
         }
         return $this->db->insert('WORD', [
