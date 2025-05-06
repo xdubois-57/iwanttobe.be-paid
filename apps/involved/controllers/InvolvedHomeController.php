@@ -701,6 +701,7 @@ class InvolvedHomeController {
     public function showPollAnswerForm($params = []) {
         require_once __DIR__ . '/../models/PollModel.php';
         require_once __DIR__ . '/../models/PollAnswerModel.php';
+        require_once __DIR__ . '/../models/EventItemModel.php';
         
         $pid = (int)($params['pid'] ?? 0);
         $code = strtoupper($params['code'] ?? '');
@@ -722,8 +723,21 @@ class InvolvedHomeController {
             return;
         }
 
+        Logger::getInstance()->debug('showPollAnswerForm called with pid=' . $pid . ', code=' . $code);
+
+        // Get the event item for this poll
+        $eventItemModel = new EventItemModel();
+        $eventItem = $eventItemModel->getById((int)$poll['event_item_id']);
+        if (!$eventItem) {
+            Logger::getInstance()->error('EventItem not found for poll id=' . $pid . ', event_item_id=' . $poll['event_item_id']);
+            http_response_code(404);
+            echo 'Poll question not found';
+            return;
+        }
+
         $pollAnswerModel = new PollAnswerModel();
         $answers = $pollAnswerModel->getByPoll($pid);
+        Logger::getInstance()->debug('Found ' . count($answers) . ' answers for poll id=' . $pid);
 
         require __DIR__ . '/../views/answer_poll_form.php';
     }
