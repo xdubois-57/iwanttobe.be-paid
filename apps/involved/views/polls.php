@@ -40,7 +40,7 @@ $lang = LanguageController::getInstance();
     <div class="grid" style="margin-top:2rem; gap:2rem;">
         <!-- Left: chart placeholder -->
         <article style="grid-column: span 3;">
-            <canvas id="poll-chart" class="poll-wrapper"></canvas>
+            <canvas id="poll-chart" class="poll-wrapper" style="transform:scale(0.7); transform-origin:center; cursor:pointer;"></canvas>
             <div style="text-align:center; margin-top:1rem;">
                 <a href="/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/<?php echo urlencode($event['key']); ?>/poll/<?php echo $poll['id']; ?>/answer" class="primary" role="button" target="_blank" style="padding:0.8rem 2rem; font-size:1.1rem;">
                     <?php echo htmlspecialchars($lang->translate('add_your_vote', 'Add your vote')); ?>
@@ -77,6 +77,7 @@ $lang = LanguageController::getInstance();
     </article>
 
 </main>
+<script src="/apps/involved/js/OverlayObjectHelper.js"></script>
 <script>
 (function(){
   // Load Chart.js
@@ -97,6 +98,13 @@ $lang = LanguageController::getInstance();
     let myChart=null;
     const form=document.getElementById('add-answer-form');
     const input=document.getElementById('answer-value');
+
+    // Overlay helper instance
+    let overlayHelper = null;
+    if (typeof OverlayObjectHelper !== 'undefined') {
+      overlayHelper = window.__pollOverlayHelper = (window.__pollOverlayHelper || new OverlayObjectHelper());
+    }
+
     function renderAnswers(arr){
       listEl.innerHTML='';
       arr.forEach(a=>{
@@ -128,6 +136,38 @@ $lang = LanguageController::getInstance();
     form.addEventListener('submit',function(e){e.preventDefault(); const val=input.value.trim(); if(!val) return; const fd=new FormData(); fd.append('value',val); fetch(addEndpoint,{method:'POST',body:fd}).then(r=>r.json()).then(d=>{if(d.success){input.value=''; fetchAnswers();}});});
     fetchAnswers();
     setInterval(fetchAnswers,10000);
+
+    // Fullscreen and overlay logic
+    const pollChartCanvas = document.getElementById('poll-chart');
+    let isFullscreen = false;
+    pollChartCanvas.addEventListener('click',function(){
+      if (!isFullscreen) {
+        if (pollChartCanvas.requestFullscreen) {
+          pollChartCanvas.requestFullscreen();
+        } else if (pollChartCanvas.webkitRequestFullscreen) {
+          pollChartCanvas.webkitRequestFullscreen();
+        } else if (pollChartCanvas.mozRequestFullScreen) {
+          pollChartCanvas.mozRequestFullScreen();
+        } else if (pollChartCanvas.msRequestFullscreen) {
+          pollChartCanvas.msRequestFullscreen();
+        }
+      }
+    });
+    document.addEventListener('fullscreenchange', handleFsChange);
+    document.addEventListener('webkitfullscreenchange', handleFsChange);
+    document.addEventListener('mozfullscreenchange', handleFsChange);
+    document.addEventListener('MSFullscreenChange', handleFsChange);
+    function handleFsChange() {
+      const fsElem = document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement;
+      isFullscreen = !!fsElem;
+      if (isFullscreen && overlayHelper && typeof overlayHelper.activate === 'function') {
+        overlayHelper.activate();
+        pollChartCanvas.style.transform = 'scale(1)';
+      } else {
+        if (overlayHelper && typeof overlayHelper.deactivate === 'function') overlayHelper.deactivate();
+        pollChartCanvas.style.transform = 'scale(0.7)';
+      }
+    }
 
     function getChartJsType(pollType){
         switch(pollType){
