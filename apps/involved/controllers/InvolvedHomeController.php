@@ -374,8 +374,8 @@ class InvolvedHomeController {
         }
 
         $wcModel = new WordCloudModel();
-        $wordCloud = $wcModel->getById($wcid);
-        if (!$wordCloud || (int)$wordCloud['event_id'] !== (int)$event['id']) {
+        $wordCloud = $wcModel->getByEventItemId($wcid);
+        if (!$wordCloud) {
             http_response_code(404);
             $lang = LanguageController::getInstance();
             echo $lang->translate('wordcloud_not_found');
@@ -407,8 +407,8 @@ class InvolvedHomeController {
         }
 
         $wcModel = new WordCloudModel();
-        $wordCloud = $wcModel->getById($wcid);
-        if (!$wordCloud || (int)$wordCloud['event_id'] !== (int)$event['id']) {
+        $wordCloud = $wcModel->getByEventItemId($wcid);
+        if (!$wordCloud) {
             http_response_code(404);
             $lang = LanguageController::getInstance();
             echo $lang->translate('wordcloud_not_found');
@@ -446,8 +446,8 @@ class InvolvedHomeController {
         }
 
         $wcModel = new WordCloudModel();
-        $wordCloud = $wcModel->getById($wcid);
-        if (!$wordCloud || (int)$wordCloud['event_id'] !== (int)$event['id']) {
+        $wordCloud = $wcModel->getByEventItemId($wcid);
+        if (!$wordCloud) {
             http_response_code(404);
             $lang = LanguageController::getInstance();
             echo $lang->translate('wordcloud_not_found');
@@ -493,8 +493,8 @@ class InvolvedHomeController {
         }
 
         $wcModel = new WordCloudModel();
-        $wordCloud = $wcModel->getById($wcid);
-        if (!$wordCloud || (int)$wordCloud['event_id'] !== (int)$event['id']) {
+        $wordCloud = $wcModel->getByEventItemId($wcid);
+        if (!$wordCloud) {
             header('Content-Type: application/json');
             echo json_encode(['success' => false, 'error' => LanguageController::getInstance()->translate('wordcloud_not_found')]);
             exit;

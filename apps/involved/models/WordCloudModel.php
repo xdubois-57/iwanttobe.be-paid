@@ -139,6 +139,17 @@ class WordCloudModel
     }
 
     /**
+     * Get a word cloud by event item ID
+     * @param int $eventItemId
+     * @return array|null
+     */
+    public function getByEventItemId(int $eventItemId): ?array
+    {
+        $result = $this->db->fetchOne('SELECT wc.*, ei.event_id, ei.question, ei.position FROM WORDCLOUD wc JOIN EVENT_ITEM ei ON wc.event_item_id = ei.id WHERE ei.id = ?', [$eventItemId]);
+        return $result === false ? null : $result;
+    }
+
+    /**
      * Delete a word cloud by ID
      */
     public function delete(int $id): bool
