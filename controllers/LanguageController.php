@@ -25,7 +25,12 @@ class LanguageController {
     private $currentLang;
     
     private function __construct() {
-        $this->currentLang = $this->detectBrowserLanguage();
+        // First try to determine language from URL
+        $this->currentLang = $this->determineLanguage();
+        // If URL language is not found, fall back to browser detection
+        if (!$this->currentLang) {
+            $this->currentLang = $this->detectBrowserLanguage();
+        }
         $this->loadTranslations();
     }
     
@@ -42,7 +47,7 @@ class LanguageController {
         $browserLang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'] ?? '', 0, 2);
         
         // Use browser language if supported, otherwise default to English
-        return in_array($browserLang, $availableLanguages) ? $browserLang : 'en';
+        return in_array($browserLang, $availableLanguages) ? $browserLang : $config['default_language'];
     }
     
     public static function getInstance() {
@@ -82,8 +87,8 @@ class LanguageController {
         if ($langFromUrl && isset($config['available_languages'][$langFromUrl])) {
             return $langFromUrl;
         }
-        // Default to English if not present in URL
-        return 'en';
+        // Return null if no valid language found in URL
+        return null;
     }
     
     public function getCurrentLanguage() {
