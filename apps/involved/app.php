@@ -101,6 +101,11 @@ class InvolvedApp implements AppInterface {
         $router->post('/{lang}/involved/verify-password', 'InvolvedHomeController@verifyPassword');
         
         // Event item routes
+        $router->get('/{lang}/involved/{code}/eventitem/{itemid}', 'InvolvedHomeController@showEventItem');
+        $router->get('/{lang}/involved/{code}/eventitem/{itemid}/answers', 'InvolvedHomeController@getEventItemAnswers');
+        $router->post('/{lang}/involved/{code}/eventitem/create', 'InvolvedHomeController@createEventItem');
+        $router->post('/{lang}/involved/{code}/eventitem/{itemid}/answer/add', 'InvolvedHomeController@addEventItemAnswer');
+        $router->get('/{lang}/involved/{code}/eventitem/{itemid}/answer', 'InvolvedHomeController@showEventItemAnswerForm');
         $router->post('/{lang}/involved/{code}/eventitem/{itemid}/delete', 'InvolvedHomeController@deleteEventItem');
         $router->post('/{lang}/involved/{code}/eventitem/reorder', 'InvolvedHomeController@reorderEventItems');
         

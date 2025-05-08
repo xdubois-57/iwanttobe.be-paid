@@ -182,32 +182,12 @@ use chillerlan\QRCode\QROptions;
                             <span class="drag-handle" style="font-size:1.3em;vertical-align:middle;margin-right:0.5em;cursor:grab;">≡</span>
                             <span class="wordcloud-list-question">
                                 <?php 
-                                // Determine the link based on item type
-                                $itemType = $item['type'] ?? 'wordcloud';
-                                $itemModel = null;
-                                $itemId = null;
-                                
-                                if ($itemType === 'wordcloud') {
-                                    require_once __DIR__ . '/../models/WordCloudModel.php';
-                                    $wcModel = new WordCloudModel();
-                                    $wc = $wcModel->getByEventItemId($item['id']);
-                                    $itemId = $wc ? $wc['id'] : null;
-                                    $itemLink = '/' . htmlspecialchars($lang->getCurrentLanguage()) . '/involved/' . urlencode($eventData['key']) . '/wordcloud/' . $itemId;
-                                } else if (in_array($itemType, ['horizontal_bar_chart','vertical_bar_chart','pie_chart','doughnut'])) {
-                                    require_once __DIR__ . '/../models/PollModel.php';
-                                    $pollModel = new PollModel();
-                                    $poll = $pollModel->getByEventItemId($item['id']);
-                                    $itemId = $poll ? $poll['id'] : null;
-                                    $itemLink = '/' . htmlspecialchars($lang->getCurrentLanguage()) . '/involved/' . urlencode($eventData['key']) . '/poll/' . $itemId;
-                                }
+                                // Always link to the unified event item page
+                                $itemLink = '/' . htmlspecialchars($lang->getCurrentLanguage()) . '/involved/' . urlencode($eventData['key']) . '/eventitem/' . $item['id'];
                                 ?>
-                                <?php if ($itemId): ?>
                                 <a href="<?php echo $itemLink; ?>" style="text-decoration:none; color:inherit;">
                                  <?php echo htmlspecialchars($item['question']); ?>
                                 </a>
-                                <?php else: ?>
-                                <?php echo htmlspecialchars($item['question']); ?>
-                                <?php endif; ?>
                              </span>
                             <form method="post" action="/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/<?php echo urlencode($eventData['key']); ?>/eventitem/<?php echo $item['id']; ?>/delete" style="display:inline;">
                                 <button type="submit" class="word-cloud-delete" title="Delete event item" onclick="return confirm('Are you sure you want to delete this event item?');">×</button>

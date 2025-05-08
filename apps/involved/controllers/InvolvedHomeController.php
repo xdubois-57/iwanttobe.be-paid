@@ -423,6 +423,201 @@ class InvolvedHomeController {
     }
     
     /**
+     * Create an event item
+     */
+    public function createEventItem($params) {
+        $code = strtoupper($params['code'] ?? '');
+        $question = $_POST['question'] ?? '';
+        $langSlug = $params['lang'] ?? LanguageController::getInstance()->getCurrentLanguage();
+        
+        // Authorization check
+        if (!$this->isAuthorized($code)) {
+            header('Location: /' . $langSlug . '/involved/' . urlencode($code));
+            exit;
+        }
+        
+        $eventModel = new EventModel();
+        $event = $eventModel->getByKey($code);
+        if (!$event) {
+            http_response_code(404);
+            Logger::getInstance()->error('Event not found: ' . $code);
+            echo 'Event not found';
+            return;
+        }
+        
+        // Get the event's position to determine the order of the new item
+        $eventItemModel = new EventItemModel();
+        $maxPosition = $eventItemModel->getMaxPositionForEvent($event['id']);
+        $position = $maxPosition + 1;
+        
+        // Get the event item type (default to wordcloud)
+        $type = $_POST['event_item_type'] ?? 'wordcloud';
+        
+        // Create the event item
+        $eventItemId = $eventItemModel->create((int)$event['id'], $question, $position, $type);
+        
+        if ($eventItemId) {
+            Logger::getInstance()->info('Created new event item: ' . $eventItemId . ' for event: ' . $code);
+            // Redirect to the event page
+            header('Location: /' . $langSlug . '/involved/' . urlencode($code));
+            exit;
+        } else {
+            // Error
+            http_response_code(500);
+            Logger::getInstance()->error('Error creating event item for event: ' . $code);
+            echo 'Error creating event item';
+        }
+    }
+    
+    /**
+     * Show an event item page
+     */
+    public function showEventItem($params = []) {
+        require_once __DIR__ . '/../models/EventAnswerModel.php';
+        require_once __DIR__ . '/../models/EventItemModel.php';
+
+        $code = strtoupper($params['code'] ?? '');
+        $itemId = (int)($params['itemid'] ?? 0);
+        $langSlug = $params['lang'] ?? LanguageController::getInstance()->getCurrentLanguage();
+
+        $eventModel = new EventModel();
+        $event = $eventModel->getByKey($code);
+        if (!$event) {
+            http_response_code(404);
+            $lang = LanguageController::getInstance();
+            echo $lang->translate('event_not_found');
+            return;
+        }
+
+        // Authorization check
+        if (!empty($event['password']) && !$this->isAuthorized($code)) {
+            header('Location: /' . $langSlug . '/involved/' . urlencode($code));
+            exit;
+        }
+
+        $eventItemModel = new EventItemModel();
+        $eventItem = $eventItemModel->getById($itemId);
+        if (!$eventItem) {
+            http_response_code(404);
+            $lang = LanguageController::getInstance();
+            echo $lang->translate('event_item_not_found');
+            return;
+        }
+
+        $currentApp = 'involved';
+        require_once __DIR__ . '/../views/eventitem.php';
+    }
+    
+    /**
+     * Get answers for an event item
+     */
+    public function getEventItemAnswers($params = []) {
+        require_once __DIR__ . '/../models/EventAnswerModel.php';
+        
+        $code = strtoupper($params['code'] ?? '');
+        $itemId = (int)($params['itemid'] ?? 0);
+        
+        $eventModel = new EventModel();
+        $event = $eventModel->getByKey($code);
+        if (!$event) {
+            header('Content-Type: application/json');
+            echo json_encode(['success' => false, 'error' => 'Event not found']);
+            exit;
+        }
+        
+        $eventItemModel = new EventItemModel();
+        $eventItem = $eventItemModel->getById($itemId);
+        if (!$eventItem) {
+            header('Content-Type: application/json');
+            echo json_encode(['success' => false, 'error' => 'Event item not found']);
+            exit;
+        }
+        
+        $answerModel = new EventAnswerModel();
+        $answers = $answerModel->getByEventItem($itemId);
+        
+        header('Content-Type: application/json');
+        echo json_encode(['success' => true, 'answers' => $answers]);
+    }
+    
+    /**
+     * Add an answer to an event item
+     */
+    public function addEventItemAnswer($params = []) {
+        require_once __DIR__ . '/../models/EventAnswerModel.php';
+        
+        $code = strtoupper($params['code'] ?? '');
+        $itemId = (int)($params['itemid'] ?? 0);
+        $value = isset($_POST['value']) ? trim($_POST['value']) : '';
+        
+        if (empty($value)) {
+            header('Content-Type: application/json');
+            echo json_encode(['success' => false, 'error' => 'Answer value is required']);
+            exit;
+        }
+        
+        $eventModel = new EventModel();
+        $event = $eventModel->getByKey($code);
+        if (!$event) {
+            header('Content-Type: application/json');
+            echo json_encode(['success' => false, 'error' => 'Event not found']);
+            exit;
+        }
+        
+        $eventItemModel = new EventItemModel();
+        $eventItem = $eventItemModel->getById($itemId);
+        if (!$eventItem) {
+            header('Content-Type: application/json');
+            echo json_encode(['success' => false, 'error' => 'Event item not found']);
+            exit;
+        }
+        
+        $answerModel = new EventAnswerModel();
+        $answerId = $answerModel->create($itemId, $value);
+        
+        if ($answerId) {
+            header('Content-Type: application/json');
+            echo json_encode(['success' => true, 'id' => $answerId]);
+        } else {
+            header('Content-Type: application/json');
+            echo json_encode(['success' => false, 'error' => 'Failed to add answer']);
+        }
+    }
+    
+    /**
+     * Show form to add an answer to an event item
+     */
+    public function showEventItemAnswerForm($params = []) {
+        require_once __DIR__ . '/../models/EventAnswerModel.php';
+        require_once __DIR__ . '/../models/EventItemModel.php';
+        
+        $code = strtoupper($params['code'] ?? '');
+        $itemId = (int)($params['itemid'] ?? 0);
+        $langSlug = $params['lang'] ?? LanguageController::getInstance()->getCurrentLanguage();
+        
+        $eventModel = new EventModel();
+        $event = $eventModel->getByKey($code);
+        if (!$event) {
+            http_response_code(404);
+            $lang = LanguageController::getInstance();
+            echo $lang->translate('event_not_found');
+            return;
+        }
+        
+        $eventItemModel = new EventItemModel();
+        $eventItem = $eventItemModel->getById($itemId);
+        if (!$eventItem) {
+            http_response_code(404);
+            $lang = LanguageController::getInstance();
+            echo $lang->translate('event_item_not_found');
+            return;
+        }
+        
+        $currentApp = 'involved';
+        require_once __DIR__ . '/../views/event_item_answer.php';
+    }
+
+    /**
      * Process adding a word to a word cloud
      */
     public function addWord($params = []) {
@@ -476,7 +671,7 @@ class InvolvedHomeController {
             echo json_encode(['success' => false, 'error' => LanguageController::getInstance()->translate('word_parameter_is_required')]);
             exit;
         }
-
+        
         $eventModel = new EventModel();
         $event = $eventModel->getByKey($code);
         if (!$event) {
@@ -501,10 +696,11 @@ class InvolvedHomeController {
         }
 
         // Delete the word
-        $success = $wcModel->deleteWordByText($wcid, $word);
+        $result = $wcModel->deleteWordByText($wordCloud['id'], $word);
         
+        // Return JSON response
         header('Content-Type: application/json');
-        echo json_encode(['success' => $success]);
+        echo json_encode(['success' => $result]);
         exit;
     }
 
