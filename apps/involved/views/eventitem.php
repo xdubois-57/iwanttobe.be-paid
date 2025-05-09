@@ -314,7 +314,8 @@ $lang = LanguageController::getInstance();
                     if (answer && (answer.value || answer.text || answer.answer)) {
                         const formattedAnswer = {
                             id: answer.id || 0,
-                            value: answer.value || answer.text || answer.answer
+                            value: answer.value || answer.text || answer.answer,
+                            votes: answer.votes || answer.count || 0
                         };
                         addAnswerToList(formattedAnswer);
                     }
