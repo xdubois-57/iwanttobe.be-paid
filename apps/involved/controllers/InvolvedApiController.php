@@ -141,12 +141,12 @@ class InvolvedApiController {
         
         if (empty($url)) {
             http_response_code(400);
-            file_put_contents($logFile, date('Y-m-d H:i:s') . " - InvolvedApiController: Empty URL in getPresence\n", FILE_APPEND);
+            Logger::getInstance()->error('InvolvedApiController: Empty URL in getPresence');
             echo json_encode(['success' => false, 'error' => 'URL is required']);
             return;
         }
         
-        file_put_contents($logFile, date('Y-m-d H:i:s') . " - InvolvedApiController: Getting presence for URL: $url\n", FILE_APPEND);
+        Logger::getInstance()->info('InvolvedApiController: Getting presence for URL: ' . $url);
         
         // Get presence count
         $model = new EventItemModel();
@@ -154,10 +154,10 @@ class InvolvedApiController {
             $count = $model->getActivePresenceCount($url);
         } else {
             $count = 0;
-            file_put_contents($logFile, date('Y-m-d H:i:s') . " - InvolvedApiController: EventItemModel::getActivePresenceCount not implemented\n", FILE_APPEND);
+            Logger::getInstance()->error('InvolvedApiController: EventItemModel::getActivePresenceCount not implemented');
         }
         
-        file_put_contents($logFile, date('Y-m-d H:i:s') . " - InvolvedApiController: getPresence returning count: $count for URL: $url\n", FILE_APPEND);
+        Logger::getInstance()->info('InvolvedApiController: getPresence returning count: ' . $count . ' for URL: ' . $url);
         
         $response = [
             'success' => true,
