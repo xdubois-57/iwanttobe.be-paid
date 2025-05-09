@@ -225,11 +225,41 @@ $lang = LanguageController::getInstance();
         li.dataset.value = answer.value.toLowerCase(); // Store lowercase value for sorting
         li.innerHTML = `
             <div class="event-item-list-content">
-                <span class="event-item-list-question">${answer.value}</span>
-                <span class="answer-count">${answer.votes || 1}</span>
+                <span class="event-item-list-question" style="cursor:pointer;">${answer.value}</span>
+                <span class="answer-count" style="cursor:pointer;">${answer.votes || 1}</span>
                 <span class="event-item-delete" onclick="window.deleteAnswer(${answer.id}, ${itemId})">×</span>
             </div>
         `;
+        // Add click handler for incrementing count
+        const contentDiv = li.querySelector('.event-item-list-content');
+        const questionSpan = contentDiv.querySelector('.event-item-list-question');
+        const countSpan = contentDiv.querySelector('.answer-count');
+        function incrementCountHandler() {
+            // Optimistically update the count
+            let count = parseInt(countSpan.textContent, 10) || 1;
+            countSpan.textContent = count + 1;
+            // Background AJAX call
+            const formData = new FormData();
+            formData.append('value', answer.value);
+            fetch(addEndpoint, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (!data.success) {
+                    // Revert UI if server failed
+                    countSpan.textContent = count;
+                    alert('Failed to register vote.');
+                }
+            })
+            .catch(() => {
+                countSpan.textContent = count;
+                alert('Failed to register vote.');
+            });
+        }
+        questionSpan.onclick = incrementCountHandler;
+        countSpan.onclick = incrementCountHandler;
         
         // Insert in alphabetical order
         let inserted = false;
