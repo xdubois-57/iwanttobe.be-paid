@@ -129,19 +129,20 @@ $lang = LanguageController::getInstance();
 // Submit an emoji directly to the AJAX endpoint
 async function submitEmoji(emoji) {
     try {
+        // Using FormData instead of JSON for better compatibility
+        const formData = new FormData();
+        formData.append('emoji', emoji);
+        formData.append('eventItemId', <?php echo (int)$eventItem['id']; ?>);
+        
         const response = await fetch(`/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/<?php echo htmlspecialchars($event['key']); ?>/emoji`, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                url: `/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/<?php echo htmlspecialchars($event['key']); ?>`,
-                emoji: emoji
-            })
+            body: formData
         });
         const data = await response.json();
         if (!data.success) {
             console.error('Failed to submit emoji:', data.error);
+        } else {
+            console.log('Emoji submitted successfully');
         }
     } catch (error) {
         console.error('Error submitting emoji:', error);
