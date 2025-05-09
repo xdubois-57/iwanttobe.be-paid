@@ -67,12 +67,12 @@ use chillerlan\QRCode\QROptions;
         .word-cloud-item:hover .word-cloud-delete {
             color: #dc3545;
         }
-        .wordcloud-list-item {
+        .event-item-list-item {
             display: inline-block;
             margin: 0.3rem;
             position: relative;
         }
-        .wordcloud-list-content {
+        .event-item-list-content {
             display: flex;
             align-items: center;
             padding: 0.5rem 1rem;
@@ -86,10 +86,10 @@ use chillerlan\QRCode\QROptions;
             color: var(--text-primary, #ffffff);
             border: 1px solid var(--border-color, #404040);
         }
-        .wordcloud-list-content:hover {
+        .event-item-list-content:hover {
             background: var(--background-secondary-hover, #353535);
         }
-        .wordcloud-list-question {
+        .event-item-list-question {
             cursor: pointer;
             border-radius: 0.7rem;
             padding: 0.1rem 0.4rem;
@@ -116,10 +116,10 @@ use chillerlan\QRCode\QROptions;
         }
     </style>
     <script>
-    function deleteWordCloud(lang, eventCode, wordCloudId) {
-        if (confirm('<?php echo htmlspecialchars($lang->translate('confirm_delete_wordcloud')); ?>')) {
-            const url = '/' + encodeURIComponent(lang) + '/involved/' + encodeURIComponent(eventCode) + '/wordcloud/' + encodeURIComponent(wordCloudId) + '/delete';
-            console.log('Deleting word cloud, URL:', url);
+    function deleteEventItem(lang, eventCode, itemId) {
+        if (confirm('<?php echo htmlspecialchars($lang->translate('confirm_delete_item')); ?>')) {
+            const url = '/' + encodeURIComponent(lang) + '/involved/' + encodeURIComponent(eventCode) + '/eventitem/' + encodeURIComponent(itemId) + '/delete';
+            console.log('Deleting event item, URL:', url);
             fetch(url, {
                 method: 'POST'
             })
@@ -153,10 +153,11 @@ use chillerlan\QRCode\QROptions;
         <!-- Left column (3/4 width) -->
         <article style="grid-column: span 3;">
             <h3 style="margin-top:1.5rem;">Add a new question</h3>
-            <form method="post" action="/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/<?php echo urlencode($eventData['key']); ?>/wordcloud/create" style="margin-top:1.5rem;">
+            <form method="post" action="/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/<?php echo urlencode($eventData['key']); ?>/eventitem/create" style="margin-top:1.5rem;">
                 <label for="event-item-type" style="font-weight:bold;">Type</label>
                 <select id="event-item-type" name="event_item_type" style="width:100%;margin-bottom:0.5rem;">
                     <option value="wordcloud" selected>Word cloud</option>
+                    <option value="text">Text</option>
                     <option value="horizontal_bar_chart">Horizontal bar chart</option>
                     <option value="vertical_bar_chart">Vertical bar chart</option>
                     <option value="pie_chart">Pie chart</option>
@@ -177,10 +178,10 @@ use chillerlan\QRCode\QROptions;
             <div style="margin-top:1rem;">
                 <ul id="event-item-list" style="list-style:none; padding:0;">
                 <?php foreach ($eventItems as $item): ?>
-                    <li class="wordcloud-list-item" data-id="<?php echo $item['id']; ?>">
-                        <div class="wordcloud-list-content">
+                    <li class="event-item-list-item" data-id="<?php echo $item['id']; ?>">
+                        <div class="event-item-list-content">
                             <span class="drag-handle" style="font-size:1.3em;vertical-align:middle;margin-right:0.5em;cursor:grab;">≡</span>
-                            <span class="wordcloud-list-question">
+                            <span class="event-item-list-question">
                                 <?php 
                                 // Always link to the unified event item page
                                 $itemLink = '/' . htmlspecialchars($lang->getCurrentLanguage()) . '/involved/' . urlencode($eventData['key']) . '/eventitem/' . $item['id'];
@@ -231,10 +232,10 @@ use chillerlan\QRCode\QROptions;
     </div>
 
 <script>
-document.querySelectorAll('.delete-wordcloud-form').forEach(form => {
+document.querySelectorAll('.delete-event-item-form').forEach(form => {
     form.addEventListener('submit', function(event) {
         event.stopPropagation();
-        if (!confirm('<?php echo htmlspecialchars($lang->translate('confirm_delete_wordcloud')); ?>')) {
+        if (!confirm('<?php echo htmlspecialchars($lang->translate('confirm_delete_item')); ?>')) {
             event.preventDefault();
         }
     });

@@ -1,18 +1,25 @@
 -- Database Initialization Script
 -- This script creates the necessary tables for the QR Transfer application
 
--- Force foreign key checks off to avoid dependency issues when dropping tables
+-- Drop all tables in the database
 SET FOREIGN_KEY_CHECKS = 0;
 
--- Drop existing tables if they exist
-DROP TABLE IF EXISTS `EVENT_ANSWERS`;
-DROP TABLE IF EXISTS `POLLS`;
-DROP TABLE IF EXISTS `POLL_ANSWERS`;
-DROP TABLE IF EXISTS `EVENT_PRESENCE`;
-DROP TABLE IF EXISTS `EVENT_ITEM`;
-DROP TABLE IF EXISTS `EVENT`;
+-- Get all table names
+SET @tables = NULL;
+SELECT GROUP_CONCAT(table_schema, '.', table_name) INTO @tables
+  FROM information_schema.tables
+  WHERE table_schema = (SELECT DATABASE());
+
+-- Drop all tables
+SET @tables = CONCAT('DROP TABLE IF EXISTS ', @tables);
+PREPARE stmt FROM @tables;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
 -- Turn foreign key checks back on
 SET FOREIGN_KEY_CHECKS = 1;
+
+-- Create EVENT table
 
 -- Create EVENT table
 CREATE TABLE IF NOT EXISTS `EVENT` (

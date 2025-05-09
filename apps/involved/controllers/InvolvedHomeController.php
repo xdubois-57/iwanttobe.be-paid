@@ -3,7 +3,7 @@
  * Controller for the Involved! app.
  */
 require_once __DIR__ . '/../models/EventModel.php';
-require_once __DIR__ . '/../models/WordCloudModel.php';
+require_once __DIR__ . '/../models/EventItemModel.php';
 
 class InvolvedHomeController {
     /**
@@ -165,10 +165,6 @@ class InvolvedHomeController {
         $currentApp = 'involved';
         $eventData = $event;
         
-        // Get word clouds for this event
-        $wcModel = new WordCloudModel();
-        $wordClouds = $wcModel->getByEvent((int)$event['id']);
-        
         // Load translations from the home.php file in the app-specific translation path
         $lang = LanguageController::getInstance();
         
@@ -256,174 +252,12 @@ class InvolvedHomeController {
         }
         exit;
     }
-
-    /**
-     * Create a word cloud for an event
-     */
-    public function createWordCloud($params = []) {
-        Logger::getInstance()->debug('Route called: createWordCloud with params: ' . json_encode($params) . ', POST: ' . json_encode($_POST));
-        $code = strtoupper($params['code'] ?? '');
-        $question = isset($_POST['question']) ? trim($_POST['question']) : '';
-        $eventItemType = isset($_POST['event_item_type']) ? trim($_POST['event_item_type']) : 'wordcloud';
-        $langSlug = $params['lang'] ?? LanguageController::getInstance()->getCurrentLanguage();
-
-        if ($code === '' || $question === '') {
-            header('Location: /' . $langSlug . '/involved/' . urlencode($code));
-            exit;
-        }
-
-        $eventModel = new EventModel();
-        $event = $eventModel->getByKey($code);
-        if (!$event) {
-            http_response_code(404);
-            $lang = LanguageController::getInstance();
-            echo $lang->translate('event_not_found');
-            return;
-        }
-
-        // Authorization check (password or session)
-        if (!empty($event['password']) && !$this->isAuthorized($code)) {
-            header('Location: /' . $langSlug . '/involved/' . urlencode($code));
-            exit;
-        }
-
-        if ($eventItemType === 'wordcloud') {
-            $wcModel = new WordCloudModel();
-            $newId = $wcModel->create((int)$event['id'], $question, 0, $eventItemType);
-            Logger::getInstance()->debug('WordCloudModel::create returned: ' . json_encode($newId));
-        } else if (in_array($eventItemType, ['horizontal_bar_chart','vertical_bar_chart','pie_chart','doughnut'])) {
-            // create poll for various chart types
-            require_once __DIR__ . '/../models/EventItemModel.php';
-            require_once __DIR__ . '/../models/PollModel.php';
-            $eventItemModel = new EventItemModel();
-            $eid = $eventItemModel->create((int)$event['id'], $question, 0, $eventItemType);
-            if ($eid !== false) {
-                $pollModel = new PollModel();
-                $pid = $pollModel->create($eid, $eventItemType);
-                Logger::getInstance()->info('Created poll ' . $pid . ' (type '.$eventItemType.') for event item ' . $eid);
-            } else {
-                Logger::getInstance()->error('Failed to create event item for poll type '.$eventItemType);
-            }
-        }
-
-        header('Location: /' . $langSlug . '/involved/' . urlencode($code));
-        exit;
-    }
-
-    /**
-     * Delete a word cloud
-     */
-    public function deleteWordCloud($params = []) {
-        $code = strtoupper($params['code'] ?? '');
-        $wcid = (int)($params['wcid'] ?? 0);
-        $langSlug = $params['lang'] ?? LanguageController::getInstance()->getCurrentLanguage();
-
-        header('Content-Type: application/json');
-
-        if ($code === '' || $wcid === 0) {
-            http_response_code(400);
-            echo json_encode(['success' => false, 'error' => 'missing_parameters']);
-            return;
-        }
-
-        $eventModel = new EventModel();
-        $event = $eventModel->getByKey($code);
-        if (!$event) {
-            http_response_code(404);
-            echo json_encode(['success' => false, 'error' => 'event_not_found']);
-            return;
-        }
-
-        if (!empty($event['password']) && !$this->isAuthorized($code)) {
-            http_response_code(403);
-            echo json_encode(['success' => false, 'error' => 'unauthorized']);
-            return;
-        }
-
-        $wcModel = new WordCloudModel();
-        $success = $wcModel->delete($wcid);
-        if ($success) {
-            echo json_encode(['success' => true]);
-        } else {
-            http_response_code(500);
-            echo json_encode(['success' => false, 'error' => 'delete_failed']);
-        }
-    }
-
-    /**
-     * Show a word cloud page
-     */
-    public function showWordCloud($params = []) {
-        $code = strtoupper($params['code'] ?? '');
-        $wcid = (int)($params['wcid'] ?? 0);
-        $langSlug = $params['lang'] ?? LanguageController::getInstance()->getCurrentLanguage();
-
-        $eventModel = new EventModel();
-        $event = $eventModel->getByKey($code);
-        if (!$event) {
-            http_response_code(404);
-            $lang = LanguageController::getInstance();
-            echo $lang->translate('event_not_found');
-            return;
-        }
-
-        // Authorization check
-        if (!empty($event['password']) && !$this->isAuthorized($code)) {
-            header('Location: /' . $langSlug . '/involved/' . urlencode($code));
-            exit;
-        }
-
-        $wcModel = new WordCloudModel();
-        $wordCloud = $wcModel->getByEventItemId($wcid);
-        if (!$wordCloud) {
-            http_response_code(404);
-            $lang = LanguageController::getInstance();
-            echo $lang->translate('wordcloud_not_found');
-            return;
-        }
-
-        $eventData = $event;
-        $wordCloudData = $wordCloud;
-
-        $currentApp = 'involved';
-        require_once __DIR__ . '/../views/wordcloud.php';
-    }
-    
-    /**
-     * Show form to add a word to a word cloud
-     */
-    public function showAddWordForm($params = []) {
-        $code = strtoupper($params['code'] ?? '');
-        $wcid = (int)($params['wcid'] ?? 0);
-        $langSlug = $params['lang'] ?? LanguageController::getInstance()->getCurrentLanguage();
-
-        $eventModel = new EventModel();
-        $event = $eventModel->getByKey($code);
-        if (!$event) {
-            http_response_code(404);
-            $lang = LanguageController::getInstance();
-            echo $lang->translate('event_not_found');
-            return;
-        }
-
-        $wcModel = new WordCloudModel();
-        $wordCloud = $wcModel->getByEventItemId($wcid);
-        if (!$wordCloud) {
-            http_response_code(404);
-            $lang = LanguageController::getInstance();
-            echo $lang->translate('wordcloud_not_found');
-            return;
-        }
-
-        $eventData = $event;
-        $wordCloudData = $wordCloud;
-
-        $currentApp = 'involved';
-        require_once __DIR__ . '/../views/add_word_form.php';
-    }
     
     /**
      * Create an event item
+     * 
+     * Handles all event item types directly through EventItemModel
+     * without any special routing or model-specific logic
      */
     public function createEventItem($params) {
         $code = strtoupper($params['code'] ?? '');
@@ -450,14 +284,21 @@ class InvolvedHomeController {
         $maxPosition = $eventItemModel->getMaxPositionForEvent($event['id']);
         $position = $maxPosition + 1;
         
-        // Get the event item type (default to wordcloud)
-        $type = $_POST['event_item_type'] ?? 'wordcloud';
+        // Get the event item type (default to 'text' if not specified)
+        $type = $_POST['event_item_type'] ?? 'text';
         
-        // Create the event item
+        // Validate the event item type
+        $validTypes = ['text', 'horizontal_bar_chart', 'vertical_bar_chart', 'pie_chart', 'doughnut'];
+        if (!in_array($type, $validTypes)) {
+            $type = 'text'; // Default to text if invalid type
+            Logger::getInstance()->warning('Invalid event item type specified, defaulting to text');
+        }
+        
+        // Create the event item directly using EventItemModel
         $eventItemId = $eventItemModel->create((int)$event['id'], $question, $position, $type);
         
         if ($eventItemId) {
-            Logger::getInstance()->info('Created new event item: ' . $eventItemId . ' for event: ' . $code);
+            Logger::getInstance()->info('Created new event item: ' . $eventItemId . ' (type: ' . $type . ') for event: ' . $code);
             // Redirect to the event page
             header('Location: /' . $langSlug . '/involved/' . urlencode($code));
             exit;
@@ -759,6 +600,7 @@ class InvolvedHomeController {
         $langSlug = $params['lang'] ?? LanguageController::getInstance()->getCurrentLanguage();
 
         require_once __DIR__ . '/../models/EventModel.php';
+require_once __DIR__ . '/../models/EventItemModel.php';
         require_once __DIR__ . '/../models/EventItemModel.php';
         $eventModel = new EventModel();
         $event = $eventModel->getByKey($code);
@@ -806,6 +648,7 @@ class InvolvedHomeController {
             return;
         }
         require_once __DIR__ . '/../models/EventModel.php';
+require_once __DIR__ . '/../models/EventItemModel.php';
         require_once __DIR__ . '/../models/EventItemModel.php';
         $eventModel = new EventModel();
         $event = $eventModel->getByKey($code);
@@ -951,43 +794,130 @@ class InvolvedHomeController {
      * Expects POST, returns JSON
      */
     public function deleteEventItemAnswer($params = []) {
-        require_once __DIR__ . '/../models/EventAnswerModel.php';
-        require_once __DIR__ . '/../models/EventItemModel.php';
-        
         $code = strtoupper($params['code'] ?? '');
         $itemId = (int)($params['itemid'] ?? 0);
         $answerId = (int)($params['answerid'] ?? 0);
+        
         header('Content-Type: application/json');
-        $lang = LanguageController::getInstance();
-        if (!$code || !$itemId || !$answerId) {
-            echo json_encode(['success' => false, 'error' => $lang->translate('missing_parameters')]);
+        
+        // Check if we have valid IDs
+        if ($itemId === 0 || $answerId === 0) {
+            http_response_code(400);
+            echo json_encode(['success' => false, 'error' => 'missing_parameters']);
             return;
         }
+        
+        // Authorization check
+        if (!$this->isAuthorized($code)) {
+            http_response_code(403);
+            echo json_encode(['success' => false, 'error' => 'unauthorized']);
+            return;
+        }
+        
+        // Load the models
+        require_once __DIR__ . '/../models/EventItemModel.php';
+        require_once __DIR__ . '/../models/EventAnswerModel.php';
+        
+        // Delete the answer
+        $eventAnswerModel = new EventAnswerModel();
+        $success = $eventAnswerModel->delete($answerId);
+        
+        if ($success) {
+            echo json_encode(['success' => true]);
+        } else {
+            http_response_code(500);
+            echo json_encode(['success' => false, 'error' => 'delete_failed']);
+        }
+    }
+    
+    /**
+     * Show form to add content to an event item
+     */
+    public function showAddItemForm($params = []) {
+        $code = strtoupper($params['code'] ?? '');
+        $itemId = (int)($params['itemid'] ?? 0);
+        $langSlug = $params['lang'] ?? LanguageController::getInstance()->getCurrentLanguage();
+
         $eventModel = new EventModel();
         $event = $eventModel->getByKey($code);
         if (!$event) {
-            echo json_encode(['success' => false, 'error' => $lang->translate('event_not_found')]);
+            http_response_code(404);
+            $lang = LanguageController::getInstance();
+            echo $lang->translate('event_not_found');
             return;
         }
+
         // Authorization check
         if (!empty($event['password']) && !$this->isAuthorized($code)) {
-            echo json_encode(['success' => false, 'error' => $lang->translate('unauthorized')]);
-            return;
+            header('Location: /' . $langSlug . '/involved/' . urlencode($code));
+            exit;
         }
+
+        require_once __DIR__ . '/../models/EventItemModel.php';
         $eventItemModel = new EventItemModel();
         $eventItem = $eventItemModel->getById($itemId);
         if (!$eventItem) {
-            echo json_encode(['success' => false, 'error' => $lang->translate('event_item_not_found')]);
+            http_response_code(404);
+            $lang = LanguageController::getInstance();
+            echo $lang->translate('event_item_not_found');
             return;
         }
-        $answerModel = new EventAnswerModel();
-        $result = $answerModel->deleteAnswer($answerId, $itemId);
-        if ($result) {
-            Logger::getInstance()->info('Deleted answer', ['answer_id' => $answerId, 'event_item_id' => $itemId, 'event_code' => $code]);
-            echo json_encode(['success' => true]);
+
+        $currentApp = 'involved';
+        require_once __DIR__ . '/../views/add_item_form.php';
+    }
+
+    /**
+     * Add content to an event item
+     */
+    public function addItem($params = []) {
+        $code = strtoupper($params['code'] ?? '');
+        $itemId = (int)($params['itemid'] ?? 0);
+        $langSlug = $params['lang'] ?? LanguageController::getInstance()->getCurrentLanguage();
+        $content = isset($_POST['content']) ? trim($_POST['content']) : '';
+
+        if ($code === '' || $itemId === 0 || $content === '') {
+            header('Location: /' . $langSlug . '/involved/' . urlencode($code));
+            exit;
+        }
+
+        $eventModel = new EventModel();
+        $event = $eventModel->getByKey($code);
+        if (!$event) {
+            http_response_code(404);
+            $lang = LanguageController::getInstance();
+            echo $lang->translate('event_not_found');
+            return;
+        }
+
+        // Authorization check
+        if (!empty($event['password']) && !$this->isAuthorized($code)) {
+            header('Location: /' . $langSlug . '/involved/' . urlencode($code));
+            exit;
+        }
+
+        require_once __DIR__ . '/../models/EventItemModel.php';
+        $eventItemModel = new EventItemModel();
+        $eventItem = $eventItemModel->getById($itemId);
+        if (!$eventItem) {
+            http_response_code(404);
+            $lang = LanguageController::getInstance();
+            echo $lang->translate('event_item_not_found');
+            return;
+        }
+
+        // Add the content as an answer
+        require_once __DIR__ . '/../models/EventAnswerModel.php';
+        $eventAnswerModel = new EventAnswerModel();
+        $newId = $eventAnswerModel->create($itemId, $content);
+        
+        if ($newId) {
+            Logger::getInstance()->info('Added content to event item ' . $itemId . ': ' . $content);
+            header('Location: /' . $langSlug . '/involved/' . urlencode($code) . '/eventitem/' . $itemId);
         } else {
-            Logger::getInstance()->error('Failed to delete answer', ['answer_id' => $answerId, 'event_item_id' => $itemId, 'event_code' => $code]);
-            echo json_encode(['success' => false, 'error' => $lang->translate('delete_failed')]);
+            Logger::getInstance()->error('Failed to add content to event item ' . $itemId);
+            http_response_code(500);
+            echo 'Failed to add content';
         }
     }
 }

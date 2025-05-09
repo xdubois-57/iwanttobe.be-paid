@@ -81,21 +81,6 @@ class InvolvedApp implements AppInterface {
         $router->get('/{lang}/involved', 'InvolvedHomeController@index');
         $router->post('/{lang}/involved/create', 'InvolvedHomeController@create');
         $router->post('/{lang}/involved/join', 'InvolvedHomeController@join');
-        $router->get('/{lang}/involved/{code}/wordcloud/{wcid}', 'InvolvedHomeController@showWordCloud');
-        $router->get('/{lang}/involved/{code}/wordcloud/{wcid}/words', 'InvolvedHomeController@getWordCloudWords');
-        $router->post('/{lang}/involved/{code}/wordcloud/create', 'InvolvedHomeController@createWordCloud');
-        $router->post('/{lang}/involved/{code}/wordcloud/{wcid}/delete', 'InvolvedHomeController@deleteWordCloud');
-        $router->get('/{lang}/involved/{code}/wordcloud/{wcid}/add', 'InvolvedHomeController@showAddWordForm');
-        $router->post('/{lang}/involved/{code}/wordcloud/{wcid}/add', 'InvolvedHomeController@addWord');
-        $router->post('/{lang}/involved/{code}/wordcloud/{wcid}/word/delete', 'InvolvedHomeController@deleteWord');
-        
-        // Poll routes
-        $router->post('/{lang}/involved/{code}/poll/create', 'InvolvedHomeController@createPoll');
-        $router->get('/{lang}/involved/{code}/poll/{pid}', 'InvolvedHomeController@showPoll');
-        $router->get('/{lang}/involved/{code}/poll/{pid}/answers', 'InvolvedHomeController@getPollAnswers');
-        $router->post('/{lang}/involved/{code}/poll/{pid}/answer/add', 'InvolvedHomeController@addPollAnswer');
-        $router->post('/{lang}/involved/{code}/poll/{pid}/answer/{aid}/vote', 'InvolvedHomeController@votePollAnswer');
-        $router->get('/{lang}/involved/{code}/poll/{pid}/answer', 'InvolvedHomeController@showPollAnswerForm');
         
         $router->get('/{lang}/involved/{code}', 'InvolvedHomeController@show');
         $router->post('/{lang}/involved/verify-password', 'InvolvedHomeController@verifyPassword');
@@ -109,6 +94,8 @@ class InvolvedApp implements AppInterface {
         $router->post('/{lang}/involved/{code}/eventitem/{itemid}/answer/{answerid}/delete', 'InvolvedHomeController@deleteEventItemAnswer');
         $router->post('/{lang}/involved/{code}/eventitem/{itemid}/delete', 'InvolvedHomeController@deleteEventItem');
         $router->post('/{lang}/involved/{code}/eventitem/reorder', 'InvolvedHomeController@reorderEventItems');
+        $router->get('/{lang}/involved/{code}/eventitem/{itemid}/add', 'InvolvedHomeController@showAddItemForm');
+        $router->post('/{lang}/involved/{code}/eventitem/{itemid}/add', 'InvolvedHomeController@addItem');
         
         // AJAX endpoints
         $router->post('/{lang}/involved/ajax/like', 'InvolvedAjaxController@incrementLikes');
