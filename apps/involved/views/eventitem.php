@@ -30,7 +30,6 @@ $lang = LanguageController::getInstance();
         background: var(--background-secondary,#f4f4f4);
         color: var(--text-secondary,#666);
         font-size: 0.7em;
-        font-weight: bold;
         margin-left: 0.5em;
         margin-right: 0.5em;
         line-height: 1.2em;
