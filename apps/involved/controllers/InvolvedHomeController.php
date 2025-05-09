@@ -573,12 +573,14 @@ class InvolvedHomeController {
         }
         
         $answerModel = new EventAnswerModel();
-        $answerId = $answerModel->create($itemId, $value);
+        $answerId = $answerModel->upsertAnswer($itemId, $value);
         
         if ($answerId) {
+            Logger::getInstance()->info('User submitted answer: ' . json_encode(['event_item_id' => $itemId, 'value' => $value, 'user_ip' => $_SERVER['REMOTE_ADDR'] ?? null]));
             header('Content-Type: application/json');
             echo json_encode(['success' => true, 'id' => $answerId]);
         } else {
+            Logger::getInstance()->error('Failed to add or increment answer for event_item_id=' . $itemId . ', value=' . json_encode($value));
             header('Content-Type: application/json');
             echo json_encode(['success' => false, 'error' => 'Failed to add answer']);
         }
@@ -942,5 +944,47 @@ class InvolvedHomeController {
         // For backward compatibility: use createWordCloud with type horizontal_bar_chart
         $_POST['event_item_type'] = 'horizontal_bar_chart';
         $this->createWordCloud($params);
+    }
+
+    /**
+     * Delete an answer for an event item (AJAX)
+     * Expects POST, returns JSON
+     */
+    public function deleteEventItemAnswer($params = []) {
+        $code = strtoupper($params['code'] ?? '');
+        $itemId = (int)($params['itemid'] ?? 0);
+        $answerId = (int)($params['answerid'] ?? 0);
+        header('Content-Type: application/json');
+        $lang = LanguageController::getInstance();
+        if (!$code || !$itemId || !$answerId) {
+            echo json_encode(['success' => false, 'error' => $lang->translate('missing_parameters')]);
+            return;
+        }
+        $eventModel = new EventModel();
+        $event = $eventModel->getByKey($code);
+        if (!$event) {
+            echo json_encode(['success' => false, 'error' => $lang->translate('event_not_found')]);
+            return;
+        }
+        // Authorization check
+        if (!empty($event['password']) && !$this->isAuthorized($code)) {
+            echo json_encode(['success' => false, 'error' => $lang->translate('unauthorized')]);
+            return;
+        }
+        $eventItemModel = new EventItemModel();
+        $eventItem = $eventItemModel->getById($itemId);
+        if (!$eventItem) {
+            echo json_encode(['success' => false, 'error' => $lang->translate('event_item_not_found')]);
+            return;
+        }
+        $answerModel = new EventAnswerModel();
+        $result = $answerModel->deleteAnswer($answerId, $itemId);
+        if ($result) {
+            Logger::getInstance()->info('Deleted answer', ['answer_id' => $answerId, 'event_item_id' => $itemId, 'event_code' => $code]);
+            echo json_encode(['success' => true]);
+        } else {
+            Logger::getInstance()->error('Failed to delete answer', ['answer_id' => $answerId, 'event_item_id' => $itemId, 'event_code' => $code]);
+            echo json_encode(['success' => false, 'error' => $lang->translate('delete_failed')]);
+        }
     }
 }
