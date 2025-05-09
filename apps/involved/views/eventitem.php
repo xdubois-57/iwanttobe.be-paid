@@ -177,12 +177,8 @@ function submitEmoji(emoji) {
         overlayHelper = window.__itemOverlayHelper = (window.__itemOverlayHelper || new OverlayObjectHelper());
     }
     
-    // Initialize based on item type
-    if (itemType === 'wordcloud') {
-        initWordCloud();
-    } else {
-        loadChartJs().then(initChart);
-    }
+    // Initialize answers functionality only (no wordcloud or poll logic)
+    // You can add other item type initializations here if needed.
     
     // Handle answers functionality
     initAnswers();
@@ -394,7 +390,7 @@ function submitEmoji(emoji) {
     }
     
     // Word Cloud initialization
-    function initWordCloud() {
+    // function initWordCloud() { (REMOVED)
         // Skip WordCloud if we're in a different item type
         if (itemType !== 'wordcloud') {
             console.log('Not a wordcloud item, skipping initialization');
