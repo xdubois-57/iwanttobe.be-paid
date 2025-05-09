@@ -125,27 +125,32 @@ $lang = LanguageController::getInstance();
 </main>
 
 <script src="/apps/involved/js/OverlayObjectHelper.js"></script>
+<script src="/apps/involved/js/InvolvedRealtimeHelper.js"></script>
 <script>
-// Submit an emoji directly to the AJAX endpoint
-async function submitEmoji(emoji) {
-    try {
-        const response = await fetch(`/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/<?php echo htmlspecialchars($event['key']); ?>/emoji`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                url: `/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/<?php echo htmlspecialchars($event['key']); ?>`,
-                emoji: emoji
-            })
+// Use InvolvedRealtimeHelper for emoji submission with event item ID
+function submitEmoji(emoji) {
+    // Get the event item ID from the page scope
+    const eventItemId = itemId;
+    
+    window.InvolvedRealtimeHelper.sendEmoji(emoji, eventItemId)
+        .then(async res => {
+            // If res is already the parsed JSON, just return it, else parse
+            if (typeof res.json === 'function') {
+                return await res.json();
+            } else {
+                return res;
+            }
+        })
+        .then(data => {
+            if (!data.success) {
+                console.error('Failed to submit emoji:', data.error);
+            } else {
+                console.log('Successfully submitted emoji for event item:', eventItemId);
+            }
+        })
+        .catch(error => {
+            console.error('Error submitting emoji:', error);
         });
-        const data = await response.json();
-        if (!data.success) {
-            console.error('Failed to submit emoji:', data.error);
-        }
-    } catch (error) {
-        console.error('Error submitting emoji:', error);
-    }
 }
 
 (function(){

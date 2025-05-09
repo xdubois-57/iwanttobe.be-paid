@@ -236,11 +236,14 @@ class InvolvedApiController {
     }
     
     /**
-     * Append an emoji to the queue for a URL
-     * POST /ajax/emoji
-     * Required POST params: url, emoji
+     * Append an emoji to the queue for an event
+     * POST /{lang}/involved/{eventCode}/emoji
+     * Required POST params: emoji (optional: eventItemId)
      */
     public function appendEmoji($params = []) {
+        // Extract event code from route params
+        $eventCode = $params['eventCode'] ?? '';
+        
         // CORS headers
         header('Access-Control-Allow-Origin: *');
         header('Access-Control-Allow-Methods: POST');
@@ -253,18 +256,13 @@ class InvolvedApiController {
             return;
         }
 
-        $url   = $_POST['url']   ?? '';
+        // Get emoji and optional event item ID
         $emoji = $_POST['emoji'] ?? '';
+        $eventItemId = isset($_POST['eventItemId']) ? (int)$_POST['eventItemId'] : null;
 
-        if ($url === '' || $emoji === '') {
+        if ($eventCode === '' || $emoji === '') {
             http_response_code(400);
-            echo json_encode(['success' => false, 'error' => 'url and emoji required']);
-            return;
-        }
-
-        if (!filter_var($url, FILTER_VALIDATE_URL)) {
-            http_response_code(400);
-            echo json_encode(['success' => false, 'error' => 'Invalid URL']);
+            echo json_encode(['success' => false, 'error' => 'Event code and emoji required']);
             return;
         }
 
@@ -276,14 +274,18 @@ class InvolvedApiController {
             return;
         }
 
+        // Log the emoji submission
+        $logFile = __DIR__ . '/../../../logs/presence_debug.log';
+        file_put_contents($logFile, date('Y-m-d H:i:s') . " - InvolvedApiController: appendEmoji for event: {$eventCode}, emoji: {$emoji}" . ($eventItemId ? ", eventItemId: {$eventItemId}" : "") . "\n", FILE_APPEND);
+
         // Append via model
         $model = new OverlayObjectModel();
-        $ok = $model->appendEmoji($url, $emoji);
+        $ok = $model->appendEmojiForEvent($eventCode, $emoji, $eventItemId);
         if ($ok) {
             echo json_encode(['success' => true]);
         } else {
             http_response_code(500);
-            echo json_encode(['success' => false, 'error' => 'DB error']);
+            echo json_encode(['success' => false, 'error' => 'Failed to append emoji']);
         }
     }
 

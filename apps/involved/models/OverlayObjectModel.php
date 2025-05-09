@@ -13,6 +13,31 @@ class OverlayObjectModel
     {
         $this->db = DatabaseHelper::getInstance();
     }
+    
+    /**
+     * Append an emoji to the queue for an event. Creates or uses the event record in OVERLAY_OBJECT
+     *
+     * @param string $eventCode Event code
+     * @param string $emoji Single Unicode emoji character
+     * @param int|null $eventItemId Optional event item ID for targeted emoji reactions
+     * @return bool Success
+     */
+    public function appendEmojiForEvent(string $eventCode, string $emoji, ?int $eventItemId = null): bool
+    {
+        if (!$this->db->isConnected()) {
+            Logger::getInstance()->error('DB connection failed: ' . $this->db->getErrorMessage());
+            return false;
+        }
+
+        // Generate a consistent URL format for events and event items
+        $url = '/involved/' . $eventCode;
+        if ($eventItemId) {
+            $url .= '/eventitem/' . $eventItemId;
+        }
+        
+        // Use existing appendEmoji method with the constructed URL
+        return $this->appendEmoji($url, $emoji);
+    }
 
     /**
      * Append an emoji to the queue for a URL. Creates the record if it doesn't exist

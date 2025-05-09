@@ -1,9 +1,9 @@
 /**
- * OverlayClientHelper for handling client-side interactions with the overlay system
+ * InvolvedRealtimeHelper for handling client-side interactions with the overlay system
  * - Handles "like" actions 
  * - Manages presence tracking with periodic "hello there" calls
  */
-class OverlayClientHelper {
+class InvolvedRealtimeHelper {
     constructor() {
         this.currentUrl = null;
         this.presenceInterval = null;
@@ -32,7 +32,7 @@ class OverlayClientHelper {
             }
         }
         
-        console.log('[OverlayClientHelper] Initialized with URL:', this.currentUrl, 'language:', this.currentLang);
+        console.log('[InvolvedRealtimeHelper] Initialized with URL:', this.currentUrl, 'language:', this.currentLang);
         
         // Modify navigation if we're on an event page
         if (this.eventCode) {
@@ -48,11 +48,10 @@ class OverlayClientHelper {
         const urlObj = new URL(window.location.href);
         urlObj.hash = '';
         urlObj.search = '';
-        this.currentUrl = urlObj.toString();
+        let fullUrl = urlObj.toString();
 
         // Check if we're on a wordcloud page
         const pathSegments = urlObj.pathname.split('/');
-        
         // URL format: /lang/involved/key/wordcloud/wcid[/add]
         if (pathSegments.length >= 6 && pathSegments[2] === 'involved' && pathSegments[4] === 'wordcloud') {
             // We're on a wordcloud page, normalize the URL to always track likes for the main wordcloud page
@@ -60,11 +59,13 @@ class OverlayClientHelper {
             const lang = pathSegments[1];
             const eventKey = pathSegments[3];
             const wcid = pathSegments[5];
-            
             // Normalize to base wordcloud URL, removing any extra paths like '/add'
-            this.currentUrl = `${baseUrl}/${lang}/involved/${eventKey}/wordcloud/${wcid}`;
-            console.log('[OverlayClientHelper] Normalized URL for tracking:', this.currentUrl);
+            fullUrl = `${baseUrl}/${lang}/involved/${eventKey}/wordcloud/${wcid}`;
+            console.log('[InvolvedRealtimeHelper] Normalized URL for tracking:', fullUrl);
         }
+        // Always set currentUrl as fully qualified
+        this.currentUrl = fullUrl;
+
     }
     
     /**
@@ -85,7 +86,7 @@ class OverlayClientHelper {
                 return pathSegments[3].toUpperCase();
             }
         } catch (e) {
-            console.error('[OverlayClientHelper] Error extracting event code from URL:', e);
+            console.error('[InvolvedRealtimeHelper] Error extracting event code from URL:', e);
         }
         
         // If we can't determine the event code from the URL, use the stored one if available
@@ -93,7 +94,7 @@ class OverlayClientHelper {
             return this.eventCode;
         }
         
-        console.warn('[OverlayClientHelper] Could not extract event code from URL:', url);
+        console.warn('[InvolvedRealtimeHelper] Could not extract event code from URL:', url);
         return 'unknown';
     }
     
@@ -108,7 +109,7 @@ class OverlayClientHelper {
         if (pathSegments.length >= 4 && pathSegments[2].toLowerCase() === 'involved') {
             this.eventCode = pathSegments[3].toUpperCase();
             this.currentLang = pathSegments[1];
-            console.log('[OverlayClientHelper] Extracted event code:', this.eventCode, 'and language:', this.currentLang);
+            console.log('[InvolvedRealtimeHelper] Extracted event code:', this.eventCode, 'and language:', this.currentLang);
         }
     }
     
@@ -145,38 +146,48 @@ class OverlayClientHelper {
             adminLi.appendChild(adminLink);
             navLinks.appendChild(adminLi);
             
-            console.log('[OverlayClientHelper] Modified navigation to show admin link only');
+            console.log('[InvolvedRealtimeHelper] Modified navigation to show admin link only');
         } else {
-            console.log('[OverlayClientHelper] Could not find navigation menu to modify');
+            console.log('[InvolvedRealtimeHelper] Could not find navigation menu to modify');
         }
     }
     
     /**
-     * Send an emoji reaction for the current page
+     * Send an emoji reaction for the current event
      * @param {string} emoji - Unicode emoji character
+     * @param {number} [eventItemId] - Optional event item ID for targeted reactions
      * @returns {Promise}
      */
-    sendEmoji(emoji) {
-        if (!this.currentUrl) {
-            this.calculateCurrentUrl();
-        }
-
+    sendEmoji(emoji, eventItemId = null) {
         // Make sure we have a valid language
         if (!this.currentLang) {
             this.currentLang = 'en'; // Default to English if language not available
-            console.warn('[OverlayClientHelper] No language detected, defaulting to:', this.currentLang);
+            console.warn('[InvolvedRealtimeHelper] No language detected, defaulting to:', this.currentLang);
+        }
+        
+        // Make sure we have an event code
+        if (!this.eventCode) {
+            this.extractEventCodeAndLang();
+        }
+        
+        if (!this.eventCode) {
+            console.error('[InvolvedRealtimeHelper] No event code available for emoji submission');
+            return Promise.reject(new Error('No event code available'));
         }
         
         // Get the base URL (protocol + hostname + port)
         const baseUrl = window.location.origin;
 
         const formData = new FormData();
-        formData.append('url', this.currentUrl);
         formData.append('emoji', emoji);
-
-        // Get the event code from the URL
-        const eventCode = this.extractEventCodeFromUrl(this.currentUrl);
-        return fetch(`${baseUrl}/${this.currentLang}/involved/${eventCode}/emoji`, {
+        
+        // Add event item ID if provided
+        if (eventItemId) {
+            formData.append('eventItemId', eventItemId);
+        }
+        
+        // Use eventCode directly from the instance
+        return fetch(`${baseUrl}/${this.currentLang}/involved/${this.eventCode}/emoji`, {
             method: 'POST',
             body: formData
         })
@@ -211,7 +222,7 @@ class OverlayClientHelper {
             this.sendPresenceUpdate();
         }, this.presenceIntervalTime);
         
-        console.log('[OverlayClientHelper] Started presence tracking');
+        console.log('[InvolvedRealtimeHelper] Started presence tracking');
     }
     
     /**
@@ -221,7 +232,7 @@ class OverlayClientHelper {
         if (this.presenceInterval) {
             clearInterval(this.presenceInterval);
             this.presenceInterval = null;
-            console.log('[OverlayClientHelper] Stopped presence tracking');
+            console.log('[InvolvedRealtimeHelper] Stopped presence tracking');
         }
     }
     
@@ -237,13 +248,13 @@ class OverlayClientHelper {
         // Make sure we have a valid language
         if (!this.currentLang) {
             this.currentLang = 'en'; // Default to English if language not available
-            console.warn('[OverlayClientHelper] No language detected, defaulting to:', this.currentLang);
+            console.warn('[InvolvedRealtimeHelper] No language detected, defaulting to:', this.currentLang);
         }
         
         // Get the base URL (protocol + hostname + port)
         const baseUrl = window.location.origin;
         
-        console.log('[OverlayClientHelper] Sending presence update for URL:', this.currentUrl);
+        console.log('[InvolvedRealtimeHelper] Sending presence update for URL:', this.currentUrl);
         
         const formData = new FormData();
         formData.append('url', this.currentUrl);
@@ -256,11 +267,11 @@ class OverlayClientHelper {
         })
         .then(response => response.json())
         .then(data => {
-            console.log('[OverlayClientHelper] Presence update response:', data);
+            console.log('[InvolvedRealtimeHelper] Presence update response:', data);
             
             // Check if there's an active URL to redirect to
             if (data.active_url && data.active_url !== window.location.href) {
-                console.log('[OverlayClientHelper] Redirecting to active URL:', data.active_url);
+                console.log('[InvolvedRealtimeHelper] Redirecting to active URL:', data.active_url);
                 
                 // Store that we're performing a redirection to avoid loops
                 sessionStorage.setItem('redirected_from', window.location.href);
@@ -273,7 +284,7 @@ class OverlayClientHelper {
             // Check if we just redirected and log it
             const redirectedFrom = sessionStorage.getItem('redirected_from');
             if (redirectedFrom) {
-                console.log('[OverlayClientHelper] Was redirected from:', redirectedFrom);
+                console.log('[InvolvedRealtimeHelper] Was redirected from:', redirectedFrom);
                 sessionStorage.removeItem('redirected_from');
             }
             
@@ -283,11 +294,11 @@ class OverlayClientHelper {
             return 0;
         })
         .catch(error => {
-            console.error('[OverlayClientHelper] Error sending presence update:', error);
+            console.error('[InvolvedRealtimeHelper] Error sending presence update:', error);
             return 0;
         });
     }
 }
 
 // Create a global instance
-window.OverlayClientHelper = new OverlayClientHelper();
+window.InvolvedRealtimeHelper = new InvolvedRealtimeHelper();
