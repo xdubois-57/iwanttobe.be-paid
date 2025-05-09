@@ -96,50 +96,24 @@ $lang = LanguageController::getInstance();
     </article>
 
     <div class="grid" style="margin-top:2rem; gap:2rem;">
-        <!-- Left: content area -->
-        <article style="grid-column: span 3;">
-            <?php if ($eventItem['type'] === 'wordcloud'): ?>
-                <div id="word-cloud-container" class="event-item-wrapper"></div>
-            <?php else: ?>
-                <canvas id="chart-container" class="event-item-wrapper" style="transform:scale(0.7); transform-origin:center; cursor:pointer;"></canvas>
-            <?php endif; ?>
-            <div style="text-align:center; margin-top:1rem;">
-                <a href="/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/<?php echo urlencode($event['key']); ?>/eventitem/<?php echo $eventItem['id']; ?>/answer" class="primary" role="button" target="_blank" style="padding:0.8rem 2rem; font-size:1.1rem;">
-                    <?php echo htmlspecialchars($lang->translate('add_your_answer', 'Add your answer')); ?>
-                </a>
-            </div>
+        <!-- Left column: Future animations -->
+        <article style="grid-column: span 1;">
+            <span id="future-animations" style="width:100%; height:100%; display:block;"></span>
         </article>
-        <!-- Right: QR code only -->
-        <article style="grid-column: span 1; text-align:center;">
-            <div id="event-qr-block" style="margin:1rem 0;"></div>
-            <script src="/apps/involved/js/eventQrBlock.js"></script>
-            <script>
-            document.addEventListener('DOMContentLoaded',function(){
-                const scheme=window.location.protocol.replace(':','');
-                const host=window.location.host;
-                const lang='<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>';
-                const eventKey='<?php echo htmlspecialchars($event["key"]); ?>';
-                const itemId='<?php echo $eventItem['id']; ?>';
-                const addAnswerUrl=`${scheme}://${host}/${lang}/involved/${eventKey}/eventitem/${itemId}/answer`;
-                const eventPassword=<?php echo json_encode($event['password'] ?? null); ?>;
-                new EventQrBlock('#event-qr-block', addAnswerUrl, eventKey, eventPassword, '', true);
-            });
-            </script>
+        
+        <!-- Right column: Answers -->
+        <article style="grid-column: span 1;">
+            <h3>Answers</h3>
+            <ul id="answer-list" style="list-style:none;padding:0;margin-top:1rem;"></ul>
+            
+            <!-- Add answer form -->
+            <h3 style="margin-top:1.5rem;">Add answer</h3>
+            <form id="add-answer-form" style="margin-top:0.5rem;" onsubmit="return false;">
+                <input type="text" id="answer-value" placeholder="Answer" required style="width:100%; margin-bottom:0.5rem;">
+                <button type="button" onclick="submitAnswer()" class="primary" style="width:100%;">Add</button>
+            </form>
         </article>
     </div>
-
-    <!-- Answers section -->
-    <article style="margin-top:2rem;">
-        <h3>Answers</h3>
-        <ul id="answer-list" style="list-style:none;padding:0;margin-top:1rem;"></ul>
-        
-        <!-- Add answer form -->
-        <h3 style="margin-top:1.5rem;">Add answer</h3>
-        <form id="add-answer-form" style="margin-top:0.5rem;" onsubmit="return false;">
-            <input type="text" id="answer-value" placeholder="Answer" required style="width:100%; margin-bottom:0.5rem;">
-            <button type="button" onclick="submitAnswer()" class="primary" style="width:100%;">Add</button>
-        </form>
-    </article>
 
 </main>
 
