@@ -2,8 +2,6 @@
 /**
  * Controller for AJAX requests.
  */
-require_once __DIR__ . '/../models/OverlayObjectModel.php';
-require_once __DIR__ . '/../models/OverlayPresenceModel.php';
 require_once __DIR__ . '/../../../controllers/LanguageController.php';
 
 class InvolvedApiController {

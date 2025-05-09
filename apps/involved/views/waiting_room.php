@@ -14,18 +14,17 @@ require_once __DIR__ . '/../../../views/header.php';
 </main>
 
 <!-- Initialize the overlay client helper just like in the add word form -->
-<script src="/apps/involved/js/OverlayClientHelper.js"></script>
+<script src="/apps/involved/js/OverlayObjectHelper.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize the overlay client for presence tracking
-    const overlayClient = new OverlayClientHelper();
-    
-    // Initialize the helper (this will also add the admin link)
-    overlayClient.initialize();
-    
-    // Set custom polling interval and start presence tracking
-    overlayClient.presenceIntervalTime = 3000; // Check every 3 seconds (default is 30 seconds)
-    overlayClient.startPresenceTracking();
+    // Initialize the overlay object helper for presence tracking
+    if (window.OverlayObjectHelper) {
+        window.OverlayObjectHelper.initialize();
+        // Optionally set custom polling interval if needed
+        window.OverlayObjectHelper.presenceIntervalTime = 3000; // Check every 3 seconds
+        window.OverlayObjectHelper.startPresencePolling();
+    }
+
 });
 </script>
 

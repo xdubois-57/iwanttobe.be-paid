@@ -495,13 +495,10 @@ class OverlayObjectHelper {
         this.initializePresenceCounter();
     }
 
-    sendEmoji() {
-        // backward compatibility – send default 👍 emoji
-        if (!window.OverlayClientHelper || typeof window.OverlayClientHelper.sendEmoji !== 'function') {
-            console.warn('[OverlayObjectHelper] OverlayClientHelper.sendEmoji missing');
-            return Promise.resolve();
-        }
-        return window.OverlayClientHelper.sendEmoji('👍');
+    sendEmoji(emoji = '👍') {
+        // TODO: Implement new emoji submission logic here, possibly via fetch to the backend
+        console.warn('[OverlayObjectHelper] sendEmoji is not implemented. Please implement emoji submission logic.');
+        return Promise.resolve();
     }
 
     cleanup() {
