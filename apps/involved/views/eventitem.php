@@ -129,7 +129,7 @@ $lang = LanguageController::getInstance();
 // Submit an emoji directly to the AJAX endpoint
 async function submitEmoji(emoji) {
     try {
-        const response = await fetch(`/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/ajax/emoji`, {
+        const response = await fetch(`/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/<?php echo htmlspecialchars($event['key']); ?>/emoji`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

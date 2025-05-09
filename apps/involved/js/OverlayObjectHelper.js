@@ -151,7 +151,7 @@ class OverlayObjectHelper {
             // Get the base URL (protocol + hostname + port)
             const baseUrl = window.location.origin;
             
-            fetch(`${baseUrl}/${this.currentLang}/involved/ajax/set_active_url`, {
+            fetch(`${baseUrl}/${this.currentLang}/involved/${eventCode}/active-url`, {
                 method: 'POST',
                 body: formData
             })
@@ -317,7 +317,8 @@ class OverlayObjectHelper {
         const baseUrl = window.location.origin;
         
         // Construct a proper URL
-        const presenceUrl = `${baseUrl}/${this.currentLang}/involved/ajax/presence?url=${encodeURIComponent(this.currentUrl)}`;
+        const eventCode = this.extractEventCode();
+        const presenceUrl = `${baseUrl}/${this.currentLang}/involved/${eventCode}/presence?url=${encodeURIComponent(this.currentUrl)}`;
         console.log('[OverlayObjectHelper] Presence endpoint URL:', presenceUrl);
         
         fetch(presenceUrl)
@@ -370,7 +371,8 @@ class OverlayObjectHelper {
         const baseUrl = window.location.origin;
         
         // Construct a proper URL
-        const emojisUrl = `${baseUrl}/${this.currentLang}/involved/ajax/emoji?url=${encodeURIComponent(this.currentUrl)}&max=15`;
+        const eventCode = this.extractEventCode();
+        const emojisUrl = `${baseUrl}/${this.currentLang}/involved/${eventCode}/emoji?url=${encodeURIComponent(this.currentUrl)}&max=15`;
         console.log('[OverlayObjectHelper] Emojis endpoint URL:', emojisUrl);
         
         fetch(emojisUrl)
@@ -687,7 +689,7 @@ class OverlayObjectHelper {
         formData.append('event_code', eventCode);
         formData.append('active_url', url);
         
-        fetch(`${baseUrl}/${this.currentLang}/involved/ajax/set_active_url`, {
+        fetch(`${baseUrl}/${this.currentLang}/involved/${eventCode}/active-url`, {
             method: 'POST',
             body: formData
         })
@@ -700,6 +702,31 @@ class OverlayObjectHelper {
             }
         })
         .catch(err => console.error('[OverlayObjectHelper] Error setting active URL:', err));
+    }
+    
+    /**
+     * Extract event code from the current URL or from the stored eventCode property
+     * @returns {string} The event code or 'unknown' if not found
+     */
+    extractEventCode() {
+        if (this.eventCode) {
+            return this.eventCode;
+        }
+        
+        try {
+            const urlObj = new URL(this.currentUrl || window.location.href);
+            const pathSegments = urlObj.pathname.split('/');
+            
+            // URL format: /{lang}/involved/{eventCode}/...
+            if (pathSegments.length >= 4 && pathSegments[2].toLowerCase() === 'involved') {
+                return pathSegments[3].toUpperCase();
+            }
+        } catch (e) {
+            console.error('[OverlayObjectHelper] Error extracting event code:', e);
+        }
+        
+        console.warn('[OverlayObjectHelper] Could not extract event code, using default');
+        return 'unknown';
     }
 }
 

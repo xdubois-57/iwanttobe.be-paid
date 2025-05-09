@@ -70,6 +70,36 @@ class OverlayClientHelper {
     /**
      * Extract event code and language from the current URL
      */
+    /**
+     * Extract event code from a URL string
+     * @param {string} url - The URL to extract the event code from
+     * @returns {string} The event code or 'unknown' if not found
+     */
+    extractEventCodeFromUrl(url) {
+        try {
+            const urlObj = new URL(url);
+            const pathSegments = urlObj.pathname.split('/');
+            
+            // URL format: /{lang}/involved/{eventCode}/...
+            if (pathSegments.length >= 4 && pathSegments[2].toLowerCase() === 'involved') {
+                return pathSegments[3].toUpperCase();
+            }
+        } catch (e) {
+            console.error('[OverlayClientHelper] Error extracting event code from URL:', e);
+        }
+        
+        // If we can't determine the event code from the URL, use the stored one if available
+        if (this.eventCode) {
+            return this.eventCode;
+        }
+        
+        console.warn('[OverlayClientHelper] Could not extract event code from URL:', url);
+        return 'unknown';
+    }
+    
+    /**
+     * Extract event code and language from the current URL
+     */
     extractEventCodeAndLang() {
         const urlObj = new URL(window.location.href);
         const pathSegments = urlObj.pathname.split('/');
@@ -144,7 +174,9 @@ class OverlayClientHelper {
         formData.append('url', this.currentUrl);
         formData.append('emoji', emoji);
 
-        return fetch(`${baseUrl}/${this.currentLang}/involved/ajax/emoji`, {
+        // Get the event code from the URL
+        const eventCode = this.extractEventCodeFromUrl(this.currentUrl);
+        return fetch(`${baseUrl}/${this.currentLang}/involved/${eventCode}/emoji`, {
             method: 'POST',
             body: formData
         })
@@ -216,7 +248,9 @@ class OverlayClientHelper {
         const formData = new FormData();
         formData.append('url', this.currentUrl);
         
-        return fetch(`${baseUrl}/${this.currentLang}/involved/ajax/presence`, {
+        // Get the event code from the URL
+        const eventCode = this.extractEventCodeFromUrl(this.currentUrl);
+        return fetch(`${baseUrl}/${this.currentLang}/involved/${eventCode}/presence`, {
             method: 'POST',
             body: formData
         })

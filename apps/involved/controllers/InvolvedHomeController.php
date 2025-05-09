@@ -584,7 +584,7 @@ require_once __DIR__ . '/../models/EventItemModel.php';
         
         // Delete the answer
         $eventAnswerModel = new EventAnswerModel();
-        $success = $eventAnswerModel->delete($answerId);
+        $success = $eventAnswerModel->deleteAnswer($answerId, $itemId);
         
         if ($success) {
             echo json_encode(['success' => true]);

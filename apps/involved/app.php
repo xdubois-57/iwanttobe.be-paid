@@ -18,7 +18,7 @@
  */
 
 require_once __DIR__ . '/controllers/InvolvedHomeController.php';
-require_once __DIR__ . '/controllers/AjaxController.php';
+require_once __DIR__ . '/controllers/InvolvedApiController.php';
 
 class InvolvedApp implements AppInterface {
     /**
@@ -98,13 +98,20 @@ class InvolvedApp implements AppInterface {
         $router->post('/{lang}/involved/{code}/eventitem/{itemid}/add', 'InvolvedHomeController@addItem');
         
         // AJAX endpoints
-        $router->post('/{lang}/involved/ajax/like', 'InvolvedAjaxController@incrementLikes');
-        $router->get('/{lang}/involved/ajax/likes', 'InvolvedAjaxController@getLikes');
-        $router->post('/{lang}/involved/ajax/presence', 'InvolvedAjaxController@updatePresence');
-        $router->get('/{lang}/involved/ajax/presence', 'InvolvedAjaxController@getPresence');
-        $router->post('/{lang}/involved/ajax/set_active_url', 'InvolvedAjaxController@setActiveUrl');
-        $router->post('/{lang}/involved/ajax/emoji', 'InvolvedAjaxController@appendEmoji');
-        $router->get('/{lang}/involved/ajax/emoji', 'InvolvedAjaxController@getEmojis');
+        
+        // Event-specific AJAX endpoints
+        $router->post('/{lang}/involved/{code}/presence', 'InvolvedApiController@updatePresence');
+        $router->get('/{lang}/involved/{code}/presence', 'InvolvedApiController@getPresence');
+        $router->post('/{lang}/involved/{code}/active-url', 'InvolvedApiController@setActiveUrl');
+        $router->post('/{lang}/involved/{code}/emoji', 'InvolvedApiController@appendEmoji');
+        $router->get('/{lang}/involved/{code}/emoji', 'InvolvedApiController@getEmojis');
+        
+        // Legacy routes for backward compatibility - to be removed in future
+        $router->post('/{lang}/involved/ajax/presence', 'InvolvedApiController@updatePresence');
+        $router->get('/{lang}/involved/ajax/presence', 'InvolvedApiController@getPresence');
+        $router->post('/{lang}/involved/ajax/set_active_url', 'InvolvedApiController@setActiveUrl');
+        $router->post('/{lang}/involved/ajax/emoji', 'InvolvedApiController@appendEmoji');
+        $router->get('/{lang}/involved/ajax/emoji', 'InvolvedApiController@getEmojis');
     }
     
     /**
