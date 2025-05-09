@@ -241,8 +241,14 @@ class InvolvedApiController {
      * Required POST params: emoji (optional: eventItemId)
      */
     public function appendEmoji($params = []) {
-        // Extract event code from route params
-        $eventCode = $params['eventCode'] ?? '';
+        $logFile = __DIR__ . '/../../../logs/presence_debug.log';
+        // Log all incoming data for debugging
+        file_put_contents($logFile, date('Y-m-d H:i:s') . " - appendEmoji called\n", FILE_APPEND);
+        file_put_contents($logFile, "  Incoming params: " . json_encode($params) . "\n", FILE_APPEND);
+        file_put_contents($logFile, "  Incoming POST: " . json_encode($_POST) . "\n", FILE_APPEND);
+
+        // Extract event code from route params (use only 'code')
+        $eventCode = $params['code'] ?? '';
         
         // CORS headers
         header('Access-Control-Allow-Origin: *');
@@ -251,6 +257,7 @@ class InvolvedApiController {
         header('Content-Type: application/json');
 
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            file_put_contents($logFile, "  Error: Method not allowed\n", FILE_APPEND);
             http_response_code(405);
             echo json_encode(['success' => false, 'error' => 'Method not allowed']);
             return;
@@ -260,7 +267,10 @@ class InvolvedApiController {
         $emoji = $_POST['emoji'] ?? '';
         $eventItemId = isset($_POST['eventItemId']) ? (int)$_POST['eventItemId'] : null;
 
+        file_put_contents($logFile, "  eventCode: {$eventCode}, emoji: {$emoji}, eventItemId: " . var_export($eventItemId, true) . "\n", FILE_APPEND);
+
         if ($eventCode === '' || $emoji === '') {
+            file_put_contents($logFile, "  Error: Event code and emoji required\n", FILE_APPEND);
             http_response_code(400);
             echo json_encode(['success' => false, 'error' => 'Event code and emoji required']);
             return;
@@ -269,21 +279,30 @@ class InvolvedApiController {
         // Allow only certain emojis
         $allowedEmojis = ['❤️', '😂', '👍', '🔥', '🎉', '😅'];
         if (!in_array($emoji, $allowedEmojis)) {
+            file_put_contents($logFile, "  Error: Invalid emoji\n", FILE_APPEND);
             http_response_code(400);
             echo json_encode(['success' => false, 'error' => 'Invalid emoji']);
             return;
         }
 
         // Log the emoji submission
-        $logFile = __DIR__ . '/../../../logs/presence_debug.log';
         file_put_contents($logFile, date('Y-m-d H:i:s') . " - InvolvedApiController: appendEmoji for event: {$eventCode}, emoji: {$emoji}" . ($eventItemId ? ", eventItemId: {$eventItemId}" : "") . "\n", FILE_APPEND);
 
-        // Append via model
-        $model = new OverlayObjectModel();
-        $ok = $model->appendEmojiForEvent($eventCode, $emoji, $eventItemId);
+        // Append emoji to EVENT_ITEM if eventItemId is provided
+        if ($eventItemId) {
+            require_once __DIR__ . '/../models/EventItemModel.php';
+            $eventItemModel = new EventItemModel();
+            $ok = $eventItemModel->appendEmojiToEventItem($eventItemId, $emoji);
+            file_put_contents($logFile, "  Used EventItemModel for emoji append.\n", FILE_APPEND);
+        } else {
+            file_put_contents($logFile, "  Error: eventItemId required for emoji submission to EVENT_ITEM.\n", FILE_APPEND);
+            $ok = false;
+        }
         if ($ok) {
+            file_put_contents($logFile, "  Success: Emoji appended\n", FILE_APPEND);
             echo json_encode(['success' => true]);
         } else {
+            file_put_contents($logFile, "  Error: Failed to append emoji\n", FILE_APPEND);
             http_response_code(500);
             echo json_encode(['success' => false, 'error' => 'Failed to append emoji']);
         }

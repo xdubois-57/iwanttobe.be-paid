@@ -127,6 +127,12 @@ $lang = LanguageController::getInstance();
 <script src="/apps/involved/js/OverlayObjectHelper.js"></script>
 <script src="/apps/involved/js/InvolvedRealtimeHelper.js"></script>
 <script>
+// Common variables (must be defined before any function uses them)
+const lang='<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>';
+const eventKey='<?php echo htmlspecialchars($event['key']); ?>';
+const itemId=<?php echo (int)$eventItem['id']; ?>;
+const itemType='<?php echo $eventItem['type']; ?>';
+
 // Use InvolvedRealtimeHelper for emoji submission with event item ID
 function submitEmoji(emoji) {
     // Get the event item ID from the page scope

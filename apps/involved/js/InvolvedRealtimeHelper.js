@@ -10,6 +10,7 @@ class InvolvedRealtimeHelper {
         this.presenceIntervalTime = 30000; // 30 seconds in milliseconds
         this.eventCode = null;
         this.currentLang = null;
+        this.extractEventCodeAndLang(); // Ensure these are set at construction
     }
     
     /**
@@ -159,6 +160,9 @@ class InvolvedRealtimeHelper {
      * @returns {Promise}
      */
     sendEmoji(emoji, eventItemId = null) {
+        // Always extract event code and language from URL before sending
+        this.extractEventCodeAndLang();
+
         // Make sure we have a valid language
         if (!this.currentLang) {
             this.currentLang = 'en'; // Default to English if language not available
@@ -166,10 +170,6 @@ class InvolvedRealtimeHelper {
         }
         
         // Make sure we have an event code
-        if (!this.eventCode) {
-            this.extractEventCodeAndLang();
-        }
-        
         if (!this.eventCode) {
             console.error('[InvolvedRealtimeHelper] No event code available for emoji submission');
             return Promise.reject(new Error('No event code available'));

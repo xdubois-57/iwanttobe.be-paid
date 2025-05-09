@@ -122,4 +122,40 @@ class EventItemModel
         
         return (int)$result['max_position'];
     }
+
+    /**
+     * Append an emoji to the emoji_queue for a specific event item
+     * @param int $eventItemId
+     * @param string $emoji
+     * @return bool
+     */
+    public function appendEmojiToEventItem(int $eventItemId, string $emoji): bool
+    {
+        $logFile = __DIR__ . '/../../../logs/presence_debug.log';
+        file_put_contents($logFile, date('Y-m-d H:i:s') . " [appendEmojiToEventItem] Called with eventItemId: $eventItemId, emoji: $emoji\n", FILE_APPEND);
+        if (!$this->db->isConnected()) {
+            $err = $this->db->getErrorMessage();
+            file_put_contents($logFile, date('Y-m-d H:i:s') . " [appendEmojiToEventItem] DB connection failed: $err\n", FILE_APPEND);
+            Logger::getInstance()->error('DB connection failed: ' . $err);
+            return false;
+        }
+        $this->db->beginTransaction();
+        try {
+            $row = $this->db->fetchOne('SELECT emoji_queue FROM EVENT_ITEM WHERE id = ?', [$eventItemId]);
+            $queue = ($row && $row['emoji_queue']) ? json_decode($row['emoji_queue'], true) : [];
+            if (!is_array($queue)) {
+                $queue = [];
+            }
+            $queue[] = $emoji;
+            $this->db->query('UPDATE EVENT_ITEM SET emoji_queue = ? WHERE id = ?', [json_encode($queue), $eventItemId]);
+            $this->db->commit();
+            file_put_contents($logFile, date('Y-m-d H:i:s') . " [appendEmojiToEventItem] Commit success\n", FILE_APPEND);
+            return true;
+        } catch (Exception $e) {
+            $this->db->rollback();
+            file_put_contents($logFile, date('Y-m-d H:i:s') . " [appendEmojiToEventItem] Exception: " . $e->getMessage() . "\n", FILE_APPEND);
+            Logger::getInstance()->error('Failed to append emoji to event item: ' . $e->getMessage());
+            return false;
+        }
+    }
 }

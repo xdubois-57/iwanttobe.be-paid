@@ -48,32 +48,44 @@ class OverlayObjectModel
      */
     public function appendEmoji(string $url, string $emoji): bool
     {
+        $logFile = __DIR__ . '/../../../logs/presence_debug.log';
+        file_put_contents($logFile, date('Y-m-d H:i:s') . " [appendEmoji] Called with url: $url, emoji: $emoji\n", FILE_APPEND);
         if (!$this->db->isConnected()) {
-            Logger::getInstance()->error('DB connection failed: ' . $this->db->getErrorMessage());
+            $err = $this->db->getErrorMessage();
+            file_put_contents($logFile, date('Y-m-d H:i:s') . " [appendEmoji] DB connection failed: $err\n", FILE_APPEND);
+            Logger::getInstance()->error('DB connection failed: ' . $err);
             return false;
         }
 
         $this->db->beginTransaction();
         try {
             // Fetch existing queue (if any)
-            $row = $this->db->fetchOne('SELECT id, emoji_queue FROM OVERLAY_OBJECT WHERE url = ?', [$url]);
+            $sql = 'SELECT id, emoji_queue FROM OVERLAY_OBJECT WHERE url = ?';
+            file_put_contents($logFile, date('Y-m-d H:i:s') . " [appendEmoji] SQL: $sql [url: $url]\n", FILE_APPEND);
+            $row = $this->db->fetchOne($sql, [$url]);
             if ($row) {
                 $queue = $row['emoji_queue'] ? json_decode($row['emoji_queue'], true) : [];
                 if (!is_array($queue)) {
                     $queue = [];
                 }
                 $queue[] = $emoji;
-                $this->db->query('UPDATE OVERLAY_OBJECT SET emoji_queue = ? WHERE id = ?', [json_encode($queue), $row['id']]);
+                $updateSql = 'UPDATE OVERLAY_OBJECT SET emoji_queue = ? WHERE id = ?';
+                file_put_contents($logFile, date('Y-m-d H:i:s') . " [appendEmoji] SQL: $updateSql [queue: " . json_encode($queue) . ", id: {$row['id']}]\n", FILE_APPEND);
+                $this->db->query($updateSql, [json_encode($queue), $row['id']]);
             } else {
-                $this->db->insert('OVERLAY_OBJECT', [
+                $insertData = [
                     'url'         => $url,
                     'emoji_queue' => json_encode([$emoji])
-                ]);
+                ];
+                file_put_contents($logFile, date('Y-m-d H:i:s') . " [appendEmoji] INSERT: " . json_encode($insertData) . "\n", FILE_APPEND);
+                $this->db->insert('OVERLAY_OBJECT', $insertData);
             }
             $this->db->commit();
+            file_put_contents($logFile, date('Y-m-d H:i:s') . " [appendEmoji] Commit success\n", FILE_APPEND);
             return true;
         } catch (Exception $e) {
             $this->db->rollback();
+            file_put_contents($logFile, date('Y-m-d H:i:s') . " [appendEmoji] Exception: " . $e->getMessage() . "\n", FILE_APPEND);
             Logger::getInstance()->error('Failed to append emoji: ' . $e->getMessage());
             return false;
         }
