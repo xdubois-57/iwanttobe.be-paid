@@ -125,38 +125,27 @@ $lang = LanguageController::getInstance();
 </main>
 
 <script src="/apps/involved/js/OverlayObjectHelper.js"></script>
-<script src="/apps/involved/js/InvolvedRealtimeHelper.js"></script>
 <script>
-// Common variables (must be defined before any function uses them)
-const lang='<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>';
-const eventKey='<?php echo htmlspecialchars($event['key']); ?>';
-const itemId=<?php echo (int)$eventItem['id']; ?>;
-const itemType='<?php echo $eventItem['type']; ?>';
-
-// Use InvolvedRealtimeHelper for emoji submission with event item ID
-function submitEmoji(emoji) {
-    // Get the event item ID from the page scope
-    const eventItemId = itemId;
-    
-    window.InvolvedRealtimeHelper.sendEmoji(emoji, eventItemId)
-        .then(async res => {
-            // If res is already the parsed JSON, just return it, else parse
-            if (typeof res.json === 'function') {
-                return await res.json();
-            } else {
-                return res;
-            }
-        })
-        .then(data => {
-            if (!data.success) {
-                console.error('Failed to submit emoji:', data.error);
-            } else {
-                console.log('Successfully submitted emoji for event item:', eventItemId);
-            }
-        })
-        .catch(error => {
-            console.error('Error submitting emoji:', error);
+// Submit an emoji directly to the AJAX endpoint
+async function submitEmoji(emoji) {
+    try {
+        const response = await fetch(`/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/<?php echo htmlspecialchars($event['key']); ?>/emoji`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                url: `/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/<?php echo htmlspecialchars($event['key']); ?>`,
+                emoji: emoji
+            })
         });
+        const data = await response.json();
+        if (!data.success) {
+            console.error('Failed to submit emoji:', data.error);
+        }
+    } catch (error) {
+        console.error('Error submitting emoji:', error);
+    }
 }
 
 (function(){
@@ -177,7 +166,8 @@ function submitEmoji(emoji) {
         overlayHelper = window.__itemOverlayHelper = (window.__itemOverlayHelper || new OverlayObjectHelper());
     }
     
-    // Only initialize answers functionality. All chart and wordcloud logic has been removed.
+    // Initialize answers functionality only
+    // All chart and wordcloud code has been removed
     
     // Handle answers functionality
     initAnswers();
@@ -381,229 +371,6 @@ function submitEmoji(emoji) {
                 resolve();
                 return;
             }
-            const script = document.createElement('script');
-            script.src = 'https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js';
-            script.onload = resolve;
-            document.head.appendChild(script);
-        });
-    }
-    
-    // Word Cloud logic fully removed; no orphaned or commented code remains.
-        
-        // Wordcloud logic removed. No fetchWordcloudData remains.
-            // The correct endpoint for wordcloud words (check if it's an answer endpoint vs. wordcloud)
-            const endpoint = `/${lang}/involved/${eventKey}/eventitem/${itemId}/answers`;
-            console.log('Fetching wordcloud data from:', endpoint);
-            
-            return fetch(endpoint)
-                .then(response => {
-                    if (!response.ok) {
-                        console.error(`Server returned ${response.status} for ${endpoint}`);
-                        throw new Error(`Failed to fetch words: ${response.status}`);
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    console.log('Word data received:', data);
-                    // Ensure we have an array of word objects
-                    if (!Array.isArray(data)) {
-                        console.log('Converting non-array response to array format');
-                        // Try to extract answers or other relevant data
-                        if (data && data.answers) return data.answers;
-                        if (data && data.words) return data.words;
-                        if (data && data.items) return data.items;
-                        return [];
-                    }
-                    return data;
-                })
-                .catch(error => {
-                    console.error('Error fetching words:', error);
-                    return []; // Return empty array on error
-                });
-        };
-        
-        // Load library then fetch and render data
-        loadWordCloudLib()
-            .then(() => fetchWordcloudData())
-            .then(words => {
-                if (typeof WordCloud !== 'undefined') {
-                    renderWords(words);
-                } else {
-                    console.error('WordCloud library not available after loading');
-                }
-            })
-            .catch(error => {
-                console.error('Error in wordcloud initialization:', error);
-            });
-        
-        
-        // Process and display words in word cloud
-        function renderWords(words) {
-            console.log('Rendering words:', words);
-            if (!words || !words.length) {
-                console.log('No words to render');
-                return;
-            }
-            
-            if (typeof WordCloud !== 'undefined') {
-                const container = document.getElementById('word-cloud-container');
-                if (!container) {
-                    console.error('Word cloud container not found');
-                    return;
-                }
-                
-                const width = container.offsetWidth;
-                const height = container.offsetHeight || 400;
-                
-                // Prepare canvas if not exists
-                let canvas = container.querySelector('canvas');
-                if (!canvas) {
-                    canvas = document.createElement('canvas');
-                    canvas.width = width;
-                    canvas.height = height;
-                    container.appendChild(canvas);
-                }
-                
-                // Format words for WordCloud2.js - handle different data formats
-                const list = words.map(w => {
-                    // Extract the word and weight from potential different formats
-                    const text = w.word || w.value || w.text || w.answer || '';
-                    const weight = w.weight || w.count || w.votes || 1;
-                    return [text, weight];
-                }).filter(item => item[0]); // Remove empty entries
-                
-                console.log('Formatted word list:', list);
-                
-                if (list.length === 0) {
-                    console.log('No valid words to display after formatting');
-                    return;
-                }
-                
-                // Generate word cloud
-                WordCloud(canvas, {
-                    list: list,
-                    gridSize: Math.round(16 * width / 1024),
-                    weightFactor: function (size) {
-                        return Math.pow(size, 2.3) * width / 1024;
-                    },
-                    fontFamily: 'system-ui, -apple-system, "Segoe UI", "Roboto", sans-serif',
-                    color: function (word, weight) {
-                        return weight > 8 ? '#f44336' : weight > 6 ? '#ff9800' : weight > 4 ? '#2196f3' : weight > 2 ? '#4caf50' : '#9e9e9e';
-                    },
-                    rotateRatio: 0.5,
-                    rotationSteps: 2,
-                    backgroundColor: 'transparent'
-                });
-            }
-        }
-        
-        // Fetch words
-        // Wordcloud logic removed. No fetchWords remains.
-            fetch(answersEndpoint)
-                .then(r => r.json())
-                .then(d => {
-                    if (d.success) {
-                        renderWords(d.answers);
-                    }
-                });
-        }
-        
-        fetchWords();
-        setInterval(fetchWords, 10000);
-    }
-    
-    // Chart logic removed. No chart initialization remains.
-        const chartCtx = document.getElementById('chart-container').getContext('2d');
-        const chartType = itemType.replace('_bar_chart', 'Bar').replace('vertical', 'bar').replace('horizontal', 'bar');
-        let myChart = null;
-        
-        function renderAnswers(arr) {
-            // Update list display
-            listEl.innerHTML = '';
-            arr.forEach(a => {
-                const li = document.createElement('li');
-                li.className = 'answer-list-item';
-                li.innerHTML = `<span class="answer-value">${a.answer}</span><span>${a.votes || 1}</span>`;
-                listEl.appendChild(li);
-            });
-            
-            // Update chart
-            const labels = arr.map(a => a.answer);
-            const dataValues = arr.map(a => a.votes || 1);
-            if (!myChart) {
-                const config = {
-                    type: getChartJsType(itemType),
-                    data: {
-                        labels: labels,
-                        datasets: [{
-                            label: 'Votes',
-                            data: dataValues,
-                            backgroundColor: generateColors(labels.length)
-                        }]
-                    },
-                    options: {
-                        indexAxis: chartType === 'bar' && itemType === 'horizontal_bar_chart' ? 'y' : 'x',
-                        animation: false
-                    }
-                };
-                myChart = new Chart(chartCtx, config);
-            } else {
-                myChart.data.labels = labels;
-                myChart.data.datasets[0].data = dataValues;
-                myChart.update();
-            }
-        }
-        
-        // Fetch answers
-        function fetchAnswers() {
-            fetch(answersEndpoint)
-                .then(r => r.json())
-                .then(d => {
-                    if (d.success) {
-                        renderAnswers(d.answers);
-                    }
-                });
-        }
-        
-        // Fullscreen handling
-        const chartCanvas = document.getElementById('chart-container');
-        let isFullscreen = false;
-        
-        chartCanvas.addEventListener('click', function() {
-            if (!isFullscreen) {
-                if (chartCanvas.requestFullscreen) {
-                    chartCanvas.requestFullscreen();
-                } else if (chartCanvas.webkitRequestFullscreen) {
-                    chartCanvas.webkitRequestFullscreen();
-                } else if (chartCanvas.mozRequestFullScreen) {
-                    chartCanvas.mozRequestFullScreen();
-                } else if (chartCanvas.msRequestFullscreen) {
-                    chartCanvas.msRequestFullscreen();
-                }
-            }
-        });
-        
-        document.addEventListener('fullscreenchange', handleFsChange);
-        document.addEventListener('webkitfullscreenchange', handleFsChange);
-        document.addEventListener('mozfullscreenchange', handleFsChange);
-        document.addEventListener('MSFullscreenChange', handleFsChange);
-        
-        function handleFsChange() {
-            const fsElem = document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement;
-            isFullscreen = !!fsElem;
-            if (isFullscreen && overlayHelper && typeof overlayHelper.activate === 'function') {
-                overlayHelper.activate();
-                chartCanvas.style.transform = 'scale(1)';
-            } else {
-                if (overlayHelper && typeof overlayHelper.deactivate === 'function') overlayHelper.deactivate();
-                chartCanvas.style.transform = 'scale(0.7)';
-            }
-        }
-        
-        fetchAnswers();
-        setInterval(fetchAnswers, 10000);
-    }
-    
     // Common form handling
     form.addEventListener('submit', function(e) {
         e.preventDefault();
@@ -622,36 +389,13 @@ function submitEmoji(emoji) {
             if (d.success) {
                 input.value = '';
                 // Refresh the data
-                if (itemType === 'wordcloud') {
-                    // Use loadAnswers() which is already defined and handles refresh
-                    loadAnswers();
-                } else {
-                    loadAnswers();
-                }
+                loadAnswers();
             }
         });
     });
-    
-    // Utility functions
-    // Chart logic removed. No getChartJsType remains.
-        switch(itemType) {
-            case 'vertical_bar_chart': return 'bar';
-            case 'horizontal_bar_chart': return 'bar';
-            case 'pie_chart': return 'pie';
-            case 'doughnut': return 'doughnut';
-            default: return 'bar';
-        }
-    }
-    
-    function generateColors(n) {
-        const colors = [];
-        for (let i = 0; i < n; i++) {
-            const hue = i * 360 / n;
-            colors.push(`hsl(${hue},70%,50%)`);
-        }
-        return colors;
-    }
 })();
+    
+// End of event item script
 </script>
 
 <?php require_once __DIR__ . '/../../../views/footer.php'; ?>
