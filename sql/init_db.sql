@@ -6,12 +6,9 @@ SET FOREIGN_KEY_CHECKS = 0;
 
 -- Drop existing tables if they exist
 DROP TABLE IF EXISTS `EVENT_ANSWERS`;
-DROP TABLE IF EXISTS `WORD`;
-DROP TABLE IF EXISTS `WORDCLOUD`;
 DROP TABLE IF EXISTS `POLLS`;
 DROP TABLE IF EXISTS `POLL_ANSWERS`;
-DROP TABLE IF EXISTS `OVERLAY_PRESENCE`;
-DROP TABLE IF EXISTS `OVERLAY_OBJECT`;
+DROP TABLE IF EXISTS `EVENT_PRESENCE`;
 DROP TABLE IF EXISTS `EVENT_ITEM`;
 DROP TABLE IF EXISTS `EVENT`;
 -- Turn foreign key checks back on
@@ -35,49 +32,24 @@ CREATE TABLE IF NOT EXISTS `EVENT_ITEM` (
     `question` TEXT NOT NULL,
     `type` VARCHAR(32) NOT NULL DEFAULT 'wordcloud',
     `position` INT DEFAULT 0,
+    `emoji_queue` TEXT NULL COMMENT 'JSON-encoded FIFO queue of pending emoji reactions',
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (`event_id`) REFERENCES `EVENT`(`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Create WORDCLOUD table
-CREATE TABLE IF NOT EXISTS `WORDCLOUD` (
-    `id` BIGINT AUTO_INCREMENT PRIMARY KEY,
-    `event_item_id` BIGINT NOT NULL,
-    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (`event_item_id`) REFERENCES `EVENT_ITEM`(`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Create WORD table
-CREATE TABLE IF NOT EXISTS `WORD` (
-    `id` BIGINT AUTO_INCREMENT PRIMARY KEY,
-    `wordcloud_id` BIGINT NOT NULL,
-    `word` VARCHAR(30) NOT NULL,
-    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (`wordcloud_id`) REFERENCES `WORDCLOUD`(`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Create OVERLAY_OBJECT table for tracking emoji reactions
-CREATE TABLE IF NOT EXISTS `OVERLAY_OBJECT` (
+-- Create EVENT_PRESENCE table for tracking user presence
+CREATE TABLE IF NOT EXISTS `EVENT_PRESENCE` (
     `id` BIGINT AUTO_INCREMENT PRIMARY KEY,
-    `url` VARCHAR(256) NOT NULL UNIQUE,
-    `emoji_queue` TEXT NULL, -- JSON-encoded FIFO queue of pending emoji reactions
-    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- Create OVERLAY_PRESENCE table for tracking user presence
-CREATE TABLE IF NOT EXISTS `OVERLAY_PRESENCE` (
-    `id` BIGINT AUTO_INCREMENT PRIMARY KEY,
-    `overlay_object_id` BIGINT NOT NULL,
+    `event_id` BIGINT NOT NULL,
     `phpsessid` VARCHAR(128) NOT NULL,
     `last_seen` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (`overlay_object_id`) REFERENCES `OVERLAY_OBJECT`(`id`) ON DELETE CASCADE,
-    UNIQUE KEY `unique_presence` (`overlay_object_id`, `phpsessid`)
+    FOREIGN KEY (`event_id`) REFERENCES `EVENT`(`id`) ON DELETE CASCADE,
+    UNIQUE KEY `unique_presence` (`event_id`, `phpsessid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Create EVENT_ANSWERS table
@@ -93,8 +65,5 @@ CREATE TABLE IF NOT EXISTS `EVENT_ANSWERS` (
 
 -- Add indexes for better performance
 CREATE INDEX idx_e_key ON EVENT(`key`);
-CREATE INDEX idx_wc_event_item_id ON WORDCLOUD(`event_item_id`);
-CREATE INDEX idx_w_wordcloud_id ON WORD(`wordcloud_id`);
 CREATE INDEX idx_ea_event_item_id ON EVENT_ANSWERS(`event_item_id`);
-CREATE INDEX idx_oo_url ON OVERLAY_OBJECT(`url`);
-CREATE INDEX idx_op_overlay_object_id ON OVERLAY_PRESENCE(`overlay_object_id`);
+CREATE INDEX idx_ep_event_id ON EVENT_PRESENCE(`event_id`);

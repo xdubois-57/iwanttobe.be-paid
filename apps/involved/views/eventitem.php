@@ -126,6 +126,28 @@ $lang = LanguageController::getInstance();
 
 <script src="/apps/involved/js/OverlayObjectHelper.js"></script>
 <script>
+// Submit an emoji directly to the AJAX endpoint
+async function submitEmoji(emoji) {
+    try {
+        const response = await fetch(`/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/ajax/emoji`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                url: `/<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>/involved/<?php echo htmlspecialchars($event['key']); ?>`,
+                emoji: emoji
+            })
+        });
+        const data = await response.json();
+        if (!data.success) {
+            console.error('Failed to submit emoji:', data.error);
+        }
+    } catch (error) {
+        console.error('Error submitting emoji:', error);
+    }
+}
+
 (function(){
     // Common variables
     const lang='<?php echo htmlspecialchars($lang->getCurrentLanguage()); ?>';
@@ -137,14 +159,6 @@ $lang = LanguageController::getInstance();
     const listEl=document.getElementById('answer-list');
     const form=document.getElementById('add-answer-form');
     const input=document.getElementById('answer-value');
-
-    // Submit an emoji as an answer
-    function submitEmoji(emoji) {
-        // Set the emoji in the input field
-        input.value = emoji;
-        // Submit the answer
-        submitAnswer();
-    }
     
     // Overlay helper instance
     let overlayHelper = null;
