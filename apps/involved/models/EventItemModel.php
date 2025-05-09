@@ -100,4 +100,26 @@ class EventItemModel
         
         return $success;
     }
+    
+    /**
+     * Get the maximum position value for event items in a given event.
+     * 
+     * @param int $eventId The event ID
+     * @return int The maximum position value (0 if no items exist)
+     */
+    public function getMaxPositionForEvent(int $eventId): int
+    {
+        if (!$this->db->isConnected()) {
+            Logger::getInstance()->error('DB connection failed: ' . $this->db->getErrorMessage());
+            return 0;
+        }
+        
+        $result = $this->db->fetchOne('SELECT MAX(position) as max_position FROM EVENT_ITEM WHERE event_id = ?', [$eventId]);
+        
+        if ($result === false || $result['max_position'] === null) {
+            return 0;
+        }
+        
+        return (int)$result['max_position'];
+    }
 }
