@@ -951,6 +951,9 @@ class InvolvedHomeController {
      * Expects POST, returns JSON
      */
     public function deleteEventItemAnswer($params = []) {
+        require_once __DIR__ . '/../models/EventAnswerModel.php';
+        require_once __DIR__ . '/../models/EventItemModel.php';
+        
         $code = strtoupper($params['code'] ?? '');
         $itemId = (int)($params['itemid'] ?? 0);
         $answerId = (int)($params['answerid'] ?? 0);

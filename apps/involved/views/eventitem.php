@@ -25,6 +25,45 @@ $lang = LanguageController::getInstance();
         background:none; border:none; color:var(--text-secondary,#666); cursor:pointer; font-size:1.2rem;
     }
     .delete-btn:hover { color:#dc3545; }
+    
+    .event-item-list-item {
+        display: inline-block;
+        margin: 0.3rem;
+        position: relative;
+    }
+    
+    .event-item-list-content {
+        display: flex;
+        align-items: center;
+        padding: 0.5rem 1rem;
+        background: var(--background-secondary, #f4f4f4);
+        color: var(--text-primary, #121212);
+        border-radius: 1rem;
+        transition: background 0.2s;
+        cursor: pointer;
+    }
+    
+    .event-item-list-content:hover {
+        background: var(--background-secondary-hover, #e0e0e0);
+    }
+    
+    .event-item-list-question {
+        font-size: 1rem;
+    }
+    
+    .event-item-delete {
+        margin-left: 0.5rem;
+        padding: 0px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: var(--text-secondary, #666);
+        font-size: 1.2rem;
+    }
+    
+    .event-item-delete:hover {
+        color: #dc3545;
+    }
 </style>
 <?php require_once __DIR__ . '/../../../views/header.php'; ?>
 <main class="container">
@@ -70,14 +109,17 @@ $lang = LanguageController::getInstance();
         </article>
     </div>
 
-    <!-- Add answers section -->
+    <!-- Answers section -->
     <article style="margin-top:2rem;">
-        <h3>Add answer</h3>
-        <form id="add-answer-form" style="margin-top:0.5rem;">
+        <h3>Answers</h3>
+        <ul id="answer-list" style="list-style:none;padding:0;margin-top:1rem;"></ul>
+        
+        <!-- Add answer form -->
+        <h3 style="margin-top:1.5rem;">Add answer</h3>
+        <form id="add-answer-form" style="margin-top:0.5rem;" onsubmit="return false;">
             <input type="text" id="answer-value" placeholder="Answer" required style="width:100%; margin-bottom:0.5rem;">
-            <button type="submit" class="primary" style="width:100%;">Add</button>
+            <button type="button" onclick="submitAnswer()" class="primary" style="width:100%;">Add</button>
         </form>
-        <ul id="answer-list" style="list-style:none;padding:0;margin-top:1rem;text-align:left;"></ul>
     </article>
 
 </main>
@@ -109,6 +151,173 @@ $lang = LanguageController::getInstance();
         loadChartJs().then(initChart);
     }
     
+    // Handle answers functionality
+    initAnswers();
+    
+    // Define the submitAnswer function for global access
+    window.submitAnswer = function() {
+        const input = document.getElementById('answer-value');
+        const value = input.value.trim();
+        if (!value) return;
+        
+        console.log('Submitting answer:', value);
+        
+        // Create FormData object for submission - trying both field names
+        const formData = new FormData();
+        formData.append('value', value);
+        
+        // This is the correct endpoint from the app.php route definition:  /{lang}/involved/{code}/eventitem/{itemid}/answer/add
+        fetch(addEndpoint, {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                console.log('Answer added successfully', data);
+                input.value = '';
+                // Add the new answer to the list immediately
+                const answer = { id: data.id || Date.now(), value: value };
+                addAnswerToList(answer);
+            } else {
+                console.error('Failed to add answer:', data);
+                alert('Failed to add your answer. Please try again.');
+            }
+        })
+        .catch(error => {
+            console.error('Error submitting answer:', error);
+            alert('An error occurred. Please try again.');
+        });
+    };
+    
+    // Initialize answers functionality
+    function initAnswers() {
+        // Load initial answers
+        loadAnswers();
+        
+        // Refresh answers periodically
+        setInterval(loadAnswers, 5000);
+    }
+    
+    function addAnswerToList(answer) {
+        const answerList = document.getElementById('answer-list');
+        const li = document.createElement('li');
+        li.className = 'event-item-list-item';
+        li.dataset.value = answer.value.toLowerCase(); // Store lowercase value for sorting
+        li.innerHTML = `
+            <div class="event-item-list-content">
+                <span class="event-item-list-question">${answer.value}</span>
+                <button class="event-item-delete" onclick="window.deleteAnswer(${answer.id}, ${itemId})">×</button>
+            </div>
+        `;
+        
+        // Insert in alphabetical order
+        let inserted = false;
+        const existingItems = Array.from(answerList.children);
+        
+        for (let i = 0; i < existingItems.length; i++) {
+            const currentValue = existingItems[i].dataset.value;
+            if (answer.value.toLowerCase() < currentValue) {
+                answerList.insertBefore(li, existingItems[i]);
+                inserted = true;
+                break;
+            }
+        }
+        
+        // If not inserted anywhere (it's alphabetically last), append to the end
+        if (!inserted) {
+            answerList.appendChild(li);
+        }
+    }
+    
+    function loadAnswers() {
+        console.log('Loading answers from:', answersEndpoint);
+        fetch(answersEndpoint)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Server responded with status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Answers data received:', data);
+                const answerList = document.getElementById('answer-list');
+                answerList.innerHTML = '';
+                
+                // Ensure data is an array
+                const answersArray = Array.isArray(data) ? data : 
+                                    (data && data.answers ? data.answers : []);
+                
+                if (answersArray.length === 0) {
+                    console.log('No answers found');
+                    // Add a placeholder message if needed
+                    // answerList.innerHTML = '<p>No answers yet. Be the first to add one!</p>';
+                    return;
+                }
+                
+                // Sort answers alphabetically by value
+                const sortedAnswers = [...answersArray].sort((a, b) => {
+                    const valueA = (a.value || a.text || a.answer || '').toLowerCase();
+                    const valueB = (b.value || b.text || b.answer || '').toLowerCase();
+                    return valueA.localeCompare(valueB);
+                });
+                
+                // Render sorted answers
+                sortedAnswers.forEach(answer => {
+                    // Make sure the answer has the expected structure
+                    if (answer && (answer.value || answer.text || answer.answer)) {
+                        const formattedAnswer = {
+                            id: answer.id || 0,
+                            value: answer.value || answer.text || answer.answer
+                        };
+                        addAnswerToList(formattedAnswer);
+                    }
+                });
+            })
+            .catch(error => {
+                console.error('Error loading answers:', error);
+            });
+    }
+    
+    // Expose deleteAnswer to global scope for button click handlers
+    window.deleteAnswer = function(answerId, eventItemId) {
+        if (!confirm('Are you sure you want to delete this answer?')) {
+            return;
+        }
+        
+        console.log(`Deleting answer ID: ${answerId} from event item ID: ${eventItemId}`);
+        
+        // Use the correct delete endpoint we just added to app.php
+        const deleteEndpoint = `/${lang}/involved/${eventKey}/eventitem/${eventItemId}/answer/${answerId}/delete`;
+        console.log('Delete endpoint:', deleteEndpoint);
+        
+        fetch(deleteEndpoint, {
+            method: 'POST'
+        
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to delete answer');
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                loadAnswers();
+                if (typeof Logger !== 'undefined' && Logger.getInstance) {
+                    Logger.getInstance().info('Deleted answer', {
+                        'answer_id': answerId,
+                        'event_item_id': eventItemId
+                    });
+                }
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Failed to delete answer');
+        });
+    };
+    
     // Load Chart.js dynamically if needed
     function loadChartJs() {
         return new Promise((resolve) => {
@@ -125,14 +334,100 @@ $lang = LanguageController::getInstance();
     
     // Word Cloud initialization
     function initWordCloud() {
-        // Word cloud specific code will go here
-        // Fetch and display words
+        // Skip WordCloud if we're in a different item type
+        if (itemType !== 'wordcloud') {
+            console.log('Not a wordcloud item, skipping initialization');
+            return;
+        }
+        
+        console.log('Initializing wordcloud...');
+        
+        // Check if WordCloud.js is loaded
+        const loadWordCloudLib = () => {
+            return new Promise((resolve) => {
+                if (typeof WordCloud !== 'undefined') {
+                    console.log('WordCloud already loaded');
+                    resolve();
+                } else {
+                    console.log('Loading WordCloud library...');
+                    const script = document.createElement('script');
+                    script.src = '/js/wordcloud2.js';
+                    script.onload = () => {
+                        console.log('WordCloud library loaded');
+                        resolve();
+                    };
+                    script.onerror = () => {
+                        console.error('Failed to load WordCloud library');
+                        resolve(); // Resolve anyway to continue the chain
+                    };
+                    document.head.appendChild(script);
+                }
+            });
+        };
+        
+        // Fetch words data
+        const fetchWordcloudData = () => {
+            // The correct endpoint for wordcloud words (check if it's an answer endpoint vs. wordcloud)
+            const endpoint = `/${lang}/involved/${eventKey}/eventitem/${itemId}/answers`;
+            console.log('Fetching wordcloud data from:', endpoint);
+            
+            return fetch(endpoint)
+                .then(response => {
+                    if (!response.ok) {
+                        console.error(`Server returned ${response.status} for ${endpoint}`);
+                        throw new Error(`Failed to fetch words: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Word data received:', data);
+                    // Ensure we have an array of word objects
+                    if (!Array.isArray(data)) {
+                        console.log('Converting non-array response to array format');
+                        // Try to extract answers or other relevant data
+                        if (data && data.answers) return data.answers;
+                        if (data && data.words) return data.words;
+                        if (data && data.items) return data.items;
+                        return [];
+                    }
+                    return data;
+                })
+                .catch(error => {
+                    console.error('Error fetching words:', error);
+                    return []; // Return empty array on error
+                });
+        };
+        
+        // Load library then fetch and render data
+        loadWordCloudLib()
+            .then(() => fetchWordcloudData())
+            .then(words => {
+                if (typeof WordCloud !== 'undefined') {
+                    renderWords(words);
+                } else {
+                    console.error('WordCloud library not available after loading');
+                }
+            })
+            .catch(error => {
+                console.error('Error in wordcloud initialization:', error);
+            });
+        
+        
+        // Process and display words in word cloud
         function renderWords(words) {
-            // Process and display words
-            if (!words || !words.length) return;
+            console.log('Rendering words:', words);
+            if (!words || !words.length) {
+                console.log('No words to render');
+                return;
+            }
             
             if (typeof WordCloud !== 'undefined') {
                 const container = document.getElementById('word-cloud-container');
+                if (!container) {
+                    console.error('Word cloud container not found');
+                    return;
+                }
+                
                 const width = container.offsetWidth;
                 const height = container.offsetHeight || 400;
                 
@@ -145,8 +440,20 @@ $lang = LanguageController::getInstance();
                     container.appendChild(canvas);
                 }
                 
-                // Format words for WordCloud2.js
-                const list = words.map(w => [w.word, w.weight || 1]);
+                // Format words for WordCloud2.js - handle different data formats
+                const list = words.map(w => {
+                    // Extract the word and weight from potential different formats
+                    const text = w.word || w.value || w.text || w.answer || '';
+                    const weight = w.weight || w.count || w.votes || 1;
+                    return [text, weight];
+                }).filter(item => item[0]); // Remove empty entries
+                
+                console.log('Formatted word list:', list);
+                
+                if (list.length === 0) {
+                    console.log('No valid words to display after formatting');
+                    return;
+                }
                 
                 // Generate word cloud
                 WordCloud(canvas, {
@@ -293,9 +600,10 @@ $lang = LanguageController::getInstance();
                 input.value = '';
                 // Refresh the data
                 if (itemType === 'wordcloud') {
-                    fetchWords();
+                    // Use loadAnswers() which is already defined and handles refresh
+                    loadAnswers();
                 } else {
-                    fetchAnswers();
+                    loadAnswers();
                 }
             }
         });
