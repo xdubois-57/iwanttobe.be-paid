@@ -18,6 +18,26 @@ $lang = LanguageController::getInstance();
         margin: 0.3rem 0;
         border-radius: 0.8rem;
     }
+    
+    .answer-count {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 1.4em;
+        height: 1.4em;
+        border-radius: 50%;
+        border: 1.5px solid var(--text-secondary,#666);
+        background: var(--background-secondary,#f4f4f4);
+        color: var(--text-secondary,#666);
+        font-size: 0.7em;
+        font-weight: bold;
+        margin-left: 0.5em;
+        margin-right: 0.5em;
+        line-height: 1.4em;
+        box-sizing: border-box;
+        user-select: none;
+        min-width: 1.4em;
+    }
     .answer-value {
         font-size: 1rem;
     }
@@ -207,24 +227,21 @@ $lang = LanguageController::getInstance();
         li.innerHTML = `
             <div class="event-item-list-content">
                 <span class="event-item-list-question">${answer.value}</span>
+                <span class="answer-count">${answer.votes || 1}</span>
                 <button class="event-item-delete" onclick="window.deleteAnswer(${answer.id}, ${itemId})">×</button>
             </div>
         `;
         
         // Insert in alphabetical order
         let inserted = false;
-        const existingItems = Array.from(answerList.children);
-        
-        for (let i = 0; i < existingItems.length; i++) {
-            const currentValue = existingItems[i].dataset.value;
-            if (answer.value.toLowerCase() < currentValue) {
-                answerList.insertBefore(li, existingItems[i]);
+        const children = Array.from(answerList.children);
+        for (let i = 0; i < children.length; i++) {
+            if (answer.value.toLowerCase() < children[i].dataset.value) {
+                answerList.insertBefore(li, children[i]);
                 inserted = true;
                 break;
             }
         }
-        
-        // If not inserted anywhere (it's alphabetically last), append to the end
         if (!inserted) {
             answerList.appendChild(li);
         }
