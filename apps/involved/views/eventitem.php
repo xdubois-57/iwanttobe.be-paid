@@ -111,8 +111,13 @@ $lang = LanguageController::getInstance();
                 <input type="text" id="answer-value" placeholder="Answer" required style="width:100%; margin-bottom:0.5rem;">
                 <button type="button" onclick="submitAnswer()" class="primary" style="width:100%;">Add</button>
             </form>
-            <div id="emoji-container" style="margin-top:1rem; display:flex; flex-wrap:wrap; gap:0.5rem; justify-content:center;">
-                <!-- Emojis will be added here dynamically -->
+            <div style="margin-top:1rem; display:flex; flex-wrap:wrap; gap:0.5rem; justify-content:center;">
+                <button type="button" class="emoji-button" onclick="submitEmoji('❤️')" style="background: var(--background-secondary, #f4f4f4); border: 1px solid var(--text-secondary, #666); border-radius: 50%; width: 2.5em; height: 2.5em; display: flex; align-items: center; justify-content: center; font-size: 1.5em; cursor: pointer; transition: background-color 0.1s;">❤️</button>
+                <button type="button" class="emoji-button" onclick="submitEmoji('😂')" style="background: var(--background-secondary, #f4f4f4); border: 1px solid var(--text-secondary, #666); border-radius: 50%; width: 2.5em; height: 2.5em; display: flex; align-items: center; justify-content: center; font-size: 1.5em; cursor: pointer; transition: background-color 0.1s;">😂</button>
+                <button type="button" class="emoji-button" onclick="submitEmoji('👍')" style="background: var(--background-secondary, #f4f4f4); border: 1px solid var(--text-secondary, #666); border-radius: 50%; width: 2.5em; height: 2.5em; display: flex; align-items: center; justify-content: center; font-size: 1.5em; cursor: pointer; transition: background-color 0.1s;">👍</button>
+                <button type="button" class="emoji-button" onclick="submitEmoji('🔥')" style="background: var(--background-secondary, #f4f4f4); border: 1px solid var(--text-secondary, #666); border-radius: 50%; width: 2.5em; height: 2.5em; display: flex; align-items: center; justify-content: center; font-size: 1.5em; cursor: pointer; transition: background-color 0.1s;">🔥</button>
+                <button type="button" class="emoji-button" onclick="submitEmoji('🎉')" style="background: var(--background-secondary, #f4f4f4); border: 1px solid var(--text-secondary, #666); border-radius: 50%; width: 2.5em; height: 2.5em; display: flex; align-items: center; justify-content: center; font-size: 1.5em; cursor: pointer; transition: background-color 0.1s;">🎉</button>
+                <button type="button" class="emoji-button" onclick="submitEmoji('😅')" style="background: var(--background-secondary, #f4f4f4); border: 1px solid var(--text-secondary, #666); border-radius: 50%; width: 2.5em; height: 2.5em; display: flex; align-items: center; justify-content: center; font-size: 1.5em; cursor: pointer; transition: background-color 0.1s;">😅</button>
             </div>
         </article>
     </div>
@@ -129,52 +134,18 @@ $lang = LanguageController::getInstance();
     const itemType='<?php echo $eventItem['type']; ?>';
     const answersEndpoint=`/${lang}/involved/${eventKey}/eventitem/${itemId}/answers`;
     const addEndpoint=`/${lang}/involved/${eventKey}/eventitem/${itemId}/answer/add`;
-    const emojiEndpoint=`/${lang}/involved/ajax/emoji`;
     const listEl=document.getElementById('answer-list');
     const form=document.getElementById('add-answer-form');
     const input=document.getElementById('answer-value');
-    const emojiContainer=document.getElementById('emoji-container');
-
-    // Load and display emojis
-    async function loadEmojis() {
-        try {
-            const response = await fetch(emojiEndpoint);
-            const data = await response.json();
-            if (data.success && data.emojis) {
-                emojiContainer.innerHTML = data.emojis.map(emoji => `
-                    <button type="button" 
-                            class="emoji-button" 
-                            onclick="submitEmoji('${emoji}')"
-                            style="
-                                background: var(--background-secondary, #f4f4f4);
-                                border: 1px solid var(--text-secondary, #666);
-                                border-radius: 50%;
-                                width: 2.5em;
-                                height: 2.5em;
-                                display: flex;
-                                align-items: center;
-                                justify-content: center;
-                                font-size: 1.5em;
-                                cursor: pointer;
-                                transition: background-color 0.1s;
-                            "
-                    >${emoji}</button>
-                `).join('');
-            }
-        } catch (error) {
-            console.error('Error loading emojis:', error);
-        }
-    }
 
     // Submit an emoji as an answer
     function submitEmoji(emoji) {
+        // Set the emoji in the input field
         input.value = emoji;
+        // Submit the answer
         submitAnswer();
     }
     
-    // Load emojis when the page loads
-    loadEmojis();
-
     // Overlay helper instance
     let overlayHelper = null;
     if (typeof OverlayObjectHelper !== 'undefined') {
