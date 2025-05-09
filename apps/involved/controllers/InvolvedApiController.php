@@ -149,8 +149,13 @@ class InvolvedApiController {
         file_put_contents($logFile, date('Y-m-d H:i:s') . " - InvolvedApiController: Getting presence for URL: $url\n", FILE_APPEND);
         
         // Get presence count
-        $model = new OverlayPresenceModel();
-        $count = $model->getActivePresenceCount($url);
+        $model = new EventItemModel();
+        if (method_exists($model, 'getActivePresenceCount')) {
+            $count = $model->getActivePresenceCount($url);
+        } else {
+            $count = 0;
+            file_put_contents($logFile, date('Y-m-d H:i:s') . " - InvolvedApiController: EventItemModel::getActivePresenceCount not implemented\n", FILE_APPEND);
+        }
         
         file_put_contents($logFile, date('Y-m-d H:i:s') . " - InvolvedApiController: getPresence returning count: $count for URL: $url\n", FILE_APPEND);
         
