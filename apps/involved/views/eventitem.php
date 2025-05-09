@@ -23,8 +23,8 @@ $lang = LanguageController::getInstance();
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        width: 1.4em;
-        height: 1.4em;
+        width: 1.2em;
+        height: 1.2em;
         border-radius: 50%;
         border: 1.5px solid var(--text-secondary,#666);
         background: var(--background-secondary,#f4f4f4);
@@ -33,18 +33,30 @@ $lang = LanguageController::getInstance();
         font-weight: bold;
         margin-left: 0.5em;
         margin-right: 0.5em;
-        line-height: 1.4em;
+        line-height: 1.2em;
         box-sizing: border-box;
         user-select: none;
-        min-width: 1.4em;
+        min-width: 1.2em;
     }
     .answer-value {
         font-size: 1rem;
     }
-    .delete-btn {
-        background:none; border:none; color:var(--text-secondary,#666); cursor:pointer; font-size:1.2rem;
+    .delete-btn, .event-item-delete {
+        background: none;
+        border: none;
+        color: var(--text-secondary,#666);
+        cursor: pointer;
+        font-size: 1.2rem;
+        text-decoration: none;
+        padding: 0;
+        outline: none;
+        transition: color 0.2s;
+        margin-left: 0;
     }
-    .delete-btn:hover { color:#dc3545; }
+    .delete-btn:hover, .event-item-delete:hover {
+        color: #dc3545;
+        text-decoration: none;
+    }
     
     .event-item-list-item {
         display: inline-block;
@@ -71,19 +83,6 @@ $lang = LanguageController::getInstance();
         font-size: 1rem;
     }
     
-    .event-item-delete {
-        margin-left: 0.5rem;
-        padding: 0px;
-        background: none;
-        border: none;
-        cursor: pointer;
-        color: var(--text-secondary, #666);
-        font-size: 1.2rem;
-    }
-    
-    .event-item-delete:hover {
-        color: #dc3545;
-    }
 </style>
 <?php require_once __DIR__ . '/../../../views/header.php'; ?>
 <main class="container">
@@ -228,7 +227,7 @@ $lang = LanguageController::getInstance();
             <div class="event-item-list-content">
                 <span class="event-item-list-question">${answer.value}</span>
                 <span class="answer-count">${answer.votes || 1}</span>
-                <button class="event-item-delete" onclick="window.deleteAnswer(${answer.id}, ${itemId})">×</button>
+                <span class="event-item-delete" onclick="window.deleteAnswer(${answer.id}, ${itemId})">×</span>
             </div>
         `;
         
