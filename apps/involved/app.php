@@ -157,12 +157,9 @@ class InvolvedApp implements AppInterface {
     {
         return [
             'js/OverlayObjectHelper.js',
-            'js/OverlayObjectHelper.js',
             'js/eventQrBlock.js',
-            '/vendor/timdream/wordcloud2.js',
-            '/js/wordcloud-wrapper.js', // Add wrapper to fix wordcloud2.js errors
-            '/js/error-catcher.js',     // Error catcher for debugging
-            '/js/wordcloud.js'
+            // Wordcloud scripts removed
+            '/js/error-catcher.js'     // Error catcher for debugging
         ];
     }
 }

@@ -124,7 +124,6 @@ $lang = LanguageController::getInstance();
 
 </main>
 
-<script src="/apps/involved/js/OverlayObjectHelper.js"></script>
 <script>
 // Submit an emoji directly to the AJAX endpoint
 async function submitEmoji(emoji) {
@@ -394,8 +393,6 @@ async function submitEmoji(emoji) {
         });
     });
 })();
-    
-// End of event item script
 </script>
 
 <?php require_once __DIR__ . '/../../../views/footer.php'; ?>
