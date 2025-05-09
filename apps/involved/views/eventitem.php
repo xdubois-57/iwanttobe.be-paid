@@ -100,24 +100,21 @@ $lang = LanguageController::getInstance();
             <span id="future-animations" style="width:100%; height:100%; display:block;"></span>
         </article>
         
-        <!-- Right column: Answers -->
-        <article style="grid-column: span 1;">
-            <h3>Answers</h3>
-            <ul id="answer-list" style="list-style:none;padding:0;margin-top:1rem;"></ul>
-            
-            <!-- Add answer form -->
-            <h3 style="margin-top:1.5rem;">Add answer</h3>
-            <form id="add-answer-form" style="margin-top:0.5rem;" onsubmit="return false;">
-                <input type="text" id="answer-value" placeholder="Answer" required style="width:100%; margin-bottom:0.5rem;">
-                <button type="button" onclick="submitAnswer()" class="primary" style="width:100%;">Add</button>
-            </form>
-            <div style="margin-top:1rem; display:flex; flex-wrap:wrap; gap:0.25rem; justify-content:center;">
-                <button type="button" class="emoji-button" onclick="submitEmoji('❤️')" style="width: 1.5em; height: 1.5em; font-size: 1.5em; cursor: pointer; transition: transform 0.1s; background: none; border: none; padding: 0;">❤️</button>
-                <button type="button" class="emoji-button" onclick="submitEmoji('😂')" style="width: 1.5em; height: 1.5em; font-size: 1.5em; cursor: pointer; transition: transform 0.1s; background: none; border: none; padding: 0;">😂</button>
-                <button type="button" class="emoji-button" onclick="submitEmoji('👍')" style="width: 1.5em; height: 1.5em; font-size: 1.5em; cursor: pointer; transition: transform 0.1s; background: none; border: none; padding: 0;">👍</button>
-                <button type="button" class="emoji-button" onclick="submitEmoji('🔥')" style="width: 1.5em; height: 1.5em; font-size: 1.5em; cursor: pointer; transition: transform 0.1s; background: none; border: none; padding: 0;">🔥</button>
-                <button type="button" class="emoji-button" onclick="submitEmoji('🎉')" style="width: 1.5em; height: 1.5em; font-size: 1.5em; cursor: pointer; transition: transform 0.1s; background: none; border: none; padding: 0;">🎉</button>
-                <button type="button" class="emoji-button" onclick="submitEmoji('😅')" style="width: 1.5em; height: 1.5em; font-size: 1.5em; cursor: pointer; transition: transform 0.1s; background: none; border: none; padding: 0;">😅</button>
+        <!-- Right column: Answers management -->
+        <article style="grid-column: span 2;">
+            <div class="event-item-wrapper">
+                <h4>Answers</h4>
+                
+                <!-- Answer form -->
+                <form id="add-answer-form" class="add-item-form">
+                    <input type="text" id="answer-value" name="answer-value" placeholder="Your answer..." required>
+                    <button type="submit">Add</button>
+                </form>
+                
+                <!-- Answer list -->
+                <div class="answers-wrapper">
+                    <ul id="answer-list" class="answer-list"></ul>
+                </div>
             </div>
         </article>
     </div>
@@ -355,21 +352,17 @@ async function submitEmoji(emoji) {
                         'event_item_id': eventItemId
                     });
                 }
+            } else {
+                console.error('Failed to delete answer:', data);
+                alert('Failed to delete the answer. Please try again.');
             }
         })
         .catch(error => {
-            console.error('Error:', error);
-            alert('Failed to delete answer');
+            console.error('Error deleting answer:', error);
+            alert('An error occurred while deleting the answer. Please try again.');
         });
     };
     
-    // Load Chart.js dynamically if needed
-    function loadChartJs() {
-        return new Promise((resolve) => {
-            if (window.Chart) {
-                resolve();
-                return;
-            }
     // Common form handling
     form.addEventListener('submit', function(e) {
         e.preventDefault();
