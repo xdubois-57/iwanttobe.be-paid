@@ -177,8 +177,7 @@ function submitEmoji(emoji) {
         overlayHelper = window.__itemOverlayHelper = (window.__itemOverlayHelper || new OverlayObjectHelper());
     }
     
-    // Initialize answers functionality only (no wordcloud or poll logic)
-    // You can add other item type initializations here if needed.
+    // Only initialize answers functionality. All chart and wordcloud logic has been removed.
     
     // Handle answers functionality
     initAnswers();
@@ -389,41 +388,9 @@ function submitEmoji(emoji) {
         });
     }
     
-    // Word Cloud initialization
-    // function initWordCloud() { (REMOVED)
-        // Skip WordCloud if we're in a different item type
-        if (itemType !== 'wordcloud') {
-            console.log('Not a wordcloud item, skipping initialization');
-            return;
-        }
+    // Word Cloud logic fully removed; no orphaned or commented code remains.
         
-        console.log('Initializing wordcloud...');
-        
-        // Check if WordCloud.js is loaded
-        const loadWordCloudLib = () => {
-            return new Promise((resolve) => {
-                if (typeof WordCloud !== 'undefined') {
-                    console.log('WordCloud already loaded');
-                    resolve();
-                } else {
-                    console.log('Loading WordCloud library...');
-                    const script = document.createElement('script');
-                    script.src = '/js/wordcloud2.js';
-                    script.onload = () => {
-                        console.log('WordCloud library loaded');
-                        resolve();
-                    };
-                    script.onerror = () => {
-                        console.error('Failed to load WordCloud library');
-                        resolve(); // Resolve anyway to continue the chain
-                    };
-                    document.head.appendChild(script);
-                }
-            });
-        };
-        
-        // Fetch words data
-        const fetchWordcloudData = () => {
+        // Wordcloud logic removed. No fetchWordcloudData remains.
             // The correct endpoint for wordcloud words (check if it's an answer endpoint vs. wordcloud)
             const endpoint = `/${lang}/involved/${eventKey}/eventitem/${itemId}/answers`;
             console.log('Fetching wordcloud data from:', endpoint);
@@ -531,7 +498,7 @@ function submitEmoji(emoji) {
         }
         
         // Fetch words
-        function fetchWords() {
+        // Wordcloud logic removed. No fetchWords remains.
             fetch(answersEndpoint)
                 .then(r => r.json())
                 .then(d => {
@@ -545,8 +512,7 @@ function submitEmoji(emoji) {
         setInterval(fetchWords, 10000);
     }
     
-    // Chart initialization
-    function initChart() {
+    // Chart logic removed. No chart initialization remains.
         const chartCtx = document.getElementById('chart-container').getContext('2d');
         const chartType = itemType.replace('_bar_chart', 'Bar').replace('vertical', 'bar').replace('horizontal', 'bar');
         let myChart = null;
@@ -667,7 +633,7 @@ function submitEmoji(emoji) {
     });
     
     // Utility functions
-    function getChartJsType(itemType) {
+    // Chart logic removed. No getChartJsType remains.
         switch(itemType) {
             case 'vertical_bar_chart': return 'bar';
             case 'horizontal_bar_chart': return 'bar';
