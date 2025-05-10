@@ -10,11 +10,15 @@ class ChartRenderer {
         this.chartType = chartType;
 
         this.canvas = document.createElement('canvas');
-        this.canvas.width = container.clientWidth;
-        this.canvas.height = container.clientHeight;
-        this.canvas.style.width = '100%';
-        this.canvas.style.height = '100%';
         container.appendChild(this.canvas);
+        this.resizeCanvasToParent();
+        // Observe parent resize
+        if (window.ResizeObserver) {
+            this.resizeObserver = new ResizeObserver(() => this.resizeCanvasToParent());
+            this.resizeObserver.observe(container);
+        } else {
+            window.addEventListener('resize', () => this.resizeCanvasToParent());
+        }
 
         if (!window.Chart) {
             console.error('[ChartRenderer] Chart.js not loaded');
@@ -80,6 +84,16 @@ class ChartRenderer {
         this.chart.data.labels = labels;
         this.chart.data.datasets[0].data = data;
         this.chart.update();
+    }
+    resizeCanvasToParent() {
+        const parent = this.canvas.parentElement;
+        if (!parent) return;
+        const w = parent.clientWidth;
+        const h = parent.clientHeight;
+        this.canvas.width = w;
+        this.canvas.height = h;
+        this.canvas.style.width = w + 'px';
+        this.canvas.style.height = h + 'px';
     }
 }
 

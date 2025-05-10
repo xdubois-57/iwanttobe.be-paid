@@ -263,13 +263,7 @@ class EventItemDisplayManager {
     }
 
     renderQr(url) {
-        const qrWrapper = document.createElement('div');
-        qrWrapper.style.position = 'absolute';
-        qrWrapper.style.bottom = '20px';
-        qrWrapper.style.right = '20px';
-        qrWrapper.style.maxWidth = '200px';
-        qrWrapper.style.zIndex = '2';
-        qrWrapper.id = 'event-qr-wrapper';
+        let qrWrapper = document.getElementById('event-qr-wrapper');
         
         // Find or create the future-animations element
         let futureAnimations = this.container.querySelector('.future-animations');
@@ -292,8 +286,21 @@ class EventItemDisplayManager {
             futureAnimations.style.position = 'relative';
         }
         
-        // Add QR to future-animations
-        futureAnimations.appendChild(qrWrapper);
+        // Move or create the QR wrapper inside future-animations
+        if (!qrWrapper || qrWrapper.parentNode !== futureAnimations) {
+            if (qrWrapper && qrWrapper.parentNode) qrWrapper.parentNode.removeChild(qrWrapper);
+            qrWrapper = document.createElement('div');
+            qrWrapper.id = 'event-qr-wrapper';
+            futureAnimations.appendChild(qrWrapper);
+            console.debug('[QrDebug] Appended QR wrapper to future-animations', qrWrapper);
+        }
+        
+        // Set position styles
+        qrWrapper.style.position = 'absolute';
+        qrWrapper.style.bottom = '20px';
+        qrWrapper.style.right = '20px';
+        qrWrapper.style.maxWidth = '180px';
+        qrWrapper.style.zIndex = '2000';
 
         // EventQrBlock comes from eventQrBlock.js
         if (typeof EventQrBlock !== 'undefined') {

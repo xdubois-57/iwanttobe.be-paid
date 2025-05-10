@@ -111,19 +111,24 @@ a {
 .future-animations {
     position: relative !important;
     box-sizing: border-box;
-    /* Optionally, adjust width/height/padding/margin as needed for your layout */
+    min-height: 70vh !important; /* Minimum height of 50% of the viewport height */
+    width: 100% !important;
+    height: 100% !important;
 }
 
 /* Event QR code inside future-animations */
 #event-qr-wrapper {
     position: absolute !important;
-    bottom: 20px !important;
-    right: 20px !important;
+    bottom: 0 !important;
+    right: 0 !important;
+    left: auto !important;
     max-width: 180px !important;
-    z-index: 2000 !important;
-    background-color: rgba(255, 255, 255, 0.95) !important;
-    border-radius: 8px !important;
-    padding: 10px !important;
+    z-index: 30000 !important;
+    background: rgba(255,255,255,0.95) !important;
+    border-radius: 4px !important;
+    padding: 8px 12px !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
 }
 

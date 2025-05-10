@@ -14,11 +14,15 @@ class WordCloudRenderer {
         }, options);
 
         this.canvas = document.createElement('canvas');
-        this.canvas.width = container.clientWidth;
-        this.canvas.height = container.clientHeight;
-        this.canvas.style.width = '100%';
-        this.canvas.style.height = '100%';
         container.appendChild(this.canvas);
+        this.resizeCanvasToParent();
+        // Observe parent resize
+        if (window.ResizeObserver) {
+            this.resizeObserver = new ResizeObserver(() => this.resizeCanvasToParent());
+            this.resizeObserver.observe(container);
+        } else {
+            window.addEventListener('resize', () => this.resizeCanvasToParent());
+        }
     }
 
     update(wordsArray) {
@@ -57,6 +61,16 @@ class WordCloudRenderer {
             gridSize: Math.max(8, Math.floor(this.canvas.width / 50)) 
         });
         WordCloud(this.canvas, opts);
+    }
+    resizeCanvasToParent() {
+        const parent = this.canvas.parentElement;
+        if (!parent) return;
+        const w = parent.clientWidth;
+        const h = parent.clientHeight;
+        this.canvas.width = w;
+        this.canvas.height = h;
+        this.canvas.style.width = w + 'px';
+        this.canvas.style.height = h + 'px';
     }
 }
 
