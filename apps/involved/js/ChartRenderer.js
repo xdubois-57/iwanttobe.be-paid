@@ -50,12 +50,16 @@ class ChartRenderer {
     mapChartType(type) {
         switch (type) {
             case 'bar_chart':
+            case 'horizontal_bar_chart':
+            case 'vertical_bar_chart':
                 return 'bar';
             case 'pie_chart':
                 return 'pie';
             case 'doughnut_chart':
+            case 'doughnut':
                 return 'doughnut';
             default:
+                console.warn('[ChartRenderer] Unknown chart type:', type, 'defaulting to bar');
                 return 'bar';
         }
     }

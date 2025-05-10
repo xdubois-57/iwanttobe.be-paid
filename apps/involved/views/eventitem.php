@@ -124,7 +124,9 @@ $lang = LanguageController::getInstance();
 
 </main>
 
-<script src="/apps/involved/js/EventItemDisplayManager.js"></script>
+<!-- Include the required external libraries that aren't in the app's JS files list -->
+<script src="/vendor/timdream/wordcloud2.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
 <script>
 // Submit an emoji directly to the AJAX endpoint
 async function submitEmoji(emoji) {

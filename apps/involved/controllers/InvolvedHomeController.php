@@ -298,7 +298,13 @@ class InvolvedHomeController {
         $eventItemId = $eventItemModel->create((int)$event['id'], $question, $position, $type);
         
         if ($eventItemId) {
-            Logger::getInstance()->info('Created new event item: ' . $eventItemId . ' (type: ' . $type . ') for event: ' . $code);
+            Logger::getInstance()->info('Created new event item: ' . json_encode([
+                'id' => $eventItemId,
+                'type' => $type,
+                'question' => $question,
+                'event_code' => $code,
+                'timestamp' => date('Y-m-d H:i:s')
+            ]));
             // Redirect to the event page
             header('Location: /' . $langSlug . '/involved/' . urlencode($code));
             exit;

@@ -101,6 +101,33 @@ a {
     color: var(--link-color);
 }
 
+.future-animations {
+    position: relative !important;
+    box-sizing: border-box;
+    /* Optionally, adjust width/height/padding/margin as needed for your layout */
+}
+
+/* Ensure future-animations is always a positioning context for its children */
+.future-animations {
+    position: relative !important;
+    box-sizing: border-box;
+    /* Optionally, adjust width/height/padding/margin as needed for your layout */
+}
+
+/* Presence indicator inside future-animations */
+.future-animations .presence-inside-future-animations {
+    position: absolute !important;
+    top: 0 !important;
+    right: 0 !important;
+    left: auto !important;
+    z-index: 30000 !important;
+    background: rgba(255,255,255,0.9);
+    font-size: 1.5rem;
+    padding: 8px 12px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
 main {
     flex: 1 0 auto;
     position: relative;

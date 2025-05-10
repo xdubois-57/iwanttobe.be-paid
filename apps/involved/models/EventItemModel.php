@@ -170,26 +170,37 @@ class EventItemModel
      * Get queued emojis for an item (consume if needed)
      */
     public function getEmojiQueue(int $itemId): array {
-        // Fetch queued emojis in a transaction
         try {
-            $this->db->query('START TRANSACTION');
+            $this->db->beginTransaction();
             
-            $rows = $this->db->fetchAll('SELECT id, emoji FROM event_item_emoji_queue WHERE event_item_id = ? ORDER BY id ASC LIMIT 20', [$itemId]);
-            if (!$rows) {
-                $this->db->query('COMMIT');
+            // Get the emoji queue from EVENT_ITEM
+            $row = $this->db->fetchOne('SELECT emoji_queue FROM EVENT_ITEM WHERE id = ?', [$itemId]);
+            if (!$row || empty($row['emoji_queue'])) {
+                $this->db->commit();
                 return [];
             }
             
-            $ids = array_column($rows, 'id');
-            $placeholders = implode(',', array_fill(0, count($ids), '?'));
+            // Decode the emoji queue
+            $queue = json_decode($row['emoji_queue'], true);
+            if (!is_array($queue)) {
+                $this->db->commit();
+                return [];
+            }
             
-            // Delete fetched rows using placeholders for safety
-            $this->db->query("DELETE FROM event_item_emoji_queue WHERE id IN ($placeholders)", $ids);
-            $this->db->query('COMMIT');
+            // Take up to 20 emojis from the queue
+            $emojis = array_slice($queue, 0, 20);
             
-            return array_column($rows, 'emoji');
+            // Update the queue by removing the consumed emojis
+            $remainingQueue = array_slice($queue, 20);
+            $this->db->query('UPDATE EVENT_ITEM SET emoji_queue = ? WHERE id = ?', [
+                empty($remainingQueue) ? null : json_encode($remainingQueue),
+                $itemId
+            ]);
+            
+            $this->db->commit();
+            return $emojis;
         } catch (Exception $e) {
-            $this->db->query('ROLLBACK');
+            $this->db->rollback();
             Logger::getInstance()->error('Failed to get emoji queue: ' . $e->getMessage());
             return [];
         }
