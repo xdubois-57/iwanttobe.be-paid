@@ -86,6 +86,11 @@ class EventItemDisplayManager {
     }
 
     handleData(data) {
+        if (!data || typeof data !== 'object') {
+            console.error('[EventItemDisplayManager] Invalid data received:', data);
+            return;
+        }
+        
         // Presence
         this.updatePresenceDisplay(data.presence || 0);
 
@@ -94,13 +99,25 @@ class EventItemDisplayManager {
             this.animateEmojis(data.emojis);
         }
 
-        // Words
-        if (Array.isArray(data.words)) {
-            const hash = JSON.stringify(data.words);
-            if (hash !== this.previousWordsHash && this.renderer && typeof this.renderer.update === 'function') {
-                this.previousWordsHash = hash;
-                this.renderer.update(data.words);
+        // Words handling - now more robust
+        try {
+            // Handle potential structures: {words: [...]} or {answers: [...]} or direct array
+            const wordsArray = data.words || data.answers || [];
+            
+            if (Array.isArray(wordsArray)) {
+                // Only update if we have renderer and data has changed
+                if (this.renderer && typeof this.renderer.update === 'function') {
+                    const hash = JSON.stringify(wordsArray);
+                    if (hash !== this.previousWordsHash) {
+                        this.previousWordsHash = hash;
+                        this.renderer.update(wordsArray);
+                    }
+                }
+            } else {
+                console.warn('[EventItemDisplayManager] Invalid words data format:', wordsArray);
             }
+        } catch (e) {
+            console.error('[EventItemDisplayManager] Error processing words data:', e);
         }
 
         // QR
