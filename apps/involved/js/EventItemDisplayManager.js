@@ -235,7 +235,14 @@ class EventItemDisplayManager {
 
     // Simple emoji floating animation
     animateEmojis(list) {
-        list.forEach((emoji) => {
+        // Clear any previous emoji timers
+        if (!this.emojiTimers) this.emojiTimers = [];
+        this.emojiTimers.forEach(timer => clearTimeout(timer));
+        this.emojiTimers = [];
+        if (!Array.isArray(list) || list.length === 0) return;
+        const pollInterval = this.pollInterval || 5000;
+        // Helper to animate a single emoji
+        const animateEmoji = (emoji) => {
             const span = document.createElement('span');
             span.textContent = emoji;
             span.style.position = 'absolute';
@@ -244,11 +251,9 @@ class EventItemDisplayManager {
             span.style.fontSize = '2.2rem';
             span.style.pointerEvents = 'none';
             this.container.appendChild(span);
-
             const targetX = Math.random() * this.container.clientWidth;
-            const targetY = this.container.clientHeight + 50; // go up beyond top
+            const targetY = this.container.clientHeight + 50;
             const duration = 4000 + Math.random() * 2000;
-
             span.animate([
                 { transform: 'translate(0,0)', opacity: 1 },
                 { transform: `translate(${targetX}px,-${targetY}px)`, opacity: 0 }
@@ -257,9 +262,16 @@ class EventItemDisplayManager {
                 easing: 'ease-out',
                 fill: 'forwards'
             });
-
             setTimeout(() => span.remove(), duration);
-        });
+        };
+        // Animate the first emoji immediately
+        animateEmoji(list[0]);
+        // Animate the rest at random times within the poll interval
+        for (let i = 1; i < list.length; i++) {
+            const delay = Math.floor(Math.random() * pollInterval);
+            const timer = setTimeout(() => animateEmoji(list[i]), delay);
+            this.emojiTimers.push(timer);
+        }
     }
 
     renderQr(url) {
