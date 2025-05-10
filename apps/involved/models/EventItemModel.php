@@ -162,51 +162,50 @@ class EventItemModel
      */
     public function getActivePresenceCount(string $code, ?int $itemId = null): int {
         // If itemId provided, restrict to that item (future feature). For now event-level.
-        $pdo = $this->db->getConnection();
-        $stmt = $pdo->prepare('SELECT COUNT(*) AS c FROM event_presence WHERE event_code = ? AND updated_at > (NOW() - INTERVAL 60 SECOND)');
-        $stmt->execute([$code]);
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        return intval($row['c'] ?? 0);
+        $result = $this->db->fetchValue('SELECT COUNT(*) AS c FROM event_presence WHERE event_code = ? AND updated_at > (NOW() - INTERVAL 60 SECOND)', [$code]);
+        return intval($result ?? 0);
     }
 
     /**
      * Get queued emojis for an item (consume if needed)
      */
     public function getEmojiQueue(int $itemId): array {
-        $pdo = $this->db->getConnection();
-        $pdo->beginTransaction();
-        // Fetch queued emojis
-        $stmt = $pdo->prepare('SELECT id, emoji FROM event_item_emoji_queue WHERE event_item_id = ? ORDER BY id ASC LIMIT 20');
-        $stmt->execute([$itemId]);
-        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        if (!$rows) {
-            $pdo->commit();
+        // Fetch queued emojis in a transaction
+        try {
+            $this->db->query('START TRANSACTION');
+            
+            $rows = $this->db->fetchAll('SELECT id, emoji FROM event_item_emoji_queue WHERE event_item_id = ? ORDER BY id ASC LIMIT 20', [$itemId]);
+            if (!$rows) {
+                $this->db->query('COMMIT');
+                return [];
+            }
+            
+            $ids = array_column($rows, 'id');
+            $placeholders = implode(',', array_fill(0, count($ids), '?'));
+            
+            // Delete fetched rows using placeholders for safety
+            $this->db->query("DELETE FROM event_item_emoji_queue WHERE id IN ($placeholders)", $ids);
+            $this->db->query('COMMIT');
+            
+            return array_column($rows, 'emoji');
+        } catch (Exception $e) {
+            $this->db->query('ROLLBACK');
+            Logger::getInstance()->error('Failed to get emoji queue: ' . $e->getMessage());
             return [];
         }
-        $ids = array_column($rows, 'id');
-        // Delete fetched rows
-        $del = $pdo->prepare('DELETE FROM event_item_emoji_queue WHERE id IN (' . implode(',', $ids) . ')');
-        $del->execute();
-        $pdo->commit();
-        return array_column($rows, 'emoji');
     }
 
     /**
      * Get word counts for item (supports wordcloud and poll answers)
      */
     public function getItemWordCounts(int $itemId): array {
-        $pdo = $this->db->getConnection();
         // For wordcloud, words are stored in event_answers. For polls they are in poll_values.
-        $stmt = $pdo->prepare('SELECT answer AS word, COUNT(*) AS c FROM event_answers WHERE event_item_id = ? GROUP BY answer');
-        $stmt->execute([$itemId]);
-        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $rows = $this->db->fetchAll('SELECT answer AS word, COUNT(*) AS c FROM event_answers WHERE event_item_id = ? GROUP BY answer', [$itemId]);
         if ($rows) {
             return array_map(fn($r) => ['word' => $r['word'], 'count' => intval($r['c'])], $rows);
         }
         // fallback poll values
-        $stmt = $pdo->prepare('SELECT value AS word, COUNT(*) AS c FROM poll_values WHERE event_item_id = ? GROUP BY value');
-        $stmt->execute([$itemId]);
-        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $rows = $this->db->fetchAll('SELECT value AS word, COUNT(*) AS c FROM poll_values WHERE event_item_id = ? GROUP BY value', [$itemId]);
         return array_map(fn($r) => ['word' => $r['word'], 'count' => intval($r['c'])], $rows);
     }
 
@@ -214,10 +213,7 @@ class EventItemModel
      * Get active URL for QR block (possibly stored in event_item table)
      */
     public function getActiveUrl(string $code, int $itemId): ?string {
-        $pdo = $this->db->getConnection();
-        $stmt = $pdo->prepare('SELECT active_url FROM event_item WHERE id = ? AND event_code = ? LIMIT 1');
-        $stmt->execute([$itemId, $code]);
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $row = $this->db->fetchOne('SELECT active_url FROM event_item WHERE id = ? AND event_code = ? LIMIT 1', [$itemId, $code]);
         return $row['active_url'] ?? null;
     }
 }
