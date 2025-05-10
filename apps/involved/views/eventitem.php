@@ -124,7 +124,7 @@ $lang = LanguageController::getInstance();
 
 </main>
 
-<script src="/apps/involved/js/OverlayObjectHelper.js"></script>
+<script src="/apps/involved/js/EventItemDisplayManager.js"></script>
 <script>
 // Submit an emoji directly to the AJAX endpoint
 async function submitEmoji(emoji) {
@@ -161,10 +161,15 @@ async function submitEmoji(emoji) {
     const form=document.getElementById('add-answer-form');
     const input=document.getElementById('answer-value');
     
-    // Overlay helper instance
-    let overlayHelper = null;
-    if (typeof OverlayObjectHelper !== 'undefined') {
-        overlayHelper = window.__itemOverlayHelper = (window.__itemOverlayHelper || new OverlayObjectHelper());
+    // Event item display manager instance (handles QR, presence, emojis, rendering)
+    let displayManager = null;
+    if (typeof EventItemDisplayManager !== 'undefined') {
+        displayManager = new EventItemDisplayManager('#future-animations', {
+            eventCode: eventKey,
+            eventItemId: itemId,
+            itemType: itemType,
+            pollInterval: 4000
+        });
     }
     
     // Initialize answers functionality only

@@ -97,9 +97,15 @@ class InvolvedApp implements AppInterface {
         $router->get('/{lang}/involved/{code}/eventitem/{itemid}/add', 'InvolvedHomeController@showAddItemForm');
         $router->post('/{lang}/involved/{code}/eventitem/{itemid}/add', 'InvolvedHomeController@addItem');
         
-        // AJAX endpoints
-        
-        // Event-specific AJAX endpoints
+        // AJAX endpoints (new nested paths by event item)
+        $router->post('/{lang}/involved/{code}/eventitem/{itemid}/presence', 'InvolvedApiController@updatePresence');
+        $router->get('/{lang}/involved/{code}/eventitem/{itemid}/presence', 'InvolvedApiController@getPresence');
+        $router->post('/{lang}/involved/{code}/eventitem/{itemid}/active-url', 'InvolvedApiController@setActiveUrl');
+        $router->post('/{lang}/involved/{code}/eventitem/{itemid}/emoji', 'InvolvedApiController@appendEmoji');
+        $router->get('/{lang}/involved/{code}/eventitem/{itemid}/emoji', 'InvolvedApiController@getEmojis');
+        $router->get('/{lang}/involved/{code}/eventitem/{itemid}/data', 'InvolvedApiController@getEventItemData');
+
+        // Event-level AJAX endpoints (kept for backward compatibility)
         $router->post('/{lang}/involved/{code}/presence', 'InvolvedApiController@updatePresence');
         $router->get('/{lang}/involved/{code}/presence', 'InvolvedApiController@getPresence');
         $router->post('/{lang}/involved/{code}/active-url', 'InvolvedApiController@setActiveUrl');
@@ -156,7 +162,10 @@ class InvolvedApp implements AppInterface {
     public function getJavaScriptFiles(): array
     {
         return [
-            'js/OverlayObjectHelper.js',
+            'js/EventItemDisplayManager.js',
+            'js/WordCloudRenderer.js',
+            'js/ChartRenderer.js',
+            'js/InvolvedRealtimeHelper.js',
             'js/eventQrBlock.js',
             // Wordcloud scripts removed
             '/js/error-catcher.js'     // Error catcher for debugging

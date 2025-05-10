@@ -346,4 +346,46 @@ class InvolvedApiController {
         $emojis = $model->popQueuedEmojis($url, $max);
         echo json_encode(['success' => true, 'emojis' => $emojis]);
     }
+
+    /**
+     * Aggregate all data for EventItemDisplayManager in one call
+     * GET /{lang}/involved/{code}/eventitem/{itemid}/data
+     * @param array $params
+     */
+    public function getEventItemData($params = []) {
+        // CORS headers for AJAX
+        header('Access-Control-Allow-Origin: *');
+        header('Access-Control-Allow-Methods: GET');
+        header('Access-Control-Allow-Headers: Content-Type');
+        header('Content-Type: application/json');
+
+        $code = $params['code'] ?? null;
+        $itemId = isset($params['itemid']) ? intval($params['itemid']) : 0;
+        if (!$code || !$itemId) {
+            echo json_encode(['success' => false, 'error' => 'missing_params']);
+            return;
+        }
+
+        $model = new EventItemModel();
+
+        // Presence count for item (fallback to event)
+        $activeCount = $model->getActivePresenceCount($code, $itemId);
+
+        // Emojis queued for item
+        $emojis = $model->getEmojiQueue($itemId);
+
+        // Words list for item (wordcloud or poll answers)
+        $words = $model->getItemWordCounts($itemId);
+
+        // Active URL for QR
+        $activeUrl = $model->getActiveUrl($code, $itemId);
+
+        echo json_encode([
+            'success' => true,
+            'presence' => $activeCount,
+            'emojis' => $emojis,
+            'words' => $words,
+            'active_url' => $activeUrl
+        ]);
+    }
 }

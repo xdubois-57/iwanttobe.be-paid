@@ -156,4 +156,68 @@ class EventItemModel
             return false;
         }
     }
+
+    /**
+     * Get active presence count
+     */
+    public function getActivePresenceCount(string $code, int $itemId = null): int {
+        // If itemId provided, restrict to that item (future feature). For now event-level.
+        $pdo = DB::getInstance()->getConnection();
+        $stmt = $pdo->prepare('SELECT COUNT(*) AS c FROM event_presence WHERE event_code = ? AND updated_at > (NOW() - INTERVAL 60 SECOND)');
+        $stmt->execute([$code]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return intval($row['c'] ?? 0);
+    }
+
+    /**
+     * Get queued emojis for an item (consume if needed)
+     */
+    public function getEmojiQueue(int $itemId): array {
+        $pdo = DB::getInstance()->getConnection();
+        $pdo->beginTransaction();
+        // Fetch queued emojis
+        $stmt = $pdo->prepare('SELECT id, emoji FROM event_item_emoji_queue WHERE event_item_id = ? ORDER BY id ASC LIMIT 20');
+        $stmt->execute([$itemId]);
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        if (!$rows) {
+            $pdo->commit();
+            return [];
+        }
+        $ids = array_column($rows, 'id');
+        // Delete fetched rows
+        $del = $pdo->prepare('DELETE FROM event_item_emoji_queue WHERE id IN (' . implode(',', $ids) . ')');
+        $del->execute();
+        $pdo->commit();
+        return array_column($rows, 'emoji');
+    }
+
+    /**
+     * Get word counts for item (supports wordcloud and poll answers)
+     */
+    public function getItemWordCounts(int $itemId): array {
+        $pdo = DB::getInstance()->getConnection();
+        // For wordcloud, words are stored in event_answers. For polls they are in poll_values.
+        $stmt = $pdo->prepare('SELECT answer AS word, COUNT(*) AS c FROM event_answers WHERE event_item_id = ? GROUP BY answer');
+        $stmt->execute([$itemId]);
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        if ($rows) {
+            return array_map(fn($r) => ['word' => $r['word'], 'count' => intval($r['c'])], $rows);
+        }
+        // fallback poll values
+        $stmt = $pdo->prepare('SELECT value AS word, COUNT(*) AS c FROM poll_values WHERE event_item_id = ? GROUP BY value');
+        $stmt->execute([$itemId]);
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return array_map(fn($r) => ['word' => $r['word'], 'count' => intval($r['c'])], $rows);
+    }
+
+    /**
+     * Get active URL for QR block (possibly stored in event_item table)
+     */
+    public function getActiveUrl(string $code, int $itemId): ?string {
+        $pdo = DB::getInstance()->getConnection();
+        $stmt = $pdo->prepare('SELECT active_url FROM event_item WHERE id = ? AND event_code = ? LIMIT 1');
+        $stmt->execute([$itemId, $code]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $row['active_url'] ?? null;
+    }
 }

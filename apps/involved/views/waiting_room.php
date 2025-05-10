@@ -13,18 +13,14 @@ require_once __DIR__ . '/../../../views/header.php';
     </div>
 </main>
 
-<!-- Initialize the overlay client helper just like in the add word form -->
-<script src="/apps/involved/js/OverlayObjectHelper.js"></script>
+<!-- Initialize realtime helper for presence tracking -->
+<script src="/apps/involved/js/InvolvedRealtimeHelper.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize the overlay object helper for presence tracking
-    if (window.OverlayObjectHelper) {
-        window.OverlayObjectHelper.initialize();
-        // Optionally set custom polling interval if needed
-        window.OverlayObjectHelper.presenceIntervalTime = 3000; // Check every 3 seconds
-        window.OverlayObjectHelper.startPresencePolling();
-    }
-
+    const realtime = new InvolvedRealtimeHelper();
+    realtime.initialize();
+    realtime.presenceIntervalTime = 3000; // Check every 3 seconds
+    realtime.startPresenceTracking();
 });
 </script>
 
