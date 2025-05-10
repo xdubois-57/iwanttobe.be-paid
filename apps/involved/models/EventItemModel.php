@@ -201,11 +201,18 @@ class EventItemModel
     public function getItemWordCounts(int $itemId): array {
         // For wordcloud, words are stored in event_answers. For polls they are in poll_values.
         $rows = $this->db->fetchAll('SELECT answer AS word, COUNT(*) AS c FROM event_answers WHERE event_item_id = ? GROUP BY answer', [$itemId]);
-        if ($rows) {
+        if ($rows === false) {
+            Logger::getInstance()->warning('Failed to fetch event answers for event item ' . $itemId);
+            // Continue to try poll values instead of returning empty
+        } else if (!empty($rows)) {
             return array_map(fn($r) => ['word' => $r['word'], 'count' => intval($r['c'])], $rows);
         }
         // fallback poll values
         $rows = $this->db->fetchAll('SELECT value AS word, COUNT(*) AS c FROM poll_values WHERE event_item_id = ? GROUP BY value', [$itemId]);
+        if ($rows === false) {
+            Logger::getInstance()->warning('Failed to fetch poll values for event item ' . $itemId);
+            return [];
+        }
         return array_map(fn($r) => ['word' => $r['word'], 'count' => intval($r['c'])], $rows);
     }
 
