@@ -114,6 +114,19 @@ a {
     /* Optionally, adjust width/height/padding/margin as needed for your layout */
 }
 
+/* Event QR code inside future-animations */
+#event-qr-wrapper {
+    position: absolute !important;
+    bottom: 20px !important;
+    right: 20px !important;
+    max-width: 180px !important;
+    z-index: 2000 !important;
+    background-color: rgba(255, 255, 255, 0.95) !important;
+    border-radius: 8px !important;
+    padding: 10px !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
+}
+
 /* Presence indicator inside future-animations */
 .future-animations .presence-inside-future-animations {
     position: absolute !important;

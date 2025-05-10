@@ -136,9 +136,11 @@ class EventItemDisplayManager {
             console.error('[EventItemDisplayManager] Error processing words data:', e);
         }
 
-        // QR
-        if (!this.qrBlock && data.active_url) {
-            this.renderQr(data.active_url);
+        // QR - create a URL if it doesn't exist in data
+        if (!this.qrBlock) {
+            const url = data.active_url || `/${this.lang}/involved/${this.eventCode}/event`;
+            console.debug('[QrDebug] Creating QR with URL:', url);
+            this.renderQr(url);
         }
     }
 
@@ -267,7 +269,31 @@ class EventItemDisplayManager {
         qrWrapper.style.right = '20px';
         qrWrapper.style.maxWidth = '200px';
         qrWrapper.style.zIndex = '2';
-        this.container.appendChild(qrWrapper);
+        qrWrapper.id = 'event-qr-wrapper';
+        
+        // Find or create the future-animations element
+        let futureAnimations = this.container.querySelector('.future-animations');
+        if (!futureAnimations) {
+            console.debug('[QrDebug] Creating .future-animations element for QR');
+            futureAnimations = document.createElement('div');
+            futureAnimations.className = 'future-animations';
+            
+            // Make it take the full size of its parent
+            futureAnimations.style.position = 'relative';
+            futureAnimations.style.width = '100%';
+            futureAnimations.style.height = '100%';
+            
+            // Add future-animations to the container
+            this.container.appendChild(futureAnimations);
+        }
+        
+        // Ensure future-animations is positioned relatively
+        if (getComputedStyle(futureAnimations).position === 'static') {
+            futureAnimations.style.position = 'relative';
+        }
+        
+        // Add QR to future-animations
+        futureAnimations.appendChild(qrWrapper);
 
         // EventQrBlock comes from eventQrBlock.js
         if (typeof EventQrBlock !== 'undefined') {
