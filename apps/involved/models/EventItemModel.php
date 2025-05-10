@@ -160,9 +160,9 @@ class EventItemModel
     /**
      * Get active presence count
      */
-    public function getActivePresenceCount(string $code, int $itemId = null): int {
+    public function getActivePresenceCount(string $code, ?int $itemId = null): int {
         // If itemId provided, restrict to that item (future feature). For now event-level.
-        $pdo = DB::getInstance()->getConnection();
+        $pdo = $this->db->getConnection();
         $stmt = $pdo->prepare('SELECT COUNT(*) AS c FROM event_presence WHERE event_code = ? AND updated_at > (NOW() - INTERVAL 60 SECOND)');
         $stmt->execute([$code]);
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -173,7 +173,7 @@ class EventItemModel
      * Get queued emojis for an item (consume if needed)
      */
     public function getEmojiQueue(int $itemId): array {
-        $pdo = DB::getInstance()->getConnection();
+        $pdo = $this->db->getConnection();
         $pdo->beginTransaction();
         // Fetch queued emojis
         $stmt = $pdo->prepare('SELECT id, emoji FROM event_item_emoji_queue WHERE event_item_id = ? ORDER BY id ASC LIMIT 20');
@@ -195,7 +195,7 @@ class EventItemModel
      * Get word counts for item (supports wordcloud and poll answers)
      */
     public function getItemWordCounts(int $itemId): array {
-        $pdo = DB::getInstance()->getConnection();
+        $pdo = $this->db->getConnection();
         // For wordcloud, words are stored in event_answers. For polls they are in poll_values.
         $stmt = $pdo->prepare('SELECT answer AS word, COUNT(*) AS c FROM event_answers WHERE event_item_id = ? GROUP BY answer');
         $stmt->execute([$itemId]);
@@ -214,7 +214,7 @@ class EventItemModel
      * Get active URL for QR block (possibly stored in event_item table)
      */
     public function getActiveUrl(string $code, int $itemId): ?string {
-        $pdo = DB::getInstance()->getConnection();
+        $pdo = $this->db->getConnection();
         $stmt = $pdo->prepare('SELECT active_url FROM event_item WHERE id = ? AND event_code = ? LIMIT 1');
         $stmt->execute([$itemId, $code]);
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
